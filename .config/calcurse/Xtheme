@@ -1,0 +1,44 @@
+!
+! calcurse/Xtheme
+! Created by Hayden Hamilton
+!
+! haydenvh.com
+! Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 .licenses/gplv2.license
+!
+
+! special
+*.foreground:   #a84b8d
+*.background:   #090711
+*.cursorColor:  #1e5eb3
+
+! black
+*.color0:       #dc6f3c
+*.color8:       #dc6f3c
+
+! red
+*.color1:       #4747e1
+*.color9:       #4747e1
+
+! green
+*.color4:       #892b2b
+*.color12:      #892b2b
+
+! yellow
+*.color3:       #a1a1d9
+*.color11:      #a1a1d9
+
+! blue
+*.color5:       #1f8a27
+*.color13:      #1f8a27
+
+! magenta
+*.color2:       #a84b8d
+*.color10:      #a84b8d
+
+! cyan
+*.color6:       #434343
+*.color14:      #434343
+
+! white
+*.color7:       #3ab475
+*.color15:      #3ab475

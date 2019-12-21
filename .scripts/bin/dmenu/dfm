@@ -1,0 +1,156 @@
+#!/bin/bash
+#
+# dfm - Hayden's Dmenu File Manager
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+#
+dmenu="dmenu"
+. $HOME/.dmenurc
+. $HOME/.config/dfm/config
+
+confdir="$HOME/.config/dfm"
+conffile="$confdir/config"
+
+makeconfdir(){
+	if [ -d $confdir ]
+	then
+		echo > /dev/null
+	else
+		mkdir -p $confdir
+	fi
+}
+
+sendconf(){
+	varname="$1"
+	varcont="$2"
+	makeconfdir
+	if [ -f conffile ]
+	then
+		if [ "$(awk "/${varname}=/ {print}" $conffile)" != "" ]
+		then
+			sed -i "/${varname}=/d" $conffile
+		fi
+	fi
+	echo "${varname}=\"${varcont}\"" >> $conffile
+	. $conffile
+}
+
+getdot(){
+	. $conffile
+	if [ "$DFM_DOT" == "1" ]
+	then
+		lscommand="ls -A"
+	elif [ "$DFM_DOT" == "0" ]
+	then
+		lscommand="ls"
+	else
+		lscommand="ls -A"
+	fi
+}
+
+fmspecial(){
+	if [ "$output2" == "RM - Remove file" ]
+	then
+		rm $output
+	elif [ "$output2" == "CMD - Specific command" ]
+	then
+		output3=$(dmenu_path | $dmenu -i -p "Select program")
+		$output3 $output
+	elif [ "$output2" == "MV - Move file" ]
+	then
+		output3=$(echo "" | $dmenu -i -p "Move to:")
+		mv $output $output3
+	elif [ "$output2" == "EDIT - Open with $EDITOR" ]
+	then
+		$EDITOR $output
+	fi
+}
+
+cd $2
+while true
+do
+	getdot
+	output=$(echo "FM * .. $($lscommand)" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
+	fmcmd1="MD - Make dir
+MF - Make file
+BM - Bookmarks
+FND - Find
+HIDE - Toggle Dotfiles"
+	fmcmd2="MV - Move file
+RM - Remove file
+CMD - Specific command
+EDIT - Open with $EDITOR"
+
+	if [ "$output" == "FM" ]
+	then
+		output=$(echo "$fmcmd1" | $dmenu -l 30 -i -p "Select command:")
+		if [ "$output" == "MD - Make dir" ]
+		then
+			output2=$(echo "" | $dmenu -i -p "Name dir:")
+			mkdir $output2
+		elif [ "$output" == "MF - Make file" ]
+		then
+			output2=$(echo "" | $dmenu -i -p "Name file:")
+			touch $output2
+		elif [ "$output" == "BM - Bookmarks" ]
+		then
+			mkdir ~/.config/dfm/
+			touch ~/.config/dfm/bookmarks
+			output=$(echo "MK DEL $(cat ~/.config/dfm/bookmarks | awk '// {print $1}')" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
+			if [ "$output" == "MK" ]
+			then
+				output=$(echo "" | $dmenu -i -p "Choose bookmark name(no spaces):")
+				output2=$(echo "" | $dmenu -i -p "Choose bookmark path(absolute):")
+			 	echo "$output $output2" >> ~/.config/dfm/bookmarks
+			elif [ "$output" == "DEL" ]
+			then
+				output=$(echo "$(cat ~/.config/dfm/bookmarks | awk '// {print $1}')" | $dmenu -l 30 -i -p "Select bookmark to delete:")
+				delete=$(cat ~/.config/dfm/bookmarks | awk "/$output/")
+				cat ~/.config/dfm/bookmarks | sed "/$delete/d" > ~/.config/dfm/bookmarks
+			else
+				output=$(cat ~/.config/dfm/bookmarks | awk "/$output/"' {print $2}')
+				output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
+				fmspecial
+			fi
+		elif [ "$output" == "FND - Find" ]
+		then
+			output=$(echo "" | $dmenu -i -p "Enter name of file:")
+			(find . | grep "$output")
+			output3=$(echo "$(find . | grep "$output")" | $dmenu -i -l 30 -p "Select file:")
+		elif [ "$output" == "HIDE - Toggle Dotfiles" ]
+		then
+			if [ "$DFM_DOT" == "0" ]
+			then
+				export DFM_DOT="1"
+				sendconf "DFM_DOT" "1"
+			elif [ "$DFM_DOT" == "1" ]
+			then
+				export DFM_DOT="0"
+				sendconf "DFM_DOT" "0"
+			else
+				export DFM_DOT="0"
+				sendconf "DFM_DOT" "0"
+			fi
+		fi
+	elif [ -d "$output" ]
+	then
+		cd $output
+	elif [ "$output" == "exit" ]
+	then
+		exit 1
+	elif [ "$output" == "" ]
+	then
+		exit 1
+	else
+		if [ "$1" == "fm" ]
+		then
+			output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
+			fmspecial
+		else
+			$1 $output
+			$pause
+		fi
+	fi
+done

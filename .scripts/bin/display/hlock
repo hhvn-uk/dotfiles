@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# hlock
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+#
+image="/tmp/screen.png"
+locker="i3lock -i"
+
+while getopts ":n:i:l:h:b:p:r" o; do case "${o}" in
+	i) image=${OPTARG} ;;
+	r) resolution=${OPTARG} ;;
+	b) blur=${OPTARG} ;;
+	p) locker=${OPTARG} ;;
+	n) convert="off" ;;
+	h) printf "Specify an image with -i, resolution with -r, imagemagick effects with -b, and the program used for locking with -p." ;;
+esac done
+
+if [ "$convert" == "off" ]
+then
+	echo "All image manipulation off..."
+	if [ "$image" == "" ]
+	then
+		echo "No image, please specify one..."
+		exit 1
+	fi
+	echo "Getting image..."
+	cp $image /tmp/screen.png
+else
+	res=$(xrandr | grep 'current' | sed -E 's/.*current\s([0-9]+)\sx\s([0-9]+).*/\1x\2/')
+	convert -size 320x85 canvas:none -pointsize 72 -draw "text 25,60 'Locked...'" -channel RGBA -blur 0x6 -fill white -stroke white -draw "text 20,55 'Locked...'" /tmp/lock.png
+	echo "Resizing & blurring..."
+	ffmpeg -f x11grab -video_size $res -y -i $DISPLAY -i /tmp/lock.png -filter_complex "boxblur=8:1,overlay=(main_w-overlay_w)/12:(main_h-overlay_h)/2" -vframes 1 /tmp/screen.png -loglevel quiet
+	convert /tmp/screen.png $blur /tmp/screen.png
+fi
+echo "Locking..."
+$locker /tmp/screen.png -t

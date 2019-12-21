@@ -1,0 +1,32 @@
+!!
+!! .Xdefaults
+!! Created by Hayden Hamilton
+!!
+!! haydenvh.com
+!! Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 .licenses/gplv2.license
+!!
+
+URxvt.intensityStyles:false
+URxvt.depth:32
+URxvt.font:xft:monospace:size=9
+URxvt.scrollBar:false
+URxvt.cursorColor:white
+
+!! 25px padding
+URxvt*internalBorder:25
+!! Extensions 
+URxvt.perl-ext-common:default,resize-font,url-select,keyboard-select,clipboard
+URxvt.colorUL:#4682B4
+!! url-select 
+URxvt.keysym.C-u:perl:url-select:select_next 
+URxvt.url-select.launcher:vimb
+URxvt.url-select.underline:true 
+!! keyboard-select: 
+URxvt.keysym.C-s:perl:keyboard-select:activate
+!! resize-font 
+URxvt.resize-font.smaller:C-j
+URxvt.resize-font.bigger:C-k
+!! Matcher 
+URxvt.url-launcher:vimb
+!! clipboard
+URxvt.keysym.M-c:perl:clipboard:copy

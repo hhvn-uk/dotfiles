@@ -1,0 +1,22 @@
+set download-path=~/general/downloads/
+set editor-command="urxvt -e vim %s"
+set history-max-items=99999
+set input-autohide=true
+
+set home-page=file:///root/.homepage/index.html
+
+set smooth-scrolling=false
+set webinspector=true
+
+shortcut-add sx=https://searx.me/?q=$0
+shortcut-add sch=https://searx.ch/?q=$0
+shortcut-add bit=https://bitchute.com/search?q=$0
+shortcut-add yt=https://youtube.com/results?search_query=$0
+shortcut-add hh=https://haydenh.gitlab.io/h/search?q=$0
+shortcut-add vl=https://voidlinux.org
+shortcut-add vw=https://wiki.voidlinux.org/index.php?search=$0
+shortcut-add gh=https://github.com/search?q=$0
+shortcut-add gl=https://gitlab.com/search?search=$0
+shortcut-add ddg=https://duckduckgo.com/?q=$0
+shortcut-add wk=https://en.wikipedia.org/wiki/$0
+shortcut-add aw=https://wiki.archlinux.org/index.php?search=$0

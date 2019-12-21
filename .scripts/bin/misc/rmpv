@@ -1,0 +1,32 @@
+#!/bin/bash
+
+dir=$1
+count="$2"
+filetypes="mp3 opus mkv mp4 flac m4a webm wav"
+getfiles() {
+	files+=$(find $dir | awk "/$1/ {print}")
+}
+
+allfiles() {
+	for filetype in $filetypes
+	do
+		getfiles $filetype
+	done
+	if [ "$files" == "" ]
+	then
+		echo "No files found..."
+		exit 1
+	fi
+}
+
+randomize() {
+	filearray=($files)
+	length=${#filearray[@]}
+	randomn=$(($RANDOM%$length))
+	echo ${filearray[$randomn]}
+}
+
+allfiles
+files=$(for i in `seq $count`; do randomize; done)
+mpv --input-ipc-server=/tmp/mpv-socket $files
+

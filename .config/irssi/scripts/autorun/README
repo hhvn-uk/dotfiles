@@ -1,0 +1,21 @@
+
+ascii.pl:
+	/ASCII [-c1234] [-f <fontname>] [-p <prefix>] [-l|-s|-m <where>] <text>
+	/COLSAY [-1234] [-m <where>] <text>
+	/COLME [-1234] <text>
+	/COLTOPIC [-1234] <text>
+	/COLKICK [-1234] [nick(,nick_1,...,nick_n)] <reason>
+	/COLQUIT [-1234] <reason>
+	/SET ascii_figlet_path [path]
+
+auto_whois:
+	all is handled by itself
+
+nickcolor.pl:
+	all is handled by itself
+
+url_hilight.pl:
+	all is handled by itself
+
+usercount.pl:
+	all is handled by itself

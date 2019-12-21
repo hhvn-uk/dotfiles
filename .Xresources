@@ -1,0 +1,44 @@
+!
+! .Xresources
+! Created by Hayden Hamilton
+!
+! haydenvh.com
+! Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 .licenses/gplv2.license
+!
+
+! special
+*.foreground:   #1e5eb3
+*.background:   #090711
+*.cursorColor:  #1e5eb3
+
+! black
+*.color0:       #141726
+*.color8:       #dc6f3c
+
+! red
+*.color1:       #24283c
+*.color9:       #4747e1
+
+! green
+*.color2:       #31364b
+*.color10:      #892b2b
+
+! yellow
+*.color3:       #40445c
+*.color11:      #a1a1d9
+
+! blue
+*.color4:       #575b72
+*.color12:      #1f8a27
+
+! magenta
+*.color5:       #777b8e
+*.color13:      #a84b8d
+
+! cyan
+*.color6:       #a3a6b3
+*.color14:      #434343
+
+! white
+*.color7:       #c7cad9
+*.color15:      #3ab475

@@ -1,0 +1,71 @@
+#!/bin/bash
+
+if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
+then
+	echo 'rfeh /path/to/folder [number of monitors or "auto"] [true for locking] [program to lock with]
+
+Written by Hayden Hamilton <hayden@haydenvh.com>'
+	exit 0
+fi
+dir=$1
+filetypes="png jpg jpeg jpe tiff"
+getfiles() {
+	files+=$(ls $dir | awk "/$1/ {print}")
+}
+
+lock="$3"
+baselockwith="$4"
+if [ "$baselockwith" == "" ]
+then
+	lockwith="i3lock"
+	lockop="-i"
+else
+	lockwith="$(echo $baselockwith | awk '// {print $1}')
+	lockopt="$(echo $baselockwith | awk '// {print $2}')
+fi
+monitors=$2
+if [ "$2" == "" ]
+then
+	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
+elif [ "$2" == "auto" ]
+then
+	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
+fi
+
+allfiles() {
+	for filetype in $filetypes
+	do
+		getfiles $filetype
+	done
+	if [ "$files" == "" ]
+	then
+		echo "No files found..."
+		exit 1
+	fi
+	files=$(echo $files | tr " " "\n" | sed "s~^~$dir~g")
+}
+
+randomize() {
+	filearray=($files)
+	length=${#filearray[@]}
+	randomn=$(($RANDOM%$length))
+	echo ${filearray[$randomn]}
+}
+
+allfiles
+files=$(for i in `seq $monitors`; do randomize; done)
+if [ -d ~/.cache/rfeh/ ]
+then
+	echo > /dev/null
+else
+	mkdir -p ~/.cache/rfeh
+fi
+echo $files > ~/.cache/rfeh/prev
+if [ "$lock" == "true" ]
+then
+	files=$(echo "$files" | tr " " "\n" | sed "s~^~$lockopt ~g" | tr "\n" " ")
+	$lockwith $files
+else
+	files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
+	feh $files
+fi

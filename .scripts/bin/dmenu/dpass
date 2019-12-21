@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# dmenu/dpass
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+#
+. $HOME/.dmenurc
+
+lower() {
+    printf '%s\n' "${1,,}"
+}
+
+if [ -f $PASS ]
+then
+	echo ""
+else
+	notify-send "Password file does not exist, creating it."
+	touch $PASS
+fi
+pass=$(cat $PASS | awk '// {print $1}' | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
+getpass=$(cat $PASS | awk "/$pass/ "'{print $0}')
+if [ "$pass" == "" ]
+then
+	exit 0
+elif [ "$pass" == "generate" ]
+then
+	password=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 30 | head -n 1)
+	passname=$(echo "" | $dmenu -l 50 -i -p "Name for password (only 1 word):")
+	if [ "$passname" == "" ]
+	then
+		passname="pleaseeditthis"
+	fi
+	echo "$passname: $password" >> $PASS
+	userinput "Edit the pasword file?" "$TERMINAL -hold -e vim $PASS"
+elif [ "$pass" == "edit" ]
+then
+	$TERMINAL -hold -e vim $PASS
+else
+	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -l 50 -p "Password:" | xclip
+	notify-send "Password copied to clipboard."
+fi

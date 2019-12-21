@@ -1,0 +1,3 @@
+#!/bin/bash
+. $HOME/.config/irssi/userrc
+irssi --home ~/.config/irssi/ -n $IRCUSER -c chat.freenode.net 6667 $IRCUSER:$IRCPASS

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. $HOME/.dmenurc
+
+hmpv pause $3
+dfm "mpv --input-ipc-server $2 $4" ~/$1
