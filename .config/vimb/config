@@ -12,7 +12,7 @@ shortcut-add sx=https://searx.me/?q=$0
 shortcut-add sch=https://searx.ch/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
-shortcut-add hh=https://haydenh.gitlab.io/h/search?q=$0
+shortcut-add hh=https://haydenh.gitlab.io/h/
 shortcut-add vl=https://voidlinux.org
 shortcut-add vw=https://wiki.voidlinux.org/index.php?search=$0
 shortcut-add gh=https://github.com/search?q=$0

@@ -23,7 +23,7 @@ function xi; sudo xbps-install $argv; end
 function xq; sudo xbps-query $argv; end
 function xr; sudo xbps-remove $argv; end
 function irssi; irssi --config ~/.config/irssi/config $argv; end
-function pipes; pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv; end
+function pipes; command pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv; end
 function clock; tty-clock; end
 function ytdl; youtube-dl --add-metadata -ic $argv; end
 function ytdla; youtube-dl --add-metadata -xic $argv; end
@@ -40,7 +40,7 @@ function fff; bash ~/.config/fff/config; end
 function python; python3; end
 function vimb; command vimb --no-maximize; end
 function cleancache; sudo xbps-remove -O; end
-function dots; git push orgin master; git push github master; end
+function dots; git push origin master -f; git push github master -f; end
 
 #Set fish colors
 set fish_color_command a84b8d
@@ -48,8 +48,8 @@ set fish_color_autosuggestion 86296b
 set fish_color_quote 3ab475
 
 #Set LS colors
-bash ~/.ls_colors
-bash ~/.bash_profile
+set -x LS_COLORS "di=35:fi=0:ln=33:ex=91;01:*.sh=91:*.html=92:*.css=97:*.md=97:*.yml=93:*.c=94:*.h=94:*.h.orig=94;01:*.h.rej=94;01:*.mk=96:*LICENSE=90:*Makefile=90:*README=97:*.c.orig=94;01:*.c.rej=94;01:*.png=95:*.jpg=95:*.heic=95:*.heif=95:*.mp3=95;01:*opus=.95;01:*.m4a=95;01:*.flac=95;01:*.wav=95;01:*.mp4=95;04:*.mkv=95;04"
+
 
 #Frame buffer
 function video; mpv $argv --vo=drm; end

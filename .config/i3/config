@@ -159,7 +159,7 @@ assign [class="Vimb"] $ws1
 assign [class="URxvt" instance="irssi"] $ws8
 
 ##Scratchpad
-for_window [class="URxvt" instance="dropdown"] move scratchpad; move position 0 0; resize set 1000 500
+for_window [class="URxvt" instance="dropdown*"] exec scratcher
 
 ##Movement bindings
 bindsym $mod+h focus 			left
@@ -187,7 +187,7 @@ bindsym $mod+bracketleft		exec userinput "Do you want to suspend?" "sudo -A zzz"
 bindsym $mod+shift+bracketleft		exec userinput "Do you want to hibernate?" "sudo -A ZZZ"
 
 ##Letter bindings
-bindsym $mod+q 				exec dropdown kill; exec dropdown hide
+bindsym $mod+q 				scratchpad show
 bindsym $mod+shift+q 			kill
 bindsym $mod+w 				exec rfeh ~/.wallpapers/
 bindsym $mod+shift+w 			exec fehffile ~/.wall
@@ -217,8 +217,8 @@ bindsym $mod+d 				exec dmenurun
 bindsym $mod+shift+d 			exec dmenurun
 bindsym $mod+f 				fullscreen toggle
 bindsym $mod+shift+f 			fullscreen toggle
-bindsym $mod+g				exec dropdown show; exec dropdown program 'newsboat'
-bindsym $mod+shift+g			exec dropdown hide; exec dropdown program 'calcurse'
+bindsym $mod+g				exec $terminal -name newsboat -e newsboat
+bindsym $mod+shift+g			exec $terminal -name calcurse -e calcurse -D ~/.config/calcurse
 ##HJKL in movement bindings
 bindsym $mod+z 				split v
 bindsym $mod+shift+z 			split v
@@ -248,7 +248,7 @@ exec fehffile ~/.wall.png
 exec_always notify-send "i3 restarted. Press Super(windows key)+F1 to open the manual."
 exec_always brightnessctl s 100%
 exec_always crefresh
-exec dropdown start urxvtc
+exec $terminal -name dropdown -e fish
 
 ##Setting colors for tabbed windows
 #class			#border		#background	#text
