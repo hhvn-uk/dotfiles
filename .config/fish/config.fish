@@ -41,6 +41,7 @@ function python; python3; end
 function vimb; command vimb --no-maximize; end
 function cleancache; sudo xbps-remove -O; end
 function dots; git push origin master -f; git push github master -f; end
+function dotsadd; bash ~/.gitaddlist; end
 
 #Set fish colors
 set fish_color_command a84b8d

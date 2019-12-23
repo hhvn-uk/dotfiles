@@ -10,7 +10,6 @@
 if [ "$(echo $1 | awk '/help/ {print}')" != "" ]
 then
 	echo "dfm [fm for standard mode/name of program for file-selection] [/path/to/dir - enter at start]
-			^ Also accepts 0x0 for file uploads
 
 $(tput bold)CONFIG:$(tput sgr0)
 DFM_CONF_DIR=[insert /path/to/confdir] <-- Default: $HOME/.config/dfm
