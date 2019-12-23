@@ -8,4 +8,4 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
 #
 . $HOME/.dmenurc
-$dmenu -nf "#090711" -p "$1" <&- && echo
+$dmenu -P -p "$1" <&- && echo

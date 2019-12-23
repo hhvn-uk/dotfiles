@@ -9,12 +9,8 @@
 dmenu="dmenu"
 . $HOME/.dmenurc
 
-lower() {
-    printf '%s\n' "${1,,}"
-}
-
 [ ! -f $PASS ] && touch $PASS
-pass=$(cat $PASS | awk '// {print $1}' | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
+pass=$(printf "GENERATE\nEDIT\n$(cat $PASS | awk '// {print $1}')" | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
 getpass=$(cat $PASS | awk "/$pass/ "'{print $0}')
 if [ "$pass" == "" ]
 then
