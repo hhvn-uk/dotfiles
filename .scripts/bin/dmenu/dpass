@@ -6,6 +6,17 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
 #
+if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
+then
+	echo "dpass [\"option that your terminal uses to execute the argument\"]
+
+$(tput bold)ENVIRONMENTAL:$(tput sgr0) (must be set in .profile, .bash_profile .zprofile etc...)
+PASS=\"/path/to/password/file\"
+TERMINAL=\"name of terminal binary\"
+
+Written by Hayden Hamilton <haydenvh.com>"
+	exit 0
+fi
 dmenu="dmenu"
 . $HOME/.dmenurc
 
@@ -24,10 +35,10 @@ then
 		passname="pleaseeditthis"
 	fi
 	echo "$passname: $password" >> $PASS
-	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" == "Yes" ] && $TERMINAL -e vim $PASS
+	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" == "Yes" ] && $TERMINAL "$1" vim $PASS
 elif [ "$pass" == "edit" ]
 then
-	$TERMINAL -hold -e vim $PASS
+	$TERMINAL "$1" vim $PASS
 else
 	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -l 20 -p "Password:" | xclip
 	notify-send "Password copied to clipboard."
