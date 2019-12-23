@@ -10,12 +10,17 @@
 if [ "$(echo $1 | awk '/help/ {print}')" != "" ]
 then
 	echo "dfm [fm for standard mode/name of program for file-selection] [/path/to/dir - enter at start]
+			^ Also accepts 0x0 for file uploads
 
 $(tput bold)CONFIG:$(tput sgr0)
 DFM_CONF_DIR=[insert /path/to/confdir] <-- Default: $HOME/.config/dfm
 DFM_DOT=[0/1 to show dotfiles] <-- Default: 1
 DFM_USE_HH_PATCH=[0/1 to use the patched dmenu from haydenvh.com] <-- Default: 0
 DFM_DISABLE_ENQUEUE=[0/1 to never enqueue input] <-- Default: 0
+
+$(tput bold)CONFIGURING COMMANDS FOR FILE TYPES:$(tput sgr0) Syntax
+	DFM_FILETYPE_[insert filetype in all caps]=\"[insert program name]\"
+			^ For example, .mkv is MKV	^ For example mpv
 
 Written by Hayden Hamilton <haydenvh.com>"
 	exit 0
@@ -58,7 +63,6 @@ fmornorm(){
 	then
 		output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
 		fmspecial
-		argu=""
 	else
 		dooutput
 		if [ "$doarg" == "true" ]
@@ -94,21 +98,35 @@ getdot(){
 	fi
 }
 
+getprog(){
+	varout=$(echo "$1" | sed 's/\./ /g' | tr '[:lower:]' '[:upper:]' | awk '// {print $NF}' | sed 's/^/DFM_FILETYPE_/g')
+	commandout=${!varout}
+}
+
 fmspecial(){
-	if [ "$output2" == "RM - Remove file" ]
+	if [ "$output2" == "AUTO - Check config for program to use" ]
+	then
+		getprog "$output"
+		$commandout $output $argu
+	elif [ "$output2" == "RM - Remove file" ]
 	then
 		rm $output
 	elif [ "$output2" == "CMD - Specific command" ]
 	then
 		output3=$(dmenu_path | $dmenu -i -p "Select program")
-		$output3 $output
+		$output3 $output $argu
+		argu=""
 	elif [ "$output2" == "MV - Move file" ]
 	then
 		output3=$(echo "" | $dmenu -i -p "Move to:")
 		mv $output $output3
 	elif [ "$output2" == "EDIT - Open with $EDITOR" ]
 	then
-		$EDITOR $output
+		$EDITOR $output $argu
+		argu=""
+	elif [ "$output2" == "QUE - Enqueue" ]
+	then
+		argu+="$output "
 	fi
 }
 
@@ -124,11 +142,13 @@ MF - Make file
 BM - Bookmarks
 FND - Find
 HIDE - Toggle Dotfiles"
-	fmcmd2="CCL - CANCEL
+	fmcmd2="AUTO - Check config for program to use
+CCL - CANCEL
 MV - Move file
 RM - Remove file
 CMD - Specific command
-EDIT - Open with $EDITOR"
+EDIT - Open with $EDITOR
+QUE - Enqueue"
 
 	if [ "$output" == "FM" ]
 	then
