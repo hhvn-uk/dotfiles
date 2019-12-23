@@ -17,6 +17,7 @@ DFM_CONF_DIR=[insert /path/to/confdir] <-- Default: $HOME/.config/dfm
 DFM_DOT=[0/1 to show dotfiles] <-- Default: 1
 DFM_USE_HH_PATCH=[0/1 to use the patched dmenu from haydenvh.com] <-- Default: 0
 DFM_DISABLE_ENQUEUE=[0/1 to never enqueue input] <-- Default: 0
+DFM_SCREENSHOT_CMD=\"[insert program name]\" <-- Default: \"maim -s\"
 
 $(tput bold)CONFIGURING COMMANDS FOR FILE TYPES:$(tput sgr0) Syntax
 	DFM_FILETYPE_[insert filetype in all caps]=\"[insert program name]\"
@@ -31,8 +32,10 @@ if [ "$1" == "" ]
 then
 	export forn1="fm"
 fi
+
 getconf(){
 dmenu="dmenu"
+DFM_SCREENSHOT_CMD="maim -s"
 DFM_CONF_DIR="$HOME/.config/dfm"
 . $HOME/.dmenurc
 . $HOME/.config/dfm/config
@@ -104,11 +107,24 @@ getprog(){
 	commandout=${!varout}
 }
 
+send0x0(){
+	send=$(curl -F "file=@$output" https://0x0.st)
+	send2=$(echo "$send" | awk '/http/')
+	[ "$send2" == "" ] && echo "Failed" | $dmenu -i -p "Hit enter to continue"
+	[ "$send2" != "" ] && echo $send | $dmenu -i -p "Hit enter to continue" | xclip
+}
+
+sendscrn0x0(){
+	output="/tmp/ss"
+	$DFM_SCREENSHOT_CMD > /tmp/ss && send0x0
+}
+
 fmspecial(){
 	if [ "$output2" == "AUTO - Check config for program to use" ]
 	then
 		getprog "$output"
-		$commandout $output $argu
+		[ "$commandout" != "" ] && $commandout $output $argu
+		[ "$commandout" == "" ] && echo "No program set..."
 	elif [ "$output2" == "RM - Remove file" ]
 	then
 		rm $output
@@ -128,6 +144,9 @@ fmspecial(){
 	elif [ "$output2" == "QUE - Enqueue" ]
 	then
 		argu+="$output "
+	elif [ "$output2" == "SND - Send to 0x0.st" ]
+	then
+		send0x0
 	fi
 }
 
@@ -142,15 +161,16 @@ MD - Make dir
 MF - Make file
 BM - Bookmarks
 FND - Find
-HIDE - Toggle Dotfiles"
+HIDE - Toggle Dotfiles
+SCRN - Host screenshot on 0x0.st"
 	fmcmd2="AUTO - Check config for program to use
 CCL - CANCEL
 MV - Move file
 RM - Remove file
 CMD - Specific command
 EDIT - Open with $EDITOR
-QUE - Enqueue"
-
+QUE - Enqueue
+SND - Send to 0x0.st"
 	if [ "$output" == "FM" ]
 	then
 		output=$(echo "$fmcmd1" | $dmenu -l 30 -i -p "Select command:")
@@ -212,6 +232,9 @@ QUE - Enqueue"
 				export DFM_DOT="0"
 				sendconf "DFM_DOT" "0"
 			fi
+		elif [ "$output" == "SCRN - Host screenshot on 0x0.st" ]
+		then
+			sendscrn0x0
 		fi
 	elif [ -d "$output" ]
 	then
