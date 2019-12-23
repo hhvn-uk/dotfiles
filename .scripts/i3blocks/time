@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "< $(date +%d/%m)"
+echo
+echo \#ff7777

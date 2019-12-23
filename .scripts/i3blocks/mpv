@@ -1,0 +1,51 @@
+#!/bin/bash
+
+file=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket | tr "." " " | sed 's/opus//g' | sed 's/mp3//g' | sed 's/mkv//g' | sed 's/flac//g' | sed 's/webm//g' | sed 's/part//g' | tr '"\{:,}[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  //g' | tail -c +2 | sed 's/$//g' | tr "()'" " " | sed 's/   / /g' |sed 's/  / /g' | sed 's/  / /g' | sed 's/   / /g')
+vidtitle=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket2 | tr '"{:,}\[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g')
+state=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket | tr '{":0,}' ' ' | awk '// {print $2}')
+state2=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | awk '// {print $2}')
+convertsecs() {
+	((h=${1}/3600))
+	((m=(${1}%3600)/60))
+	((s=${1}%60))
+	printf "%02d:%02d:%02d\n" $h $m $s
+}
+time=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat - /tmp/mpv-socket | tr '{":,}' ' ' | awk '// {print $2}' | sed 's/\./ /g' | awk '// {print $1}'))
+time2=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat - /tmp/mpv-socket2 | tr '{":,}' ' ' | awk '// {print $2}' | sed 's/\./ /g' | awk '// {print $1}'))
+if [ "$state" == "false" ]
+then
+	out=" PLAY - MUSIC - $file - $time"
+	color="true"
+elif [ "$state" == "true" ]
+then
+	if [ "$state2" == "false" ]
+	then
+		out=" PLAY - VIDEO - $vidtitle - $time2"
+	else
+		out=" STOP - MUSIC - $file - $time"
+	fi
+	color="true"
+elif [ "$state2" == "false" ]
+then
+	out=" PLAY - VIDEO - $vidtitle - $time2"
+	color="true"
+elif [ "$state2" == "true" ]
+then
+	out=" STOP - VIDEO - $vidtitle - $time2"
+	color="true"
+else
+	out=" NONE"
+	color="true"
+fi
+if [ "$color" == "true" ]
+then
+	echo "< MPV$out"
+	echo
+	echo \#666b1b
+elif [ "$color" == "false" ]
+then
+	exit 0
+else
+	echo "Nothing set?... Exiting"
+	exit 1
+fi

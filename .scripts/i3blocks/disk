@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# i3blocks/disk
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+#
+
+sda1=$(df -h | awk '/sda1/ {print $3 "/" $4}')
+echo "< SDA1 $sda1"
+echo
+echo \#0F9BF3

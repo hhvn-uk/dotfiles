@@ -1,0 +1,8 @@
+#!/bin/bash
+
+toggled=$(amixer sget Master | awk '/Mono/ {print $6}' | sed 's/\[//g' | sed 's/\]//g')
+volume=$(amixer sget Master | awk '/Mono/ {print $4}' | sed 's/\[//g' | sed 's/\]//g')
+output=$(echo $(echo ${volume}|tr "\n" " ")$(echo ${toggled}|tr "\n" " "|sed 's/ //g'))
+echo "< VOL $output"
+echo
+echo \#21a4a3

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "< RAIN $(sed 5q ~/.cache/weather | sed 's/‘//g' | sed 's/‚’//g' | tail -n 1 | sed 's/ //g')"
+echo
+echo \#249980

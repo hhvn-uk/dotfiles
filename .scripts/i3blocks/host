@@ -1,0 +1,6 @@
+#!/bin/bash
+
+hostget="\u@\h"
+echo "< ${hostget@P}"
+echo 
+echo \#ff003b
