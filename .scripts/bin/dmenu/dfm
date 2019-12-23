@@ -21,6 +21,7 @@ DFM_DISABLE_ENQUEUE=[0/1 to never enqueue input] <-- Default: 0
 $(tput bold)CONFIGURING COMMANDS FOR FILE TYPES:$(tput sgr0) Syntax
 	DFM_FILETYPE_[insert filetype in all caps]=\"[insert program name]\"
 			^ For example, .mkv is MKV	^ For example mpv
+When in standard file management mode, you will now get the option to automatically select a program to launch.
 
 Written by Hayden Hamilton <haydenvh.com>"
 	exit 0
