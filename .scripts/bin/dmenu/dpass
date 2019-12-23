@@ -6,19 +6,14 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
 #
+dmenu="dmenu"
 . $HOME/.dmenurc
 
 lower() {
     printf '%s\n' "${1,,}"
 }
 
-if [ -f $PASS ]
-then
-	echo ""
-else
-	notify-send "Password file does not exist, creating it."
-	touch $PASS
-fi
+[ ! -f $PASS ] && touch $PASS
 pass=$(cat $PASS | awk '// {print $1}' | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
 getpass=$(cat $PASS | awk "/$pass/ "'{print $0}')
 if [ "$pass" == "" ]
@@ -33,11 +28,11 @@ then
 		passname="pleaseeditthis"
 	fi
 	echo "$passname: $password" >> $PASS
-	userinput "Edit the pasword file?" "$TERMINAL -hold -e vim $PASS"
+	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" == "Yes" ] && $TERMINAL -e vim $PASS
 elif [ "$pass" == "edit" ]
 then
 	$TERMINAL -hold -e vim $PASS
 else
-	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -l 50 -p "Password:" | xclip
+	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -l 20 -p "Password:" | xclip
 	notify-send "Password copied to clipboard."
 fi
