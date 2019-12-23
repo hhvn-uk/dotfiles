@@ -1,3 +1,4 @@
 #!/bin/bash
 . $HOME/.dmenurc
-dmenu_path | $dmenu "$@" | ${SHELL:-"/bin/bash"} &
+dir=$(echo $PATH | tr ":" " ")
+find $dir -maxdepth 1 -executable -not -type d -printf "%f\n" | sort | $dmenu "$@" | ${SHELL:-"/bin/bash"} &

@@ -29,6 +29,7 @@ channels = (
   { name = "#GNU/matrix"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#archlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#GNU/matrix"; chatnet = "Rizon"; autojoin = "Yes"; },
 );
 aliases = {
   ATAG = "WINDOW SERVER";
