@@ -74,10 +74,10 @@ dooutput(){
 	enqueue=$(echo "DO ENQUEUE" | tr " " "\n" | $dmenu -i -p "What do you want to do?")
 	if [ "$enqueue" == "ENQUEUE" ]
 	then
-		argu+="$output "
+		argu+="$(pwd)/$output "
 		doarg="false"
 	else
-		argu+="$output "
+		argu+="$(pwd)/$output "
 		doarg="true"
 	fi
 }
@@ -118,12 +118,14 @@ while true
 do
 	getdot
 	output=$(echo "FM * .. $($lscommand)" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
-	fmcmd1="MD - Make dir
+	fmcmd1="CCL - CANCEL
+MD - Make dir
 MF - Make file
 BM - Bookmarks
 FND - Find
 HIDE - Toggle Dotfiles"
-	fmcmd2="MV - Move file
+	fmcmd2="CCL - CANCEL
+MV - Move file
 RM - Remove file
 CMD - Specific command
 EDIT - Open with $EDITOR"
