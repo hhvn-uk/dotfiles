@@ -248,7 +248,7 @@ exec fehffile ~/.wall.png
 exec_always notify-send "i3 restarted. Press Super(windows key)+F1 to open the manual."
 exec_always brightnessctl s 100%
 exec_always crefresh
-exec $terminal -name dropdown -e fish
+exec $TERMINAL -name dropdown -e fish
 
 ##Setting colors for tabbed windows
 #class			#border		#background	#text
