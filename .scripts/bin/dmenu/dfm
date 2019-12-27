@@ -17,6 +17,8 @@ DFM_DOT=[0/1 to show dotfiles] <-- Default: 1
 DFM_USE_HH_PATCH=[0/1 to use the patched dmenu from haydenvh.com] <-- Default: 0
 DFM_DISABLE_ENQUEUE=[0/1 to never enqueue input] <-- Default: 0
 DFM_SCREENSHOT_CMD=\"[insert program name]\" <-- Default: \"maim -s\"
+DFM_CLIPBOARD_TYPE=\"[PRIMARY/CLIPBOARD/CUSTOM]\" <-- Default: \"PRIMARY\"
+DFM_CLIPBOARD_CUSTOM=\"[insert program for clipboard]\" <-- Default: \"xclip\"
 
 $(tput bold)CONFIGURING COMMANDS FOR FILE TYPES:$(tput sgr0) Syntax
 	DFM_FILETYPE_[insert filetype in all caps]=\"[insert program name]\"
@@ -33,18 +35,32 @@ then
 fi
 
 getconf(){
-dmenu="dmenu"
-DFM_SCREENSHOT_CMD="maim -s"
-DFM_CONF_DIR="$HOME/.config/dfm"
-. $HOME/.dmenurc
-. $HOME/.config/dfm/config
-if [ "$DFM_USE_HH_PATCH" == "1" ]
-then
-	dmenu="$dmenu -c -w 1000"
-fi
-
-confdir="$DFM_CONF_DIR"
-conffile="$confdir/config"
+	dmenu="dmenu"
+	DFM_SCREENSHOT_CMD="maim -s"
+	DFM_CONF_DIR="$HOME/.config/dfm"
+	DFM_CLIPBOARD_CUSTOM="xclip"
+	DFM_CLIPBOARD_TYPE="PRIMARY"
+	. $HOME/.dmenurc
+	. $HOME/.config/dfm/config
+	if [ "$DFM_USE_HH_PATCH" == "1" ]
+	then
+		dmenu="$dmenu -c -w 1000"
+	fi
+	if [ "$DFM_CLIPBOARD_TYPE" == "PRIMARY" ]
+	then
+		clipboard="xclip"
+	elif [ "$DFM_CLIPBOARD_TYPE" == "CLIPBOARD" ]
+	then
+		clipboard="xclip -selection clipboard"
+	elif [ "$DFM_CLIPBOARD_TYPE" == "CUSTOM" ]
+	then
+		clipboard="$DFM_CLIPBOARD_CUSTOM"
+	else
+		clipboard="xclip"
+	fi
+	echo $clipboard
+	confdir="$DFM_CONF_DIR"
+	conffile="$confdir/config"
 }
 
 makeconfdir(){
@@ -110,7 +126,7 @@ send0x0(){
 	send=$(curl -F "file=@$output" https://0x0.st)
 	send2=$(echo "$send" | awk '/http/')
 	[ "$send2" == "" ] && echo "Failed" | $dmenu -i -p "Hit enter to continue"
-	[ "$send2" != "" ] && echo $send | $dmenu -i -p "Hit enter to continue" | xclip
+	[ "$send2" != "" ] && echo $send | $dmenu -i -p "Hit enter to continue" | $clipboard
 }
 
 sendscrn0x0(){

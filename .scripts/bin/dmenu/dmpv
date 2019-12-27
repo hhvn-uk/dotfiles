@@ -1,5 +1,5 @@
 #!/bin/bash
-
+dmenu="dmenu"
 . $HOME/.dmenurc
 
 hmpv pause $3

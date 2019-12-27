@@ -27,4 +27,5 @@ set hlsearch
 "Set useful bindings
 nmap <Leader>s !bash %
 nmap <Leader>p !perl %
-nmap <Leader>u !g++ -o compilefile %
+nmap <Leader>c !gcc % -o compilefile
+nmap <Leader>u !g++ % -o compilefile

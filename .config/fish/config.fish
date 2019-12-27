@@ -30,11 +30,11 @@ function ytdla; youtube-dl --add-metadata -xic $argv; end
 function ls; command ls --color $argv; end
 function map; telnet mapscii.me; end
 function tetris; ssh netris.rocketnine.space; end
-function calcurse; calcurse -D ~/.config/calcurse/; end
+function calcurse; command calcurse -D ~/.config/calcurse/; end
 function irssi; command irssi --home ~/.config/irssi/ -n hayden; ircgetpass; end
 function xsleep; sudo zzz; end
 function xhibernate; sudo ZZZ; end
-function urxvtrestart; xrdb ~/.Xresources; xrdb ~/.Xdefaults; end
+function urxvtrestart; xrdb ~/.Xdefaults; xrdb ~/.Xresources; exec urxvtc; end
 function rmst; bash ~/.scripts/random/gnulinux.sh; end
 function fff; bash ~/.config/fff/config; end
 function python; python3; end

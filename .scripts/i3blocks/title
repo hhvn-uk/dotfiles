@@ -1,0 +1,5 @@
+#!/bin/bash
+
+id=$(xprop -root _NET_ACTIVE_WINDOW | awk '// {print $5}')
+out=$(xprop -id $id | awk '/WM_ICON_NAME\(STRING\)/ { $1=""; $2=""; print}' | sed 's/"//g' | sed "s/^[ \t]*//" | cut -zc-40)
+echo $out

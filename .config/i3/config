@@ -61,10 +61,6 @@ bar{
 		inactive_workspace $background $yellow2 #000000
 		urgent_workspace $background #ffffff #990000
 	}
-	
-	#Learn to use the keyboard newbs.
-	bindsym button1 nop
-	
 	id bar-1
 }
 bar{
@@ -84,9 +80,6 @@ bar{
 		inactive_workspace $background $yellow2 #000000
 		urgent_workspace $background #ffffff #990000
 	}
-	
-	#Learn to use the keyboard newbs.
-	bindsym button1 nop
 }
 
 ##Setting workspace names		
@@ -199,8 +192,8 @@ bindsym $mod+r				exec $terminal -name fileman -e dfm fm
 bindsym $mod+shift+r 			restart
 bindsym $mod+t 				layout tabbed
 bindsym $mod+shift+t 			layout toggle split
-bindsym $mod+y 				exec $terminal -name irssi -e irssi --home ~/.config/irssi/; exec ircgetpass
-bindsym $mod+shift+y 			exec $terminal -name irssi -e irsii --home ~/.config/irssi/; exec ircgetpass
+bindsym $mod+y 				exec $terminal -name irssi -e irssi --home ~/.config/irssi/
+bindsym $mod+shift+y 			exec dircgetpass
 bindsym $mod+u				exec wallvar ~/.wallpapers/ 60; exec dunstify "Auto-changing wallpapers on."
 bindsym $mod+shift+u			exec killall wallvar; exec dunstify "Auto-changing wallpapers off."
 bindsym $mod+i				exec $terminal -name fff -e ffflaunch
@@ -226,7 +219,7 @@ bindsym $mod+x 				split h
 bindsym $mod+shift+x 			split h
 bindsym $mod+c 				exec locker /tmp/mpv-socket2 /tmp/mpv-socket
 bindsym $mod+shift+c			exec slock
-bindsym $mod+v				exec killall mpv
+bindsym $mod+v				workspace "TEMPORARY"; exec $terminal -e htop; exec $terminal -e alsamixer
 bindsym $mod+shift+v			exec killall mpv
 bindsym $mod+b 				exec vimb --no-maximize
 bindsym $mod+shift+b 			exec dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
@@ -274,7 +267,7 @@ bindsym F9 				exec dmpv music /tmp/mpv-socket /tmp/mpv-socket2 --no-video
 bindsym shift+F9			exec rmpv music 50
 bindsym F10 				exec hmpv back /tmp/mpv-socket
 bindsym shift+F10 			exec hmpv prev /tmp/mpv-socket
-bindsym F11 				exec hmpv toggle /tmp/mpv-socket
+bindsym F11 				exec hmpv toggle /tmp/mpv-socket; exec hmpv toggle /tmp/mpv-socket2
 bindsym shift+F11			exec hmpv quit /tmp/mpv-socket
 bindsym F12 				exec hmpv forward /tmp/mpv-socket
 bindsym shift+F12			exec hmpv next /tmp/mpv-socket

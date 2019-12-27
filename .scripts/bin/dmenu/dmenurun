@@ -1,4 +1,0 @@
-#!/bin/bash
-. $HOME/.dmenurc
-dir=$(echo $PATH | tr ":" " " | sed 's/:.//g')
-find $dir -maxdepth 1 -executable -not -type d -printf "%f\n" | sort | $dmenu "$@" | ${SHELL:-"/bin/bash"} &

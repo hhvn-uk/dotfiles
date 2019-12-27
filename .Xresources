@@ -8,7 +8,7 @@
 
 ! special
 *.foreground:   #1e5eb3
-*.background:   #090711
+*.background:   #0c0a14
 *.cursorColor:  #1e5eb3
 
 ! black

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-file=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket | tr "." " " | sed 's/opus//g' | sed 's/mp3//g' | sed 's/mkv//g' | sed 's/flac//g' | sed 's/webm//g' | sed 's/part//g' | tr '"\{:,}[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  //g' | tail -c +2 | sed 's/$//g' | tr "()'" " " | sed 's/   / /g' |sed 's/  / /g' | sed 's/  / /g' | sed 's/   / /g')
-vidtitle=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket2 | tr '"{:,}\[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g')
+file=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket | tr "." " " | sed 's/opus//g' | sed 's/mp3//g' | sed 's/mkv//g' | sed 's/flac//g' | sed 's/webm//g' | sed 's/part//g' | tr '"\{:,}[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  //g' | tail -c +2 | sed 's/$//g' | tr "()'" " " | sed 's/   / /g' |sed 's/  / /g' | sed 's/  / /g' | sed 's/   / /g' | cut -zc-40)
+vidtitle=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket2 | tr '"{:,}\[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | cut -zc-40)
 state=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket | tr '{":0,}' ' ' | awk '// {print $2}')
 state2=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | awk '// {print $2}')
 convertsecs() {
