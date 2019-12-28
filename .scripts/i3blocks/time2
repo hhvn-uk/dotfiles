@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# i3blocks/time2
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+
 echo "< $(date | awk '{print $4}')"
 echo
 echo \#ff303b

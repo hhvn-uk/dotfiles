@@ -28,9 +28,13 @@ channels = (
   { name = "#neomutt"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#GNU/matrix"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#archlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
+  {
+    name = "#archlinux-offtopic";
+    chatnet = "Freenode";
+    autojoin = "Yes";
+  },
   { name = "#GNU/matrix"; chatnet = "Rizon"; autojoin = "Yes"; },
-  { name = "#cat-v"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#cat-v"; chatnet = "Freenode"; autojoin = "Yes"; }
 );
 aliases = {
   ATAG = "WINDOW SERVER";
@@ -269,6 +273,7 @@ settings = {
     user_name = "haydenh";
     nick = "haydenh";
     recode_transliterate = "no";
+    timestamp_format = "%H:%M:%S";
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {

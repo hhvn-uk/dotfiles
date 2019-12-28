@@ -1,6 +1,5 @@
 #Prompt
 function fish_prompt
-	tput setaf bold
 	tput setaf 2
 	printf "["
 	tput setaf 3
@@ -19,9 +18,9 @@ end
 
 #Aliases
 function vi; vim $argv; end
-function xi; sudo xbps-install $argv; end
-function xq; sudo xbps-query $argv; end
-function xr; sudo xbps-remove $argv; end
+function xi; sudo xbps-install $argv; cleancache; end
+function xq; sudo xbps-query $argv; cleancache; end
+function xr; sudo xbps-remove $argv; cleancache; end
 function irssi; irssi --config ~/.config/irssi/config $argv; end
 function pipes; command pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv; end
 function clock; tty-clock; end
@@ -32,9 +31,9 @@ function map; telnet mapscii.me; end
 function tetris; ssh netris.rocketnine.space; end
 function calcurse; command calcurse -D ~/.config/calcurse/; end
 function irssi; command irssi --home ~/.config/irssi/ -n hayden; ircgetpass; end
-function xsleep; sudo zzz; end
-function xhibernate; sudo ZZZ; end
-function urxvtrestart; xrdb ~/.Xdefaults; xrdb ~/.Xresources; exec urxvtc; end
+function sleep; sudo zzz; end
+function hibernate; sudo ZZZ; end
+function urxvtrestart; xrdb -merge ~/.Xdefaults; xrdb -merge ~/.Xresources; exec urxvtc; end
 function rmst; bash ~/.scripts/random/gnulinux.sh; end
 function fff; bash ~/.config/fff/config; end
 function python; python3; end

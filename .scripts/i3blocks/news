@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# i3blocks/news
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 
 newsboat -x reload 2>/dev/null
 unread=$(newsboat -x print-unread | sed 's/unread articles//g')

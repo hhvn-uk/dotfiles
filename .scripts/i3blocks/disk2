@@ -1,11 +1,10 @@
 #!/bin/bash
 #
-# i3blocks/disk
+# i3blocks/disk2
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPL    v2 ../../.licenses/gplv2.license
-#
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 
 sda2=$(df -h | awk '/sda2/ {print $3 "/" $4}')
 echo "< SDA2 $sda2"

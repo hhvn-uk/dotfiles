@@ -4,8 +4,9 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 #
+
 if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
 then
 	echo "dpass [\"option that your terminal uses to execute the argument\"]
@@ -40,6 +41,6 @@ elif [ "$pass" == "edit" ]
 then
 	$TERMINAL "$1" vim $PASS
 else
-	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -l 20 -p "Password:" | xclip
+	echo $getpass | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -P -l 20 -p "Password:" | xclip
 	notify-send "Password copied to clipboard."
 fi

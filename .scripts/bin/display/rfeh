@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# rfeh
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 
 if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
 then

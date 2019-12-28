@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# i3blocks/weather2
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 
 echo "< RAIN $(sed 5q ~/.cache/weather | sed 's/‘//g' | sed 's/‚’//g' | tail -n 1 | sed 's/ //g')"
 echo

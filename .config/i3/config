@@ -145,14 +145,12 @@ bindsym $mod+Mod1+0 move container to workspace $ws10
 ##Outputs for workspaces
 workspace $ws1 output VGA1
 workspace $ws2 output LVDS1
+workspace "TEMPORARY" output VGA1
 
 ##Setting windows to workspaces
 assign [class="Gimp"] $ws9
 assign [class="Vimb"] $ws1
 assign [class="URxvt" instance="irssi"] $ws8
-
-##Scratchpad
-for_window [class="URxvt" instance="dropdown*"] exec scratcher
 
 ##Movement bindings
 bindsym $mod+h focus 			left
@@ -206,8 +204,8 @@ bindsym $mod+a 				exec screenkey
 bindsym $mod+shift+a 			exec killall screenkey
 bindsym $mod+s 				exec dpass
 bindsym $mod+shift+s 			exec dpass
-bindsym $mod+d 				exec dmenurun
-bindsym $mod+shift+d 			exec dmenurun
+bindsym $mod+d 				exec dmenu_run
+bindsym $mod+shift+d 			exec dmenu_run
 bindsym $mod+f 				fullscreen toggle
 bindsym $mod+shift+f 			fullscreen toggle
 bindsym $mod+g				exec $terminal -name newsboat -e newsboat
@@ -241,7 +239,7 @@ exec fehffile ~/.wall.png
 exec_always notify-send "i3 restarted. Press Super(windows key)+F1 to open the manual."
 exec_always brightnessctl s 100%
 exec_always crefresh
-exec $TERMINAL -name dropdown -e fish
+exec scratcher
 
 ##Setting colors for tabbed windows
 #class			#border		#background	#text

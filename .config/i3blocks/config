@@ -8,23 +8,23 @@ border_right=0
 
 [title]
 interval=1
-border=#ffffff
+border=#226644
 
 [vol]
 interval=1
-border=#21a4a3
+border=#218888
 
 [net]
 interval=50
-border=#4db0c6
+border=#4da0c6
 
 [mem]
 interval=1
-border=#009dc1
+border=#007dc1
 
 [disk]
 interval=100
-border=#0f9bf3
+border=#0f6bd3
 
 [disk2]
 interval=1
