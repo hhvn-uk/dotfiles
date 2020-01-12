@@ -14,15 +14,14 @@ font pango:monospace 8
 
 ##Setting variables
 set $mod Mod4
-set $terminal urxvtc
+set $terminal st
 set $browser vimb
 exec export BROWSER="surf"
 exec export EDITOR="vim"
 exec_always export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 
 ##Setting gaps
-gaps outer 10
-gaps inner 2
+gaps inner 10
 for_window [class="^.*"] border pixel 0
 
 ##Setting Xresources
@@ -48,8 +47,10 @@ set_from_resource $white2 color15 #3ab475
 ##Setting bar
 bar{
 	font pango:monospace 7
+	i3bar_command "sleep 2;i3bar"
 	status_command i3blocks
 	position top
+	id bar-1
 	mode dock
 	modifier none
 	separator_symbol " "
@@ -61,7 +62,6 @@ bar{
 		inactive_workspace $background $yellow2 #000000
 		urgent_workspace $background #ffffff #990000
 	}
-	id bar-1
 }
 bar{
 	font pango:monospace 7
@@ -151,9 +151,10 @@ workspace "TEMPORARY" output VGA1
 assign [class="Gimp"] $ws9
 assign [class="Vimb"] $ws1
 assign [class="URxvt" instance="irssi"] $ws8
+for_window [class="URxvt" instance="fileman"] floating enable; sticky enable
 
 ##Movement bindings
-bindsym $mod+h focus 			left
+bindsym $mod+h 				focus left
 bindsym $mod+shift+h 			move left
 bindsym $mod+ctrl+h 			resize shrink width 5px or 5ppt
 bindsym $mod+j 				focus down
@@ -170,7 +171,7 @@ bindsym $mod+ctrl+l 			resize grow width 5px or 5ppt
 bindsym $mod+shift+space 		floating toggle
 bindsym $mod+space 			focus mode_toggle
 bindsym $mod+Return 			exec $terminal
-bindsym $mod+F1 			exec $browser file:///etc/manual/index.html
+bindsym $mod+shift+Return		exec $terminal -e tty-clock -s -c -C 7 -b
 bindsym $mod+Escape 			exec userinput "Do you want to quit i3?" "sudo -A i3-msg exit"
 bindsym $mod+shift+Escape		exec userinput "Do you want to shutdown?" "sudo -A halt"
 bindsym $mod+ctrl+Escape 		exec userinput "Do you want to reboot?" "sudo -A reboot"
@@ -196,7 +197,7 @@ bindsym $mod+u				exec wallvar ~/.wallpapers/ 60; exec dunstify "Auto-changing w
 bindsym $mod+shift+u			exec killall wallvar; exec dunstify "Auto-changing wallpapers off."
 bindsym $mod+i				exec $terminal -name fff -e ffflaunch
 bindsym $mod+shift+i			exec $terminal -name fff -e ffflaunch
-##bindsym $mod+o 
+bindsym $mod+o 				exec makegrid $TERMINAL
 ##bindsym $mod+super+o 	
 bindsym $mod+p 				focus parent
 bindsym $mod+shift+p 			focus child
@@ -216,8 +217,8 @@ bindsym $mod+shift+z 			split v
 bindsym $mod+x 				split h
 bindsym $mod+shift+x 			split h
 bindsym $mod+c 				exec locker /tmp/mpv-socket2 /tmp/mpv-socket
-bindsym $mod+shift+c			exec slock
-bindsym $mod+v				workspace "TEMPORARY"; exec $terminal -e htop; exec $terminal -e alsamixer
+bindsym $mod+shift+c			exec $terminal -e slock_mod /tmp/mpv-socket2 /tmp/mpv-socket
+bindsym $mod+v				workspace "TEMPORARY"
 bindsym $mod+shift+v			exec killall mpv
 bindsym $mod+b 				exec vimb --no-maximize
 bindsym $mod+shift+b 			exec dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
@@ -250,8 +251,10 @@ client.placeholder      $yellow		$background	$white
 client.urgent           $yellow 	$background	$yellow2
 
 ##Setting volume
-bindsym XF86AudioRaiseVolume exec hvol 5%+
-bindsym XF86AudioLowerVolume exec hvol 5%-
+bindsym XF86AudioRaiseVolume exec hvol 3.5%+
+bindsym $mod+plus exec hvol 3.5%+
+bindsym $mod+minus exec hvol 3.5%-
+bindsym XF86AudioLowerVolume exec hvol 3.5%-
 bindsym XF86AudioMute exec hvol toggle
 
 ##Setting brightness

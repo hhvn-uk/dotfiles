@@ -271,7 +271,7 @@ settings = {
   core = {
     real_name = "haydenh";
     user_name = "haydenh";
-    nick = "haydenh";
+    nick = "hayden";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };
@@ -285,6 +285,7 @@ settings = {
     ascii_figlet_path = "/usr/bin/figlet";
     nickcolor_colors = "4 8 9 10 11 12 13 14 15";
   };
+  "irc/core" = { alternate_nick = "haydenh_"; };
 };
 
 logs = { };

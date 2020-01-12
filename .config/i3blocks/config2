@@ -10,6 +10,10 @@ border_right=0
 interval=1
 border=#666b1b
 
+[title]
+interval=1
+border=#4a6b1b
+
 [cal]
 interval=30
 border=#236b1b

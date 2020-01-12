@@ -2,7 +2,7 @@
 auto-reload yes
 
 browser "vimb --no-maximize"
-external-url-viewer "vimb --no-maximize"
+external-url-viewer "urlhand"
 
 bind-key j down
 bind-key k up

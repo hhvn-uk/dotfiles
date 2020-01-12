@@ -6,10 +6,6 @@ border_top=0
 border_left=0
 border_right=0
 
-[title]
-interval=1
-border=#226644
-
 [vol]
 interval=1
 border=#218888

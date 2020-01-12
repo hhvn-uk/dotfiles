@@ -1,5 +1,5 @@
 span[vimbhint^='label'] {
-	background-color:#0a542599 !important;
+	background-color:#0c0a1499 !important;
 	border:0 !important;
 	color:#fff !important;
 	opacity:1 !important;
@@ -8,10 +8,10 @@ span[vimbhint^='label'] {
 	font-size:16px !important;
 }
 *[vimbhint^='hint'] {
-	background-color:#0a542533 !important;
+	background-color:#0c0a1433 !important;
 }
 *[vimbhint^='hint focus'] {
-	background-color:#0a542533 !important;
+	background-color:#0c0a1433 !important;
 }
 *{
 border-radius:0 !important;

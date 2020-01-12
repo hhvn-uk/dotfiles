@@ -5,25 +5,25 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
 #
 shadow=true
-shadow-radius=10
-shadow-offset-x=-5
-shadow-offset-y=-5
-
-shadow-exclude = [
-	"class_g ?= 'dmenu'",
-	"class_g ?= 'i3bar'",
-];
+shadow-radius=25
+shadow-offset-x=-20
+shadow-offset-y=-20
 
 opacity-rule = [
 	"0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
-	"90:class_g ?= 'urxvt'",
-	"90:class_g ?= 'i3bar'",
-	"100:name ?= 'fff'",
-	"90:class_g ?= 'vimb'",
+	"87:class_g ?= 'urxvt' && !focused",
+	"84:class_g ?= 'urxvt' && focused",
+	"87:class_g ?= 'st-256color' && !focused",
+	"84:class_g ?= 'st-256color' && focused",
+	"85:class_g ?= 'i3bar'",
+	"87:class_g ?= 'vimb' && !focused",
+	"84:class_g ?= 'vimb' && focused",
+	"87:class_g ?= 'surf' && !focused",
+	"84:class_g ?= 'surf' && focused",
 ];
 
 fade-exclude = [
 	"!_I3_FLOATING_WINDOW@:c",
 ];
 
-inactive-dim = 0.2
+inactive-dim = 0.1

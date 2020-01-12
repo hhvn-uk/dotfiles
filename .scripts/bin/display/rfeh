@@ -54,7 +54,8 @@ allfiles() {
 randomize() {
 	filearray=($files)
 	length=${#filearray[@]}
-	randomn=$(($RANDOM%$length))
+	randoms=$(od -vAn -N2 -tu2 < /dev/urandom)
+	randomn=$((1+$randoms%$length))
 	echo ${filearray[$randomn]}
 }
 

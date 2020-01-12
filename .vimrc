@@ -24,8 +24,5 @@ set relativenumber
 set number
 set hlsearch
 
-"Set useful bindings
-nmap <Leader>s !bash %
-nmap <Leader>p !perl %
-nmap <Leader>c !gcc % -o compilefile
-nmap <Leader>u !g++ % -o compilefile
+autocmd BufWritePost config.h,config.def.h,dmenu.c !sudo make install clean
+autocmd BufWritePost ~/.Xreources,~/.Xdefaults !xrdb -merge %

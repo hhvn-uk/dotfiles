@@ -7,7 +7,12 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
 
 id=$(xprop -root _NET_ACTIVE_WINDOW | awk '// {print $5}')
-out=$(xprop -id $id | awk '/WM_ICON_NAME\(STRING\)/ { $1=""; $2=""; print}' | sed 's/"//g' | sed "s/^[ \t]*//" | cut -zc-40)
-echo $out
+out1=$(xprop -id $id | awk '/WM_CLASS/ {print $3}' | sed 's/"//g' | sed 's/,//g')
+out2=$(xprop -id $id | awk '/WM_ICON_NAME\(STRING\)/ { $1=""; $2=""; print}' | sed 's/"//g' | sed "s/^[ \t]*//")
+if [ "$BLOCK_BUTTON" == "1" ]
+then
+	dunstify "Current window title" "$out2"
+fi
+echo "$out1 - $(echo "$out2" | cut -zc-25)"
 echo
-echo \#226644
+echo \#4a6b1b

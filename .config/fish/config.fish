@@ -1,5 +1,6 @@
 #Prompt
 function fish_prompt
+	set STRING (pwd | sed "s~$HOME~\~~g" | tr "/" "\n" | cut -c 1-5 | tr "\n" "/")
 	tput setaf 2
 	printf "["
 	tput setaf 3
@@ -9,7 +10,7 @@ function fish_prompt
 	tput setaf 5
 	printf $hostname
 	tput setaf 6
-	printf " "(pwd | sed "s~$HOME~\~~g")
+	printf " "$STRING
 	tput setaf 2
 	printf "]"
 	tput setaf 11
@@ -18,7 +19,8 @@ end
 
 #Aliases
 function vi; vim $argv; end
-function xi; sudo xbps-install $argv; cleancache; end
+function xi; 
+sudo xbps-install $argv; cleancache; end
 function xq; sudo xbps-query $argv; cleancache; end
 function xr; sudo xbps-remove $argv; cleancache; end
 function irssi; irssi --config ~/.config/irssi/config $argv; end
@@ -41,6 +43,7 @@ function vimb; command vimb --no-maximize; end
 function cleancache; sudo xbps-remove -O; end
 function dots; git push origin master -f; git push github master -f; end
 function dotsadd; bash ~/.gitaddlist; end
+function clock; tty-clock -s -c -C 7; end
 
 #Set fish colors
 set fish_color_command a84b8d

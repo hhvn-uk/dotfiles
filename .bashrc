@@ -49,10 +49,10 @@ export LS_COLORS="di=35:fi=0:ln=33:ex=91;01:*.sh=91:*.html=92:*.css=97:*.md=97:*
 
 ##Framebuffer functions
 video(){
-	mpv $1 --vo=drm
+	mpv $* --vo=drm
 }
 image(){
-	mpv $1 --vo=drm --pause
+	mpv $* --vo=drm --pause
 }
 
 ##C Compilation
