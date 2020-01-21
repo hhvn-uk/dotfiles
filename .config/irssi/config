@@ -22,7 +22,7 @@ chatnets = {
 };
 channels = (
   { name = "#voidlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#haydenh"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#staw"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
   { name = "#neomutt"; chatnet = "Freenode"; autojoin = "Yes"; },
@@ -271,7 +271,7 @@ settings = {
   core = {
     real_name = "haydenh";
     user_name = "haydenh";
-    nick = "hayden";
+    nick = "haydenh";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };

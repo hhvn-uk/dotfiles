@@ -55,12 +55,6 @@ image(){
 	mpv $* --vo=drm --pause
 }
 
-##C Compilation
-comp(){
-	out="$1"
-	gcc $2 $3 $4 $5 $6 $7 $8 $9 -o ~/.scripts/bin/c/"$out"
-}
-
 ##Random
 hostfile() {
 	if [ "$(echo "$1" | sed 's/ /qqq/g' | awk '/qqq/')" == "" ]

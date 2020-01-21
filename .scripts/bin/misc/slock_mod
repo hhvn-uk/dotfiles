@@ -1,0 +1,13 @@
+#!/bin/bash
+socket1="$1"
+socket2="$2"
+
+echo "dmpv/rmpv: $(hmpv state $socket1)" > ~/.cache/socket; echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
+hmpv pause $socket1; sleep 0.1; hmpv pause $socket2; sleep 0.1; hmpv pause $socket2; sleep 0.1; hmpv pause $socket2
+slock -m "Locked at $(date) by $USER - what? You thought I would let you in... Fool."
+
+state=$(cat ~/.cache/socket | awk '/:/')
+state1=$(echo "$state" | head -n -1 | awk '{print $2}')
+state2=$(echo "$state" | tail +2 | awk '{print $2}')
+[ "$state1" == "playing" ] && hmpv unpause $socket1
+[ "$state2" == "playing" ] && hmpv unpause $socket2

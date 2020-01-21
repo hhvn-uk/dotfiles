@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# wallblur
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+
+cachebool="$1"
+if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
+then
+	echo 'wallblur ["true" for file caching]
+
+Written by Hayden Hamilton <hayden@haydenvh.com>'
+	exit 0
+fi
+donorm(){
+	convert $file -colors 2 $1
+	files+="$1 "
+}
+input=$(cat ~/.cache/rfeh/prev)
+count=0
+files=""
+for file in $input
+do
+	count=$(($count+1))
+	if [ "$cachebool" == "true" ]
+	then
+		file2=$(echo $file | sed "s~$HOME~$HOME/.cache/rfeh~g")
+		if [ -f $file2 ]
+		then
+			files+="$file2 "
+		else
+			file3=$(echo $file2 | sed 's~/~/ ~g' | awk 'sub(FS $NF,x)' | sed 's~/ ~/~g')
+			if [ -d $file3 ]
+			then
+				echo > /dev/null
+			else
+				mkdir -p $file3
+			fi
+			donorm "$file2"
+		fi
+	else
+		donorm "/tmp/screen${count}.png"
+	fi
+done
+files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
+feh $files

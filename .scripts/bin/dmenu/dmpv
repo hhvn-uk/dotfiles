@@ -2,5 +2,10 @@
 dmenu="dmenu"
 . $HOME/.dmenurc
 
+if [ "$5" = "fuzz" ]
+then
+	com="find"
+fi
+
 hmpv pause $3
-dfm "mpv --input-ipc-server $2 $4" ~/$1
+dfm "mpv --input-ipc-server $2 $4" ~/$1 $com

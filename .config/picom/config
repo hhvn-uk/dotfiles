@@ -5,12 +5,23 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
 #
 shadow=true
-shadow-radius=25
+shadow-radius=32.5
 shadow-offset-x=-20
 shadow-offset-y=-20
 
+shadow-exclude = [
+	"class_g ?= 'i3bar'",
+	"class_g ?= 'i3'",
+];
+
 opacity-rule = [
 	"0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'",
+	"100:_NET_WM_STATE@[0]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:_NET_WM_STATE@[1]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:_NET_WM_STATE@[2]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:_NET_WM_STATE@[3]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:_NET_WM_STATE@[4]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:_NET_WM_STATE@[5]:32a *= '_NET_WM_STATE_FULLSCREEN'",
 	"87:class_g ?= 'urxvt' && !focused",
 	"84:class_g ?= 'urxvt' && focused",
 	"87:class_g ?= 'st-256color' && !focused",

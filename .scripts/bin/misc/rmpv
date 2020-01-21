@@ -36,4 +36,3 @@ randomize() {
 allfiles
 files=$(for i in `seq $count`; do randomize; done)
 mpv --input-ipc-server=/tmp/mpv-socket $files
-

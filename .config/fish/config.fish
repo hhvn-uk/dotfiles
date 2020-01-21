@@ -1,6 +1,6 @@
 #Prompt
 function fish_prompt
-	set STRING (pwd | sed "s~$HOME~\~~g" | tr "/" "\n" | cut -c 1-5 | tr "\n" "/")
+	set STRING (pwd | sed "s~$HOME~\~~g" | tr "/" "\n" | cut -c 1-3 | tr "\n" "/")
 	tput setaf 2
 	printf "["
 	tput setaf 3
@@ -18,32 +18,28 @@ function fish_prompt
 end
 
 #Aliases
-function vi; vim $argv; end
-function xi; 
-sudo xbps-install $argv; cleancache; end
-function xq; sudo xbps-query $argv; cleancache; end
-function xr; sudo xbps-remove $argv; cleancache; end
-function irssi; irssi --config ~/.config/irssi/config $argv; end
-function pipes; command pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv; end
-function clock; tty-clock; end
-function ytdl; youtube-dl --add-metadata -ic $argv; end
-function ytdla; youtube-dl --add-metadata -xic $argv; end
-function ls; command ls --color $argv; end
-function map; telnet mapscii.me; end
-function tetris; ssh netris.rocketnine.space; end
-function calcurse; command calcurse -D ~/.config/calcurse/; end
-function irssi; command irssi --home ~/.config/irssi/ -n hayden; ircgetpass; end
-function sleep; sudo zzz; end
-function hibernate; sudo ZZZ; end
-function urxvtrestart; xrdb -merge ~/.Xdefaults; xrdb -merge ~/.Xresources; exec urxvtc; end
-function rmst; bash ~/.scripts/random/gnulinux.sh; end
-function fff; bash ~/.config/fff/config; end
-function python; python3; end
-function vimb; command vimb --no-maximize; end
-function cleancache; sudo xbps-remove -O; end
-function dots; git push origin master -f; git push github master -f; end
-function dotsadd; bash ~/.gitaddlist; end
-function clock; tty-clock -s -c -C 7; end
+abbr -a -g vi vim $argv
+abbr -a -g xi sudo xbps-install
+abbr -a -g xq sudo xbps-query
+abbr -a -g xr sudo xbps-remove
+abbr -a -g irssi irssi --config ~/.config/irssi/config
+abbr -a -g pipes pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv
+abbr -a -g clock tty-clock
+abbr -a -g ytdl youtube-dl --add-metadata -ic
+abbr -a -g ytdla youtube-dl --add-metadata -xic
+abbr -a -g ls ls --color
+abbr -a -g map telnet mapscii.me
+abbr -a -g tetris ssh netris.rocketnine.space
+abbr -a -g calcurse calcurse -D ~/.config/calcurse/
+abbr -a -g irssi  irssi --home ~/.config/irssi/ -n haydenh
+abbr -a -g sleep sudo zzz
+abbr -a -g hibernate sudo ZZZ
+abbr -a -g rmst bash ~/.scripts/random/gnulinux.sh
+abbr -a -g fff bash ~/.config/fff/config
+abbr -a -g python python3
+abbr -a -g vimb vimb --no-maximize
+abbr -a -g cleancache sudo xbps-remove -O
+abbr -a -g clock tty-clock -s -c -C 7
 
 #Set fish colors
 set fish_color_command a84b8d
@@ -55,10 +51,12 @@ set -x LS_COLORS "di=35:fi=0:ln=33:ex=91;01:*.sh=91:*.html=92:*.css=97:*.md=97:*
 
 
 #Frame buffer
-function video; mpv $argv --vo=drm; end
-function music; mpv $argv --vo=drm --pause; end
-
-##Auto tar
-function at; bash ~/.autotar; end
+abbr -a -g video mpv $argv --vo=drm
+abbr -a -g music mpv $argv --vo=drm --pause
 
 fish_vi_key_bindings
+
+function hostfile
+		set name (curl -F "file=@$argv" http://0x0.st)
+		echo "Your file has been hosted at $name"
+end

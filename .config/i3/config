@@ -16,6 +16,7 @@ font pango:monospace 8
 set $mod Mod4
 set $terminal st
 set $browser vimb
+set $alt mod1
 exec export BROWSER="surf"
 exec export EDITOR="vim"
 exec_always export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
@@ -58,10 +59,12 @@ bar{
 		background $background
 		statusline #eeddee
 		focused_workspace $background #ffffff #000000
-		active_workspace $background $yellow2 #000000
-		inactive_workspace $background $yellow2 #000000
+		active_workspace $background $background #ffffff
+		inactive_workspace $background $background #ffffff
 		urgent_workspace $background #ffffff #990000
 	}
+	#bindsym button1 nop
+	tray_output none
 }
 bar{
 	font pango:monospace 7
@@ -75,24 +78,22 @@ bar{
 	colors {
 		background $background
 		statusline #eeddee
-		focused_workspace $background #ffffff #000000
-		active_workspace $background $yellow2 #000000
-		inactive_workspace $background $yellow2 #000000
-		urgent_workspace $background #ffffff #990000
 	}
+	#bindsym button1 nop
+	tray_output none
 }
 
 ##Setting workspace names		
-set $ws1 "1.WWW"
-set $ws2 "2.DEV"
-set $ws3 "3.DEV"
-set $ws4 "4.DEV"
-set $ws5 "5.DEV"
-set $ws6 "6.SYS"
-set $ws7 "7.SYS"
-set $ws8 "8.IRC"
-set $ws9 "9.GFX"
-set $ws10 "10.MSC"
+set $ws1 "[1.WWW]"
+set $ws2 "[2.DEV]"
+set $ws3 "[3.DEV]"
+set $ws4 "[4.DEV]"
+set $ws5 "[5.DEV]"
+set $ws6 "[6.SYS]"
+set $ws7 "[7.SYS]"
+set $ws8 "[8.IRC]"
+set $ws9 "[9.GFX]"
+set $ws10 "[0.MSC]"
 
 ##Change workspace
 bindsym $mod+1 workspace $ws1
@@ -151,6 +152,8 @@ workspace "TEMPORARY" output VGA1
 assign [class="Gimp"] $ws9
 assign [class="Vimb"] $ws1
 assign [class="URxvt" instance="irssi"] $ws8
+
+##Window rule
 for_window [class="URxvt" instance="fileman"] floating enable; sticky enable
 
 ##Movement bindings
@@ -184,19 +187,19 @@ bindsym $mod+shift+q 			kill
 bindsym $mod+w 				exec rfeh ~/.wallpapers/
 bindsym $mod+shift+w 			exec fehffile ~/.wall
 bindsym $mod+ctrl+w			exec wallblur true
-bindsym $mod+mod1+w			exec fehffile ~/.cache/rfeh/prev
+bindsym $mod+$alt+w			exec fehffile ~/.cache/rfeh/prev
 bindsym $mod+e 				exec $terminal -e dvimedit
 bindsym $mod+shift+e 			exec $terminal -e dvimedit
-bindsym $mod+r				exec $terminal -name fileman -e dfm fm
+bindsym $mod+r				exec $terminal -n fileman -e dfm fm
 bindsym $mod+shift+r 			restart
 bindsym $mod+t 				layout tabbed
 bindsym $mod+shift+t 			layout toggle split
-bindsym $mod+y 				exec $terminal -name irssi -e irssi --home ~/.config/irssi/
+bindsym $mod+y 				exec $terminal -n irssi -e irssi --home ~/.config/irssi/
 bindsym $mod+shift+y 			exec dircgetpass
 bindsym $mod+u				exec wallvar ~/.wallpapers/ 60; exec dunstify "Auto-changing wallpapers on."
 bindsym $mod+shift+u			exec killall wallvar; exec dunstify "Auto-changing wallpapers off."
-bindsym $mod+i				exec $terminal -name fff -e ffflaunch
-bindsym $mod+shift+i			exec $terminal -name fff -e ffflaunch
+bindsym $mod+i				exec $terminal -n fileman -e ffflaunch
+bindsym $mod+shift+i			exec $terminal -n fileman -e ffflaunch
 bindsym $mod+o 				exec makegrid $TERMINAL
 ##bindsym $mod+super+o 	
 bindsym $mod+p 				focus parent
@@ -222,8 +225,8 @@ bindsym $mod+v				workspace "TEMPORARY"
 bindsym $mod+shift+v			exec killall mpv
 bindsym $mod+b 				exec vimb --no-maximize
 bindsym $mod+shift+b 			exec dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
-bindsym $mod+n 				exec dmpv music /tmp/mpv-socket /tmp/mpv-socket2 --no-video
-bindsym $mod+shift+n 			exec dmpv videos /tmp/mpv-socket2 /tmp/mpv-socket
+##bindsym $mod+n
+##bindsym $mod+shift+n
 bindsym $mod+m 				exec dmount
 bindsym $mod+shift+m 			exec dumount
 
@@ -262,9 +265,9 @@ bindsym XF86MonBrightnessUp exec brightnessctl --quiet set +5%
 bindsym XF86MonBrightnessDown exec brightnessctl --quiet set -5%
 
 ##Function bindings (hmpv)
-bindsym F8				exec dmpv videos /tmp/mpv-socket2 /tmp/mpv-socket
+bindsym F8				exec dmpv videos /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
 bindsym shift+F8			exec rmpv videos 50
-bindsym F9 				exec dmpv music /tmp/mpv-socket /tmp/mpv-socket2 --no-video
+bindsym F9 				exec dmpv music /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
 bindsym shift+F9			exec rmpv music 50
 bindsym F10 				exec hmpv back /tmp/mpv-socket
 bindsym shift+F10 			exec hmpv prev /tmp/mpv-socket
@@ -274,6 +277,21 @@ bindsym F12 				exec hmpv forward /tmp/mpv-socket
 bindsym shift+F12			exec hmpv next /tmp/mpv-socket
 bindsym Home				exec brightnessctl s +500000
 bindsym End				exec brightnessctl s 500000-
+
+###Same, but for 60% keyboards
+bindsym $mod+ctrl+y			exec dmpv videos /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
+bindsym $mod+$alt+y			exec rmpv videos 50
+bindsym $mod+ctrl+u			exec dmpv music /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
+bindsym $mod+$alt+u			exec rmpv music 50
+bindsym $mod+ctrl+i			exec hmpv back /tmp/mpv-socket
+bindsym $mod+$alt+i 			exec hmpv prev /tmp/mpv-socket
+bindsym $mod+ctrl+o			exec hmpv toggle /tmp/mpv-socket; exec hmpv toggle /tmp/mpv-socket2
+bindsym $mod+$alt+o			exec hmpv quit /tmp/mpv-socket
+bindsym $mod+ctrl+p			exec hmpv forward /tmp/mpv-socket
+bindsym $mod+$alt+p			exec hmpv next /tmp/mpv-socket
+bindsym $mod+ctrl+t			exec brightnessctl s +500000
+bindsym $mod+$alt+t			exec brightnessctl s 500000-
+
 
 ##i3 related commands
 focus_follows_mouse no

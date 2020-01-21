@@ -29,6 +29,7 @@ Written by Hayden Hamilton <haydenvh.com>"
 	exit 0
 fi
 forn1="$1"
+lsforce="$3"
 if [ "$1" == "" ]
 then
 	export forn1="fm"
@@ -106,7 +107,10 @@ dooutput(){
 }
 
 getdot(){
-	if [ "$DFM_DOT" == "1" ]
+	if [ "$lsforce" != "" ]
+	then
+		lscommand="$lsforce"
+	elif [ "$DFM_DOT" == "1" ]
 	then
 		lscommand="ls -A"
 	elif [ "$DFM_DOT" == "0" ]

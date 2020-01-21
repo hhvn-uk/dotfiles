@@ -15,7 +15,7 @@ unpause() {
 	echo '{ "command": ["set_property", "pause", false] }' | socat - $socket > /dev/null
 }
 getstate() {
-	stateraw=$(echo '{ "command": ["get_property", "pause"] }' | socat - $socket | tr '{":0,}' ' ' | awk '// {print $2}')
+	stateraw=$(echo '{ "command": ["get_property", "pause"] }' | socat - $socket 2>/dev/null | tr '{":0,}' ' ' | awk '// {print $2}')
 	if [ "$stateraw" == "true" ]
 	then
 		state="paused"
