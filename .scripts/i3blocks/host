@@ -4,9 +4,9 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
 hostget="\u@\h"
-echo "< ${hostget@P}"
+echo "| ${hostget@P}"
 echo 
 echo \#ff003b

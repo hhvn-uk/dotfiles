@@ -4,8 +4,8 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
-echo "< RAIN $(sed 5q ~/.cache/weather | sed 's/‘//g' | sed 's/‚’//g' | tail -n 1 | sed 's/ //g')"
+echo "| RAIN $(sed 5q ~/.cache/weather | sed 's/‘//g' | sed 's/‚’//g' | tail -n 1 | sed 's/ //g')"
 echo
 echo \#249980

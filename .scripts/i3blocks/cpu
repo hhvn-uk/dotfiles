@@ -4,9 +4,9 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
 cpu=$(ps -e -o %cpu | awk '{s+=$1} END {print s}')
-echo "< C $cpu%"
+echo "| C $cpu%"
 echo
 echo \#7525C8

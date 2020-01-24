@@ -4,8 +4,8 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
-echo "< $(date | awk '{print $4}')"
+echo "| $(date | awk '{print $4}')"
 echo
 echo \#ff303b

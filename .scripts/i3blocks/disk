@@ -4,9 +4,9 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
 sda1=$(df -h | awk '/sda1/ {print $3 "/" $4}')
-echo "< SDA1 $sda1"
+echo "| SDA1 $sda1"
 echo
 echo \#0F6BF3

@@ -4,14 +4,14 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
 p=$(acpi | awk '/Battery/ {print $4}' | sed 's/,//g')
 if [ "$p" == "0%" ]
 then
 	echo "" > /dev/null
 else
-	echo "< B $p"
+	echo "| B $p"
 	echo
 	echo \#C625C8
 fi

@@ -2,7 +2,7 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ../../.licenses/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 #
 shadow=true
 shadow-radius=32.5
@@ -27,6 +27,7 @@ opacity-rule = [
 	"87:class_g ?= 'st-256color' && !focused",
 	"84:class_g ?= 'st-256color' && focused",
 	"85:class_g ?= 'i3bar'",
+	"85:class_g ?= 'dwm'",
 	"87:class_g ?= 'vimb' && !focused",
 	"84:class_g ?= 'vimb' && focused",
 	"87:class_g ?= 'surf' && !focused",

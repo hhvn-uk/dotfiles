@@ -1,0 +1,34 @@
+#!/bin/bash
+
+mkdir -p ~/.cache/blocks
+
+./host > ~/.cache/blocks/host &
+
+while true
+do
+	((swait>20)) &&{
+		./net > ~/.cache/blocks/net &
+		./news > ~/.cache/blocks/news &
+		./weather > ~/.cache/blocks/weather &
+		./bat > ~/.cache/blocks/bat &
+		./disk > ~/.cache/blocks/disk &
+		./disk2 > ~/.cache/blocks/disk2 &
+		./time2 > ~/.cache/blocks/time2 &
+		swait=0
+	};
+	#./.scripts/i3blocks/cal > .cache/blocks/cal &
+	./cpu > ~/.cache/blocks/cpu &
+	./mem > ~/.cache/blocks/mem &
+	./mpv > ~/.cache/blocks/mpv &
+	./vol > ~/.cache/blocks/vol &
+	sleep 2
+	for ((i=0;i<1;i++))
+	do
+		./time > .cache/blocks/time &
+		(
+			cd ~/.cache/blocks
+			xsetroot -name " $(cat bat cpu disk disk2 mem mpv net news vol weather time2 time host | sed '/^#/d;/^$/d' | tr '\n' '\f' | sed 's/\f/ /g')"
+		)
+	done
+	swait=$(($swait+1))
+done

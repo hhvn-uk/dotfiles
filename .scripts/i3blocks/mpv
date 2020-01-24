@@ -4,7 +4,7 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 haydenh.gitlab.io/p/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton.
 
 file=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket | tr "." " " | sed 's/opus//g' | sed 's/mp3//g' | sed 's/mkv//g' | sed 's/flac//g' | sed 's/webm//g' | sed 's/part//g' | tr '"\{:,}[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  //g' | tail -c +2 | sed 's/$//g' | tr "()'" " " | sed 's/   / /g' |sed 's/  / /g' | sed 's/  / /g' | sed 's/   / /g')
 file2=$(echo "$file" | cut -zc-25)
@@ -48,7 +48,7 @@ else
 fi
 if [ "$color" == "true" ]
 then
-	echo "< MPV$out"
+	echo "| MPV$out"
 	echo
 	echo \#666b1b
 elif [ "$color" == "false" ]
