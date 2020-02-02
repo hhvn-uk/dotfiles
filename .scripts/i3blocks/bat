@@ -11,7 +11,7 @@ if [ "$p" == "0%" ]
 then
 	echo "" > /dev/null
 else
-	echo "| B $p"
+	echo "[B $p]"
 	echo
 	echo \#C625C8
 fi

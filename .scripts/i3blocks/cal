@@ -16,6 +16,6 @@ then
 else
 	todo=$(($todo-1))
 fi
-echo "| CAL A:$(get_cal -a "*")/T:$todo"
+echo "[CAL A:$(get_cal -a "*")/T:$todo]"
 echo
 echo \#236B1B

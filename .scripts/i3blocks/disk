@@ -7,6 +7,6 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 sda1=$(df -h | awk '/sda1/ {print $3 "/" $4}')
-echo "| SDA1 $sda1"
+echo "[SDA1 $sda1]"
 echo
 echo \#0F6BF3

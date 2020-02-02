@@ -3,7 +3,7 @@
 mkdir -p ~/.cache/blocks
 
 ./host > ~/.cache/blocks/host &
-
+swait=21
 while true
 do
 	((swait>20)) &&{
@@ -13,7 +13,7 @@ do
 		./bat > ~/.cache/blocks/bat &
 		./disk > ~/.cache/blocks/disk &
 		./disk2 > ~/.cache/blocks/disk2 &
-		./time2 > ~/.cache/blocks/time2 &
+		./time > ~/.cache/blocks/time &
 		swait=0
 	};
 	#./.scripts/i3blocks/cal > .cache/blocks/cal &
@@ -21,14 +21,20 @@ do
 	./mem > ~/.cache/blocks/mem &
 	./mpv > ~/.cache/blocks/mpv &
 	./vol > ~/.cache/blocks/vol &
-	sleep 2
-	for ((i=0;i<1;i++))
-	do
-		./time > .cache/blocks/time &
-		(
-			cd ~/.cache/blocks
-			xsetroot -name " $(cat bat cpu disk disk2 mem mpv net news vol weather time2 time host | sed '/^#/d;/^$/d' | tr '\n' '\f' | sed 's/\f/ /g')"
-		)
-	done
+	sleep 3
+	cd ~/.cache/blocks
+	cd ~/.scripts/i3blocks
 	swait=$(($swait+1))
+done &
+
+while true
+do
+	sleep 1
+	./time2 > ~/.cache/blocks/time2
+done &
+
+cd ~/.cache/blocks
+while true; do
+sleep 1
+	xsetroot -name "$(for ((i=0;i<255;i++)) do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/' | tr '\n' '\f' | sed 's/\f/ /g' | tr "[]" " ")    "
 done

@@ -32,6 +32,8 @@ opacity-rule = [
 	"84:class_g ?= 'vimb' && focused",
 	"87:class_g ?= 'surf' && !focused",
 	"84:class_g ?= 'surf' && focused",
+	"87:class_g ?= 'tabbed' && !focused",
+	"84:class_g ?= 'tabbed' && focused",
 ];
 
 fade-exclude = [

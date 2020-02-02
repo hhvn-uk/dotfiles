@@ -7,6 +7,6 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 hostget="\u@\h"
-echo "| ${hostget@P}"
+echo "[${hostget@P}]"
 echo 
 echo \#ff003b

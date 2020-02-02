@@ -6,6 +6,6 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-echo "| $(date | awk '{print $4}')"
+echo "[$(date | awk '{print $4}')]"
 echo
 echo \#ff303b

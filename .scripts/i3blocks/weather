@@ -7,6 +7,6 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 curl -Ss 'https://wttr.in?0TQ' | cut -c 16- > ~/.cache/weather
-echo "| $(sed 2q ~/.cache/weather | sed 's/\.\./ /g' | xargs echo)"
+echo "[$(sed 2q ~/.cache/weather | sed 's/\.\./ /g' | xargs echo)]"
 echo
 echo \#249980
