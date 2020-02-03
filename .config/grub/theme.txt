@@ -1,0 +1,31 @@
+title-text: "Austall/Void"
+desktop-image: "background.png"
+desktop-color: "#0c0a14"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
++ boot_menu {
+	left=30%
+	top=10%
+	width=40%
+	height=80%
+	selected_item_color="#305363"
+	item_color="#0a3439"
+	item_height=38
+	item_spacing=9
+	align="center"
+	selected_item_pixmap_style = "select_*.png"
+}
+
++ label {
+	top=94%
+	left=30%
+	width=40%
+	align="center"
+	id="__timeout__"
+	text="Arrows ^ / start in: %d s"
+	color="#1e5eb3"
+}
