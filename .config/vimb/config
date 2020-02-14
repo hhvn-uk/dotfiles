@@ -1,9 +1,16 @@
 set download-path=~/general/downloads/
 set editor-command="urxvt -e vim %s"
 set history-max-items=99999
-set input-autohide=true
 
-set home-page=file:///root/.homepage/index.html
+set input-autohide=false
+set input-css=background-color:#30404e;color:#ffffff
+set completion-css=background-color:#0a0a10;color:#1e5eb3
+set completion-hover-css=background-color:#141726;color:#1e5eb3
+set completion-selected-css=background-color:#141726;color:#1e5eb3
+set status-css=background-color:#30404e;color:#ffffff;border-bottom;padding-bottom:1px;border-bottom:1px solid #0a0a10
+set status-ssl-css=background-color:#30404e;color:#ffffff;border-bottom;padding-bottom:1px;border-bottom:1px solid #0a0a10
+
+set home-page=http://www.haydenvh.com/h/
 
 set smooth-scrolling=false
 set webinspector=true
@@ -12,11 +19,16 @@ shortcut-add sx=https://searx.me/?q=$0
 shortcut-add sch=https://searx.ch/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
-shortcut-add hh=https://haydenh.gitlab.io/h/
-shortcut-add vl=https://voidlinux.org
+shortcut-add hh=http://www.haydenvh.com/h/
+shortcut-add vl=https://voidlinux.org/
 shortcut-add vw=https://wiki.voidlinux.org/index.php?search=$0
+shortcut-add vd=https://docs.voidlinux.org/
 shortcut-add gh=https://github.com/search?q=$0
 shortcut-add gl=https://gitlab.com/search?search=$0
 shortcut-add ddg=https://duckduckgo.com/?q=$0
 shortcut-add wk=https://en.wikipedia.org/wiki/$0
 shortcut-add aw=https://wiki.archlinux.org/index.php?search=$0
+shortcut-add karta=https://minkarta.lantmateriet.se/
+shortcut-add map=https://map.openaerialmap.org/#/
+shortcut-add ebay=https://www.ebay.co.uk/sch/$0
+shortcut-add 8g=https://8kun.top/g/catalog.html

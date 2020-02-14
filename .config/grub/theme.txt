@@ -12,8 +12,8 @@ terminal-border: "0"
 	top=10%
 	width=40%
 	height=80%
-	selected_item_color="#305363"
-	item_color="#0a3439"
+	selected_item_color="#1e5eb3"
+	item_color="#1e5eb3"
 	item_height=38
 	item_spacing=9
 	align="center"

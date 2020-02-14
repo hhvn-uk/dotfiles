@@ -12,6 +12,9 @@ HISTSIZE= HISTFILESIZE=
 export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\w\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\\$ \[$(tput sgr0)\]"
 export PS2="\[$(tput bold)\]\[$(tput setaf 1)\][$(tput setaf 2)\]Unclosed string\[$(tput setaf 1)\]]\[$(tput setaf 7)\]> \[$(tput sgr0)\]"
 
+##Start X when on tty1
+[ "$(tty)" = "/dev/tty1" ] && startx
+
 ##Setting aliases for xbps
 alias \
 vi="vim" \

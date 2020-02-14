@@ -3,8 +3,15 @@
 " Created by Hayden Hamilton
 "
 " haydenvh.com
-" Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ./licenses/gplv2.license
+" Copyright (c) 2019 Hayden Hamilton.
 "
+
+"Note: scripts are found in .vim/plugin/ or .vim/autoload/
+" goyo - centres text
+" surround - allows operation on surrounding characters
+" commentary - comments stuff out
+" repeat - repeat things
+" vimling (ipa, deadkeys, prose) - deadkeys
 
 "VI-M not VI
 set nocompatible
@@ -12,21 +19,80 @@ set nocompatible
 "Leader
 let mapleader=","
 
-"Manpage
-let $PAGER=''
-
 "Tab completion
 set path+=**
 set wildmenu
 set wildmode=longest,list,full
 set incsearch
 
-"Set colourscheme
+"Misc
+set encoding=utf-8
+
+"Set scheme
 syntax on
+colo ron
 set background=dark
 set relativenumber
 set number
 set hlsearch
+filetype plugin on
+
+"Keys
+map <leader>g :Goyo \| set linebreak<CR>
+map <leader>c :!sudo make all install clean \| set linebreak<CR>
+map <leader>oc :!groff -T pdf % - > /tmp/grff<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+map <Leader>ov :!zathura /tmp/grff \| set linebreak<CR>
+map <Leader>sv :!sent % \| set linebreak<CR> 
+map <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
+map <leader>ff :r !find \| set linebreak<CR>
+map <leader>fl :r !ls \| set linebreak<CR>
+
+map <leader><leader>s /<++><Enter>"_c4l
+imap <leader><leader>s <Esc>/<++><Enter>"_c4l
+map <leader><leader>c i<++><Esc>
+imap <leader><leader>c <++><Enter>
+
+map <leader><leader>[ []<Esc><Left>i
+map <leader><leader>( ()<Esc><Left>i
+map <leader><leader>" ""<Esc><Left>i
+map <leader><leader>' ''<Esc><Left>i
+map <leader><leader>{ {}<Esc><Left>i
+map <leader><leader>< <><Esc><Left>i
+imap <leader><leader>[ []<Esc><Left>i
+imap <leader><leader>( ()<Esc><Left>i
+imap <leader><leader>" ""<Esc><Left>i
+imap <leader><leader>' ''<Esc><Left>i
+imap <leader><leader>{ {}<Esc><Left>i
+imap <leader><leader>< <><Esc><Left>i
+
+"Magit
+map <leader>m :Magit \| set linebreak<CR>
+let g:magit_default_fold_level=0
+
+"Splitting
+set splitbelow splitright
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-c> <C-w>c
+
+"Vimling
+nm <leader>ld :call ToggleDeadKeys()<CR>
+imap <leader>ld <esc>:call ToggleDeadKeys()<CR>a
+nm <leader>li :call ToggleIPA()<CR>
+imap <leader>li <esc>:call ToggleIPA()<CR>a
+nm <F8> :call ToggleProse()<CR>
+
+"File-browser
+map <leader>eh :Sexplore \| set linebreak<CR>
+map <leader>ev :Vexplore \| set linebreak<CR>
+map <leader>en :Explox \| set linebreak<CR>
+map <leader>Eo :browse oldfiles \| set linebreak<CR>
+map <leader>Eb 100j
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_altv=1
 
 "Remove arrow keys
 no <Up> <Nop>

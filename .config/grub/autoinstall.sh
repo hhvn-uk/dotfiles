@@ -7,3 +7,5 @@ sudo cp background.png /boot/grub
 sudo cp grub /etc/default/grub
 sudo grub-mkconfig -o grub.cfg
 sudo cp grub.cfg /boot/grub/grub.cfg
+user="$USER"
+sudo chown $USER1:$USER1 grub.cfg
