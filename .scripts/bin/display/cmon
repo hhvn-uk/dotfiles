@@ -1,0 +1,19 @@
+#!/bin/bash
+
+choice=$(xrandr --listmonitors | tail -n +2 | dmenu -i -p "Choose primary monitor:" | awk '//{print $4}')
+cmd="xrandr --output $choice --primary"
+while true
+do
+	bchoice="$choice"
+	choice=$(printf "DONE\nRight\nLeft\nAbove\nBelow" | dmenu -i -p "Add monitor to:")
+	case $choice in
+		Right) direction="right-of" ;;
+		Left) direction="left-of" ;;
+		Above) direction="above" ;;
+		Below) direction="below" ;;
+		DONE) $cmd; exit 0 ;;
+	esac
+	choice2=$(xrandr --listmonitors | tail -n +2 | dmenu -i -p "Select monitor:" | awk '//{printf $4}')
+	cmd="$cmd --output $choice2 --$direction $bchoice"
+	setup=$(($setup+1))
+done

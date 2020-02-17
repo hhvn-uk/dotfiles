@@ -1,0 +1,107 @@
+#!/bin/bash
+
+[ "$1" != "" ] && cd $1
+
+draw(){
+	lines=$(tput lines)
+	clear
+	printf "\e[0H\n\n"
+	cat /dev/stdin
+	printf "\e[0H"
+	tput setab 0
+	printf "   [$(date)] [Acts: $ACTS]   "
+	tput sgr0
+	tput cup $lines 0
+}
+
+redraw(){
+	tput sc
+	printf "\e[0H"
+	tput setab 0
+	printf "   [$(date)] [Acts: $ACTS]   \n\n"
+	tput rc
+}
+
+dirlist(){
+	tree $(find -type d -maxdepth 1| sed '/^.$/d') | sed 's/^[0-9]* directories.*//g' | draw
+	dosleep="1"
+}
+
+getchannels(){
+	CHANS=$(find -maxdepth 2 -mindepth 2 -type d | nl /dev/stdin)
+	echo "$CHANS" | draw
+	dosleep="1"
+}
+
+update(){
+	CHANS=$(find -name "*out" | nl /dev/stdin)
+	echo "$CHANS" > ./chanlist
+	redraw
+	goto "$CURRENTCHANNEL"
+}
+
+send(){
+	sendchannel=$(echo "$CURRENTCHANNEL" | sed 's/out$/in/g')
+	echo "$@" > $sendchannel
+}
+
+help(){
+
+printf '
+CHANNEL always refers to either the number displayed in getchannels, or the name of the channel starting with #
+
+COMMANDS:
+
+&server LINK TO SERVER - this is required to send commands to the server (for freenode: irc.freenode.net/in)
+&help - this message
+&dirlist - list directory structure
+&getchannels - list channels
+&goto CHANNEL - go to CHANNEL
+&read CHANNEL - read entire channel history
+&exit - exit
+' | draw
+dosleep="1"
+
+}
+
+returnchannel(){
+	read raw < /dev/stdin
+	grep "$raw" < ./chanlist >/dev/null 2>&1 &&{
+		echo "$(grep "$raw" < ./chanlist | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g' | sed 1q)"
+	} ||{
+		echo "Cannot find channel" | draw
+	};
+}
+
+goto(){
+	channel=$(echo "$1" | returnchannel)
+	export CURRENTCHANNEL="$channel"
+	cat $channel | draw
+}
+
+server(){
+	export CURRENTSERVER="$1 $2 $3"
+}
+
+sendcommand(){
+	echo "/$1" > $CURRENTSERVER
+}
+
+getchannels
+
+while true
+do
+	read input < /dev/tty
+	input2=$(echo "$input" | sed 's/^\///g')
+	input3=$(echo "$input" | sed 's/^\&//g')
+	if [ "$input" = "$input2" ] && [ "$input2" = "$input3" ]; then
+		send $input
+	elif [ "$input" != "$input2" ]; then
+		sendcommand "$input2"
+	else
+		$input3
+	fi
+	[ "$dosleep" != "" ] && sleep 4
+	update
+	dosleep=""
+done
