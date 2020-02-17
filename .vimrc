@@ -46,10 +46,20 @@ map <Leader>sv :!sent % \| set linebreak<CR>
 map <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
 map <leader>ff :r !find \| set linebreak<CR>
 map <leader>fl :r !ls \| set linebreak<CR>
+map <leader>bd :bdelete \| set linebreak<CR>
+map <leader>bn :bn \| set linebreak<CR>
+map <leader>bp :bp \| set linebreak<CR>
+map <leader>mvg :r !find -maxdepth 1 -type f -printf "mv \"\%f\"\t<++>\n"<Enter>
+map <leader>mvd :w! /tmp/bmv-edit \| set linebreak<CR>:!sh /tmp/bmv-edit \| set linebreak<CR>:q \| set linebreak<CR>
+map <leader>ss :set syntax=
+map dw diw
+map cw ciw
+imap <leader><leader>ss <Esc>:set syntax=
 
-map <leader><leader>s /<++><Enter>"_c4l
-imap <leader><leader>s <Esc>/<++><Enter>"_c4l
-map <leader><leader>c i<++><Esc>
+map <leader>j 0/<++><Enter>"_c4l
+map <leader>J 0/<++><Enter>"_d4l
+imap <leader><leader>j <Esc>0/<++><Enter>"_c4l
+map <leader>C i<++><Esc>
 imap <leader><leader>c <++><Enter>
 
 map <leader><leader>[ []<Esc><Left>i
@@ -69,13 +79,16 @@ imap <leader><leader>< <><Esc><Left>i
 map <leader>m :Magit \| set linebreak<CR>
 let g:magit_default_fold_level=0
 
-"Splitting
+"Splits
 set splitbelow splitright
+noremap <leader>z :vsplit \| set linebreak<CR>
+noremap <leader>Z :split \| set linebreak<CR>
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-c> <C-w>c
+noremap <C-W> <C-w><C-w>
 
 "Vimling
 nm <leader>ld :call ToggleDeadKeys()<CR>
