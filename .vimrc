@@ -88,7 +88,6 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 noremap <C-c> <C-w>c
-noremap <C-W> <C-w><C-w>
 
 "Vimling
 nm <leader>ld :call ToggleDeadKeys()<CR>
