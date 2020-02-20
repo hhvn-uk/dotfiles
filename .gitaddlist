@@ -58,4 +58,5 @@ git add .config/vimb/style.css
 git add .config/vimb/scripts.js
 git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
+git add general/makefile
 git rm --cache .config/vim/.netrwhist
