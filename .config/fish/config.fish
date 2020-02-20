@@ -38,7 +38,7 @@ abbr -a -g rmst bash ~/.scripts/random/gnulinux.sh
 abbr -a -g fff bash ~/.config/fff/config
 abbr -a -g python python3
 abbr -a -g vimb vimb --no-maximize
-abbr -a -g cleancache "sudo xbps-remove -O; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk"
+abbr -a -g cleancache "sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk"
 abbr -a -g clock tty-clock -s -c -C 7
 abbr -a -g ~d cd ~/general/downloads
 abbr -a -g ~do cd ~/general/documents

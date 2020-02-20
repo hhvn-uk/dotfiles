@@ -62,12 +62,12 @@ imap <leader><leader>j <Esc>0/<++><Enter>"_c4l
 map <leader>C i<++><Esc>
 imap <leader><leader>c <++><Enter>
 
-map <leader><leader>[ []<Esc><Left>i
-map <leader><leader>( ()<Esc><Left>i
-map <leader><leader>" ""<Esc><Left>i
-map <leader><leader>' ''<Esc><Left>i
-map <leader><leader>{ {}<Esc><Left>i
-map <leader><leader>< <><Esc><Left>i
+map <leader><leader>[ i[]<Esc><Left>i
+map <leader><leader>( i()<Esc><Left>i
+map <leader><leader>" i""<Esc><Left>i
+map <leader><leader>' i''<Esc><Left>i
+map <leader><leader>{ i{}<Esc><Left>i
+map <leader><leader>< i<><Esc><Left>i
 imap <leader><leader>[ []<Esc><Left>i
 imap <leader><leader>( ()<Esc><Left>i
 imap <leader><leader>" ""<Esc><Left>i
@@ -96,12 +96,11 @@ nm <leader>li :call ToggleIPA()<CR>
 imap <leader>li <esc>:call ToggleIPA()<CR>a
 nm <F8> :call ToggleProse()<CR>
 
-"File-browser
-map <leader>eh :Sexplore \| set linebreak<CR>
-map <leader>ev :Vexplore \| set linebreak<CR>
-map <leader>en :Explox \| set linebreak<CR>
-map <leader>Eo :browse oldfiles \| set linebreak<CR>
-map <leader>Eb 100j
+"An erotic file-browser
+map <leader>eh :Sex \| set linebreak<CR>
+map <leader>ev :Vex \| set linebreak<CR>
+map <leader>eo :browse oldfiles \| set linebreak<CR>
+map <leader>eb 100j
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_altv=1

@@ -1,0 +1,18 @@
+set ssl_starttls = yes
+set ssl_force_tls = yes
+source user
+source pass
+set smtp_authenticators = "plain"
+
+set spoolfile = "~/mail/inbox"
+set record = "~/mail/sent"
+set postponed = "~/mail/drafts"
+set trash = "~/mail/rubbish"
+mailboxes =inbox =sent =drafts =rubbish
+
+set mbox_type = Maildir
+
+source colours
+source sidebar
+
+bind index D purge-message

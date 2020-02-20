@@ -3,6 +3,7 @@
 mkdir -p ~/.cache/blocks
 
 ./host > ~/.cache/blocks/host &
+fetchmail &
 swait=21
 while true
 do
@@ -19,7 +20,7 @@ do
 	#./.scripts/i3blocks/cal > .cache/blocks/cal &
 	./cpu > ~/.cache/blocks/cpu &
 	./mem > ~/.cache/blocks/mem &
-	./mpv > ~/.cache/blocks/mpv &
+	./mpv 2> /dev/null > ~/.cache/blocks/mpv &
 	./vol > ~/.cache/blocks/vol &
 	sleep 3
 	cd ~/.cache/blocks

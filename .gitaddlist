@@ -56,4 +56,6 @@ git add .config/fish/config.fish
 git add .config/vimb/config
 git add .config/vimb/style.css
 git add .config/vimb/scripts.js
+git add .config/neomutt/neomuttrc
+git add .config/neomutt/colours
 git rm --cache .config/vim/.netrwhist

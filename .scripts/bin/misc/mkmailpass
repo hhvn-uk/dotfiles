@@ -1,0 +1,39 @@
+#!/bin/sh
+
+file="$HOME/general/security/mailinfo"
+[ "$1" != "" ] && file="$1"
+
+. $file
+
+printf "set folder = \"~/mail/\"
+set smtp_url = \"$SMTP_ADDRESS\"
+set from = \"$MAIL_ADDRESS\"
+set realname = \"$REAL_NAME\"
+" > ~/.config/neomutt/user
+
+printf "set imap_pass = \"$IMAP_PASS\"
+set smtp_pass = \"$SMTP_PASS\"
+" > ~/.config/neomutt/pass
+
+printf "IMAPAccount main
+Host $IMAP_HOST
+User $IMAP_USER
+Pass $IMAP_PASS
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore  main-remote
+Account main
+
+MaildirStore main-local
+Subfolders Verbatim
+Path ~/mail/main/
+Inbox ~/mail/inbox
+
+Channel main
+Master :main-remote:
+Slave :main-local:
+Patterns *
+Create Both
+SyncState *
+" > ~/.config/neomutt/mbsync

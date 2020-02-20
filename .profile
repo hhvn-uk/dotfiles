@@ -18,18 +18,15 @@ export BROWSER="vimb"
 export work="$HOME/work"
 export WORK="$HOME/work"
 export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
-export PASS="$WORK/pass"
+export PASS="$HOME/general/security/pass"
 export SHELL="/usr/bin/fish"
 bash ~/.ls_colors
-if [ "$hostname" != "" ]
-then
+[ "$hostname" != "" ] && {
 	echo > /dev/null
-elif [ "$HOSTNAME" != "" ]
-then
+} || [ "$HOSTNAME" != "" ] && {
 	export hostname="$HOSTNAME"
-elif [ "$(command -v hostname)" != "" ]
-then
+} || [ "$(command -v hostname)" != "" ] && {
 	export hostname=$(hostname)
-else
+} || {
 	echo "No built in way to get a hostname..."
-fi
+};
