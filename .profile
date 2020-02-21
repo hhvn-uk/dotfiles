@@ -19,8 +19,9 @@ export work="$HOME/work"
 export WORK="$HOME/work"
 export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 export PASS="$HOME/general/security/pass"
-export SHELL="/usr/bin/fish"
-bash ~/.ls_colors
+export SHELL="/usr/bin/zsh"
+export ZDOTDIR="$HOME/.config/zsh"
+. ~/.ls_colors
 [ "$hostname" != "" ] && {
 	echo > /dev/null
 } || [ "$HOSTNAME" != "" ] && {
