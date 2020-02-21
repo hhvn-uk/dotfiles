@@ -1,20 +1,31 @@
 tar:
-	tar czvf images.tar.gz images
+	tar cjvf images.tar.bz images
 	tar czvf downloads.tar.gz downloads
 	tar czvf documents.tar.gz documents
-	tar czvf music.tar.gz music
-	tar czvf videos.tar.gz videos
+	tar cjvf music.tar.bz music
+	tar cjvf videos.tar.gz videos
 	tar czvf mail.tar.gz mail
 	tar czvf security.tar.gz security
 
+images:
+	tar cjvf images.tar.bz images
+downloads:
+	tar czvf downloads.tar.gz downloads
+documents:
+	tar czvf documents.tar.gz documents
+music:
+	tar cjvf music.tar.bz music
+videos:
+	tar cjvf videos.tar.bz videos
+
 clean:
-	rm *.tar.gz
+	rm *.tar.*z
 
 extract:
-	tar xzvf images.tar.gz
+	tar xjvf images.tar.bz
 	tar xzvf downloads.tar.gz
 	tar xzvf documents.tar.gz
-	tar xzvf music.tar.gz
+	tar xjvf music.tar.bz
 	tar xzvf videos.tar.gz
 	tar xzvf mail.tar.gz
 	tar xzvf security.tar.gz

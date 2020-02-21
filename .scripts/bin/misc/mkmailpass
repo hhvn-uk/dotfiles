@@ -33,6 +33,7 @@ Inbox ~/mail/inbox
 Channel main
 Master :main-remote:
 Slave :main-local:
+Expunge Both
 Patterns *
 Create Both
 SyncState *
