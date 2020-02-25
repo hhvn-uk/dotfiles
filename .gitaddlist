@@ -1,4 +1,5 @@
 git add ./LICENSE
+git add .alias
 git add .gitaddlist
 git add .zprofile
 git add .config/zsh
@@ -19,6 +20,7 @@ git add ./.ls_colors
 git add ./.wall
 git add ./.xinitrc
 git add ./.Xresources
+git add .config/bash/
 git add .config/dunst/dunstrc
 git add .config/picom/config
 git add .config/irssi/pipeline.theme
@@ -55,6 +57,7 @@ git add .config/calcurse/keys
 git add .config/calcurse/conf
 git add .config/wall2
 git add .config/fish/config.fish
+git add .config/fish/alias
 git add .config/vimb/config
 git add .config/vimb/style.css
 git add .config/vimb/scripts.js
@@ -63,3 +66,4 @@ git add .config/neomutt/colours
 git add .config/neomutt/sidebar
 git add general/makefile
 git rm --cache .config/vim/.netrwhist
+git add .galias

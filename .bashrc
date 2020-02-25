@@ -15,34 +15,8 @@ export PS2="\[$(tput bold)\]\[$(tput setaf 1)\][$(tput setaf 2)\]Unclosed string
 ##Start X when on tty1
 [ "$(tty)" = "/dev/tty1" ] && startx
 
-##Setting aliases for xbps
-alias \
-vi="vim" \
-xi="sudo xbps-install" \
-xq="sudo xbps-query" \
-xr="sudo xbps-remove" \
-irssi="irssi --config ~/.config/irssi/config" \
-pipes="pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15" \
-clock="tty-clock" \
-ytdl="youtube-dl --add-metadata -ic" \
-ytdla="youtube-dl --add-metadata -xic" \
-ls="ls --color" \
-map="telnet mapscii.me" \
-tetris="ssh netris.rocketnine.space" \
-calcurse="calcurse -D ~/.config/calcurse/" \
-irssi="irssi --home ~/.config/irssi/ -n haydenh" \
-trimwhite="for f in *; do mv "$f" `echo $f | tr ' ' '.'`; done" \
-xsleep="sudo zzz" \
-xhibernate="sudo ZZZ" \
-urxvtrestart="xrdb ~/.Xdefaults;xrdb ~/.Xresources" \
-rmst="bash ~/.scripts/random/gnulinux.sh" \
-?="sudo !!" \
-fff="ffflaunch" \
-python="python3" \
-gcc="gcc -Wall" \
-gpp="g++ -Wall" \
-fb="mpv --vo=drm" \
-vimb="vimb --no-maximize" \
+##Setting aliases
+. $HOME/.config/bash/alias
 
 ##Setting VI mode
 set -o vi

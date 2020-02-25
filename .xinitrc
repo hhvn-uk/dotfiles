@@ -1,5 +1,4 @@
 #!/bin/bash
-[ -f .Xresources ] && xrdb -merge .Xresources
 
 while true; do
 	dwm

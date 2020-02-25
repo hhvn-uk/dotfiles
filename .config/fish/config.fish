@@ -18,37 +18,7 @@ function fish_prompt
 end
 
 #Aliases
-abbr -a -g vi vim $argv
-abbr -a -g xi sudo xbps-install
-abbr -a -g xq sudo xbps-query
-abbr -a -g xr sudo xbps-remove
-abbr -a -g irssi irssi --config ~/.config/irssi/config
-abbr -a -g pipes pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15 $argv
-abbr -a -g clock tty-clock
-abbr -a -g ytdl youtube-dl --add-metadata -ic
-abbr -a -g ytdla youtube-dl --add-metadata -xic
-abbr -a -g ls ls --color
-abbr -a -g map telnet mapscii.me
-abbr -a -g tetris ssh netris.rocketnine.space
-abbr -a -g calcurse calcurse -D ~/.config/calcurse/
-abbr -a -g irssi  irssi --home ~/.config/irssi/ -n haydenh
-abbr -a -g sleep sudo zzz
-abbr -a -g hibernate sudo ZZZ
-abbr -a -g rmst bash ~/.scripts/random/gnulinux.sh
-abbr -a -g fff bash ~/.config/fff/config
-abbr -a -g python python3
-abbr -a -g vimb vimb --no-maximize
-abbr -a -g cleancache "sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk"
-abbr -a -g clock tty-clock -s -c -C 7
-abbr -a -g ~d cd ~/general/downloads
-abbr -a -g ~do cd ~/general/documents
-abbr -a -g ~i cd ~/images
-abbr -a -g ~wa cd ~/.wallpapers
-abbr -a -g ~v cd ~/videos
-abbr -a -g ~m cd ~/music
-abbr -a -g ~w cd ~/work
-abbr -a -g ~c cd ~/.config
-abbr -a -g ~s cd ~/.scripts
+source ~/.config/fish/alias
 
 #Set fish colors
 set fish_color_command a84b8d

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+awk '{printf "alias "$1"=\"";$1="";printf $0"\"\n"}' < ~/.alias > ~/.config/bash/alias
+cp ~/.config/bash/alias ~/.config/zsh/alias
+cp ~/.config/bash/alias ~/.config/fish/alias
+
+awk '{printf "alias -g "$1"=\"";$1="";printf $0"\"\n"}' < ~/.galias >> ~/.config/zsh/alias

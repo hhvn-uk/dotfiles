@@ -1,0 +1,47 @@
+ls		\ls --color
+l		\ls --color
+vi		vim
+xi		sudo xbps-install
+xq		sudo xbps-query
+xr		sudo xbps-remove
+irssi		\irssi --config ~/.config/irssi/config
+pipes		\pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15
+clock		tty-clock -s -c -C 7
+ytdl		youtube-dl --add-metadata -ic
+ytdla 		youtube-dl --add-metadata -xic
+map		telnet mapscii.me
+tetris		ssh netris.rocketnine.space
+calcurse 	\calcurse -D ~/.config/calcurse
+irssi		\irssi --home ~/.config/irssi/ -n haydenh
+sleep		sudo zzz
+hibernate 	sudo ZZZ
+rmst		bash ~/.scripts/random/gnulinux.sh
+fff		bash ~/.config/fff/config
+python		python3
+vimb		\vimb --no-maximize
+cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history
+mkconfall	mkmailpass; mkalias
+nw		newsboat
+nm		neomutt
+~d		cd ~/general/downloads; ls
+~do		cd ~/general/documents; ls
+~iw		cd ~/images/wallpapers; ls
+~i		cd ~/images; ls
+~v		cd ~/videos; ls
+~m		cd ~/music; ls
+~w		cd ~/work; ls
+~c		cd ~/.config; ls
+~s		cd ~/.scripts; ls
+~sb		cd ~/.scripts/bin; ls
+~vrc		vim ~/.vimrc
+..		cd ..
+...		cd ../..
+....		cd ../../..
+.....		cd ../../../..
+......		cd ../../../../..
+.......		cd ../../../../../..
+........	cd ../../../../../../..
+.........	cd ../../../../../../../..
+..........	cd ../../../../../../../../..
+...........	cd ../../../../../../../../../..
+............	cd ../../../../../../../../../../..

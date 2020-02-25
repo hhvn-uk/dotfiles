@@ -21,6 +21,7 @@ export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 export PASS="$HOME/general/security/pass"
 export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
+xrdb -merge ~/.Xresources
 . ~/.ls_colors
 [ "$hostname" != "" ] && {
 	echo > /dev/null

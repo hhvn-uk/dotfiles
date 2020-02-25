@@ -7,16 +7,20 @@ tar:
 	tar czvf mail.tar.gz mail
 	tar czvf security.tar.gz security
 
-images:
+images.tar.bz:
 	tar cjvf images.tar.bz images
-downloads:
+downloads.tar.gz:
 	tar czvf downloads.tar.gz downloads
-documents:
+documents.tar.gz:
 	tar czvf documents.tar.gz documents
-music:
+music.tar.bz:
 	tar cjvf music.tar.bz music
-videos:
+videos.tar.bz:
 	tar cjvf videos.tar.bz videos
+mail.tar.gz:
+	tar czvf mail.tar.gz mail
+security.tar.gz:
+	tar czvf security.tar.gz security
 
 clean:
 	rm *.tar.*z
