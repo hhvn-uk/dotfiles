@@ -6,6 +6,10 @@ tar:
 	tar cjvf videos.tar.gz videos
 	tar czvf mail.tar.gz mail
 	tar czvf security.tar.gz security
+	tar cjvf games.tar.bz games
+
+dirclean:
+	rm -rf `find -type d`
 
 images.tar.bz:
 	tar cjvf images.tar.bz images
@@ -21,6 +25,8 @@ mail.tar.gz:
 	tar czvf mail.tar.gz mail
 security.tar.gz:
 	tar czvf security.tar.gz security
+games.tar.bz:
+	tar czvf games.tar.bz games
 
 clean:
 	rm *.tar.*z
@@ -33,6 +39,7 @@ extract:
 	tar xzvf videos.tar.gz
 	tar xzvf mail.tar.gz
 	tar xzvf security.tar.gz
+	tar xjvf games.tar.gz
 
 link:
 	cd ..
@@ -42,6 +49,7 @@ link:
 	ln -s general/images/wallpapers .wallpapers
 	ln -s general/mail mail
 	ln general/security/pass work/pass
+	ln -s general/games/.openttd ./
 
 unlink:
 	unlink ../images

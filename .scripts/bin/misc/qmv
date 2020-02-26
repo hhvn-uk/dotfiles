@@ -1,0 +1,30 @@
+#!/bin/sh
+
+[ "$(echo "$1" | grep "help")" != "" ] && printf "
+	qmv [mode] [modeinfo] [files]
+
+$(tput bold)MODES & MODEINFO$(tput sgr0)
+	number		[start number].[file extension]\n" && exit
+
+mode="$1"
+modeinfo="$2"
+all=$(echo "$@" | sed "s/^[[:space:]]*$mode//;s/^[[:space:]]*$modeinfo//")
+
+_number(){
+	number=$(echo "$@" | grep -o "^[0-9]*")
+	fileext=$(echo "$@" | grep -o "\.[A-Za-z0-9]*" | sed 's/^\.//g')
+
+	for file in $all
+	do
+		[ "$fileext" = "" ] && {
+			mv $file $number
+		} || {
+			mv $file $number.$fileext
+		}; number=$(($number+1))
+	done
+}
+
+case "$mode" in
+	number|numbered|num|n) _number "$modeinfo" ;;
+	*) echo "$mode: not a supported mode."; exit ;;
+esac

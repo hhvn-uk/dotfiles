@@ -1,0 +1,55 @@
+#!/bin/sh
+
+[ "$(echo "$1" | grep "help")" != "" ] && printf "
+	convf [conversion function] [options to function]
+
+$(tput bold)CONVERSION FUNCTIONS$(tput sgr0)
+	convert
+	ffmpeg\n" && exit
+
+count=0
+getfiles() {
+        files="$files $(ls | awk "/$1/ {print}")"
+}
+_convert(){
+	convert $1 $opts $1
+	touch $f/$count2
+}
+_ffmpeg(){
+	ffmpeg -i $1 $opts $1
+	touch $f/$count2
+}
+
+opts=$(echo "$@" | sed 's/^[[:space:]]*[a-z]*//')
+case "$1" in
+	convert) filetypes="png jpg jpeg jpe tif"; func="_convert" ;;
+	ffmpeg) filetypes="mkv opus mp4 mp3 m4a webm"; func="_ffmpeg" ;;
+	*) echo "$1: not supported."; exit ;;
+esac
+
+total=$(ls $dir | wc -l)
+f=$(mktemp -d)
+for filetype in $filetypes
+do
+	getfiles $filetype
+done
+
+count2=0
+for file in $files
+do
+	count2=$(($count2+1))
+	$func $file &
+done
+
+while true
+do
+	sleep 0.1
+	[ "$(ls $f)" = "" ] && break
+	count=$(find $f | wc -l)
+	count=$(($count-$total))
+	count=$(echo "$count" | sed 's/^[[:space:]]*-//')
+	clear
+	echo "[$count/$total]"
+done
+
+rm -rf $f

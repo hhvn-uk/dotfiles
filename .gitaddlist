@@ -17,7 +17,6 @@ git add ./.scripts/
 git add ./.xprofile
 git add ./.vimrc
 git add ./.ls_colors
-git add ./.wall
 git add ./.xinitrc
 git add ./.Xresources
 git add .config/bash/
@@ -47,7 +46,6 @@ git add .config/fff/fff
 git add .config/fff/config
 git add .config/dfm/config
 git add .config/dfm/bookmarks
-git add .config/wall1
 git add .config/youtube-viewer/youtube-viewer.conf
 git add .config/newsboat/config
 git add .config/mpv/input.conf
@@ -55,7 +53,6 @@ git add .config/mpv/mpv.conf
 git add .config/i3/config
 git add .config/calcurse/keys
 git add .config/calcurse/conf
-git add .config/wall2
 git add .config/fish/config.fish
 git add .config/fish/alias
 git add .config/vimb/config

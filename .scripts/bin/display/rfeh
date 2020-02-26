@@ -19,16 +19,6 @@ getfiles() {
 	files+=$(ls $dir | awk "/$1/ {print}")
 }
 
-lock="$3"
-baselockwith="$4"
-if [ "$baselockwith" == "" ]
-then
-	lockwith="i3lock"
-	lockop="-i"
-else
-	lockwith="$(echo $baselockwith | awk '// {print $1}')
-	lockopt="$(echo $baselockwith | awk '// {print $2}')
-fi
 monitors=$2
 if [ "$2" == "" ]
 then
@@ -37,6 +27,8 @@ elif [ "$2" == "auto" ]
 then
 	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
 fi
+
+[ "$(echo "$3" | awk '/left|right/')" != "" ] && monitors=1
 
 allfiles() {
 	for filetype in $filetypes
@@ -67,13 +59,15 @@ then
 else
 	mkdir -p ~/.cache/rfeh
 fi
+[ "$3" = "right" ] && {
+	left=$(awk '{print $1}' < $HOME/.cache/rfeh/prev)
+	files="$left $files"
+} || [ "$3" = "left" ] && {
+	right=$(awk '{print $2}' < $HOME/.cache/rfeh/prev)
+	files="$files $right"
+	
+};
 echo $files
 echo $files > $HOME/.cache/rfeh/prev
-if [ "$lock" == "true" ]
-then
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~$lockopt ~g" | tr "\n" " ")
-	$lockwith $files
-else
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
-	feh $files
-fi
+files=$(echo "$files" | tr " " "\n" | sed "s~^~feh --bg-fill ~g" | tr "\n" " ")
+$lockwith $files

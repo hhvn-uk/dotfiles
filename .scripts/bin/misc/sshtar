@@ -1,0 +1,22 @@
+#!/bin/sh
+
+[ "$(echo "$1" | grep "help")" != "" ] && printf '
+	sshtar [files] [remote host]\n' && exit
+
+last=""
+all=""
+
+for word in "$@"
+do
+	last="$word"
+	all="$all $word"
+done
+
+first=$(echo "$all" | sed "s/$last$//g;s/^ //g")
+tar cjvf /tmp/sshtar.tar.bz $first
+user=$(echo "$last" | grep -o "^[A-Za-z0-9]*")
+clear
+scp /tmp/sshtar.tar.bz $last:/home/$user
+clear
+printf "You gotta extract the stuff yourself now.\n\n"
+ssh $last

@@ -23,7 +23,6 @@ do
 	./mpv 2> /dev/null > ~/.cache/blocks/mpv &
 	./vol > ~/.cache/blocks/vol &
 	sleep 3
-	cd ~/.cache/blocks
 	cd ~/.scripts/i3blocks
 	swait=$(($swait+1))
 done &

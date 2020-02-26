@@ -30,7 +30,7 @@ done
 
 var=$(dmenu -i -p "Select a handler" < ~/.cache/urlhand4 | grep -o '[0-9]*')
 hand=$(grep "$var:" < ~/.cache/urlhand2 | sed 's|\t|/|g' | sed 's/^[0-9]*://')
-killall mpvlisten
+pkill mpvlisten
 hmpv pause /tmp/mpv-socket
 hmpv pause /tmp/mpv-socket2
 bash -c "$hand $arg"
