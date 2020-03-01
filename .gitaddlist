@@ -1,5 +1,6 @@
 git add ./LICENSE
 git add .alias
+git add .tmux.conf
 git add .gitaddlist
 git add .zprofile
 git add .config/zsh

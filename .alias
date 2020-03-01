@@ -1,6 +1,7 @@
 ls		\ls --color
 l		\ls --color
 vi		vim
+v		vim
 xi		sudo xbps-install
 xq		sudo xbps-query
 xr		sudo xbps-remove
