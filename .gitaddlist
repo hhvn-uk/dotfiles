@@ -62,6 +62,6 @@ git add .config/vimb/scripts.js
 git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
 git add .config/neomutt/sidebar
-git add general/makefile
+git add general/make.sh
 git rm --cache .config/vim/.netrwhist
 git add .galias
