@@ -19,6 +19,11 @@ set nocompatible
 "Leader
 let mapleader=","
 
+"Cursor
+let &t_SI.="\033[6 q" "SI = INSERT mode
+let &t_SR.="\033[4 q" "SR = REPLACE mode
+let &t_EI.="\033[2 q" "EI = NORMAL mode (ELSE)
+
 "Tab completion
 set path+=**
 set wildmenu
@@ -40,8 +45,7 @@ filetype plugin on
 "Keys
 map <leader>g :Goyo \| set linebreak<CR>
 map <leader>c :!sudo make all install clean \| set linebreak<CR>
-map <leader>oc :!groff -T pdf % - > /tmp/grff<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-map <Leader>ov :!zathura /tmp/grff \| set linebreak<CR>
+map <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 map <Leader>sv :!sent % \| set linebreak<CR> 
 map <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
 map <leader>ff :r !find \| set linebreak<CR>
@@ -52,6 +56,8 @@ map <leader>bp :bp \| set linebreak<CR>
 map <leader>mvg :r !find -maxdepth 1 -type f -printf "mv \"\%f\"\t<++>\n"<Enter>
 map <leader>mvd :w! /tmp/bmv-edit \| set linebreak<CR>:!sh /tmp/bmv-edit \| set linebreak<CR>:q \| set linebreak<CR>
 map <leader>ss :set syntax=
+map <leader>w :w \| set linebreak<CR>
+map <leader>W :w !sudo tee %<CR>
 map dw diw
 map cw ciw
 imap <leader><leader>ss <Esc>:set syntax=

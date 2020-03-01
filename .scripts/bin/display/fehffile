@@ -1,3 +1,15 @@
 #!/bin/bash
-files=$(cat $1 | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
-feh $files
+
+backend="xwallpaper"
+
+[ "$backend" = "xwallpaper" ] && {
+	files=$(tr " " "\n" < $1 | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+	for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
+	do
+		files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
+	done
+	xwallpaper $files
+} || {
+	files=$(tr " " "\n" < $1 | sed "s~^~--bg-fill ~g" | tr "\n" " ")
+	feh $files
+}

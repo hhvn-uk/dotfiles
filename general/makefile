@@ -36,7 +36,7 @@ extract:
 	tar xzvf downloads.tar.gz
 	tar xzvf documents.tar.gz
 	tar xjvf music.tar.bz
-	tar xzvf videos.tar.gz
+	tar xjvf videos.tar.gz
 	tar xzvf mail.tar.gz
 	tar xzvf security.tar.gz
 	tar xjvf games.tar.gz

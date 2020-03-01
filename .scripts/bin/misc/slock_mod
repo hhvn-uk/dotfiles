@@ -13,7 +13,6 @@ echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
 	sleep 0.2
 	hmpv pause $socket2
 ) &
-
 slock -m "Locked at $(date) by $USER - what? You thought I would let you in... Fool."
 
 state=$(cat ~/.cache/socket | awk '/:/')

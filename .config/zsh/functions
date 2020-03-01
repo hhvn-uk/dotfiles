@@ -1,0 +1,30 @@
+killprog(){
+	for prog in $(printf "$@")
+	do
+		pkill $prog
+	done
+}
+
+0x0(){
+	for file in $(printf "$@")
+	do
+		name=$(curl -F "file=@$file" http://0x0.st)
+		echo "$file has been hosted at $name"
+	done
+}
+
+ix(){
+	for file in $(printf "$@")
+	do
+		name=$(curl -F "f:1=<-" ix.io < $file)
+		echo "$file has been hosted at $name"
+	done
+}
+
+make(){
+	[ -f make.sh ] && {
+		sh make.sh "$@"
+	} || {
+		command make "$@"
+	}
+}

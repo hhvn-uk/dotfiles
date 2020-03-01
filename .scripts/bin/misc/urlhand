@@ -15,8 +15,9 @@ do
 done
 
 var=$(dmenu -i -p "Select an item" < ~/.cache/urlhand3 | grep -o '[0-9]*')
+[ "$var" = "" ] && exit 0
 arg=$(grep "$var:" < ~/.cache/urlhand1 | sed 's|\t|/|g' | sed 's/^[0-9]*://')
-handlers=("mpv" "youtube-dl --add-metadata -ic" "youtube-dl --add-metadata -xic" "vimb --no-maximize" "surf" "w3m")
+handlers=("mpv" "popupmpv" "youtube-dl --add-metadata -ic" "youtube-dl --add-metadata -xic" "vimb --no-maximize" "surf" "w3m")
 count=0
 echo
 printf "" > ~/.cache/urlhand2
@@ -29,6 +30,7 @@ do
 done
 
 var=$(dmenu -i -p "Select a handler" < ~/.cache/urlhand4 | grep -o '[0-9]*')
+[ "$var" = "" ] && exit 0
 hand=$(grep "$var:" < ~/.cache/urlhand2 | sed 's|\t|/|g' | sed 's/^[0-9]*://')
 pkill mpvlisten
 hmpv pause /tmp/mpv-socket

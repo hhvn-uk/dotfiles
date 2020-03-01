@@ -37,6 +37,9 @@ key[PageUp]="${terminfo[kpp]}"
 key[PageDown]="${terminfo[knp]}"
 key[ShiftTab]="${terminfo[kcbt]}"
 
+# Functions
+. $HOME/.config/zsh/functions
+
 # Syntax highlighting
 typeset -A ZSH_HIGHLIGHT_STYLES
 . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

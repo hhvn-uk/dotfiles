@@ -1,0 +1,8 @@
+#!/bin/sh
+
+pkill convtodwm
+pkill fetchmail
+
+cd ~/.scripts/i3blocks
+exec ./convtodwm >/dev/null 2>/dev/null &
+disown -a

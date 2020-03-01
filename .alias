@@ -13,7 +13,7 @@ map		telnet mapscii.me
 tetris		ssh netris.rocketnine.space
 calcurse 	\calcurse -D ~/.config/calcurse
 irssi		\irssi --home ~/.config/irssi/ -n haydenh
-sleep		sudo zzz
+zsleep		sudo zzz
 hibernate 	sudo ZZZ
 rmst		bash ~/.scripts/random/gnulinux.sh
 fff		bash ~/.config/fff/config
@@ -23,6 +23,8 @@ cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webk
 mkconfall	mkmailpass; mkalias
 nw		newsboat
 nm		neomutt
+conftar		cd ~; sshtar .config/ .tmux.conf .terminfo/ .scripts/ .alias .galias .vimrc
+maic		sudo make all install clean
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls
@@ -33,6 +35,10 @@ nm		neomutt
 ~c		cd ~/.config; ls
 ~s		cd ~/.scripts; ls
 ~sb		cd ~/.scripts/bin; ls
+~sbdi		cd ~/.scripts/bin/display; ls
+~sbdm		cd ~/.scripts/bin/dmenu; ls
+~sbi		cd ~/.scripts/bin/i3; ls
+~sbm		cd ~/.scripts/bin/misc; ls
 ~vrc		vim ~/.vimrc
 ..		cd ..
 ...		cd ../..

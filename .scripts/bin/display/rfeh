@@ -6,6 +6,8 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
+backend="xwallpaper"
+
 if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
 then
 	echo 'rfeh /path/to/folder [number of monitors or "auto"] [true for locking] [program to lock with]
@@ -69,5 +71,14 @@ fi
 };
 echo $files
 echo $files > $HOME/.cache/rfeh/prev
-files=$(echo "$files" | tr " " "\n" | sed "s~^~feh --bg-fill ~g" | tr "\n" " ")
-$lockwith $files
+[ "$backend" = "xwallpaper" ] && {
+	files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+	for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
+	do
+		files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
+	done
+	xwallpaper $files
+} || {
+	files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
+	feh $files
+}
