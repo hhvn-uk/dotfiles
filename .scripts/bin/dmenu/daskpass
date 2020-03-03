@@ -6,6 +6,4 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-dmenu="dmenu"
-. $HOME/.dmenurc
-$dmenu -P -p "$1" <&- && echo
+dmenu -P -p "$1" <&- && echo
