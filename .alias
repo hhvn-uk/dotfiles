@@ -1,8 +1,12 @@
 ls		\ls --color
 l		\ls --color
+la		\ls --color -a
+ll		\ls --color -lh
+lla		\ls --color -lah
 vi		vim
 v		vim
 xi		sudo xbps-install
+xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu
 xq		sudo xbps-query
 xr		sudo xbps-remove
 irssi		\irssi --config ~/.config/irssi/config
