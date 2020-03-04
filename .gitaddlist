@@ -3,7 +3,7 @@ git add .alias
 git add .tmux.conf
 git add .gitaddlist
 git add .zprofile
-git add .config/zsh
+git add .config/zsh/
 git add ./.Xresources
 git add ./.licenses
 git add ./.licenses/mit.license
