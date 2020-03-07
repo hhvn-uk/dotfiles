@@ -1,3 +1,6 @@
+# Make alias'
+mkalias
+
 # Completion
 autoload -Uz compinit promptinit
 compinit

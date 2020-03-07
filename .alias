@@ -24,7 +24,7 @@ rmst		bash ~/.scripts/random/gnulinux.sh
 fff		bash ~/.config/fff/config
 python		python3
 vimb		\vimb --no-maximize
-cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history
+cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history; sudo vkpurge rm all
 mkconfall	mkmailpass; mkalias
 nw		newsboat
 nm		neomutt

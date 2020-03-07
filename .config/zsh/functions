@@ -8,7 +8,7 @@ killprog(){
 0x0(){
 	for file in $(printf "$@")
 	do
-		name=$(curl -F "file=@$file" http://0x0.st)
+		name=$(curl -n -F "file=@$file" http://0x0.st)
 		echo "$file has been hosted at $name"
 	done
 }
@@ -16,9 +16,13 @@ killprog(){
 ix(){
 	for file in $(printf "$@")
 	do
-		name=$(curl -F "f:1=<-" ix.io < $file)
+		name=$(curl -n -F "f:1=<-" http://ix.io < $file)
 		echo "$file has been hosted at $name"
 	done
+}
+
+pc(){
+	"$@" | curl -n -F "f:1=<-" http://ix.io
 }
 
 make(){

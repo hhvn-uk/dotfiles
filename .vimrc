@@ -56,6 +56,7 @@ map <leader>bp :bp \| set linebreak<CR>
 map <leader>mvg :r !find -maxdepth 1 -type f -printf "mv \"\%f\"\t<++>\n"<Enter>
 map <leader>mvd :w! /tmp/bmv-edit \| set linebreak<CR>:!sh /tmp/bmv-edit \| set linebreak<CR>:q \| set linebreak<CR>
 map <leader>ss :set syntax=
+imap <leader>ss :set syntax=
 map <leader>w :w \| set linebreak<CR>
 map <leader>W :w !sudo tee %<CR>
 map dw diw

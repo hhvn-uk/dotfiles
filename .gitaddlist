@@ -25,12 +25,7 @@ git add .config/dunst/dunstrc
 git add .config/picom/config
 git add .config/irssi/pipeline.theme
 git add .config/irssi/default.theme
-git add .config/irssi/scripts/autorun/nickcolor.pl
-git add .config/irssi/scripts/autorun/usercount.pl
-git add .config/irssi/scripts/autorun/ascii.pl
-git add .config/irssi/scripts/autorun/url_hilight.pl
-git add .config/irssi/scripts/autorun/README
-git add .config/irssi/scripts/autorun/auto_whois.pl
+git add .config/irssi/scripts/autorun/
 git add .config/irssi/config
 git add .config/i3blocks/i3blocks
 git add .config/i3blocks/config
@@ -64,4 +59,5 @@ git add .config/neomutt/colours
 git add .config/neomutt/sidebar
 git add general/make.sh
 git rm --cache .config/vim/.netrwhist
+git rm --cache .config/zsh/.zcompdump
 git add .galias

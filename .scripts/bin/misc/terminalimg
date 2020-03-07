@@ -24,7 +24,6 @@ display(){
 		((img_width=img_width*HEIGHT/img_height-40))
 		((img_height=HEIGHT-40))
 	};
-
 	
 	str="$(tput setaf 10)$(tput setab 0)$image | ${number}/${#array[@]}$(tput sgr0)"
 	length=$(printf "$str" | wc -c)
@@ -52,19 +51,24 @@ unset IFS
 number="0"
 tput civis
 
+display ${array[$number]}
 clear
 while true
 do
-	display ${array[$number]}
 	read -rsn 1 -t 10000 key < /dev/tty
 	[ "$key" = "k" ] || [ "$key" = "l" ] &&{
 		number=$(($number+1))
-	};
-	[ "$key" = "j" ] || [ "$key" = "h" ] &&{
+		display ${array[$number]}
+	}; [ "$key" = "j" ] || [ "$key" = "h" ] || [ "$key" = " " ] || [ "$key" = '\b' ] &&{
 		number=$(($number-1))
-	};
-	[ "$key" = "q" ] &&{
+		display ${array[$number]}
+	}; [ "$key" = "q" ] && {
 		tput cnorm
-		exit 0
-	};
+		exit 1
+	}; [ "$key" = "0" ] && {
+		number=0
+		display ${array[$number]}
+	}; [ "$key" = "r" ] && {
+		display ${array[$number]}
+	};	
 done

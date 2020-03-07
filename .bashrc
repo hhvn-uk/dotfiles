@@ -3,7 +3,7 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:GPLv2 ./licenses/gplv2.license
+# Copyright (c) 2019 Hayden Hamilton. LICENSE:MIT
 #
 
 ##Infinite command history
