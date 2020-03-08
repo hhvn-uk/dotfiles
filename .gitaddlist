@@ -5,18 +5,11 @@ git add .gitaddlist
 git add .zprofile
 git add .config/zsh/
 git add ./.Xresources
-git add ./.licenses
-git add ./.licenses/mit.license
-git add ./.licenses/gplv2.license
 git add ./.bash_profile
-git add ./.inputrc
 git add ./.bashrc
 git add ./.profile
-git add ./.vim
-git add ./.config/vim/
 git add ./.scripts/
 git add ./.xprofile
-git add ./.vimrc
 git add ./.ls_colors
 git add ./.xinitrc
 git add ./.Xresources
@@ -57,7 +50,8 @@ git add .config/vimb/scripts.js
 git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
 git add .config/neomutt/sidebar
+git add .config/nvim/ 
+git rm --cache .config/nvim/.netrwhist
 git add general/make.sh
-git rm --cache .config/vim/.netrwhist
 git rm --cache .config/zsh/.zcompdump
 git add .galias

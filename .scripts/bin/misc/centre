@@ -1,0 +1,24 @@
+#!/bin/sh
+
+raw=$(sed 's/[[:space:]]*$//' < /dev/stdin)
+raww=$(echo "$raw" | ul | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | wc -L)
+rawh=$(echo "$raw" | ul | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | wc -l)
+
+w=$(tput cols)
+h=$(tput lines)
+
+blankw=$(((w-raww)/2))
+blankh=$(((h-rawh)/2))
+
+padw=$(for void in $(seq $blankw); do printf " "; done)
+
+display=$(echo "$raw" | sed "s/^/$padw/")
+
+clear
+(
+	[ $raww -gt $w ] && echo "$display" || {
+		for void in $(seq $blankh); do printf "\n"; done
+		echo "$display"
+		for void in $(seq $blankh); do printf "\n"; done
+	};
+) | less

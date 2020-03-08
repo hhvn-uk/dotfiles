@@ -3,8 +3,9 @@ l		\ls --color
 la		\ls --color -a
 ll		\ls --color -lh
 lla		\ls --color -lah
-vi		vim
-v		vim
+vim		nvim
+vi		nvim
+v		nvim
 xi		sudo xbps-install
 xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu
 xq		sudo xbps-query
@@ -24,7 +25,7 @@ rmst		bash ~/.scripts/random/gnulinux.sh
 fff		bash ~/.config/fff/config
 python		python3
 vimb		\vimb --no-maximize
-cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history; sudo vkpurge rm all
+cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst ~/.dbus ~/.sciminfo ~/.viminfo ~/.w3m; sudo vkpurge rm all
 mkconfall	mkmailpass; mkalias
 nw		newsboat
 nm		neomutt
