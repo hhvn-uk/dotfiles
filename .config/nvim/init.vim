@@ -6,19 +6,16 @@
 " Copyright (c) 2019 Hayden Hamilton.
 "
 
-"Note: scripts are found in .vim/plugin/ or .vim/autoload/
+"Note: plugins can found in .vim/plugin/ or .vim/autoload/
 " goyo - centres text
 " surround - allows operation on surrounding characters
 " commentary - comments stuff out
 " repeat - repeat things
 " vimling (ipa, deadkeys, prose) - deadkeys
-
-"Source abbrevs
-source ~/.config/nvim/abbrs.vim
+" vimagit - git in vim
 
 "Leader
 let mapleader=","
-let maplocalleader=",."
 
 "Cursor
 let &t_SI.="\033[6 q" "SI = INSERT mode
@@ -44,6 +41,10 @@ set hlsearch
 filetype plugin on
 
 "Leader keys
+noremap <leader>ve :vsplit ~/.config/nvim/init.vim<CR>
+noremap <leader>vs :source ~/.config/nvim/init.vim<CR>
+map <leader><leader><leader> <leader>vs
+
 noremap <leader>g :Goyo \| set linebreak<CR>
 noremap <leader>c :!sudo make all install clean \| set linebreak<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
@@ -60,8 +61,6 @@ noremap <leader>ss :set syntax=
 inoremap <leader><leader>ss <Esc>:set syntax=
 noremap <leader>w :w \| set linebreak<CR>
 noremap <leader>W :w !sudo tee %<CR>
-noremap <leader>ve :vsplit ~/.config/nvim/init.vim<CR>
-noremap <leader>vs :source ~/.config/nvim/init.vim<CR>
 noremap <leader>" ea"<esc>bi"<esc>
 noremap <leader>u" ds"
 noremap <leader>' ea'<esc>bi'<esc>
@@ -69,6 +68,7 @@ noremap <leader>u' ds'
 noremap <leader>sp o<esc>pi
 
 noremap <leader>nn :set number! relativenumber!<CR>
+noremap <leader><leader>nn :setlocal number! relativenumber!<CR>
 
 noremap <leader>j 0/<++><Enter>"_c4l
 noremap <leader>J 0/<++><Enter>"_d4l
@@ -115,16 +115,6 @@ vnoremap <Space> zf
 noremap <leader>m :Magit \| set linebreak<CR>
 let g:magit_default_fold_level=0
 
-"Splits
-set splitbelow splitright
-noremap <leader>z :vsplit \| set linebreak<CR>
-noremap <leader>Z :split \| set linebreak<CR>
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-c> <C-w>c
-
 "Vimling
 noremap <leader>ld :call ToggleDeadKeys()<CR>
 inoremap <leader>ld <esc>:call ToggleDeadKeys()<CR>a
@@ -151,7 +141,21 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
-"Statusline
-set statusline=%f\ -\ %y%m "File
-set statusline+=%=
-set statusline+=%l/%L,\ %-11c[%n] "Position
+augroup autocmd
+	"Get rid of shitty indenting
+	autocmd BufRead * :normal gg=G
+
+	"Nowrap
+	autocmd FileType html :setlocal nowrap
+
+	"C
+	autocmd FileType C :noremap <buffer> <leader>end $a;<esc>
+	autocmd FileType C :inoremap <buffer> <leader><leader>end <esc>$a;<esc>
+augroup END
+
+"Modules
+source ~/.config/nvim/modules/theme.vim
+source ~/.config/nvim/modules/abbrs.vim
+source ~/.config/nvim/modules/statusline.vim
+source ~/.config/nvim/modules/splits.vim
+source ~/.config/nvim/modules/buffs.vim
