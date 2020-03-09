@@ -11,8 +11,9 @@
 " surround - allows operation on surrounding characters
 " commentary - comments stuff out
 " repeat - repeat things
-" vimling (ipa, deadkeys, prose) - deadkeys
+" vimling (ipa, deadkeys) - deadkeys
 " vimagit - git in vim
+" v(org)im (written by me) - emulating org mode in vim
 
 "Leader
 let mapleader=","
@@ -50,6 +51,8 @@ noremap <leader>c :!sudo make all install clean \| set linebreak<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 noremap <Leader>sv :!sent % \| set linebreak<CR> 
 noremap <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
+noremap <leader>sf mm[s1z=`m<CR>
+noremap <leader>ssf z=<CR>
 noremap <leader>ff :r !find \| set linebreak<CR>
 noremap <leader>fl :r !ls \| set linebreak<CR>
 noremap <leader>bd :bdelete \| set linebreak<CR>
@@ -120,11 +123,11 @@ noremap <leader>ld :call ToggleDeadKeys()<CR>
 inoremap <leader>ld <esc>:call ToggleDeadKeys()<CR>a
 noremap <leader>li :call ToggleIPA()<CR>
 inoremap <leader>li <esc>:call ToggleIPA()<CR>a
-noremap <F8> :call ToggleProse()<CR>
 
 "An erotic file-browser
 noremap <leader>eh :Sex \| set linebreak<CR>
 noremap <leader>ev :Vex \| set linebreak<CR>
+noremap <leader>ee :Explore \| set linebreak<CR>
 noremap <leader>eo :browse oldfiles \| set linebreak<CR>
 noremap <leader>eb 100j
 let g:netrw_liststyle=3
@@ -141,11 +144,33 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
-"Registers
-nnoremap <leader>yy "*y
-inoremap <leader><leader>yy "*y
+"Search
+nnoremap <leader>CS :let @/=''<CR>
 
+"Registers
+nnoremap <c-y> "*y
+inoremap <c-y> "*y
+
+"Terminals
+nnoremap <leader>Tt :vsplit term://zsh<CR><c-h><c-l>
+nnoremap <leader>TT :split term://zsh<CR><c-k><c-j>
+tnoremap <leader><Esc> <C-\><C-n>
+
+"Modules
+source ~/.config/nvim/modules/theme.vim
+source ~/.config/nvim/modules/abbrs.vim
+source ~/.config/nvim/modules/statusline.vim
+source ~/.config/nvim/modules/splits.vim
+source ~/.config/nvim/modules/buffs.vim
+source ~/.config/nvim/modules/netrw.vim
+source ~/.config/nvim/modules/term.vim
+source ~/.config/nvim/modules/tabs.vim
+
+"Automatic commands
 augroup autocmd
+	"netrw
+	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
+
 	"Get rid of shitty indenting
 	autocmd FileType html :normal gg=G
 
@@ -156,10 +181,3 @@ augroup autocmd
 	autocmd FileType C :noremap <buffer> <leader>end $a;<esc>
 	autocmd FileType C :inoremap <buffer> <leader><leader>end <esc>$a;<esc>
 augroup END
-
-"Modules
-source ~/.config/nvim/modules/theme.vim
-source ~/.config/nvim/modules/abbrs.vim
-source ~/.config/nvim/modules/statusline.vim
-source ~/.config/nvim/modules/splits.vim
-source ~/.config/nvim/modules/buffs.vim

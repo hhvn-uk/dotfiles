@@ -1,3 +1,4 @@
+hi Statusbar 	ctermbg=0 ctermfg=0
 hi Modecol	ctermbg=10 ctermfg=254 gui=bold
 hi Basecol 	ctermbg=0
 hi Filecol 	ctermbg=2 ctermfg=7 gui=bold
@@ -72,7 +73,7 @@ function! Inactivestatus()
 	return s
 endfunction
 
-function! Netrwstatus()
+function! NetrwAstatus()
 	""Remimder
 	let s="%#Filecol#"
 	let s.=" %y "
@@ -81,24 +82,58 @@ function! Netrwstatus()
 	return s
 endfunction
 
+function! NetrwIstatus()
+	""Remimder
+	let s="%#Basecol#"
+	let s.=" %y "
+
+	return s
+endfunction
+
+function! TermAstatus()
+	""Reminder
+	let s="%#Filecol#"
+	let s.=" [terminal] "
+	let s.="%#Basecol#"
+
+	return s
+endfunction
+
+function! TermIstatus()
+	""Reminder
+	let s="%#Basecol#"
+	let s.=" [terminal] "
+
+	return s
+endfunction
+
 augroup Statusline
 	autocmd!
+	autocmd FileType netrw let _filetype=&filetype
+	autocmd FileType netrw let &l:statusline=Choosestatus(1, _filetype)
 	autocmd WinEnter,BufEnter * let _filetype=&filetype
 	autocmd WinEnter,BufEnter * let &l:statusline=Choosestatus(1, _filetype)
-	autocmd WinLeave,BufLeave * let &l:statusline=Choosestatus(0, "null")
+	autocmd WinLeave,BufLeave * let &l:statusline=Choosestatus(0, _filetype)
 augroup END
 
 function! Choosestatus(active, filetype)
 	"Set active or inactive
-	if a:active == '1' && a:filetype != 'netrw'
+	if a:active == '1'
 		let statusline=Activestatus()
 	else
 		let statusline=Inactivestatus()
 	endif
 
-	"Overwrite if netrw
-	if a:filetype == 'netrw'
-		let statusline=Netrwstatus()
+	"Overwrite if special
+	let s="term"
+	if a:filetype == 'netrw' && a:active == '1'
+		let statusline=NetrwAstatus()
+	elseif a:filetype == 'netrw'
+		let statusline=NetrwIstatus()
+	elseif stridx(expand('%:p'), s) == '0' && a:active == '1'
+		let statusline=TermAstatus()
+	elseif stridx(expand('%:p'), s) == '0'
+		let statusline=TermIstatus()
 	endif
 
 	return statusline
