@@ -141,9 +141,13 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
+"Registers
+nnoremap <leader>yy "*y
+inoremap <leader><leader>yy "*y
+
 augroup autocmd
 	"Get rid of shitty indenting
-	autocmd BufRead * :normal gg=G
+	autocmd FileType html :normal gg=G
 
 	"Nowrap
 	autocmd FileType html :setlocal nowrap

@@ -72,8 +72,34 @@ function! Inactivestatus()
 	return s
 endfunction
 
+function! Netrwstatus()
+	""Remimder
+	let s="%#Filecol#"
+	let s.=" %y "
+	let s.="%#Basecol#"
+
+	return s
+endfunction
+
 augroup Statusline
 	autocmd!
-	autocmd WinEnter,BufEnter * setlocal statusline=%!Activestatus()
-	autocmd WinLeave,BufLeave * setlocal statusline=%!Inactivestatus()
+	autocmd WinEnter,BufEnter * let _filetype=&filetype
+	autocmd WinEnter,BufEnter * let &l:statusline=Choosestatus(1, _filetype)
+	autocmd WinLeave,BufLeave * let &l:statusline=Choosestatus(0, "null")
 augroup END
+
+function! Choosestatus(active, filetype)
+	"Set active or inactive
+	if a:active == '1' && a:filetype != 'netrw'
+		let statusline=Activestatus()
+	else
+		let statusline=Inactivestatus()
+	endif
+
+	"Overwrite if netrw
+	if a:filetype == 'netrw'
+		let statusline=Netrwstatus()
+	endif
+
+	return statusline
+endfunction

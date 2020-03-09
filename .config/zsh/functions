@@ -1,24 +1,25 @@
+#!/bin/sh
 killprog(){
 	for prog in $(printf "$@")
-	do
-		pkill $prog
-	done
+		do
+			pkill $prog
+				done
 }
 
 0x0(){
 	for file in $(printf "$@")
-	do
-		name=$(curl -n -F "file=@$file" http://0x0.st)
-		echo "$file has been hosted at $name"
-	done
+		do
+			name=$(curl -n -F "file=@$file" http://0x0.st)
+				echo "$file has been hosted at $name"
+				done
 }
 
 ix(){
 	for file in $(printf "$@")
-	do
-		name=$(curl -n -F "f:1=<-" http://ix.io < $file)
-		echo "$file has been hosted at $name"
-	done
+		do
+			name=$(curl -n -F "f:1=<-" http://ix.io < $file)
+				echo "$file has been hosted at $name"
+				done
 }
 
 pc(){
