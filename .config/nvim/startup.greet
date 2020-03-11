@@ -1,0 +1,24 @@
+		
+
+
+
+
+		|‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾|
+		|   _                     _            _               _             |
+		|  | |__   __ _ _   _  __| | ___ _ __ ( )___    __   _(_)_ __ ___    |
+		|  | '_ \ / _` | | | |/ _` |/ _ \ '_ \|// __|   \ \ / / | '_ ` _ \   |
+		|  | | | | (_| | |_| | (_| |  __/ | | | \__ \    \ V /| | | | | | |  |
+		|  |_| |_|\__,_|\__, |\__,_|\___|_| |_| |___/  (n)\_/ |_|_| |_| |_|  |
+		|	        |___/                                                |
+		|____________________________________________________________________|
+
+				Plugins collected by Hayden Hamilton
+				init.vim created by Hayden Hamilton
+				modules/ created by Hayden Hamilton
+				Find more stuff at http://haydenvh.com
+
+		:edit ~/.config/nvim/init - Contains mappings and settings for neovim.
+
+		:Explore ~/.config/nvim/modules - Contains my modules and additions.
+
+		:help intro - introduction to the vim editor.

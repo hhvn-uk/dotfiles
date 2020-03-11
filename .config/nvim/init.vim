@@ -13,7 +13,7 @@
 " repeat - repeat things
 " vimling (ipa, deadkeys) - deadkeys
 " vimagit - git in vim
-" v(org)im (written by me) - emulating org mode in vim
+" vimwiki - wiki program (can view my wiki)
 
 "Leader
 let mapleader=","
@@ -40,21 +40,25 @@ set relativenumber
 set number
 set hlsearch
 filetype plugin on
+set noshowmode
 
 "Leader keys
-noremap <leader>ve :vsplit ~/.config/nvim/init.vim<CR>
+noremap <leader>vv :edit ~/.config/nvim/init.vim<CR>
+noremap <leader>vz :vsplit ~/.config/nvim/init.vim<CR>
+noremap <leader>vZ :split ~/.config/nvim/init.vim<CR>
 noremap <leader>vs :source ~/.config/nvim/init.vim<CR>
 map <leader><leader><leader> <leader>vs
 
 noremap <leader>g :Goyo \| set linebreak<CR>
-noremap <leader>c :!sudo make all install clean \| set linebreak<CR>
+noremap <leader>cd :chdir 
+noremap <leader>C :!sudo make all install clean<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-noremap <Leader>sv :!sent % \| set linebreak<CR> 
+noremap <leader>sv :!sent % \| set linebreak<CR> 
 noremap <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
 noremap <leader>sf mm[s1z=`m<CR>
-noremap <leader>ssf z=<CR>
-noremap <leader>ff :r !find \| set linebreak<CR>
-noremap <leader>fl :r !ls \| set linebreak<CR>
+noremap <leader>ssf mm[sz=`m
+noremap <leader>Ff :r !find \| set linebreak<CR>
+noremap <leader>Fl :r !ls \| set linebreak<CR>
 noremap <leader>bd :bdelete \| set linebreak<CR>
 noremap <leader>bn :bn \| set linebreak<CR>
 noremap <leader>bp :bp \| set linebreak<CR>
@@ -63,12 +67,15 @@ noremap <leader>mvd :w! /tmp/bmv-edit \| set linebreak<CR>:!sh /tmp/bmv-edit \| 
 noremap <leader>ss :set syntax=
 inoremap <leader><leader>ss <Esc>:set syntax=
 noremap <leader>w :w \| set linebreak<CR>
-noremap <leader>W :w !sudo tee %<CR>
+noremap <leader>w! :w !sudo tee %<CR>
+noremap <leader>wq :x!<CR>
 noremap <leader>" ea"<esc>bi"<esc>
 noremap <leader>u" ds"
 noremap <leader>' ea'<esc>bi'<esc>
 noremap <leader>u' ds'
 noremap <leader>sp o<esc>pi
+noremap <leader>Ee :edit 
+noremap <leader>yv :reg<CR>
 
 noremap <leader>nn :set number! relativenumber!<CR>
 noremap <leader><leader>nn :setlocal number! relativenumber!<CR>
@@ -99,16 +106,16 @@ noremap cw ciw
 noremap md ddp
 noremap mu ddkkp
 noremap <c-U> viwU
-noremap <c-u> viwu
+noremap <c-i> viwu
 
 "Insert mode
 inoremap <c-d> <esc>ddi
 inoremap <c-c> <esc>cci
-inoremap <c-r> <esc>r
-inoremap <c-R> <esc>R
-inoremap <c-v> <esc>v
-inoremap <c-p> <esc>pi
-inoremap <c-P> <esc>Pi
+inoremap <c-r> <esc>lr
+inoremap <c-R> <esc>lR
+inoremap <c-v> <esc>lv
+inoremap <c-p> <esc>lpli
+inoremap <c-P> <esc>lPli
 
 "Folds
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
@@ -127,7 +134,7 @@ inoremap <leader>li <esc>:call ToggleIPA()<CR>a
 "An erotic file-browser
 noremap <leader>eh :Sex \| set linebreak<CR>
 noremap <leader>ev :Vex \| set linebreak<CR>
-noremap <leader>ee :Explore \| set linebreak<CR>
+noremap <leader>ee :Explore 
 noremap <leader>eo :browse oldfiles \| set linebreak<CR>
 noremap <leader>eb 100j
 let g:netrw_liststyle=3
@@ -161,13 +168,19 @@ source ~/.config/nvim/modules/theme.vim
 source ~/.config/nvim/modules/abbrs.vim
 source ~/.config/nvim/modules/statusline.vim
 source ~/.config/nvim/modules/splits.vim
-source ~/.config/nvim/modules/buffs.vim
 source ~/.config/nvim/modules/netrw.vim
 source ~/.config/nvim/modules/term.vim
 source ~/.config/nvim/modules/tabs.vim
+source ~/.config/nvim/modules/wiki.vim
+source ~/.config/nvim/modules/edit.vim
+source ~/.config/nvim/modules/window.vim
+source ~/.config/nvim/modules/message.vim
+source ~/.config/nvim/modules/openc.vim
 
 "Automatic commands
 augroup autocmd
+	"greet
+	autocmd BufRead *.greet set syntax=greet
 	"netrw
 	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
 

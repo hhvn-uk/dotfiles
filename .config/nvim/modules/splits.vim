@@ -9,18 +9,8 @@ noremap <C-l> <C-w>l
 noremap <C-c> <C-w>c
 noremap <A-j> <C-w>+
 noremap <A-k> <C-w>-
-noremap <A-h> <C-w><
-noremap <A-l> <C-w>>
-
-inoremap <C-h> <C-w>h
-inoremap <C-j> <C-w>j
-inoremap <C-k> <C-w>k
-inoremap <C-l> <C-w>l
-inoremap <C-c> <C-w>c
-inoremap <A-j> <C-w>+
-inoremap <A-k> <C-w>-
-inoremap <A-h> <C-w><
-inoremap <A-l> <C-w>>
+noremap <A-h> <C-w>>
+noremap <A-l> <C-w><
 
 function! Netrwmap(filetype)
 	if a:filetype == 'netrw'
@@ -38,5 +28,5 @@ augroup Netrwstop
 augroup END
 
 set fillchars+=vert:\ 
-hi VertSplit	ctermbg=0 ctermfg=0
-hi StatusLine	ctermbg=0 ctermfg=0
+hi VertSplit	ctermbg=1 ctermfg=1
+hi StatusLine	ctermbg=1 ctermfg=1

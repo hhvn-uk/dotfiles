@@ -1,7 +1,7 @@
 hi Statusbar 	ctermbg=0 ctermfg=0
 hi Modecol	ctermbg=10 ctermfg=254 gui=bold
-hi Basecol 	ctermbg=0
-hi Filecol 	ctermbg=2 ctermfg=7 gui=bold
+hi Basecol 	ctermbg=1
+hi Filecol 	ctermbg=3 ctermfg=7 gui=bold
 hi Branchcol 	ctermbg=9 ctermfg=7 gui=bold
 hi Positioncol 	ctermbg=3 ctermfg=254 gui=bold
 hi Buffcol	ctermbg=4 ctermfg=159
