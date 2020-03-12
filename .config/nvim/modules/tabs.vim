@@ -1,5 +1,5 @@
 hi TabLine cterm=none ctermfg=252 ctermbg=1
-hi TabLineSel cterm=bold ctermfg=252 ctermbg=0
+hi TabLineSel cterm=bold ctermfg=252 ctermbg=3
 hi TabLineFill cterm=none ctermfg=none ctermbg=1
 
 nnoremap <leader>te :tabedit 

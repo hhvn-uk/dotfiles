@@ -193,4 +193,7 @@ augroup autocmd
 	"C
 	autocmd FileType C :noremap <buffer> <leader>end $a;<esc>
 	autocmd FileType C :inoremap <buffer> <leader><leader>end <esc>$a;<esc>
+
+	"Numbers
+	autocmd BufRead,BufNewFile,WinEnter,BufEnter * setlocal number relativenumber
 augroup END
