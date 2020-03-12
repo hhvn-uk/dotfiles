@@ -7,6 +7,7 @@ augroup EnterMessage
 augroup END
 
 function! VimEnterDisplay()
+	set noswapfile
 	edit ~/.config/nvim/startup.greet
 	set syntax=greet
 	call SpawnLauncher()
@@ -32,7 +33,7 @@ function! LauncherRecent()
 	redir! >/tmp/vim-recent | silent! echo '  Press "q" to open empty buffer, "Q" to quit, or any key below:' | silent! echo '' | silent! echo '   Recent files:' | redir END
 	redir! >/tmp/vim-recent.1 | silent! echo '' | silent! echo '' | silent! echo 'Config files:' | redir END
 	redir! >/tmp/vim-recent.2 | silent! echo '' | silent! echo '' | silent! echo 'Recent files (cwd):' | redir END
-	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':nnoremap <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer> :q :qa!<CR>' | redir END
+	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':no <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
 	for string in olist
 		if i=='10'
 			break
@@ -48,7 +49,7 @@ function! LauncherRecent()
 			break
 		endif
 		if stridx(string, dir) != '-1'
-			redir >>/tmp/vim-recent.2 | silent! echo '   [' . i . '] ' . string | redir END
+			redir >>/tmp/vim-recent.2 | silent! echo '[' . i . '] ' . string | redir END
 			redir >>/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> ' . i | silent! echo ':nnoremap <buffer> ' . i . ' :q<CR>:edit ' . string '<CR>' | redir END
 		else
 			continue
@@ -57,9 +58,11 @@ function! LauncherRecent()
 	endfor
 	call LauncherConfig()
 	call LauncherFileMerge()
-	edit /tmp/vim-recent
+	let null=system("rm $HOME/.local/share/nvim/swap/%tmp%vim-recent.swp")
+	edit! /tmp/vim-recent
 	source /tmp/vim-recentcmd.vim
 	setlocal syntax=recent nomodifiable
+	set swapfile
 endfunction
 
 function! LauncherFileMerge()
@@ -80,7 +83,7 @@ function! LauncherConfig()
 		redir! >/tmp/vim-config-dict | silent! echo config | redir END
 		let string=system("awk '{$1=\"\";print $0}' < /tmp/vim-config-dict | tr -d '\n\r'")
 
-		redir >>/tmp/vim-recent.1 | silent! echo '   [' . a . '] ' . string | redir END
+		redir >>/tmp/vim-recent.1 | silent! echo '[' . a . '] ' . string | redir END
 		redir >>/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> ' . a | silent! echo ':nnoremap <buffer> ' . a . ' :q<CR>' . config . '<CR>' | redir END
 		let i+=1
 	endfor
