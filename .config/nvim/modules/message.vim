@@ -34,7 +34,7 @@ function! LauncherRecent()
 	redir! >/tmp/vim-recent.1 | silent! echo '' | silent! echo '' | silent! echo 'Config files:' | redir END
 	redir! >/tmp/vim-recent.2 | silent! echo '' | silent! echo '' | silent! echo 'Recent files (cwd):' | redir END
 	redir! >/tmp/vim-recent.3 | silent! echo '' | silent! echo '' | silent! echo 'General:' | redir END
-	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':no <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
+	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> <c-k>' | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':no <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
 	for string in olist
 		let string=substitute(string, $HOME, "~", "")
 		if i=='10'
@@ -80,7 +80,9 @@ function! LauncherConfig()
 	let configs=[
 				\":Explore ~/.config/",
 				\":edit ~/.config/nvim/init.vim",
-				\":Explore ~/.config/nvim/modules"
+				\":Explore ~/.config/nvim/modules",
+				\":Explore ~/.config/nvim/syntax",
+				\":Explore ~/.config/nvim/colors",
 				\]
 	let g:i=1
 	for config in configs
@@ -97,8 +99,10 @@ endfunction
 
 function! LauncherGeneral()
 	let general=[
+				\":!sxiv ~/.config/nvim/cheat.png::: View cheatsheet (only works with `sxiv`)",
 				\":chdir ::: Change Directory",
 				\":set path=::: Set (vim) path",
+				\":set path+=::: Append (vim) path",
 				\]
 	for gen in general
 		let a=Itoa(g:i)

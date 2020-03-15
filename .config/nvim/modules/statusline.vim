@@ -1,10 +1,9 @@
-hi Statusbar 	ctermbg=0 ctermfg=0
-hi Modecol	ctermbg=10 ctermfg=254 gui=bold
-hi Basecol 	ctermbg=1
-hi Filecol 	ctermbg=3 ctermfg=7 gui=bold
-hi Branchcol 	ctermbg=9 ctermfg=7 gui=bold
-hi Positioncol 	ctermbg=3 ctermfg=254 gui=bold
-hi Buffcol	ctermbg=4 ctermfg=159
+hi Statusbar 	ctermbg=0 ctermfg=0 guifg=#141726 guibg=#141726
+hi Basecol 	ctermbg=1 guibg=#24283c
+hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
+hi Branchcol 	cterm=bold ctermbg=9 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#4747e1
+hi Positioncol 	cterm=bold ctermbg=3 ctermfg=254 gui=bold guifg=#e4e4e4 guibg=#40445c
+hi Buffcol	ctermbg=4 ctermfg=159 guifg=#afffff guibg=#575b72
 
 let g:currentmode={
 			\'n' : 'Normal ',
@@ -32,92 +31,116 @@ function! Modecurrent() abort
 	let l:modecurrent = mode()
 	let l:modelist = toupper(get(g:currentmode, l:modecurrent, 'V·Block '))
 	let l:current_status_mode = l:modelist
+	let l:lmode = tolower(l:current_status_mode)
+
 	return l:current_status_mode
 endfunction
 
+function! Modecol()
+	let other=''
+	let l:mode=tolower(Modecurrent())
+
+	if l:mode == 'insert '
+		let gbg='#af005f'
+	elseif l:mode == 'terminal '
+		let gbg='#af8700'
+	elseif l:mode == 'command '
+		let gbg='#005f5f'
+	elseif l:mode == 'visual ' || l:mode == 'v-block ' || l:mode == 'v-line ' || l:mode == 'select '
+		let gbg='#af5f00'
+	else
+		let gbg='#892b2b'
+	endif
+	
+	let hargs='gui=bold guifg=#e4e4e4 guibg=' . gbg . ' ' . other
+
+	execute 'hi! Modecol ' . hargs
+	return ''
+endfunction
+
 function! Gitbranch()
-	return system("git branch | tr -d '\n'")
+	return g:system("git branch | tr -d '\n'")
 endfunction
 
 function! Activestatus()
 	""Mode
-	let s="%#Modecol#"
-	let s.=" %{Modecurrent()}"
-	let s.="%#Basecol#"
+	let g:s.="%#Modecol#"
+	let g:s.=" %{Modecurrent()}"
+	let g:s.="%#Basecol#"
 	""File
-	let s.="%#Filecol#"
-	let s.=" %f\ -\ %y%m "
-	let s.="%#Basecol#"
-	let s.="%="
+	let g:s.="%#Filecol#"
+	let g:s.=" %f\ -\ %y%m "
+	let g:s.="%#Basecol#"
+	let g:s.="%="
 	""Branch
-	" let s.="%#Branchcol#"
-	" let s.=" %{Gitbranch()} "
-	" let s.="%#Basecol#"
+	" let g:s.="%#Branchcol#"
+	" let g:s.=" %{Gitbranch()} "
+	" let g:s.="%#Basecol#"
 	""Position
-	let s.="%#Positioncol#"
-	let s.=" %l/%L,\ %c "
-	let s.="%#Basecol#"
+	let g:s.="%#Positioncol#"
+	let g:s.=" %l/%L,\ %c "
+	let g:s.="%#Basecol#"
 	""Buffer
-	let s.="%#Buffcol#"
-	let s.=" [%n] "
-	let s.="%#Basecol#"
+	let g:s.="%#Buffcol#"
+	let g:s.=" [%n] "
+	let g:s.="%#Basecol#"
 
-	return s
+	return g:s
 endfunction
 
 function! Inactivestatus()
 	""File
-	let s="%#Basecol#"
-	let s.=" %f\ -\ %y%m"
+	let g:s.="%#Basecol#"
+	let g:s.=" %f\ -\ %y%m"
 
-	return s
+	return g:s
 endfunction
 
 function! NetrwAstatus()
 	""Remimder
-	let s="%#Filecol#"
-	let s.=" %y "
-	let s.="%#Basecol#"
+	let g:s.="%#Filecol#"
+	let g:s.=" %y "
+	let g:s.="%#Basecol#"
 
-	return s
+	return g:s
 endfunction
 
 function! NetrwIstatus()
 	""Remimder
-	let s="%#Basecol#"
-	let s.=" %y "
+	let g:s.="%#Basecol#"
+	let g:s.=" %y "
 
-	return s
+	return g:s
 endfunction
 
 function! TermAstatus()
 	""Reminder
-	let s="%#Filecol#"
-	let s.=" [terminal] "
-	let s.="%#Basecol#"
+	let g:s.="%#Modecol#"
+	let g:s.=" [terminal] "
+	let g:s.="%#Basecol#"
 
-	return s
+	return g:s
 endfunction
 
 function! TermIstatus()
 	""Reminder
-	let s="%#Basecol#"
-	let s.=" [terminal] "
+	let g:s.="%#Basecol#"
+	let g:s.=" [terminal] "
 
-	return s
+	return g:s
 endfunction
 
 augroup Statusline
 	autocmd!
-	autocmd FileType netrw let _filetype=&filetype
-	autocmd FileType netrw let &l:statusline=Choosestatus(1, _filetype)
-	autocmd WinEnter,BufEnter * let _filetype=&filetype
-	autocmd WinEnter,BufEnter * let &l:statusline=Choosestatus(1, _filetype)
-	autocmd WinLeave,BufLeave * let &l:statusline=Choosestatus(0, _filetype)
+	autocmd FileType netrw let &l:statusline=Choosestatus(1, &filetype)
+	autocmd WinEnter,BufEnter * let &l:statusline=Choosestatus(1, &filetype)
+	autocmd WinNew,BufNew * let &l:statusline=Choosestatus(1, &filetype)
+	autocmd WinLeave,BufLeave * let &l:statusline=Choosestatus(0, &filetype)
 augroup END
 
 function! Choosestatus(active, filetype)
 	"Set active or inactive
+	let g:s="%{Modecol()}"
 	if a:active == '1'
 		let statusline=Activestatus()
 	else

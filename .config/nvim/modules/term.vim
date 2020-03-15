@@ -2,6 +2,7 @@ function! Termstart()
 	let s="term"
 	if stridx(expand('%:p'), s) == '0'
 		setlocal nonumber norelativenumber
+		setlocal notermguicolors
 	endif
 endfunction
 

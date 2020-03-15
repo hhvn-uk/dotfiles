@@ -1,6 +1,6 @@
-hi TabLine cterm=none ctermfg=252 ctermbg=1
-hi TabLineSel cterm=bold ctermfg=252 ctermbg=3
-hi TabLineFill cterm=none ctermfg=none ctermbg=1
+hi TabLine cterm=none ctermfg=252 ctermbg=1 gui=none guifg=#d0d0d0 guibg=#24283c
+hi TabLineSel cterm=bold ctermfg=252 ctermbg=3 gui=bold guifg=#d0d0d0 guibg=#40445c
+hi TabLineFill cterm=none ctermfg=none ctermbg=1 gui=none guifg=none guibg=#24283c
 
 nnoremap <leader>te :tabedit 
 nnoremap <leader>tf :tabfind 

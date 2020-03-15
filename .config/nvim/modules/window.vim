@@ -1,4 +1,4 @@
-hi Float ctermbg=0 cterm=none ctermfg=256
+hi Float ctermbg=0 cterm=none ctermfg=256 gui=none guibg=#141726 guifg=none
 
 function! Winmsg()
 	let width=&columns+4

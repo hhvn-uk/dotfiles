@@ -10,18 +10,20 @@ killprog(){
 	for file in $(printf "$@")
 	do
 		name=$(curl -n -F "file=@$file" http://0x0.st)
-		echo "$file has been hosted at $name"
-		echo "$name" | xclip
+		echo "$file : $name"
+		names="$names $name"
 	done
+	echo $names | xclip
 }
 
 ix(){
 	for file in $(printf "$@")
 	do
 		name=$(curl -n -F "f:1=<-" http://ix.io < $file)
-		echo "$file has been hosted at $name"
-		echo "$name" | xclip
+		echo "$file : $name"
+		names="$names $name"
 	done
+	echo $names | xclip
 }
 
 pc(){
@@ -38,4 +40,28 @@ make(){
 
 man(){
 	command man -c "$@" | centre
+}
+
+colo(){
+	for file in $(printf "$@")
+	do
+		name=$(curl -n -F "image=@$file" https://api.deepai.org/api/colorizer)
+		echo "$file : $name"
+		names="$names $name"
+	done
+	echo $names | xclip
+}
+
+colotable(){
+	o=0
+	for ((i=0;i<256;i++))
+	do
+		[ $o -gt 5 ] && printf "\n" && o=0
+		o=$(($o+1))
+		tput setaf $i
+		printf "  %03d  " "$i"
+		tput setab $i
+		printf "       "
+		tput sgr0
+	done
 }

@@ -1,0 +1,55 @@
+" Vim color file
+" Firstcreated by:	Ron Aaron <ron@ronware.org>
+" Modified by:		Hayden Hamilton <hayden@haydenvh.com>
+" Last Change:		14th March 2020
+
+set background=dark
+hi clear
+if exists("syntax_on")
+		syntax reset
+endif
+let g:colors_name = "haydenh"
+" Modified for term colors
+hi clear Normal
+hi clear NonText
+hi comment		ctermfg=14 guifg=#434343 gui=none
+hi constant		ctermfg=13 guifg=#a84b8d gui=none
+hi identifier	ctermfg=14 guifg=#434343 gui=NONE
+hi statement	ctermfg=11 guifg=#a1a1d9 gui=NONE
+hi preproc		ctermfg=44 guifg=#00d7d7 gui=none
+hi type			ctermfg=85 guifg=#5fffaf gui=none
+hi special		ctermfg=255 guifg=#eeeeee gui=none
+hi link ErrorMsg Error
+hi link WarningMsg Error
+hi Cursor		cterm=reverse ctermfg=255 guifg=#eeeeee gui=reverse
+hi Search		cterm=bold,underline ctermbg=5 guibg=#777b8e gui=bold,underline
+hi IncSearch	cterm=bold,underline ctermbg=5 guibg=#777b8e gui=bold,underline
+hi title		ctermfg=225 guifg=#ffd7ff gui=none
+" hi ShowMarksHL ctermfg=cyan ctermbg=lightblue cterm=bold guifg=yellow guibg=black  gui=bold
+hi label		ctermfg=255 guifg=#eeeeee gui=none
+hi operator		ctermfg=240 guifg=#585858 gui=none
+hi clear Visual
+hi Visual		cterm=reverse gui=reverse
+" hi DiffChange   guibg=darkgreen
+" hi DiffText		guibg=olivedrab
+" hi DiffAdd		guibg=slateblue
+" hi DiffDelete   guibg=coral
+hi Folded		cterm=bold,underline ctermfg=255 ctermbg=none guifg=#eeeeee gui=bold,underline
+hi FoldColumn	cterm=none ctermfg=249 ctermbg=1 guifg=#b2b2b2 gui=none
+" hi cIf0			guifg=gray
+" hi diffOnly	guifg=red gui=bold
+
+" Following section entirely created by Hayden Hamilton
+hi Error ctermbg=10 ctermfg=0 guifg=#892b2b guibg=#141726 gui=none
+hi Todo cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
+hi link NvimInternalError Error
+hi Float ctermfg=13 cterm=bold guifg=#a84b8d gui=none,bold
+hi LineNr ctermfg=11 guifg=#a1a1d9 gui=none
+hi link CursorLineNr LineNr
+hi CursorLineNr gui=bold cterm=bold guifg=#a1a1d9
+hi SpellBad ctermbg=1 ctermfg=10 guifg=#24283c guibg=#24283c gui=none
+hi SpellCap ctermbg=1 ctermfg=13 guifg=#a84b8d guibg=#24283c gui=none
+hi SpellRare ctermbg=1 ctermfg=none cterm=underline guifg=none guibg=#24283c gui=none,underline
+hi SpellLocal ctermbg=1 ctermfg=255 cterm=bold guifg=#eeeeee gui=none,bold
+hi MsgArea ctermbg=0 guibg=#141726 gui=none
+hi MsgSeparator ctermbg=1 guibg=#24283c gui=none

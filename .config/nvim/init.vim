@@ -16,7 +16,8 @@
 " vimwiki - wiki program (can view my wiki)
 
 "Leader
-let mapleader=","
+let mapleader=";"
+let maplocalleader=','
 
 "Cursor
 let &t_SI.="\033[6 q" "SI = INSERT mode
@@ -34,13 +35,17 @@ set encoding=utf-8
 
 "Set scheme
 syntax on
-colo ron
+set termguicolors
+colo haydenh
 set background=dark
 set relativenumber
 set number
 set hlsearch
 filetype plugin on
 set noshowmode
+
+"Fold
+set foldmethod=marker
 
 "Leader keys
 noremap <leader>vv :edit ~/.config/nvim/init.vim<CR>
@@ -51,6 +56,8 @@ map <leader><leader><leader> <leader>vs
 
 noremap <leader>g :Goyo \| set linebreak<CR>
 noremap <leader>cd :chdir 
+noremap <leader>ca :ColorizerAttachToBuffer<CR>
+noremap <leader>cd :ColorizerDetachFromBuffer<CR>
 noremap <leader>C :!sudo make all install clean<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 noremap <leader>sv :!sent % \| set linebreak<CR> 
@@ -101,8 +108,11 @@ inoremap <leader><leader>< <><Esc><Left>i
 
 "General stuff
 noremap dw diw
-noremap dl 0d$
+noremap dew dw
 noremap cw ciw
+noremap cew cw
+noremap dl 0d$
+
 noremap md ddp
 noremap mu ddkkp
 noremap <c-U> viwU
@@ -164,7 +174,6 @@ nnoremap <leader>TT :split term://zsh<CR><c-k><c-j>
 tnoremap <leader><Esc> <C-\><C-n>
 
 "Modules
-source ~/.config/nvim/modules/theme.vim
 source ~/.config/nvim/modules/abbrs.vim
 source ~/.config/nvim/modules/statusline.vim
 source ~/.config/nvim/modules/splits.vim
@@ -176,6 +185,7 @@ source ~/.config/nvim/modules/edit.vim
 source ~/.config/nvim/modules/window.vim
 source ~/.config/nvim/modules/message.vim
 source ~/.config/nvim/modules/openc.vim
+source ~/.config/nvim/modules/filetype.vim
 
 "Automatic commands
 augroup autocmd
@@ -193,7 +203,4 @@ augroup autocmd
 	"C
 	autocmd FileType C :noremap <buffer> <leader>end $a;<esc>
 	autocmd FileType C :inoremap <buffer> <leader><leader>end <esc>$a;<esc>
-
-	"Numbers
-	autocmd BufRead,BufNewFile,WinEnter,BufEnter * setlocal number relativenumber
 augroup END
