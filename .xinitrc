@@ -2,6 +2,7 @@
 
 xrdb ~/.Xresources
 setxkbmap haydenh
+xsetroot -cursor_name sailboat
 
 while true; do
 	dwm

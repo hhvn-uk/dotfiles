@@ -19,12 +19,6 @@ function! SpawnLauncher()
 	call Winset()
 endfunction
 
-function! FzfLauncher()
-	call Winmsg()
-	" fzf
-	call Winset()
-endfunction
-
 function! LauncherRecent()
 	rshada!
 	let olist=v:oldfiles
@@ -34,7 +28,7 @@ function! LauncherRecent()
 	redir! >/tmp/vim-recent.1 | silent! echo '' | silent! echo '' | silent! echo 'Config files:' | redir END
 	redir! >/tmp/vim-recent.2 | silent! echo '' | silent! echo '' | silent! echo 'Recent files (cwd):' | redir END
 	redir! >/tmp/vim-recent.3 | silent! echo '' | silent! echo '' | silent! echo 'General:' | redir END
-	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> <c-k>' | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':no <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
+	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> <c-k>' | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>:let g:netrw_winsize=20<CR>:Lexplore<CR><c-w>l' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':nnoremap <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
 	for string in olist
 		let string=substitute(string, $HOME, "~", "")
 		if i=='10'
@@ -49,10 +43,10 @@ function! LauncherRecent()
 	endfor
 	let i=10
 	for string in olist
-		let string=substitute(string, $HOME, "~", "")
 		if i=='20'
 			break
-		elseif stridx(string, "~") != '-1' && stridx(string, "NetrwTreeListing") == '-1' && stridx(string, "/tmp/vim-recent") == '-1' && stridx(string, expand("~/.config/nvim/startup.greet")) == '-1'
+		elseif stridx(string, getcwd()) != '-1' && stridx(string, "NetrwTreeListing") == '-1' && stridx(string, "/tmp/vim-recent") == '-1' && stridx(string, "~/.config/nvim/startup.greet") == '-1'
+			let string=substitute(string, $HOME, "~", "")
 			redir >>/tmp/vim-recent.2 | silent! echo '[' . i . '] ' . string | redir END
 			redir >>/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> ' . i | silent! echo ':nnoremap <buffer> ' . i . ' :q<CR>:edit ' . string '<CR>' | redir END
 		else

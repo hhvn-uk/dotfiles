@@ -142,14 +142,14 @@ noremap <leader>li :call ToggleIPA()<CR>
 inoremap <leader>li <esc>:call ToggleIPA()<CR>a
 
 "An erotic file-browser
-noremap <leader>eh :Sex \| set linebreak<CR>
-noremap <leader>ev :Vex \| set linebreak<CR>
+noremap <leader>ev :Lexplore \| set linebreak<CR>
 noremap <leader>ee :Explore 
 noremap <leader>eo :browse oldfiles \| set linebreak<CR>
 noremap <leader>eb 100j
 let g:netrw_liststyle=3
 let g:netrw_banner=0
 let g:netrw_altv=1
+let g:netrw_winsize=20
 
 "Remove arrow keys
 no <Up> <Nop>

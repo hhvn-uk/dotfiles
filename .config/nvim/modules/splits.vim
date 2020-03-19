@@ -14,7 +14,7 @@ noremap <A-l> <C-w><
 
 function! Netrwmap(filetype)
 	if a:filetype == 'netrw'
-		unmap! <c-l>
+		silent! unmap! <c-l>
 		noremap! <C-l> <C-w>l
 	endif
 
@@ -27,6 +27,6 @@ augroup Netrwstop
 	autocmd WinEnter,BufEnter * let _void=Netrwmap(_filetype)
 augroup END
 
-set fillchars+=vert:\ 
+set fillchars+=vert:\|
 hi VertSplit	ctermbg=1 ctermfg=1 guifg=#24283c guibg=#24283c
 hi link StatusLine VertSplit

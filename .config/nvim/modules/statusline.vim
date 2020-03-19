@@ -150,8 +150,10 @@ function! Choosestatus(active, filetype)
 	"Overwrite if special
 	let s="term"
 	if a:filetype == 'netrw' && a:active == '1'
+		let g:s=""
 		let statusline=NetrwAstatus()
 	elseif a:filetype == 'netrw'
+		let g:s=""
 		let statusline=NetrwIstatus()
 	elseif stridx(expand('%:p'), s) == '0' && a:active == '1'
 		let statusline=TermAstatus()

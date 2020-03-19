@@ -10,7 +10,6 @@
 if [ "$(echo $1 | awk '/help/ {print}')" != "" ]
 then
 	echo "dfm [fm for standard mode/name of program for file-selection] [/path/to/dir - enter at start]
-
 $(tput bold)CONFIG:$(tput sgr0)
 DFM_CONF_DIR=[insert /path/to/confdir] <-- Default: $HOME/.config/dfm
 DFM_DOT=[0/1 to show dotfiles] <-- Default: 1
@@ -19,18 +18,19 @@ DFM_DISABLE_ENQUEUE=[0/1 to never enqueue input] <-- Default: 0
 DFM_SCREENSHOT_CMD=\"[insert program name]\" <-- Default: \"maim -s\"
 DFM_CLIPBOARD_TYPE=\"[PRIMARY/CLIPBOARD/CUSTOM]\" <-- Default: \"PRIMARY\"
 DFM_CLIPBOARD_CUSTOM=\"[insert program for clipboard]\" <-- Default: \"xclip\"
-
 $(tput bold)CONFIGURING COMMANDS FOR FILE TYPES:$(tput sgr0) Syntax
 	DFM_FILETYPE_[insert filetype in all caps]=\"[insert program name]\"
 			^ For example, .mkv is MKV	^ For example mpv
 When in standard file management mode, you will now get the option to automatically select a program to launch.
-
 Written by Hayden Hamilton <haydenvh.com>"
 	exit 0
 fi
 forn1="$1"
 lsforce="$3"
-[ "$1" == "" ] && export forn1="fm"
+if [ "$1" == "" ]
+then
+	export forn1="fm"
+fi
 
 getconf(){
 	dmenu="dmenu"
@@ -40,15 +40,23 @@ getconf(){
 	DFM_CLIPBOARD_TYPE="PRIMARY"
 	. $HOME/.dmenurc
 	. $HOME/.config/dfm/config
-	[ "$DFM_USE_HH_PATCH" == "1" ] && dmenu="$dmenu -c -w 1000"
-
-	case "$DFM_CLIPBOARD_TYPE" in
-		PRIMARY) clipboard="xclip" ;;
-		CLIPBOARD) clipboard="xclip -selection clipboard" ;;
-		CUSTOM) clipboard="$DFM_CLIPBOARD_CUSTOM" ;;
-	esac
-	[ "$DFM_CLIPBOARD_TYPE" = "" ] && clipboard="xclip"
-
+	if [ "$DFM_USE_HH_PATCH" == "1" ]
+	then
+		dmenu="$dmenu -c -w 1000"
+	fi
+	if [ "$DFM_CLIPBOARD_TYPE" == "PRIMARY" ]
+	then
+		clipboard="xclip"
+	elif [ "$DFM_CLIPBOARD_TYPE" == "CLIPBOARD" ]
+	then
+		clipboard="xclip -selection clipboard"
+	elif [ "$DFM_CLIPBOARD_TYPE" == "CUSTOM" ]
+	then
+		clipboard="$DFM_CLIPBOARD_CUSTOM"
+	else
+		clipboard="xclip"
+	fi
+	echo $clipboard
 	confdir="$DFM_CONF_DIR"
 	conffile="$confdir/config"
 }
@@ -68,40 +76,46 @@ sendconf(){
 }
 
 fmornorm(){
-	[ "$forn1" == "fm" ] && {
+	if [ "$forn1" == "fm" ]
+	then
 		output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
 		fmspecial
-	} || {
+	else
 		dooutput
-		[ "$doarg" == "true" ] && {
+		if [ "$doarg" == "true" ]
+		then
 			echo $forn1
 			$forn1 $argu
 			argu=""
-		};
-	};
+		fi
+	fi
 }
 
 dooutput(){
 	[ "$DFM_DISABLE_ENQUEUE" != "1" ] && enqueue=$(echo "DO ENQUEUE" | tr " " "\n" | $dmenu -i -p "What do you want to do?")
-	[ "$enqueue" == "ENQUEUE" ] && {
+	if [ "$enqueue" == "ENQUEUE" ]
+	then
 		argu+="$(pwd)/$output "
 		doarg="false"
-	} || {
+	else
 		argu+="$(pwd)/$output "
 		doarg="true"
-	};
+	fi
 }
 
 getdot(){
-	[ "$lsforce" != "" ] && {
+	if [ "$lsforce" != "" ]
+	then
 		lscommand="$lsforce"
-	} || [ "$DFM_DOT" == "1" ] && {
+	elif [ "$DFM_DOT" == "1" ]
+	then
 		lscommand="ls -A"
-	} || [ "$DFM_DOT" == "0" ] && {
+	elif [ "$DFM_DOT" == "0" ]
+	then
 		lscommand="ls"
-	} || {
+	else
 		lscommand="ls -A"
-	};
+	fi
 }
 
 getprog(){
@@ -122,35 +136,34 @@ sendscrn0x0(){
 }
 
 fmspecial(){
-	case "$output2" in
-		"AUTO - Check config for program to use")
-			getprog "$output"
-			[ "$commandout" != "" ] && $commandout $output $argu
-			[ "$commandout" == "" ] && echo "No program set..."
-		;;
-		"RM - Remove file")
-			rm $output
-		;;
-		"CMD - Specific command")
-			output3=$(dmenu_path | $dmenu -i -p "Select program")
-			$output3 $output $argu
-			argu=""
-		;;
-		"MV - Move file")
-			output3=$(echo "" | $dmenu -i -p "Move to:")
-			mv $output $output3
-		;;
-		"EDIT - Open with $EDITOR")
-			$EDITOR $output $argu
-			argu=""
-		;;
-		"QUE - Enqueue")
-			argu+="$output "
-		;;
-		"SND - Send to 0x0.st")
-			send0x0
-		;;
-	esac
+	if [ "$output2" == "AUTO - Check config for program to use" ]
+	then
+		getprog "$output"
+		[ "$commandout" != "" ] && $commandout $output $argu
+		[ "$commandout" == "" ] && echo "No program set..."
+	elif [ "$output2" == "RM - Remove file" ]
+	then
+		rm $output
+	elif [ "$output2" == "CMD - Specific command" ]
+	then
+		output3=$(dmenu_path | $dmenu -i -p "Select program")
+		$output3 $output $argu
+		argu=""
+	elif [ "$output2" == "MV - Move file" ]
+	then
+		output3=$(echo "" | $dmenu -i -p "Move to:")
+		mv $output $output3
+	elif [ "$output2" == "EDIT - Open with $EDITOR" ]
+	then
+		$EDITOR $output $argu
+		argu=""
+	elif [ "$output2" == "QUE - Enqueue" ]
+	then
+		argu+="$output "
+	elif [ "$output2" == "SND - Send to 0x0.st" ]
+	then
+		send0x0
+	fi
 }
 
 cd $2
@@ -174,72 +187,81 @@ CMD - Specific command
 EDIT - Open with $EDITOR
 QUE - Enqueue
 SND - Send to 0x0.st"
-	[ "$output" == "FM" ] && {
+	if [ "$output" == "FM" ]
+	then
 		output=$(echo "$fmcmd1" | $dmenu -l 30 -i -p "Select command:")
-		case "$output" in
-			"MD - Make dir")
-				output2=$(echo "" | $dmenu -i -p "Name dir:")
-				mkdir $output2
-			;;
-			"MF - Make file")
-				output2=$(echo "" | $dmenu -i -p "Name file:")
-				touch $output2
-			;;
-			"BM - Bookmarks")
-				touch ~/.config/dfm/bookmarks
-				output=$(echo "MK DEL $(cat ~/.config/dfm/bookmarks | awk '// {print $1}')" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
-				[ "$output" == "MK" ] && {
-					output=$(echo "" | $dmenu -i -p "Choose bookmark name(no spaces):")
-					output2=$(echo "" | $dmenu -i -p "Choose bookmark path(absolute):")
-					echo "$output $output2" >> ~/.config/dfm/bookmarks
-				} || [ "$output" == "DEL" ] && {
-					output=$(echo "$(cat $confdir/bookmarks | awk '// {print $1}')" | $dmenu -l 30 -i -p "Select bookmark to delete:")
-					[ "$(cat $confdir/bookmarks | awk "/$output/ {print"' $1}')" == "$output" ] && sed -i "/$output/d" $confdir/bookmarks
-				} || {
-					output=$(cat ~/.config/dfm/bookmarks | awk "/$output/"' {print $2}')
-					output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
-					fmspecial
-				};
-			;;
-			"FND - Find")
-				output=$(echo "" | $dmenu -i -p "Enter name of file:")
-				output2=$(printf "ROOT (Takes a while)\nLOCALLY" | $dmenu -i -p "Find option")
-				[ "$(echo $output2 | awk '/ROOT/')" != "" ] && {
-					echo "May take a while..."
-					output3="/"
-				} || {
-					output3="."
-				};
-				output=$(echo "NONE $(find $output3 | grep -i "$output")" | tr " " "\n" | $dmenu -i -l 30 -p "Select file:")
-				[ "$output" == "NONE" ] && {
-					echo > /dev/null
-				} || {
-					fmornorm
-				};
-			;;
-			"HIDE - Toggle Dotfiles")
-				[ "$DFM_DOT" == "0" ] && {
-					export DFM_DOT="1"
-					sendconf "DFM_DOT" "1"
-				} || [ "$DFM_DOT" == "1" ] && {
-					export DFM_DOT="0"
-					sendconf "DFM_DOT" "0"
-				} || {
-					export DFM_DOT="0"
-					sendconf "DFM_DOT" "0"
-				};
-			;;
-			"SCRN - Host screenshot on 0x0.st")
-				sendscrn0x0
-			;;
-		esac
-	} || [ -d "$output" ] && {
+		if [ "$output" == "MD - Make dir" ]
+		then
+			output2=$(echo "" | $dmenu -i -p "Name dir:")
+			mkdir $output2
+		elif [ "$output" == "MF - Make file" ]
+		then
+			output2=$(echo "" | $dmenu -i -p "Name file:")
+			touch $output2
+		elif [ "$output" == "BM - Bookmarks" ]
+		then
+			touch ~/.config/dfm/bookmarks
+			output=$(echo "MK DEL $(cat ~/.config/dfm/bookmarks | awk '// {print $1}')" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
+			if [ "$output" == "MK" ]
+			then
+				output=$(echo "" | $dmenu -i -p "Choose bookmark name(no spaces):")
+				output2=$(echo "" | $dmenu -i -p "Choose bookmark path(absolute):")
+			 	echo "$output $output2" >> ~/.config/dfm/bookmarks
+			elif [ "$output" == "DEL" ]
+			then
+				output=$(echo "$(cat $confdir/bookmarks | awk '// {print $1}')" | $dmenu -l 30 -i -p "Select bookmark to delete:")
+				[ "$(cat $confdir/bookmarks | awk "/$output/ {print"' $1}')" == "$output" ] && sed -i "/$output/d" $confdir/bookmarks
+			else
+				output=$(cat ~/.config/dfm/bookmarks | awk "/$output/"' {print $2}')
+				output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
+				fmspecial
+			fi
+		elif [ "$output" == "FND - Find" ]
+		then
+			output=$(echo "" | $dmenu -i -p "Enter name of file:")
+			output2=$(printf "ROOT (Takes a while)\nLOCALLY" | $dmenu -i -p "Find option")
+			if [ "$(echo $output2 | awk '/ROOT/')" != "" ]
+			then
+				echo "May take a while..."
+				output3="/"
+			else
+				output3="."
+			fi
+			output=$(echo "NONE $(find $output3 | grep -i "$output")" | tr " " "\n" | $dmenu -i -l 30 -p "Select file:")
+			if [ "$output" == "NONE" ]
+			then
+				echo > /dev/null
+			else
+				fmornorm
+			fi
+		elif [ "$output" == "HIDE - Toggle Dotfiles" ]
+		then
+			if [ "$DFM_DOT" == "0" ]
+			then
+				export DFM_DOT="1"
+				sendconf "DFM_DOT" "1"
+			elif [ "$DFM_DOT" == "1" ]
+			then
+				export DFM_DOT="0"
+				sendconf "DFM_DOT" "0"
+			else
+				export DFM_DOT="0"
+				sendconf "DFM_DOT" "0"
+			fi
+		elif [ "$output" == "SCRN - Host screenshot on 0x0.st" ]
+		then
+			sendscrn0x0
+		fi
+	elif [ -d "$output" ]
+	then
 		cd $output
-	} || [ "$output" == "exit" ] && {
+	elif [ "$output" == "exit" ]
+	then
 		exit 1
-	} || [ "$output" == "" ] && {
+	elif [ "$output" == "" ]
+	then
 		exit 1
-	} || {
+	else
 		fmornorm
-	};
+	fi
 done
