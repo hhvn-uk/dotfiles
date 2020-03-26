@@ -15,7 +15,9 @@ set home-page=http://www.haydenvh.com/h/
 set smooth-scrolling=false
 set webinspector=true
 
-nnoremap vh :sh! vimbhist
+nnoremap vh :sh! vimbhist<CR>
+nnoremap Q :q!<CR>
+nmap B :sh! mpv "$(xclip -o)"<CR>
 
 shortcut-add sx=https://searx.me/?q=$0
 shortcut-add sch=https://searx.ch/?q=$0
@@ -35,4 +37,4 @@ shortcut-add map=https://map.openaerialmap.org/#/
 shortcut-add ebay=https://www.ebay.co.uk/sch/$0
 shortcut-add am=https://www.amazon.co.uk/s?k=$0
 shortcut-add 8g=https://8kun.top/g/catalog.html
-shortcut-add 8g=https://8kun.top/brit/catalog.html
+shortcut-add 8b=https://8kun.top/brit/catalog.html

@@ -6,15 +6,15 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-dirs=$(ls -d */ */*/ */*/*/ */*/*/*/ */*/*/*/*/ 2>/dev/null)
-for dir in $dirs
+bkp=$(pwd)
+
+IFS=$'\n'
+for d in $(find . -type d)
 do
-	cd $dir
-	for f in *; do mv "$f" `echo $f | tr ' ' '.'`; done
-	backdir=$(echo $dir | tr "/" "\n" | wc -l)
-	backdir=$(($backdir-1))
-	for i in `seq $backdir`
+	cd $d
+	for f in $(find . -maxdepth 1 -type f)
 	do
-		cd ../
+		mv "$f" $(echo "$f" | tr " " ".")
 	done
+	cd $bkp
 done

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-xrdb ~/.Xresources
+xrdb ~/.local/xres
 setxkbmap haydenh
 xsetroot -cursor_name sailboat
 

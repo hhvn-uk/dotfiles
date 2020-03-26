@@ -1,0 +1,16 @@
+#!/bin/sh
+
+tar cjvf $1/$(date --iso-8601=hours | tr -d " :+-").tar.bz \
+	/bin \
+	/boot \
+	/etc \
+	/home \
+	/lib \
+	/lib32 \
+	/lib64 \
+	/opt \
+	/root \
+	/sbin \
+	/usr \
+	/var \
+	/srv \

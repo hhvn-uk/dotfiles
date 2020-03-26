@@ -1,7 +1,6 @@
 #!/bin/bash
 dmenu="dmenu"
 . $HOME/.config/irssi/userrc
-. $HOME/.dmenurc
 
 #Servers {
 	SERVERS="RIZON FREENODE"

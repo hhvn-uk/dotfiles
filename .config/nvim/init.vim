@@ -53,6 +53,14 @@ noremap <leader>vz :vsplit ~/.config/nvim/init.vim<CR>
 noremap <leader>vZ :split ~/.config/nvim/init.vim<CR>
 noremap <leader>vs :source ~/.config/nvim/init.vim<CR>
 map <leader><leader><leader> <leader>vs
+noremap <leader>r :call ReopenFile()<CR>
+
+function! ReopenFile()
+	let curfile=expand('%:p')
+	echom curfile
+	execute 'write' . curfile
+	execute 'edit' . curfile
+endfunction
 
 noremap <leader>g :Goyo \| set linebreak<CR>
 noremap <leader>cd :chdir 

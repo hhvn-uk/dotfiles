@@ -1,8 +1,8 @@
 ls		\ls --color
 l		\ls --color
-la		\ls --color -a
+la		\ls --color -A
 ll		\ls --color -lh
-lla		\ls --color -lah
+lla		\ls --color -lAh
 vim		nvim
 vi		nvim
 v		nvim
@@ -17,19 +17,16 @@ ytdl		youtube-dl --add-metadata -ic
 ytdla 		youtube-dl --add-metadata -xic
 map		telnet mapscii.me
 tetris		ssh netris.rocketnine.space
-calcurse 	\calcurse -D ~/.config/calcurse
 irssi		\irssi --home ~/.config/irssi/ -n haydenh
 zsleep		sudo zzz
 hibernate 	sudo ZZZ
 rmst		bash ~/.scripts/random/gnulinux.sh
-fff		bash ~/.config/fff/config
-python		python3
 vimb		\vimb --no-maximize
-cleancache 	sudo xbps-remove -Oo; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst ~/.dbus ~/.sciminfo ~/.viminfo ~/.w3m; sudo vkpurge rm all
+cleancache 	sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst ~/.dbus ~/.sciminfo ~/.viminfo ~/.w3m; sudo vkpurge rm all
 mkconfall	mkmailpass; mkalias
+tmux		tmux -f ~/.config/tmux/config
 nw		newsboat
 nm		neomutt
-conftar		cd ~; sshtar .config/ .tmux.conf .terminfo/ .scripts/ .alias .galias .vimrc
 maic		sudo make all install clean
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls

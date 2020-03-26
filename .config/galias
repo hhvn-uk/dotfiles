@@ -9,5 +9,7 @@
 ...........	../../../../../../../../../..
 ............	../../../../../../../../../../..
 om		origin master
+o		origin
 gm		github master
+g		github
 aic		all install clean

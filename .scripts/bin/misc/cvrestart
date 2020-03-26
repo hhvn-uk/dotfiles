@@ -1,8 +1,8 @@
 #!/bin/sh
 
-pkill convtodwm
+pkill dwmbar
 pkill fetchmail
 
-cd ~/.scripts/i3blocks
-exec ./convtodwm >/dev/null 2>/dev/null &
+cd ~/.scripts/dwmblocks
+exec ./dwmbar >/dev/null 2>/dev/null &
 disown -a

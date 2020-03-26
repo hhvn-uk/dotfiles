@@ -22,19 +22,16 @@ chatnets = {
 };
 channels = (
   { name = "#voidlinux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#staw"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#freenode"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#irssi"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#neomutt"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#GNU/matrix"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; },
-  {
-    name = "#archlinux-offtopic";
-    chatnet = "Freenode";
-    autojoin = "Yes";
-  },
   { name = "#GNU/matrix"; chatnet = "Rizon"; autojoin = "Yes"; },
+  { name = "#staw"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#neomutt"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#cat-v"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#archlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#neovim"; chatnet = "Freenode"; autojoin = "Yes"; }
+  { name = "#voidlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; },
 );
 aliases = {
   ATAG = "WINDOW SERVER";
@@ -196,16 +193,12 @@ statusbar = {
   items = {
     barstart = "{sbstart}";
     barend = "{sbend}";
-    topicbarstart = "{topicsbstart}";
-    topicbarend = "{topicsbend}";
-    time = "{sb $Z}";
     user = "{sb {sbnickmode $cumode}$N{sbmode $usermode}{sbaway $A}}";
     window = "{sb $winref:$tag/$itemname{sbmode $M}}";
     window_empty = "{sb $winref{sbservertag $tag}}";
     prompt = "{prompt $[.15]itemname}";
     prompt_empty = "{prompt $winname}";
     topic = " $topic";
-    topic_empty = " Irssi v$J - http://www.irssi.org";
     lag = "{sb Lag: $0-}";
     act = "{sb Act: $0-}";
     more = "-- more --";
@@ -219,11 +212,6 @@ statusbar = {
       visible = "active";
       items = {
         barstart = { priority = "100"; };
-        time = { };
-        user = { };
-        window = { };
-        window_empty = { };
-        lag = { priority = "-1"; };
         act = { priority = "10"; };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
@@ -237,7 +225,6 @@ statusbar = {
       items = {
         barstart = { priority = "100"; };
         window = { };
-        window_empty = { };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
       };
@@ -253,32 +240,19 @@ statusbar = {
         input = { priority = "10"; };
       };
     };
-    topic = {
-      type = "root";
-      placement = "top";
-      position = "1";
-      visible = "always";
-      items = {
-        topicbarstart = { priority = "100"; };
-        topic = { };
-        topic_empty = { };
-        topicbarend = { priority = "100"; alignment = "right"; };
-      };
-    };
   };
 };
 settings = {
   core = {
     real_name = "haydenh";
     user_name = "haydenh";
-    nick = "hhhhv";
+    nick = "haydenh";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
     theme = "pipeline";
-    autolog_path = "~/.irc.log";
     autolog = "yes";
   };
   "perl/core/scripts" = {
@@ -287,5 +261,3 @@ settings = {
   };
   "irc/core" = { alternate_nick = "haydenh_"; };
 };
-
-logs = { };

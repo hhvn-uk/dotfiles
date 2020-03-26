@@ -1,0 +1,77 @@
+#!/bin/sh
+
+backups=$(find /mnt/backups/ -type f | sort)
+dir="$1"
+
+limit(){
+	limit="$1"
+	[ -z $number ] && echo "No limit supplied!" && exit 1
+
+	tailn=$(echo "$backups" | wc -l)
+	tailn=$(($tailn-$limit))
+
+	for bkp in $(echo "$backups" | tail -"$number")
+	do
+		rm $dir/$bkp || {
+			echo "File does not exist!"; return 1
+		}
+	done
+}
+
+last(){
+	number="$1"
+	[ -z $number ] && number="1"
+
+	for bkp in $(echo "$backups" | tail -"$number")
+	do
+		rm $dir/$bkp || {
+			echo "File does not exist!"; return 1
+		}
+	done
+}
+
+specific(){
+	rm $dir/$bkp || {
+		echo "File does not exist!"; return 1
+	}
+}
+
+all(){
+	for bkp in $(echo "$backups" | head -n -1)
+	do
+		rm $dir/$bkp || {
+			echo "File does not exist!"; return 1
+		}
+	done
+}
+
+allall(){
+	rm -rf $dir/*
+}
+
+list(){
+	echo "$backups"
+}
+
+usage(){
+	echo \ 
+"backupdel /path/to/dir [type of deletion] [arg to deletion / specific (grepped) backup]
+
+limit		Keep only a certain amount of backups, deleting backups from oldest to
+		newest, until the amount of backups is equal to the number supplied.
+last		Delete the last [arg supplied or 1] backup(s)
+all		Delete all except from the current
+allall		Delete ALL including current
+list		List all backups
+*		Delete the specific (grepped) backup"
+}
+
+case arg in "$2"
+	*help|*usage) usage ;;
+	limit) limit "$3" || usage ;;
+	last) last "$3" || usage ;;
+	all) all ;;
+	allall) allall ;;
+	list) list ;;
+	*) specific "$2" || usage ;;
+esac

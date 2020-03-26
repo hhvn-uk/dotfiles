@@ -1,16 +1,32 @@
 # Make alias'
 mkalias
 
+# Prompt
+precmd(){
+	prev="$?"
+	branch=$(git branch 2>/dev/null | grep "\*" | tr -d '\*')
+	prompt="%F{3}"
+	prompt+="█ "
+	[ "$prev" != "0" ] && prompt+="%F{10}$prev "
+	prompt+="%F{4}"
+	prompt+="%n"
+	prompt+=" %F{6}"
+	prompt+="%~/"
+	prompt+="%F{5}"
+	prompt+="$branch"
+	prompt+="%F{5}"
+	prompt+=" > "
+	prompt+="%F"
+	export PROMT="$prompt"
+}
+
 # Completion
 autoload -Uz compinit promptinit
 compinit
 promptinit
 
-. $HOME/.ls_colors
 zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-export PROMPT="%F{2}[%F{3}%F{4}%n@%F{5}%M %F{6}%~/%F{2}]%F{11}\$ %F"
 
 # Vi-mode
 bindkey -v
@@ -21,9 +37,6 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -v '^?' 	  backward-delete-char
-
-# Alias'
-. $ZDOTDIR/alias
 
 # Keys
 typeset -g -A key
@@ -40,8 +53,8 @@ key[PageUp]="${terminfo[kpp]}"
 key[PageDown]="${terminfo[knp]}"
 key[ShiftTab]="${terminfo[kcbt]}"
 
-# Functions
-. $HOME/.config/zsh/functions
+# Load .zsh files
+. $ZDOTDIR/*.zsh
 
 # Highlighted man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'
