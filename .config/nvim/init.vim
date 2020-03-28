@@ -173,8 +173,7 @@ ino <Right> <Nop>
 nnoremap <leader>CS :let @/=''<CR>
 
 "Registers
-nnoremap <c-y> "*y
-inoremap <c-y> "*y
+nnoremap y "*y
 
 "Terminals
 nnoremap <leader>Tt :vsplit term://zsh<CR><c-h><c-l>

@@ -4,10 +4,10 @@ source user
 source pass
 set smtp_authenticators = "plain"
 
-set spoolfile = "~/general/mail/inbox"
-set record = "~/general/mail/sent"
-set postponed = "~/general/mail/drafts"
-set trash = "~/general/mail/rubbish"
+set spoolfile = "~/mail/inbox"
+set record = "~/mail/sent"
+set postponed = "~/mail/drafts"
+set trash = "~/mail/rubbish"
 mailboxes =inbox =sent =drafts =rubbish
 
 set mbox_type = Maildir

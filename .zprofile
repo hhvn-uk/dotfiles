@@ -38,6 +38,7 @@ xrdb -merge ~/.local/xres
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:$HOME/.local/share
+export XDG_RUNTIME_DIR=/tmp
 export XAUTHORITY=$HOME/.local/.xauth
 export LESSHISTFILE=-
 export GNUPGHOME=$HOME/.local/gnupg
