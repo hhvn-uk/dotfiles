@@ -71,14 +71,9 @@ fi
 };
 echo $files
 echo $files > $HOME/.cache/rfeh/prev
-[ "$backend" = "xwallpaper" ] && {
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
-	for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
-	do
-		files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
-	done
-	xwallpaper $files
-} || {
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
-	feh $files
-}
+files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
+do
+	files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
+done
+xwallpaper $files

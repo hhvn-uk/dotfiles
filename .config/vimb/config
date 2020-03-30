@@ -36,5 +36,4 @@ shortcut-add karta=https://minkarta.lantmateriet.se/
 shortcut-add map=https://map.openaerialmap.org/#/
 shortcut-add ebay=https://www.ebay.co.uk/sch/$0
 shortcut-add am=https://www.amazon.co.uk/s?k=$0
-shortcut-add 8g=https://8kun.top/g/catalog.html
-shortcut-add 8b=https://8kun.top/brit/catalog.html
+shortcut-add 8=https://8kun.top/$0/catalog.html

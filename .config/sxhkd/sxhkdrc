@@ -1,0 +1,68 @@
+super + {shift, ctrl, alt, shift + ctrl} + bracketright
+	dinput "Are you sure?" "{sudo zzz, sudo ZZZ, sudo halt, sudo reboot}"
+
+super + return
+	st
+
+super + b
+	tabbed -c vimb -e
+
+super + shift + b
+	dmpvurl
+
+super + ctrl + b
+	queuevid
+
+super + c
+	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2
+
+super + d
+	dmenu_run
+
+super + e
+	st -e tmux
+
+super + ctrl + e
+	rfeh ~/images/wallpapers/ auto right
+
+super + m
+	dmon
+
+super + ctrl + q
+	rfeh ~/images/wallpapers/ auto left
+
+super + s
+	dpass
+
+super + ctrl + s
+	maim -s > ~/tmp.png
+
+super + w
+	rfeh ~/images/wallpapers/
+
+super + ctrl + w
+	wallblur
+
+super + alt + w
+	fehffile ~/.cache/rfeh/prev
+
+super + ctrl + y
+	dmpv ~/general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
+
+super + ctrl + u
+	dmpv ~/general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
+
+super + alt + {y,u}
+	rmpv ~/general/{videos,music}/ 50
+
+super + ctrl + {i,p}
+	hmpv {back,forward} /tmp/mpv-socket
+
+super + alt + {i,p}
+	hmpv {prev,next} /tmp/mpv-socket
+
+super + {ctrl,alt} + o
+	hmpv {toggle,quit} /tmp/mpv-socket
+
+super + bracketright + {0-9} + {,shift}
+	hvol {0-9}%{-,+}

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ts youtube-dl --add-metadata -ic $(xclip -o)

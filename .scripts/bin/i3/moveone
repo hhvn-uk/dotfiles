@@ -1,5 +1,0 @@
-#!/bin/bash
-ws="$1"
-
-i3-msg move container to workspace "$ws"
-i3-msg workspace "$ws"

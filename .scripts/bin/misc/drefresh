@@ -1,4 +1,0 @@
-#!/bin/sh
-
-hkill dunst
-dunst &

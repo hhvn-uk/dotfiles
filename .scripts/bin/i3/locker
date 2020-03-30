@@ -1,8 +1,0 @@
-#!/bin/bash
-socket1="$1"
-socket2="$2"
-
-
-echo "dmpv/rmpv: $(hmpv state $socket1)" > ~/.cache/socket; echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
-hmpv pause $socket1; sleep 0.1; hmpv pause $socket2; sleep 0.1; hmpv pause $socket2; sleep 0.1; hmpv pause $socket2
-hlock; lockerexit /tmp/mpv-socket2 /tmp/mpv-socket

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cmons=$(xrandr | grep "[A-Z]* con" | wc -l)
+
+[ "$cmons" = "3" ] && xrandr --output LVDS1 --off --output VGA1 --primary --output HDMI2 --right-of ||
+[ "$cmons" = "2" ] && {
+	mon2=$(xrandr | grep "[A-Z]* con" | sed '/^LVDS/d' | awk '//{print $1}')
+	xrandr --output $mon2 --primary --output LVDS1 --left-of
+} || xrandr --output LVDS1 --primary

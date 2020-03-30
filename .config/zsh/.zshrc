@@ -5,13 +5,14 @@ mkalias
 precmd(){
 	prev="$?"
 	branch=$(git branch 2>/dev/null | grep "\*" | tr -d '\*')
-	dir=$(pwd | sed "s~$HOME~~")
+	#dir=$(pwd | sed "s~$HOME~~")
+	dir=$(pwd)
 	prompt="%{$(tput setab 3)%0G%} %{$(tput sgr0)%0G%} "
 	[ "$prev" != "0" ] && prompt+="%F{10}$prev "
 	prompt+="%F{4}"
 	prompt+="%n"
 	prompt+=" %F{6}"
-	prompt+="~$dir"
+	prompt+="$dir"
 	prompt+="%F{5}"
 	prompt+="$branch"
 	prompt+="%F{5}"

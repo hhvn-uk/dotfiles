@@ -1,6 +1,6 @@
 #!/bin/bash
 
-choice=$(xrandr --listmonitors | tail -n +2 | dmenu -i -p "Choose primary monitor:" | awk '//{print $4}')
+choice=$(xrandr -q | grep "[A-Z]* con" | dmenu -i -p "Choose primary monitor:" | awk '//{print $1}')
 cmd="xrandr --output $choice --primary"
 while true
 do
@@ -13,7 +13,7 @@ do
 		Below) direction="below" ;;
 		DONE) $cmd; exit 0 ;;
 	esac
-	choice2=$(xrandr --listmonitors | tail -n +2 | dmenu -i -p "Select monitor:" | awk '//{printf $4}')
+	choice2=$(xrandr -q | grep "[A-Z]* con" | dmenu -i -p "Select monitor:" | awk '//{print $1}')
 	cmd="$cmd --output $choice2 --$direction $bchoice"
 	setup=$(($setup+1))
 done
