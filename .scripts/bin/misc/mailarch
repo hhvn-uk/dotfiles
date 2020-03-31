@@ -1,0 +1,17 @@
+#!/bin/sh
+
+dir="$1"
+target="$2"
+
+cd $dir
+
+for d in "cur" "tmp" "new"
+do
+	mkdir -p $target/$d \
+		${target}sent/$d \
+		${target}rubbish/$d
+
+	mv inbox/$d/* $target/$d
+	mv sent/$d/* ${target}sent/$d
+	mv rubbish/$d/* ${target}rubbish/$d
+done

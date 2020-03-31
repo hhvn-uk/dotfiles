@@ -8,7 +8,7 @@ super + b
 	tabbed -c vimb -e
 
 super + shift + b
-	dmpvurl
+	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
 super + ctrl + b
 	queuevid

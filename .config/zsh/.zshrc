@@ -55,7 +55,10 @@ key[PageDown]="${terminfo[knp]}"
 key[ShiftTab]="${terminfo[kcbt]}"
 
 # Load .zsh files
-. $ZDOTDIR/*.zsh
+for file in $(find $ZDOTDIR -name "*.zsh")
+do
+	. $file
+done
 
 # Highlighted man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'

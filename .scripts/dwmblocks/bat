@@ -6,12 +6,26 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-p=$(acpi | awk '/Battery/ {print $4}' | sed 's/,//g')
-if [ "$p" == "0%" ]
-then
-	echo "" > /dev/null
-else
-	echo "[B $p]"
-	echo
-	echo \#C625C8
-fi
+printf "B "
+for b in $(find /sys/class/power_supply -name "BAT*")
+do
+	read charge < $b/capacity
+	read stat < $b/status
+
+	case "$stat" in
+		Charging) stat="^c#00ff00^+" ;;
+		Discharging) stat="^c#aa5555^-" ; dis="y"  ;;
+		Full) stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f8^" ; charge="" ;;
+		*) stat="^c#aaaaaa^" ;;
+	esac
+
+
+	[ "$charge" = "100" ] && stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f8^" && charge=""
+	[ $charge -le 10 ] && stat="^c#ff0000^!!!" 
+
+	printf "%s:%s%s" "^c#aaaaaa^$(echo "$b" | grep -o "[0-9]*$")" "$stat" "$charge"
+	unset dis
+done
+echo
+echo
+echo \#C625C8

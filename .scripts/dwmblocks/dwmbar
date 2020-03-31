@@ -11,13 +11,13 @@ do
 		./net > ~/.cache/blocks/net &
 		./news > ~/.cache/blocks/news &
 		./weather > ~/.cache/blocks/weather &
-		./bat > ~/.cache/blocks/bat &
 		./disk > ~/.cache/blocks/disk &
 		./disk2 > ~/.cache/blocks/disk2 &
 		./time > ~/.cache/blocks/time &
 		swait=0
 	};
 	#./.scripts/i3blocks/cal > .cache/blocks/cal &
+	./bat > ~/.cache/blocks/bat &
 	./cpu > ~/.cache/blocks/cpu &
 	./mem > ~/.cache/blocks/mem &
 	./mpv 2> /dev/null > ~/.cache/blocks/mpv &
@@ -36,5 +36,5 @@ done &
 cd ~/.cache/blocks
 while true; do
 sleep 1
-	xsetroot -name "$(for ((i=0;i<255;i++)) do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/' | tr '\n' '\f' | sed 's/\f/ /g' | tr "[]" " ")    "
+	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/' | tr '\n' '\f' | sed 's/\f/ /g' | tr "[]" " ")    "
 done

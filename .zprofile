@@ -42,4 +42,3 @@ export XDG_RUNTIME_DIR=/tmp
 export XAUTHORITY=$HOME/.local/.xauth
 export LESSHISTFILE=-
 export GNUPGHOME=$HOME/.local/gnupg
-export XINITRC=$HOME/.config/x11/xinitrc

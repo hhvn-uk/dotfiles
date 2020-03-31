@@ -5,4 +5,3 @@ pkill fetchmail
 
 cd ~/.scripts/dwmblocks
 exec ./dwmbar >/dev/null 2>/dev/null &
-disown -a

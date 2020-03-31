@@ -38,13 +38,6 @@ make(){
 	}
 }
 
-man(){
-	cols=$(tput cols)
-	[ "$cols" -gt "120" ] && export MANWIDTH=120
-	[ "$cols" -lt "120" ] && export MANWIDTH=$cols
-	command man -c "$@" | centre
-}
-
 colo(){
 	for file in $(printf "$@")
 	do
