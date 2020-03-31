@@ -7,30 +7,42 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 backend="xwallpaper"
-args="$@"
+args=$(echo "$@" | sed 's/--force//g;s/force//g')
 echo "$args"
 
-[ "$args" == "" ] && args=2
 donorm(){
-	convert $file -colors $args $1
-	files+="$1 "
+	[ "$args" = "" ] && {
+		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.5,-3.5,1   /tmp/blurmap.png
+		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 5 -composite $1
+	} || {
+		convert $file $args $1
+	}
+	files="$files $1"
 }
-input=$(cat ~/.cache/rfeh/prev)
+input=$(cat $HOME/.cache/rfeh/prev)
 count=0
 files=""
+mkdir -p $HOME/.cache/wallblur/
+
 for file in $input
 do
 	count=$(($count+1))
-	donorm "/tmp/screen${count}.png"
+	[ "$(echo "$@" | grep "force")" = "" ] && {
+		[ -f $HOME/.cache/wallblur/$(basename $file) ] && {
+			files="$HOME/.cache/wallblur/$(basename $file) $files"
+		} || {
+			donorm "$HOME/.cache/wallblur/$(basename $file)"
+		}
+	} || {
+		donorm "$HOME/.cache/wallblur/$(basename $file)"
+	}
+
 done
-[ "$backend" = "xwallpaper" ] && {
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
-	for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
-	do
-		files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
-	done
-	xwallpaper $files
-} || {
-	files=$(echo "$files" | tr " " "\n" | sed "s~^~--bg-fill ~g" | tr "\n" " ")
-	feh $files
-}
+
+files=$(echo "$files" | sed 's~ $~~g;s~^ ~~g' | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+echo $files
+for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
+do
+	files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
+done
+xwallpaper $files

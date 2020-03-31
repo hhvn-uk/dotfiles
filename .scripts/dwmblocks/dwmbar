@@ -36,5 +36,5 @@ done &
 cd ~/.cache/blocks
 while true; do
 sleep 1
-	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/' | tr '\n' '\f' | sed 's/\f/ /g' | tr "[]" " ")    "
+	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
 done

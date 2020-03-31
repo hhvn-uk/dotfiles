@@ -4,7 +4,8 @@
 	qmv [mode] [modeinfo] [files]
 
 $(tput bold)MODES & MODEINFO$(tput sgr0)
-	number		[start number].[file extension]\n" && exit
+	number		[start number].[file extension]
+	0number		[0-padded start number].[file extension]\n" && exit
 
 mode="$1"
 modeinfo="$2"
@@ -24,7 +25,28 @@ _number(){
 	done
 }
 
+_number0(){
+	number=$(echo "$@" | grep -o "^[0-9]*")
+	fileext=$(echo "$@" | grep -o "\.[A-Za-z0-9]*" | sed 's/^\.//g')
+	pad=$(echo "$number" | grep -o "^0*")
+	padc=$(echo "$pad" | wc -m)
+	echo $padc
+
+	for file in $all
+	do
+		numa=$(echo "$number" | wc -m)
+		pada=$(($numa-$padc))
+		padnum=$(for void in $(seq $pada); do printf "0"; done; printf "$number")
+		[ "$fileext" = "" ] && {
+			mv $file $padnum
+		} || {
+			mv $file $padnum.$fileext
+		}; number=$(($number+1))
+	done
+}
+
 case "$mode" in
 	number|numbered|num|n) _number "$modeinfo" ;;
+	0number|number0|0num|num0) _number0 "$modeinfo" ;;
 	*) echo "$mode: not a supported mode."; exit ;;
 esac

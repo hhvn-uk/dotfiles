@@ -21,7 +21,7 @@ export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 export PASS="$HOME/.local/pass"
 export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
-export IP="$(curl icanhazip.com -qs)" &
+export IP="$(curl icanhazip.com -qs)"
 xrdb -merge ~/.local/xres
 . .config/zsh/ls.zsh
 [ "$hostname" != "" ] && {

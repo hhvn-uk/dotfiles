@@ -10,6 +10,8 @@ file2=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-sock
 vidtitle2=$(echo '{command:["get_property", "media-title"]}' | socat - /tmp/mpv-socket2 | tr '"{:,}\[' ' ' | sed 's/data//g' | sed 's/request_id  0//g' | sed 's/error   success//g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/  / /g' | sed 's/^//g')
 state=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket | tr '{":0,}' ' ' | awk '// {print $2}')
 state2=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | awk '// {print $2}')
+artist=$(echo '{ "command": ["get_property", "metadata/artist"] }' | socat - /tmp/mpv-socket | tr '{":0,}' ' ' | sed 's/[[:space:]]*data[[:space:]]*//g;s/[[:space:]]*request_id.*$//g')
+artist2=$(echo '{ "command": ["get_property", "metadata/artist"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | sed 's/[[:space:]]*data[[:space:]]*//g;s/[[:space:]]*request_id.*$//g')
 convertsecs() {
 	((h=${1}/3600))
 	((m=(${1}%3600)/60))
@@ -21,24 +23,24 @@ time2=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | 
 
 if [ "$state" == "false" ]
 then
-	out=" PLAY - MUSIC - $file2 - $time"
+	out="$(echo "PLAY - MUSIC - $artist - $file2" | cut -zc-60) - $time"
 	color="true"
 elif [ "$state" == "true" ]
 then
 	if [ "$state2" == "false" ]
 	then
-		out=" PLAY - VIDEO - $vidtitle2 - $time2"
+		out="$(echo "PLAY - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
 	else
-		out=" STOP - MUSIC - $file2 - $time"
+		out="$(echo "STOP - MUSIC - $artist - $file2" | cut -zc-60) - $time"
 	fi
 	color="true"
 elif [ "$state2" == "false" ]
 then
-	out=" PLAY - VIDEO - $vidtitle2 - $time2"
+	out="$(echo "PLAY - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
 	color="true"
 elif [ "$state2" == "true" ]
 then
-	out=" STOP - VIDEO - $vidtitle2 - $time2"
+	out="$(echo "STOP - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
 	color="true"
 else
 	out=" NONE"
@@ -46,7 +48,7 @@ else
 fi
 if [ "$color" == "true" ]
 then
-	echo "[MPV$out]" | cut -zc-70
+	echo "[MPV $out]"
 	echo
 	echo \#666b1b
 elif [ "$color" == "false" ]

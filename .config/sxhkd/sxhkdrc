@@ -1,7 +1,7 @@
 super + {shift, ctrl, alt, shift + ctrl} + bracketright
 	dinput "Are you sure?" "{sudo zzz, sudo ZZZ, sudo halt, sudo reboot}"
 
-super + return
+super + Return
 	st
 
 super + b
@@ -63,6 +63,3 @@ super + alt + {i,p}
 
 super + {ctrl,alt} + o
 	hmpv {toggle,quit} /tmp/mpv-socket
-
-super + bracketright + {0-9} + {,shift}
-	hvol {0-9}%{-,+}
