@@ -7,16 +7,16 @@ while true
 do 
 	state=$(hmpv state $socket1)
 	sleep 0.1
-	if [ "$state" == "playing" ]
+	if [ "$state" = "playing" ]
 	then
-		if [ "$aplay" == "false" ]
+		if [ "$aplay" = "false" ]
 		then
 			hmpv pause $socket2 2>/dev/null >/dev/null
 			apause="false"
 			aplay="true"
 		fi
 	else
-		if [ "$apause" == "false" ]
+		if [ "$apause" = "false" ]
 		then
 			hmpv unpause $socket2 2>/dev/null >/dev/null
 			apause="true"

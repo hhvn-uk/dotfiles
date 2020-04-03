@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mailboxes=$(find ~/general/mail -type d | sed "s~$HOME/~~g;/\/.*\/.*\//d;/mail\/main/d;s~general/mail/~~g;s~^~=~g" | tail -n +2 | tr '\n' ' ')
+out=$(sed 's~^mailboxes.*$~mailboxes '"$mailboxes"'# Configured by my mkmailbox script~g' < $HOME/.config/neomutt/neomuttrc)
+echo "$out" > $HOME/.config/neomutt/neomuttrc

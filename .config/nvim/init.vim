@@ -13,7 +13,7 @@
 " repeat - repeat things
 " vimling (ipa, deadkeys) - deadkeys
 " vimagit - git in vim
-" vimwiki - wiki program (can view my wiki)
+" quickscope - find stuff easer 
 
 "Leader
 let mapleader=";"
@@ -193,6 +193,9 @@ source ~/.config/nvim/modules/window.vim
 source ~/.config/nvim/modules/message.vim
 source ~/.config/nvim/modules/openc.vim
 source ~/.config/nvim/modules/filetype.vim
+
+" quick-scope
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 "Automatic commands
 augroup autocmd

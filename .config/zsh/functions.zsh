@@ -11,8 +11,7 @@ killprog(){
 	do
 		name=$(curl -n -F "file=@$file" http://0x0.st)
 		echo "$file : $name"
-		names="$names $name"
-	done
+		names="$names $name" done
 	echo $names | xclip
 }
 
@@ -60,4 +59,17 @@ colotable(){
 		printf "       "
 		tput sgr0
 	done
+}
+
+filesort(){
+	find $1 -type f | sort
+}
+
+nop(){
+	echo "This already has an alias... use $1 instead!"
+}
+
+encsign(){
+	[ "$1" = "--help" ] && echo '$1=recipient $2=file' && exit 1
+	gpg --encrypt --sign --armor -r $1 $2
 }

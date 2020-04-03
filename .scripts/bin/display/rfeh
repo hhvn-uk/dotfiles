@@ -22,10 +22,10 @@ getfiles() {
 }
 
 monitors=$2
-if [ "$2" == "" ]
+if [ "$2" = "" ]
 then
 	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
-elif [ "$2" == "auto" ]
+elif [ "$2" = "auto" ]
 then
 	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
 fi
@@ -37,7 +37,7 @@ allfiles() {
 	do
 		getfiles $filetype
 	done
-	if [ "$files" == "" ]
+	if [ "$files" = "" ]
 	then
 		echo "No files found..."
 		exit 1

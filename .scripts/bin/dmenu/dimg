@@ -1,0 +1,18 @@
+#!/bin/sh
+
+printf '' > /tmp/dimg
+[ ! -z $1 ] && dir="$1" || dir="$HOME/general/images/wallpapers"
+
+case $(printf 'wallpaper\nview' | dmenu -i -p 'Select option:') in
+	view) sxiv $(find $dir -type f | shuf | dmenu -i -p "Select image:") ;;
+	wallpaper) setwall ;;
+esac
+
+monitors=$(xrandr --listmonitors | awk '/Monitors/{print $2}')
+for i in $(seq $monitors)
+do
+	files="$files $(find $dir -type f | shuf | dmenu -i -p "Select wallpaper $i:")"
+done
+
+echo "$files" | sed 's/^[[:space:]]*//g;s/[[:space:]]*$//g' > /tmp/dimg
+fehffile /tmp/dimg

@@ -2,4 +2,4 @@ Hey, thanks for downloading my path scripts. However, there are some things you 
 
 To install the scripts, copy them to your PATH. If you are not sure how to setup a path, download my .profile from my dotfiles, and place it in your home directory. Now, place the scripts in .scripts/bin/
 
-Some of the scripts will simple be wrappers on each other, please make sure that scripts such as dmpv have access to dfm.
+Some of the scripts will simply be wrappers on each other, please make sure that scripts such as dmpv have access to dfm.

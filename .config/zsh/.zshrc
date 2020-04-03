@@ -4,7 +4,7 @@ mkalias
 # Prompt
 precmd(){
 	prev="$?"
-	branch=$(git branch 2>/dev/null | grep "\*" | tr -d '\*')
+	branch=$(\git branch 2>/dev/null | grep "\*" | tr -d '\*')
 	#dir=$(pwd | sed "s~$HOME~~")
 	dir=$(pwd)
 	prompt="%{$(tput setab 3)%0G%} %{$(tput sgr0)%0G%} "

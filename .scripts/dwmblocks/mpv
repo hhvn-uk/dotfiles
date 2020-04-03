@@ -12,6 +12,8 @@ state=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socke
 state2=$(echo '{ "command": ["get_property", "pause"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | awk '// {print $2}')
 artist=$(echo '{ "command": ["get_property", "metadata/artist"] }' | socat - /tmp/mpv-socket | tr '{":0,}' ' ' | sed 's/[[:space:]]*data[[:space:]]*//g;s/[[:space:]]*request_id.*$//g')
 artist2=$(echo '{ "command": ["get_property", "metadata/artist"] }' | socat - /tmp/mpv-socket2 | tr '{":0,}' ' ' | sed 's/[[:space:]]*data[[:space:]]*//g;s/[[:space:]]*request_id.*$//g')
+[ "$artist" != "" ] && artist="$artist - "
+[ "$artist2" != "" ] && artist2="$artist2 - "
 convertsecs() {
 	((h=${1}/3600))
 	((m=(${1}%3600)/60))
@@ -21,44 +23,44 @@ convertsecs() {
 time=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat - /tmp/mpv-socket | tr '{":,}' ' ' | awk '// {print $2}' | sed 's/\./ /g' | awk '// {print $1}'))
 time2=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat - /tmp/mpv-socket2 | tr '{":,}' ' ' | awk '// {print $2}' | sed 's/\./ /g' | awk '// {print $1}'))
 
-if [ "$state" == "false" ]
+if [ "$state" = "false" ]
 then
-	out="$(echo "PLAY - MUSIC - $artist - $file2" | cut -zc-60) - $time"
+	out="$(echo "PLAY - MUSIC - $artist$file2" | cut -zc-60) - $time"
 	color="true"
-elif [ "$state" == "true" ]
+elif [ "$state" = "true" ]
 then
-	if [ "$state2" == "false" ]
+	if [ "$state2" = "false" ]
 	then
-		out="$(echo "PLAY - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
+		out="$(echo "PLAY - VIDEO - $artist2$vidtitle2" | cut -zc-60) - $time2"
 	else
-		out="$(echo "STOP - MUSIC - $artist - $file2" | cut -zc-60) - $time"
+		out="$(echo "STOP - MUSIC - $artist$file2" | cut -zc-60) - $time"
 	fi
 	color="true"
-elif [ "$state2" == "false" ]
+elif [ "$state2" = "false" ]
 then
-	out="$(echo "PLAY - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
+	out="$(echo "PLAY - VIDEO - $artist2$vidtitle2" | cut -zc-60) - $time2"
 	color="true"
-elif [ "$state2" == "true" ]
+elif [ "$state2" = "true" ]
 then
-	out="$(echo "STOP - VIDEO - $artist2 - $vidtitle2" | cut -zc-60) - $time2"
+	out="$(echo "STOP - VIDEO - $artist2$vidtitle2" | cut -zc-60) - $time2"
 	color="true"
 else
 	out=" NONE"
 	color="true"
 fi
-if [ "$color" == "true" ]
+if [ "$color" = "true" ]
 then
 	echo "[MPV $out]"
 	echo
 	echo \#666b1b
-elif [ "$color" == "false" ]
+elif [ "$color" = "false" ]
 then
 	exit 0
 else
 	echo "Nothing set?... Exiting"
 	exit 1
 fi
-if [ "$BLOCK_BUTTON" == "1" ]
+if [ "$BLOCK_BUTTON" = "1" ]
 then
 	dunstify "Currently playing" "$file\n$vidtitle"
 fi

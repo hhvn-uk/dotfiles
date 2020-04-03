@@ -2,7 +2,6 @@ git add ./LICENSE
 git add .config/sxhkd/
 git add .local/xauth
 git add .local/xres
-git add .mailcap
 git add .config/alias
 git add .config/tmux/config
 git add .zprofile
@@ -33,7 +32,9 @@ git add .config/vimb/scripts.js
 git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
 git add .config/neomutt/sidebar
+git add .config/neomutt/mailcap
 git add .config/nvim/ 
 git rm --cache .config/nvim/.netrwhist
 git rm --cache .config/zsh/.zcompdump
 git add .config/galias
+git add .config/redshift/

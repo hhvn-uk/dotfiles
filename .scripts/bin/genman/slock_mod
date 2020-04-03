@@ -13,10 +13,12 @@ echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
 	sleep 0.2
 	hmpv pause $socket2
 ) &
-slock -m "Locked at $(date) by $USER - what? You thought I would let you in... Fool."
+bat=$(head -n 1 < $HOME/.cache/blocks/bat | perl -pe 's/\^.*?\^//g;s/^\[B //g;s/\]$//g;s/$/ /g;s/ /% /g' | head -n 1)
+weather=$(head -n 1 < $HOME/.cache/blocks/weather | perl -pe 's/\^.*?\^//g;s/^\[//g;s/\]$//g' | head -n 1)
+slock -m "$(echo -e "Locked at $(date) | $USER@$hostname\nBatteries (time of screen-locking) | $bat\nWeather | $weather" | tr -s ' ')"
 
 state=$(cat ~/.cache/socket | awk '/:/')
 state1=$(echo "$state" | head -n -1 | awk '{print $2}')
 state2=$(echo "$state" | tail +2 | awk '{print $2}')
-[ "$state1" == "playing" ] && hmpv unpause $socket1
-[ "$state2" == "playing" ] && hmpv unpause $socket2
+[ "$state1" = "playing" ] && hmpv unpause $socket1
+[ "$state2" = "playing" ] && hmpv unpause $socket2

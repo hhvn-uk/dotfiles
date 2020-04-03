@@ -18,10 +18,10 @@ while getopts ":n:i:l:h:b:p:r" o; do case "${o}" in
 	h) printf "Specify an image with -i, resolution with -r, imagemagick effects with -b, and the program used for locking with -p." ;;
 esac done
 
-if [ "$convert" == "off" ]
+if [ "$convert" = "off" ]
 then
 	echo "All image manipulation off..."
-	if [ "$image" == "" ]
+	if [ "$image" = "" ]
 	then
 		echo "No image, please specify one..."
 		exit 1

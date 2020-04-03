@@ -1,0 +1,56 @@
+#!/bin/sh
+
+[ -f $HOME/general/security/pexels ] && read API_KEY < $HOME/general/security/pexels || API_KEY="$1"
+[ "$API_KEY" = "" ] && echo "No api key..." && exit 1
+download=$2
+[ "$download" = "" ] && echo "No download folder specified... using $HOME/general/downloads" && download=$HOME/general/downloads
+
+get(){
+	curl -H "Authorization: $API_KEY" "https://api.pexels.com/v1/$*"
+}
+
+apigrep(){
+	grep '^"'"$1" < /tmp/pexels | sed 's/^"'"$1"'":"//g;s/"$//g' | nl
+}
+
+grepout(){
+	grep "^[[:space:]]*$1[[:space:]]" < /dev/stdin | tr '[[:space:]]' ' ' | awk '{print $2}'
+}
+
+[ -f /tmp/pexels ] && old=$(printf "yes\nno" | dmenu -i -p "Use old request?")
+[ "$old" != "yes" ] && {
+	query=$(echo | dmenu -i -p "Search query (required):")
+	[ "$query" = "" ] && echo "Query required" && exit 1 || request="search?query=$(echo "$query" | tr ' ' '+')"
+	perpage=$(echo "DEFAULT" | dmenu -i -p "Results per page:")
+	[ "$perpage" != "DEFAULT" ] && request="${request}&per_page=$perpage" || perpage="15"
+	page=$(echo "DEFAULT" | dmenu -i -p "Page number:")
+	[ "$page" != "DEFAULT" ] && request="${request}&page=$page"
+	echo '"search_query":"'"$query"'"' > /tmp/pexels	
+	get "$request" | tr "{},[]" "\n" >> /tmp/pexels
+} || perpage="15"
+
+url=$(apigrep "url")
+width=$(apigrep "width")
+height=$(apigrep "height")
+original=$(apigrep "original")
+basename=$(echo "$original" | sed 's~^.*/~~g' | nl)
+small=$(apigrep "small")
+id=$(apigrep "id")
+
+
+for i in $(seq $perpage)
+do
+	while true
+	do
+		action=$(printf "view\nview full\ndownload\ndownload landscape\nnext\nall done" | dmenu -i -p "$(echo "$url" | grepout "$i") $(echo "$width" | grepout "$i" | tr -d '"') $(echo "$height" | grepout "$i" | tr -d '"')" | tr ' ' '-')
+		case $action in
+			view) addr=$(echo "$small" | grepout "$i") ; curl "$addr" --output /tmp/pexels.png ; sxiv /tmp/pexels.png ;;
+			view-full) addr=$(echo "$original" | grepout "$i") ; curl "$addr" --output /tmp/pexels.png ; sxiv /tmp/pexels.png ;;
+			download) mkdir -p $download/pexelgrab ; ts curl "$(echo "$original" | grepout "$i")" --output $download/pexelgrab/$(echo "$basename" | grepout "$i" | tr -d '":\\') ; echo 'sent to `ts` (task spooler)' ; break ;;
+			download-landscape) mkdir -p $download/pexelgrab ; ts curl "$(echo "$original" | grepout "$i")?fit=crop&h=1080&w=1920" --output $download/pexelgrab/$(echo "$basename" | grepout "$i" | tr -d '":\\') ; echo 'sent to `ts` (task spooler)' ; break ;;
+			next) break ;;
+			all-done) exit 0 ;;
+			*) break ;;
+		esac
+	done
+done

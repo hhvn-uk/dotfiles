@@ -47,10 +47,10 @@ super + alt + w
 	fehffile ~/.cache/rfeh/prev
 
 super + ctrl + y
-	dmpv ~/general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
+	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
 
 super + ctrl + u
-	dmpv ~/general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
+	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
 
 super + alt + {y,u}
 	rmpv ~/general/{videos,music}/ 50

@@ -36,14 +36,14 @@ randomizerM(){
 	echo "$output"
 }
 
-[ "$doprev" == "1" ] && {
-	[ "$monitors" == "" ] && files=$(tail -2 < ~/.cache/rfeh/prev | head -1) && head -n -1 < ~/.cache/rfeh/prev | tee ~/.cache/rfeh/prev > /dev/null
+[ "$doprev" = "1" ] && {
+	[ "$monitors" = "" ] && files=$(tail -2 < ~/.cache/rfeh/prev | head -1) && head -n -1 < ~/.cache/rfeh/prev | tee ~/.cache/rfeh/prev > /dev/null
 	[ "$(echo "$monitors" | grep "left")" != "" ] && files="$(tail -2 < ~/.cache/rfeh/left | head -1) $(tail -1 < ~/.cache/rfeh/right)" && head -n -1 < ~/.cache/rfeh/left | tee ~/.cache/rfeh/left > /dev/null
 	[ "$(echo "$monitors" | grep "right")" != "" ] && files="$(tail -1 < ~/.cache/rfeh/left) $(tail -2 < ~/.cache/rfeh/right | head -1)" && head -n -1 < ~/.cache/rfeh/right | tee ~/.cache/rfeh/right > /dev/null
 	echo "$files"
 	setwall "$files"
 } || {
-	[ "$monitors" == "" ] && files=$(randomizerM)
+	[ "$monitors" = "" ] && files=$(randomizerM)
 	[ "$(echo "$monitors" | grep "left")" != "" ] && files="$(randomizer) $(tail -1 < ~/.cache/rfeh/right)"
 	[ "$(echo "$monitors" | grep "right")" != "" ] && files="$(tail -1 < ~/.cache/rfeh/left) $(randomizer)"
 	echo "$files" | awk '{print $1}' >> ~/.cache/rfeh/left

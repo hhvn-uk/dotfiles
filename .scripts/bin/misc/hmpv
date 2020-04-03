@@ -16,10 +16,10 @@ unpause() {
 }
 getstate() {
 	stateraw=$(echo '{ "command": ["get_property", "pause"] }' | socat - $socket 2>/dev/null | tr '{":0,}' ' ' | awk '// {print $2}')
-	if [ "$stateraw" == "true" ]
+	if [ "$stateraw" = "true" ]
 	then
 		state="paused"
-	elif [ "$stateraw" == "false" ]
+	elif [ "$stateraw" = "false" ]
 	then
 		state="playing"
 	else
@@ -29,10 +29,10 @@ getstate() {
 }
 toggle() {
 	getstate
-	if [ "$state" == "playing" ]
+	if [ "$state" = "playing" ]
 	then
 		pause
-	elif [ "$state" == "paused" ]
+	elif [ "$state" = "paused" ]
 	then
 		unpause
 	else
@@ -41,16 +41,16 @@ toggle() {
 	fi
 }
 seek() {
-	if [ "$action" == "forward" ]
+	if [ "$action" = "forward" ]
 	then
 		echo '{ "command": ["seek", "10"] }' | socat - $socket > /dev/null
-	elif [ "$action" == "back" ]
+	elif [ "$action" = "back" ]
 	then
 		echo '{ "command": ["seek", "-10"] }' | socat - $socket > /dev/null
-	elif [ "$action" == "next" ]
+	elif [ "$action" = "next" ]
 	then
 		echo '{ "command": ["playlist-next"] }' | socat - $socket > /dev/null
-	elif [ "$action" == "prev" ]
+	elif [ "$action" = "prev" ]
 	then
 		echo '{ "command": ["playlist-prev"] }' | socat - $socket > /dev/null
 	fi
@@ -68,22 +68,22 @@ quit() {
 	echo '{ "command": ["quit"] }' | socat - $socket > /dev/null
 }
 
-if [ "$action" == "toggle" ]
+if [ "$action" = "toggle" ]
 then
 	toggle
-elif [ "$action" == "quit" ]
+elif [ "$action" = "quit" ]
 then
 	quit
-elif [ "$action" == "pause" ]
+elif [ "$action" = "pause" ]
 then
 	pause
-elif [ "$action" == "unpause" ]
+elif [ "$action" = "unpause" ]
 then
 	unpause
-elif [ "$action" == "state" ]
+elif [ "$action" = "state" ]
 then
 	getstate; echo "$state"
-elif [ "$action" == "time" ]
+elif [ "$action" = "time" ]
 then
 	gettime
 else

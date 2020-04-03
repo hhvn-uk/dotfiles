@@ -60,3 +60,5 @@ hi SpellRare ctermbg=1 ctermfg=none cterm=underline guifg=none guibg=#24283c gui
 hi SpellLocal ctermbg=1 ctermfg=255 cterm=bold guifg=#eeeeee gui=none,bold
 hi MatchParen ctermfg=30 cterm=reverse guifg=#003740 gui=reverse
 hi Underlined cterm=underline ctermfg=23 gui=underline guifg=#005f5f
+hi QuickScopePrimary guifg=#892b2b gui=bold,reverse
+hi QuickScopeSecondary guifg=#d750d7 gui=bold,reverse

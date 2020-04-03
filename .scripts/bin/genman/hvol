@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$1" == "toggle" ]
+if [ "$1" = "toggle" ]
 then
 	amixer set Master $1
 	volume=$(amixer sget Master | awk '/Mono/ {print $6}' | sed 's/\[//g' | sed 's/\]//g')

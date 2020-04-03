@@ -27,7 +27,7 @@ Written by Hayden Hamilton <haydenvh.com>"
 fi
 forn1="$1"
 lsforce="$3"
-if [ "$1" == "" ]
+if [ "$1" = "" ]
 then
 	export forn1="fm"
 fi
@@ -40,17 +40,17 @@ getconf(){
 	DFM_CLIPBOARD_TYPE="PRIMARY"
 	. $HOME/.dmenurc
 	. $HOME/.config/dfm/config
-	if [ "$DFM_USE_HH_PATCH" == "1" ]
+	if [ "$DFM_USE_HH_PATCH" = "1" ]
 	then
 		dmenu="$dmenu -c -w 1000"
 	fi
-	if [ "$DFM_CLIPBOARD_TYPE" == "PRIMARY" ]
+	if [ "$DFM_CLIPBOARD_TYPE" = "PRIMARY" ]
 	then
 		clipboard="xclip"
-	elif [ "$DFM_CLIPBOARD_TYPE" == "CLIPBOARD" ]
+	elif [ "$DFM_CLIPBOARD_TYPE" = "CLIPBOARD" ]
 	then
 		clipboard="xclip -selection clipboard"
-	elif [ "$DFM_CLIPBOARD_TYPE" == "CUSTOM" ]
+	elif [ "$DFM_CLIPBOARD_TYPE" = "CUSTOM" ]
 	then
 		clipboard="$DFM_CLIPBOARD_CUSTOM"
 	else
@@ -76,13 +76,13 @@ sendconf(){
 }
 
 fmornorm(){
-	if [ "$forn1" == "fm" ]
+	if [ "$forn1" = "fm" ]
 	then
 		output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
 		fmspecial
 	else
 		dooutput
-		if [ "$doarg" == "true" ]
+		if [ "$doarg" = "true" ]
 		then
 			echo $forn1
 			$forn1 $argu
@@ -93,7 +93,7 @@ fmornorm(){
 
 dooutput(){
 	[ "$DFM_DISABLE_ENQUEUE" != "1" ] && enqueue=$(echo "DO ENQUEUE" | tr " " "\n" | $dmenu -i -p "What do you want to do?")
-	if [ "$enqueue" == "ENQUEUE" ]
+	if [ "$enqueue" = "ENQUEUE" ]
 	then
 		argu+="$(pwd)/$output "
 		doarg="false"
@@ -107,10 +107,10 @@ getdot(){
 	if [ "$lsforce" != "" ]
 	then
 		lscommand="$lsforce"
-	elif [ "$DFM_DOT" == "1" ]
+	elif [ "$DFM_DOT" = "1" ]
 	then
 		lscommand="ls -A"
-	elif [ "$DFM_DOT" == "0" ]
+	elif [ "$DFM_DOT" = "0" ]
 	then
 		lscommand="ls"
 	else
@@ -126,7 +126,7 @@ getprog(){
 send0x0(){
 	send=$(curl -F "file=@$output" https://0x0.st)
 	send2=$(echo "$send" | awk '/http/')
-	[ "$send2" == "" ] && echo "Failed" | $dmenu -i -p "Hit enter to continue"
+	[ "$send2" = "" ] && echo "Failed" | $dmenu -i -p "Hit enter to continue"
 	[ "$send2" != "" ] && echo $send | $dmenu -i -p "Hit enter to continue" | $clipboard
 }
 
@@ -136,31 +136,31 @@ sendscrn0x0(){
 }
 
 fmspecial(){
-	if [ "$output2" == "AUTO - Check config for program to use" ]
+	if [ "$output2" = "AUTO - Check config for program to use" ]
 	then
 		getprog "$output"
 		[ "$commandout" != "" ] && $commandout $output $argu
-		[ "$commandout" == "" ] && echo "No program set..."
-	elif [ "$output2" == "RM - Remove file" ]
+		[ "$commandout" = "" ] && echo "No program set..."
+	elif [ "$output2" = "RM - Remove file" ]
 	then
 		rm $output
-	elif [ "$output2" == "CMD - Specific command" ]
+	elif [ "$output2" = "CMD - Specific command" ]
 	then
 		output3=$(dmenu_path | $dmenu -i -p "Select program")
 		$output3 $output $argu
 		argu=""
-	elif [ "$output2" == "MV - Move file" ]
+	elif [ "$output2" = "MV - Move file" ]
 	then
 		output3=$(echo "" | $dmenu -i -p "Move to:")
 		mv $output $output3
-	elif [ "$output2" == "EDIT - Open with $EDITOR" ]
+	elif [ "$output2" = "EDIT - Open with $EDITOR" ]
 	then
 		$EDITOR $output $argu
 		argu=""
-	elif [ "$output2" == "QUE - Enqueue" ]
+	elif [ "$output2" = "QUE - Enqueue" ]
 	then
 		argu+="$output "
-	elif [ "$output2" == "SND - Send to 0x0.st" ]
+	elif [ "$output2" = "SND - Send to 0x0.st" ]
 	then
 		send0x0
 	fi
@@ -187,36 +187,36 @@ CMD - Specific command
 EDIT - Open with $EDITOR
 QUE - Enqueue
 SND - Send to 0x0.st"
-	if [ "$output" == "FM" ]
+	if [ "$output" = "FM" ]
 	then
 		output=$(echo "$fmcmd1" | $dmenu -l 30 -i -p "Select command:")
-		if [ "$output" == "MD - Make dir" ]
+		if [ "$output" = "MD - Make dir" ]
 		then
 			output2=$(echo "" | $dmenu -i -p "Name dir:")
 			mkdir $output2
-		elif [ "$output" == "MF - Make file" ]
+		elif [ "$output" = "MF - Make file" ]
 		then
 			output2=$(echo "" | $dmenu -i -p "Name file:")
 			touch $output2
-		elif [ "$output" == "BM - Bookmarks" ]
+		elif [ "$output" = "BM - Bookmarks" ]
 		then
 			touch ~/.config/dfm/bookmarks
 			output=$(echo "MK DEL $(cat ~/.config/dfm/bookmarks | awk '// {print $1}')" | tr "\n" " " | tr " " "\n" |  $dmenu -l 30 -i -p "Select file/directory:")
-			if [ "$output" == "MK" ]
+			if [ "$output" = "MK" ]
 			then
 				output=$(echo "" | $dmenu -i -p "Choose bookmark name(no spaces):")
 				output2=$(echo "" | $dmenu -i -p "Choose bookmark path(absolute):")
 			 	echo "$output $output2" >> ~/.config/dfm/bookmarks
-			elif [ "$output" == "DEL" ]
+			elif [ "$output" = "DEL" ]
 			then
 				output=$(echo "$(cat $confdir/bookmarks | awk '// {print $1}')" | $dmenu -l 30 -i -p "Select bookmark to delete:")
-				[ "$(cat $confdir/bookmarks | awk "/$output/ {print"' $1}')" == "$output" ] && sed -i "/$output/d" $confdir/bookmarks
+				[ "$(cat $confdir/bookmarks | awk "/$output/ {print"' $1}')" = "$output" ] && sed -i "/$output/d" $confdir/bookmarks
 			else
 				output=$(cat ~/.config/dfm/bookmarks | awk "/$output/"' {print $2}')
 				output2=$(echo "$fmcmd2" | $dmenu -l 30 -i -p "Select command:")
 				fmspecial
 			fi
-		elif [ "$output" == "FND - Find" ]
+		elif [ "$output" = "FND - Find" ]
 		then
 			output=$(echo "" | $dmenu -i -p "Enter name of file:")
 			output2=$(printf "ROOT (Takes a while)\nLOCALLY" | $dmenu -i -p "Find option")
@@ -228,19 +228,19 @@ SND - Send to 0x0.st"
 				output3="."
 			fi
 			output=$(echo "NONE $(find $output3 | grep -i "$output")" | tr " " "\n" | $dmenu -i -l 30 -p "Select file:")
-			if [ "$output" == "NONE" ]
+			if [ "$output" = "NONE" ]
 			then
 				echo > /dev/null
 			else
 				fmornorm
 			fi
-		elif [ "$output" == "HIDE - Toggle Dotfiles" ]
+		elif [ "$output" = "HIDE - Toggle Dotfiles" ]
 		then
-			if [ "$DFM_DOT" == "0" ]
+			if [ "$DFM_DOT" = "0" ]
 			then
 				export DFM_DOT="1"
 				sendconf "DFM_DOT" "1"
-			elif [ "$DFM_DOT" == "1" ]
+			elif [ "$DFM_DOT" = "1" ]
 			then
 				export DFM_DOT="0"
 				sendconf "DFM_DOT" "0"
@@ -248,17 +248,17 @@ SND - Send to 0x0.st"
 				export DFM_DOT="0"
 				sendconf "DFM_DOT" "0"
 			fi
-		elif [ "$output" == "SCRN - Host screenshot on 0x0.st" ]
+		elif [ "$output" = "SCRN - Host screenshot on 0x0.st" ]
 		then
 			sendscrn0x0
 		fi
 	elif [ -d "$output" ]
 	then
 		cd $output
-	elif [ "$output" == "exit" ]
+	elif [ "$output" = "exit" ]
 	then
 		exit 1
-	elif [ "$output" == "" ]
+	elif [ "$output" = "" ]
 	then
 		exit 1
 	else

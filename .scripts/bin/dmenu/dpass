@@ -23,17 +23,17 @@ dmenu="dmenu"
 [ ! -f $PASS ] && touch $PASS
 pass=$(printf "GENERATE\nEDIT\n$(cat $PASS | awk '// {print $1}')" | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
 getpass=$(cat "$PASS" | awk "/$pass/ "'{print $0}')
-if [ "$pass" == "" ]
+if [ "$pass" = "" ]
 then
 	exit 0
-elif [ "$pass" == "generate" ]
+elif [ "$pass" = "generate" ]
 then
 	password=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 30 | head -n 1)
 	passname=$(echo "" | $dmenu -l 50 -i -p "Name for password (only 1 word):")
-	[ "$passname" == "" ] && passname="pleaseeditthis"
+	[ "$passname" = "" ] && passname="pleaseeditthis"
 	echo "$passname: $password" >> $PASS
-	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" == "Yes" ] && $TERMINAL "$1" vim $PASS
-elif [ "$pass" == "edit" ]
+	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" = "Yes" ] && $TERMINAL "$1" vim $PASS
+elif [ "$pass" = "edit" ]
 then
 	$TERMINAL "$1" vim $PASS
 else

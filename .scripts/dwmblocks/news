@@ -7,7 +7,7 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 newsboat -x reload 2>/dev/null
-unread=$(newsboat -x print-unread | sed 's/unread articles//g')
+unread=$(newsboat -x print-unread | sed 's/ unread articles//g')
 
 echo "[NEWS $unread]"
 echo
