@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/bin/sh
+#
+# dmon
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
 
 choice=$(xrandr -q | grep "[A-Z]* con" | dmenu -i -p "Choose primary monitor:" | awk '//{print $1}')
 cmd="xrandr --output $choice --primary"

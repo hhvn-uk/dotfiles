@@ -1,6 +1,6 @@
 #!/bin/bash
 
-link=$(awk '/http.:\/\/|gopher:\/\//' < /dev/stdin | sed 's/.*http/http/g;s/.*gopher/gopher/g' | tr -d '<[]>' | awk '{print $1}' | sort | dmenu -i -p "Select a url:")
+link=$(awk '/https*:\/\/|gopher:\/\//' < /dev/stdin | sed 's/.*http/http/g;s/.*gopher/gopher/g' | tr -d '<[]>' | awk '{print $1}' | sort | dmenu -i -p "Select a url:")
 
 IFS=$'\n'
 
@@ -9,7 +9,8 @@ popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
 vimb --no-maximize
-xclip" | dmenu -i -p "Select a handler:")
+xclip
+webimg" | dmenu -i -p "Select a handler:")
 
 pkill mpvlisten
 hmpv pause /tmp/mpv-socket

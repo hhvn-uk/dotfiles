@@ -4,7 +4,7 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton.
+# Copyright (c) 2019-2020 Hayden Hamilton.
 #
 image="/tmp/screen.png"
 locker="i3lock -i"

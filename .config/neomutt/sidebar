@@ -6,10 +6,10 @@ set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
 set sort_browser="unsorted"
 
-bind index,pager \CI sidebar-prev
+bind index,pager \CK sidebar-prev
 bind index,pager \CO sidebar-open
-bind index,pager \CP sidebar-next
+bind index,pager \CJ sidebar-next
 
 color sidebar_divider color2 default
 color sidebar_highlight color7 default
-color sidebar_indicator color4 default
+mono sidebar_indicator reverse

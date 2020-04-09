@@ -73,3 +73,22 @@ encsign(){
 	[ "$1" = "--help" ] && echo '$1=recipient $2=file' && exit 1
 	gpg --encrypt --sign --armor -r $1 $2
 }
+
+h8(){
+        for file in $(printf "$@")
+        do
+                name=$(curl -F 'file=<-' http://haydenvh.com:8080 < $file)
+                echo "$file : $name"
+                names="$names $name"
+        done
+        echo "$names" | xclip
+}
+
+p8(){
+        name=$(curl -F 'file=<-' http://haydenvh.com:8080 < /dev/stdin)
+        echo "$name" | tee | xclip
+}
+
+cu(){
+	sh $HOME/.scripts/custom/$1
+}

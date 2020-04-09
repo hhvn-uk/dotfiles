@@ -196,21 +196,3 @@ source ~/.config/nvim/modules/filetype.vim
 
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-
-"Automatic commands
-augroup autocmd
-	"greet
-	autocmd BufRead *.greet set syntax=greet
-	"netrw
-	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
-
-	"Get rid of shitty indenting
-	autocmd FileType html :normal gg=G
-
-	"Nowrap
-	autocmd FileType html :setlocal nowrap
-
-	"C
-	autocmd FileType C :noremap <buffer> <leader>end $a;<esc>
-	autocmd FileType C :inoremap <buffer> <leader><leader>end <esc>$a;<esc>
-augroup END

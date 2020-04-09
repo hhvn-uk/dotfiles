@@ -1,4 +1,9 @@
-#!/bin/sh
+#
+# pexelgrab
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
 
 [ -f $HOME/general/security/pexels ] && read API_KEY < $HOME/general/security/pexels || API_KEY="$1"
 [ "$API_KEY" = "" ] && echo "No api key..." && exit 1

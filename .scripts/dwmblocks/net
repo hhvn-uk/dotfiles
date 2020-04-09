@@ -6,7 +6,7 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-ip=$(curl -s http://icanhazip.com/)
+ip=$(curl -s http://n0a110w.xyz/ip.sh | tail -n 1)
 echo "[$ip]"
 echo
 echo \#4Da0C6

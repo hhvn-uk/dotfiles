@@ -1,0 +1,10 @@
+#!/bin/sh
+
+for d in "LVDS1" "VGA1" "HDMI2"
+do
+	ds="$ds --output $d --off"
+done
+
+xrandr $ds --output VGA1 --mode 1920x1080 --primary --pos 0x0 
+xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0
+

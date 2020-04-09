@@ -3,15 +3,25 @@ l		\ls --color
 la		\ls --color -A
 ll		\ls --color -lh
 lla		\ls --color -lAh
+r		\rm
+rr		\rm -rf
+rm		nop r
+m		\mv
+mv		nop m
 vim		nop v
 vi		nop v
 v		nvim
 git		nop g
 g		\git
+c		\cp
+cp		nop c
 xi		sudo xbps-install
 xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu
 xq		sudo xbps-query
 xr		sudo xbps-remove
+ssh222		ssh -p 222
+scp222		scp -P 222
+wget		\wget --hsts-file="/dev/null"
 irssi		\irssi --config ~/.config/irssi/config
 pipes		\pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15
 clock		tty-clock -s -c -C 7
@@ -24,13 +34,14 @@ zsleep		sudo zzz
 hibernate 	sudo ZZZ
 rmst		bash ~/.scripts/random/gnulinux.sh
 vimb		\vimb --no-maximize
-cleancache 	sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst ~/.dbus ~/.sciminfo ~/.viminfo ~/.w3m ~/.config/vimb/cookies.db; sudo vkpurge rm all;
+cleancache 	sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst* ~/.dbus ~/.sciminfo ~/.viminfo ~/.w3m ~/.config/vimb/cookies.db; sudo vkpurge rm all;
 mkconfall	mkmailpass; mkalias
 tmux		tmux -f ~/.config/tmux/config
 nw		newsboat
 nm		neomutt
 maic		sudo make all install clean
 homesync	rsync --port 222 --delete -azPe 'ssh -p 222' --exclude=general --exclude=.cache --exclude=.local/cache $HOME/ void@192.168.1.20:/home/void/homedir/
+tmux		\tmux -f $HOME/.config/tmux/config
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls

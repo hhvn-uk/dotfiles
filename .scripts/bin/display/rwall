@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# rwall
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
 
 for arg in "$@"
 do

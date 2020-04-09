@@ -1,4 +1,5 @@
-git add ./LICENSE
+#!/bin/sh
+#git add ./LICENSE
 git add .config/sxhkd/
 git add .local/xauth
 git add .local/xres

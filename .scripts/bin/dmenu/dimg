@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# dimg
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
 
 printf '' > /tmp/dimg
 [ ! -z $1 ] && dir="$1" || dir="$HOME/general/images/wallpapers"

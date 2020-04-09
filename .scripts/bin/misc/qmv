@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# qmv
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
 
 [ "$(echo "$1" | grep "help")" != "" ] && printf "
 	qmv [mode] [modeinfo] [files]
@@ -30,17 +36,13 @@ _number0(){
 	fileext=$(echo "$@" | grep -o "\.[A-Za-z0-9]*" | sed 's/^\.//g')
 	pad=$(echo "$number" | grep -o "^0*")
 	padc=$(echo "$pad" | wc -m)
-	echo $padc
 
 	for file in $all
 	do
-		numa=$(echo "$number" | wc -m)
-		pada=$(($numa-$padc))
-		padnum=$(for void in $(seq $pada); do printf "0"; done; printf "$number")
 		[ "$fileext" = "" ] && {
-			mv $file $padnum
+			mv $file $(printf "0${padc}d" "$number")
 		} || {
-			mv $file $padnum.$fileext
+			mv $file $(printf "0${padc}d" "$number").$fileext
 		}; number=$(($number+1))
 	done
 }

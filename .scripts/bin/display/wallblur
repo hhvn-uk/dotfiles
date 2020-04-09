@@ -4,7 +4,9 @@
 # Created by Hayden Hamilton
 #
 # haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton.
+
+${XDG_CACHE_HOME:=$HOME/.cache}
+cache=$XDG_CACHE_HOME
 
 backend="xwallpaper"
 args=$(echo "$@" | sed 's/--force//g;s/force//g')
@@ -12,34 +14,34 @@ echo "$args"
 
 donorm(){
 	[ "$args" = "" ] && {
-		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.5,-3.5,1   /tmp/blurmap.png
-		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 5 -composite $1
+		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.2,-3.5,1   /tmp/blurmap.png
+		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 7 -composite $1
 	} || {
 		convert $file $args $1
 	}
 	files="$files $1"
 }
-input=$(cat $HOME/.cache/rfeh/prev)
+input=$(cat $cache/rfeh/prev)
 count=0
 files=""
-mkdir -p $HOME/.cache/wallblur/
+mkdir -p $cache/wallblur/
 
 for file in $input
 do
 	count=$(($count+1))
 	[ "$(echo "$@" | grep "force")" = "" ] && {
-		[ -f $HOME/.cache/wallblur/$(basename $file) ] && {
-			files="$HOME/.cache/wallblur/$(basename $file) $files"
+		[ -f $cache/wallblur/$(basename $file) ] && {
+			files="$cache/wallblur/$(basename $file) $files"
 		} || {
-			donorm "$HOME/.cache/wallblur/$(basename $file)"
+			donorm "$cache/wallblur/$(basename $file)"
 		}
 	} || {
-		donorm "$HOME/.cache/wallblur/$(basename $file)"
+		donorm "$cache/wallblur/$(basename $file)"
 	}
 
 done
 
-files=$(echo "$files" | sed 's~ $~~g;s~^ ~~g' | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+files=$(echo "$files" | sed 's~[[:space:]]*$~~g;s~^[[:space:]]*~~g' | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
 echo $files
 for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
 do
