@@ -11,8 +11,8 @@ cache="$XDG_CACHE_HOME"
 
 donorm(){
 	[ "$args" = "" ] && {
-		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.2,-3.5,1   /tmp/blurmap.png
-		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 7 -composite $1
+		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.0,-3.2,1   /tmp/blurmap.png
+		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 8 -composite $1
 	} || {
 		convert $file $args $1
 	}
@@ -22,8 +22,22 @@ donorm(){
 mkdir -p $cache/wallblur
 rm $cache/wallblur/*
 
-for file in $(find images/wallpapers -type f -name "*.png")
+files=$(find images/wallpapers -type f -name "*.png")
+half=$(echo "$files" | wc -l)
+half=$(($half/2))
+top=$(echo "$files" | head -n $half)
+bot=$(echo "$files" | tail -n $half)
+
+for file in $top 
 do
-	echo $file
+	echo $file start
 	donorm "$cache/wallblur/$(basename $file)"
-done
+	echo $file done
+done &
+
+for file in $bot
+do
+	echo $file start
+	donorm "$cache/wallblur/$(basename $file)"
+	echo $file done
+done &

@@ -10,7 +10,8 @@ youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
 vimb --no-maximize
 xclip
-webimg" | dmenu -i -p "Select a handler:")
+webimg
+st -e curl" | dmenu -i -p "Select a handler:")
 
 pkill mpvlisten
 hmpv pause /tmp/mpv-socket

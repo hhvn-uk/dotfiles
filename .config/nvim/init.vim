@@ -62,6 +62,7 @@ function! ReopenFile()
 	execute 'edit' . curfile
 endfunction
 
+noremap <leader>q :qa!<CR>
 noremap <leader>g :Goyo \| set linebreak<CR>
 noremap <leader>cd :chdir 
 noremap <leader>ca :ColorizerAttachToBuffer<CR>

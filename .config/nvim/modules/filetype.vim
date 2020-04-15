@@ -4,6 +4,10 @@ function Shconfig()
 	nnoremap <buffer> <localleader>f i(){<CR><CR>}<esc>kk0i
 	nnoremap <buffer> <localleader>$ i$()<esc>i
 	nnoremap <buffer> <localleader>($ i$(())<esc>hi
+	nnoremap <buffer> <localleader>$ca i$cache
+	nnoremap <buffer> <localleader>$co i$config
+	iabbrev ccachedir ${XDG_CACHE_HOME:=$HOME/.cache}<CR>cache=$XDG_CACHE_HOME
+	iabbrev cconfigdir ${XDG_CONFIG_HOME:=$HOME/.config}<CR>cache=$XDG_CONFIG_HOME
 endfunction
 
 augroup autocmd

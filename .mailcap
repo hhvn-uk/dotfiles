@@ -1,6 +1,0 @@
-text/html		; vimb '%s'
-text/*			; nvim '%s'
-
-application/pdf		; zathura '%s'
-
-image/*			; sxiv '%s'

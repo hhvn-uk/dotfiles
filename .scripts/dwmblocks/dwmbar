@@ -1,40 +1,42 @@
 #!/bin/bash
 
 mkdir -p ~/.cache/blocks
+block(){
+	$HOME/.scripts/dwmblocks/$1 > $HOME/.cache/blocks/$1 &
+}
 
-./host > ~/.cache/blocks/host &
+block host
 fetchmail &
-swait=21
 while true
 do
-	((swait>20)) &&{
-		./net > ~/.cache/blocks/net &
-		./news > ~/.cache/blocks/news &
-		./weather > ~/.cache/blocks/weather &
-		./disk > ~/.cache/blocks/disk &
-		./disk2 > ~/.cache/blocks/disk2 &
-		./time > ~/.cache/blocks/time &
-		swait=0
-	};
-	#./.scripts/i3blocks/cal > .cache/blocks/cal &
-	./bat > ~/.cache/blocks/bat &
-	./cpu > ~/.cache/blocks/cpu &
-	./mem > ~/.cache/blocks/mem &
-	./mpv 2> /dev/null > ~/.cache/blocks/mpv &
-	./vol > ~/.cache/blocks/vol &
+	block bat
+	block cpu
+	block mem
+	block vol
 	sleep 3
-	cd ~/.scripts/i3blocks
-	swait=$(($swait+1))
 done &
 
 while true
 do
+	block mpv
+	block time
 	sleep 1
-	./time2 > ~/.cache/blocks/time2
+done &
+
+while true
+do
+	block net
+	block news
+	block weather
+	block disk
+	block disk2
+	block time2
+	sleep 20
 done &
 
 cd ~/.cache/blocks
-while true; do
-sleep 1
+while true
+do
+	sleep 1
 	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat bat cpu disk disk2 mem mpv net news vol weather time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#aaaaff\^/;2~2s/^/\^c#ffaaaa\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
 done

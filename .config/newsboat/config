@@ -1,8 +1,8 @@
 #show-read-feeds no
 auto-reload yes
 
-browser "vimb --no-maximize"
-external-url-viewer "urlhand"
+browser "nohup vimb --no-maximize"
+external-url-viewer "nohup urlhand"
 
 bind-key j down
 bind-key k up

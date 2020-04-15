@@ -28,7 +28,7 @@ function! LauncherRecent()
 	redir! >/tmp/vim-recent.1 | silent! echo '' | silent! echo '' | silent! echo 'Config files:' | redir END
 	redir! >/tmp/vim-recent.2 | silent! echo '' | silent! echo '' | silent! echo 'Recent files (cwd):' | redir END
 	redir! >/tmp/vim-recent.3 | silent! echo '' | silent! echo '' | silent! echo 'General:' | redir END
-	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> <c-k>' | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>:let g:netrw_winsize=20<CR>:Lexplore<CR><c-w>l' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':nnoremap <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | redir END
+	redir! >/tmp/vim-recentcmd.vim | silent! echo ':silent! unmap <buffer> <c-k>' | silent! echo ':silent! unmap <buffer> q' | silent! echo 'nnoremap <buffer> q :q<CR>:new<CR>:only<CR>:source $HOME/.config/nvim/init.vim<CR>' | silent! echo ':silent! unmap <buffer>Q' | silent! echo ':nnoremap <buffer> Q :qa!<CR>' | silent! echo ':nnoremap <buffer>: <CR>' | silent! echo ":let mapleader=';;;;;;;;;;;;;;;'" | silent! echo ":let maplocalleader=',,,,,,,,,,,,,,,,,,'"| redir END
 	for string in olist
 		let string=substitute(string, $HOME, "~", "")
 		if i=='10'
