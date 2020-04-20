@@ -35,4 +35,4 @@ randomize() {
 
 allfiles
 files=$(for i in `seq $count`; do randomize; done)
-[ "$(echo "$2" | grep "music")" != "" ] && mpv --input-ipc-server=/tmp/mpv-socket $files --no-video || mpv --input-ipc-server=/tmp/mpv-socket $files
+echo "$1" | grep "music" && mpv --input-ipc-server=/tmp/mpv-socket $files --no-video || mpv --input-ipc-server=/tmp/mpv-socket $files

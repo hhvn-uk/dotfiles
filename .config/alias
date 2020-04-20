@@ -59,6 +59,7 @@ tmux		\tmux -f $HOME/.config/tmux/config
 ~sbi		cd ~/.scripts/bin/i3; ls
 ~sbm		cd ~/.scripts/bin/misc; ls
 ~vrc		vim ~/.vimrc
+~		cd
 ..		cd ..
 ...		cd ../..
 ....		cd ../../..

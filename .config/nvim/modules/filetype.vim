@@ -6,6 +6,8 @@ function Shconfig()
 	nnoremap <buffer> <localleader>($ i$(())<esc>hi
 	nnoremap <buffer> <localleader>$ca i$cache
 	nnoremap <buffer> <localleader>$co i$config
+	nnoremap <buffer> <localleader><space> i[[:space:]]<esc>
+	nnoremap <buffer> <localleader><localleader><space> [[:space:]]
 	iabbrev ccachedir ${XDG_CACHE_HOME:=$HOME/.cache}<CR>cache=$XDG_CACHE_HOME
 	iabbrev cconfigdir ${XDG_CONFIG_HOME:=$HOME/.config}<CR>cache=$XDG_CONFIG_HOME
 endfunction

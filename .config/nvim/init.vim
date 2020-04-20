@@ -170,6 +170,12 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
+"Navigate in insert mode
+inoremap <C-j> <down>
+inoremap <C-k> <up>
+inoremap <C-l> <right>
+inoremap <C-h> <left>
+
 "Search
 nnoremap <leader>CS :let @/=''<CR>
 

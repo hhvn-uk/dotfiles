@@ -1,5 +1,5 @@
-super + {,shift, ctrl, alt} + bracketright
-	dinput "Are you sure?" "{sudo zzz, sudo ZZZ, sudo halt, sudo reboot}"
+super + {shift, ctrl, alt} + v
+	dinput "Are you sure?" "{sudo zzz, sudo halt, sudo reboot}"
 
 super + Return
 	st

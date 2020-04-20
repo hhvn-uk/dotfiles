@@ -1,5 +1,16 @@
 #!/bin/sh
 
-mailboxes=$(find ~/general/mail -type d | sed "s~$HOME/~~g;/\/.*\/.*\//d;/mail\/main/d;s~general/mail/~~g;s~^~=~g" | tail -n +2 | tr '\n' ' ')
+mailboxes="$(printf "=inbox =sent =drafts =rubbish =\"===============\"
+$(find ~/general/mail -type d | sed "s~$HOME/~~g;/\/.*\/.*\//d;/mail\/main/d;s~general/mail/~~g;s~^~=~g;s/===============$//g;s/=inbox$//g;s/=sent$//g;s/=drafts$//g;s/=rubbish//g" | tail -n +2)" | tr '\n' ' ' | tr -s ' ' | sed 's/ =$//g')"
+
+for var in "inbox" "sent" "drafts" "rubbish" "==============="
+do
+	[ ! -d ~/general/mail/$var ] && {
+		mkdir -p ~/general/mail/$var/cur \
+		~/general/mail/$var/tmp \
+		~/general/mail/$var/new
+	}
+done
+
 out=$(sed 's~^mailboxes.*$~mailboxes '"$mailboxes"'# Configured by my mkmailbox script~g' < $HOME/.config/neomutt/neomuttrc)
 echo "$out" > $HOME/.config/neomutt/neomuttrc

@@ -10,8 +10,8 @@ set spoolfile = "~/general/mail/inbox"
 set record = "~/general/mail/sent"
 set postponed = "~/general/mail/drafts"
 set trash = "~/general/mail/rubbish"
-#mailboxes =inbox =sent =drafts =rubbish # These are probably what you want
-mailboxes =inbox =sent =drafts =rubbish =exmouth =exmouthsent =exmouthrubbish # Configured by my mkmailbox script
+# mailboxes =inbox =sent =drafts =rubbish # These are probably what you want
+mailboxes =inbox =sent =drafts =rubbish ="===============" =exmouth =exmouthsent =exmouthrubbish# Configured by my mkmailbox script
 
 set mbox_type = Maildir
 
@@ -19,8 +19,9 @@ source colours
 source sidebar
 
 bind index D purge-message
+bind index,pager M compose-to-sender
 
-set sort=reverse-date
-set sort_aux=last-date-received
+# set sort=reverse-date
+# set sort_aux=last-date-received
 
-#source ~/.config/neomutt/gpg.rc
+# source ~/.config/neomutt/gpg.rc
