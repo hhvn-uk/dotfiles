@@ -20,6 +20,7 @@ while true
 do
 	block mpv
 	block time
+	block time2
 	sleep 1
 done &
 
@@ -29,7 +30,8 @@ do
 	block news
 	block disk
 	block disk2
-	block time2
+	block mail
+	block rem
 	sleep 20
 done &
 
@@ -37,5 +39,11 @@ cd /tmp/blocks
 while true
 do
 	sleep 0.1
-	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat mpv bat cpu disk disk2 mem net news vol time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
+	xsetroot -name "$(for void in $(seq 150); do printf " "; done) $(cat mpv bat cpu disk disk2 mem net news mail rem vol time time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
+done &
+
+while true
+do
+	sleep 200
+	nohup cvrestart &
 done

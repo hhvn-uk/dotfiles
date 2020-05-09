@@ -1,6 +1,6 @@
 #!/bin/bash
 
-link=$(awk '/https*:\/\/|gopher:\/\//' < /dev/stdin | sed 's/.*http/http/g;s/.*gopher/gopher/g' | tr -d '<[]>' | awk '{print $1}' | sort | dmenu -i -p "Select a url:")
+link=$(grep -Eo 'https://[A-Za-z0-9\.&%?\/\=_-+]*|http://[A-Za-z0-9\.&%?\/\=_-+]*|gopher://[A-Za-z0-9\.&%?\/\=_-+]*' < /dev/stdin 2>/dev/null| dmenu -i -p 'Select url')
 
 IFS=$'\n'
 
@@ -11,6 +11,7 @@ youtube-dl --add-metadata -xic
 vimb --no-maximize
 xclip
 webimg
+webkmv
 st -e curl" | dmenu -i -p "Select a handler:")
 
 pkill mpvlisten

@@ -6,6 +6,6 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-echo "[M $(free -h | awk '/^Mem:/ {print $3 "/" $2}')]"
+echo "[M $(free -h | awk '{print $3 "/" $2}' | head -n 2 | tail -n 1)]"
 echo
 echo \#007dc1

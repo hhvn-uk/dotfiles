@@ -213,6 +213,7 @@ abstracts = {
 
   # background of statusbar
   sb_background = "%N";
+  isbstart = "%0"
 
 
   # default statusbar item style

@@ -1,21 +1,13 @@
-ls		nop l
 l		\ls --color
 la		\ls --color -A
 ll		\ls --color -lh
 lla		\ls --color -lAh
 r		\rm
 rr		\rm -rf
-rm		nop r
 m		\mv
-mv		nop m
-vim		nop v
-vi		nop v
 v		nvim
-git		nop g
 g		\git
 c		\cp
-cp		nop c
-find		nop f
 f		\find
 xi		sudo xbps-install
 xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu
@@ -40,10 +32,11 @@ cleancache 	sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/web
 mkconfall	mkmailpass; mkalias
 tmux		tmux -f ~/.config/tmux/config
 nw		newsboat
-nm		neomutt
+nm		neomutt ; rm /tmp/mail
 maic		sudo make all install clean
 homesync	rsync --port 222 --delete -azPe 'ssh -p 222' --exclude=general --exclude=.cache --exclude=.local/cache $HOME/ void@192.168.1.20:/home/void/homedir/
 tmux		\tmux -f $HOME/.config/tmux/config
+notes		vim ~/.local/notes
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls

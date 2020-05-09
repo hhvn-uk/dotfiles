@@ -6,27 +6,31 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-printf "[B "
+setunfull(){
+	[ "$full" != "y" ] && unfull="y"
+}
+
+unset unfull
 for b in $(find /sys/class/power_supply -name "BAT*")
 do
 	read charge < $b/capacity
 	read stat < $b/status
 
 	case "$stat" in
-		Charging) stat="^c#00ff00^+" ;;
-		Discharging) stat="^c#aa5555^-" ; dis="y"  ;;
-		Full) stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f8^" ; charge="" ;;
+		Charging) stat="^c#00ff00^+" && setunfull;;
+		Discharging) stat="^c#aa5555^-" && setunfull ;;
+		Full) stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f8^" ; charge="" ; full="y" ;;
 		*) stat="^c#aaaaaa^" ;;
 	esac
 
 
-	[ "$charge" = "100" ] || [ "$charge" = "99" ] && stat="^c#00ff00^" && charge="$charge!"
-	[ $charge -le 10 ] && stat="^c#ff0000^!!!" 
+	[ "$charge" = "100" ] || [ "$charge" = "99" ] && stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f2^" && charge="" || setunfull
+	[ $charge -le 10 ] && stat="^c#ff0000^!!!"
 
 	printf "%s:%s%s" "^c#aaaaaa^$(echo "$b" | grep -o "[0-9]*$")" "$stat" "$charge"
-	unset dis
-done
-printf "]"
+	unset full
+done > /tmp/bat
+[ "$unfull" = "y" ] && read output < /tmp/bat && printf "[B $output]"
 echo
 echo
 echo \#C625C8

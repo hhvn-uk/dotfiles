@@ -3,5 +3,7 @@
 sudo mount.nfs4 192.168.1.20:/srv/storage general/
 sh $HOME/.scripts/custom/dock
 nohup redshift &
+nohup wallblur &
+xsetroot -cursor_name sailboat
 rm nohup.out
 ssh root@haydenvh.com

@@ -26,12 +26,20 @@ channels = (
   { name = "#GNU/matrix"; chatnet = "Rizon"; autojoin = "Yes"; },
   { name = "#staw"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#neomutt"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#cat-v"; chatnet = "Freenode"; autojoin = "Yes"; }
-  { name = "#archlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; }
-  { name = "#neovim"; chatnet = "Freenode"; autojoin = "Yes"; }
-  { name = "#voidlinux-offtopic"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#cat-v"; chatnet = "Freenode"; autojoin = "Yes"; },
+  {
+    name = "#archlinux-offtopic";
+    chatnet = "Freenode";
+    autojoin = "Yes";
+  },
+  { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#neovim"; chatnet = "Freenode"; autojoin = "Yes"; },
+  {
+    name = "#voidlinux-offtopic";
+    chatnet = "Freenode";
+    autojoin = "Yes";
+  },
+  { name = "#i3"; chatnet = "Freenode"; autojoin = "Yes"; }
 );
 aliases = {
   ATAG = "WINDOW SERVER";
@@ -192,13 +200,14 @@ aliases = {
 statusbar = {
   items = {
     barstart = "{sbstart}";
+    ibarstart = "{isbstart}";
     barend = "{sbend}";
     user = "{sb {sbnickmode $cumode}$N{sbmode $usermode}{sbaway $A}}";
     window = "{sb $winref:$tag/$itemname{sbmode $M}}";
     window_empty = "{sb $winref{sbservertag $tag}}";
     prompt = "{prompt $[.15]itemname}";
     prompt_empty = "{prompt $winname}";
-    topic = " $topic";
+    topic = " {sb $winref/$itemname} TOPIC: $topic";
     lag = "{sb Lag: $0-}";
     act = "{sb Act: $0-}";
     more = "-- more --";
@@ -223,7 +232,7 @@ statusbar = {
       position = "1";
       visible = "inactive";
       items = {
-        barstart = { priority = "100"; };
+        ibarstart = { priority = "100"; };
         window = { };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
@@ -246,15 +255,12 @@ settings = {
   core = {
     real_name = "haydenh";
     user_name = "haydenh";
-    nick = "haydenh";
+    nick = "haydenh_";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = {
-    theme = "pipeline";
-    autolog = "yes";
-  };
+  "fe-common/core" = { theme = "pipeline"; autolog = "yes"; };
   "perl/core/scripts" = {
     ascii_figlet_path = "/usr/bin/figlet";
     nickcolor_colors = "4 8 9 10 11 12 13 14 15";

@@ -1,0 +1,6 @@
+#!/bin/sh
+read LINE < /tmp/mail
+[ "$LINE" = '' ] && exit 1
+echo "[$LINE]"
+echo
+echo \#000000

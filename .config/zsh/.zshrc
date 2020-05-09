@@ -91,3 +91,6 @@ ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=7'
 ZSH_HIGHLIGHT_STYLES[path]='fg=7'
 
 . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# boot into X
+[ "$(tty)" = "/dev/tty1" ] && startx

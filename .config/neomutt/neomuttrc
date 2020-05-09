@@ -21,7 +21,8 @@ source sidebar
 bind index D purge-message
 bind index,pager M compose-to-sender
 
-# set sort=reverse-date
-# set sort_aux=last-date-received
+set new_mail_command="echo N:%n U:%u > /tmp/mail &"
+
+set sort=threads
 
 # source ~/.config/neomutt/gpg.rc

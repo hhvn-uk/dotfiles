@@ -8,7 +8,7 @@
 
 newsboat -x reload 2>/dev/null
 unread=$(newsboat -x print-unread | sed 's/ unread articles//g')
-
-echo "[NEWS $unread]"
+[ "$unread" = "0" ] || [ "$unread" = "" ] && exit 1
+echo "[NWS $unread]"
 echo
 echo \#498364

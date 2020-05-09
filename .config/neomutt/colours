@@ -7,8 +7,11 @@ color index_subject cyan default '.*'
 
 # For new mail:
 color index blue default "~N"
-color index_author magenta default "~N"
+color index_author color12 default "~N"
 color index_subject color12 default "~N"
+color index blue default "~O"
+color index_author color12 default "~O"
+color index_subject color12 default "~O"
 
 # Header colors:
 color header blue default ".*"

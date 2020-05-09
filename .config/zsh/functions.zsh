@@ -1,50 +1,17 @@
-#!/bin/sh
-killprog(){
-	for prog in $(printf "$@")
-	do
-		pkill $prog
-	done
-}
-
 0x0(){
-	for file in $(printf "$@")
-	do
-		name=$(curl -n -F "file=@$file" http://0x0.st)
-		echo "$file : $name"
-		names="$names $name" done
-	echo $names | xclip
+	curl -n -F "file=<-" http://0x0.st < /dev/stdin | tee /dev/stderr | xclip
 }
 
 ix(){
-	for file in $(printf "$@")
-	do
-		name=$(curl -n -F "f:1=<-" http://ix.io < $file)
-		echo "$file : $name"
-		names="$names $name"
-	done
-	echo $names | xclip
+	curl -n -F "f:1=<-" http://ix.io < /dev/stdin | tee /dev/stderr | xclip
 }
 
-pc(){
-	"$@" | curl -n -F "f:1=<-" http://ix.io
+me0w(){
+	echo "gopher://me0w.net/0/pit/$(nc me0w.net 31415 < /dev/stdin)" | tee /dev/stderr |xclip
 }
 
-make(){
-	[ -f make.sh ] && {
-		sh make.sh "$@"
-	} || {
-		command make "$@"
-	}
-}
-
-colo(){
-	for file in $(printf "$@")
-	do
-		name=$(curl -n -F "image=@$file" https://api.deepai.org/api/colorizer)
-		echo "$file : $name"
-		names="$names $name"
-	done
-	echo $names | xclip
+hb(){
+	nc haydenh.null 9999 < /dev/stdin | tee /dev/stderr | xclip
 }
 
 colotable(){
@@ -61,34 +28,34 @@ colotable(){
 	done
 }
 
-filesort(){
-	find $1 -type f | sort
-}
-
-nop(){
-	echo "This already has an alias... use $1 instead!"
-}
-
 encsign(){
 	[ "$1" = "--help" ] && echo '$1=recipient $2=file' && exit 1
 	gpg --encrypt --sign --armor -r $1 $2
 }
 
-h8(){
-        for file in $(printf "$@")
-        do
-                name=$(curl -F 'file=<-' http://haydenvh.com:8080 < $file)
-                echo "$file : $name"
-                names="$names $name"
-        done
-        echo "$names" | xclip
-}
-
-p8(){
-        name=$(curl -F 'file=<-' http://haydenvh.com:8080 < /dev/stdin)
-        echo "$name" | tee | xclip
-}
-
 cu(){
 	sh $HOME/.scripts/custom/$1
+}
+
+radio(){
+	mpv $1 --input-ipc-server=/tmp/mpv-socket3
+}
+
+notebook(){
+	nvim $HOME/.local/notes
+}
+
+diary(){
+	for o in "public" "private"
+	do
+		echo "===$o===" > ~/.local/${o}d
+	done
+
+	phlog="$HOME/web/alcl/write"
+	mkdir -p $phlog/daily.accomplishments ~/.local/diary
+	vim -O ~/.local/publicd ~/.local/privated
+	date=$(date +%d%m%y)
+	printf '.txt or .gph?'; read ftype < /dev/tty
+	mv ~/.local/publicd $phlog/daily.accomplishments/Accomplishments.of.$date.$ftype
+	mv ~/.local/privated ~/.local/diary/$date
 }

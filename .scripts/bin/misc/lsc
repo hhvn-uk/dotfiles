@@ -1,0 +1,15 @@
+#!/bin/sh
+
+t=$(mktemp -d)
+
+for o in $(ls --color "$@")
+do
+	o2=$(echo "$o" | perl -pe 's/\e\[?.*?[\@-~]//g') 
+	[ -f $o2 ] && echo "$o" >> $t/file && fin="y"
+	[ -d $o2 ] && echo "$o" >> $t/dir && fin="y"
+	[ "$fin" != "y" ] && echo "$o" >> $t/other
+	unset fin
+done
+
+pr -mtw "$(tput cols)" $t/*
+rm -rf $t

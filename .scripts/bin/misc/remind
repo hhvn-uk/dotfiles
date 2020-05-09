@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+# remind
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+
+cache=${XDG_CACHE_HOME:=$HOME/.cache}
+
+usage(){
+	echo "usage: remind $(tput bold)ARGS$(tput sgr0)
+
+ARGS:
+	-a DATE::STRING - add STRING as reminder for DATE (follows \`date +%d%%%m%%%y\` format)
+	-n - print number of reminders for today
+	-e - print reminders for today
+	-r - clear today's reminders
+	-d DATE - get reminders for DATE (follows \`date +%d%%%m%%%y\` format)"
+	exit 1
+}
+
+add(){
+	fdate=$(echo "$1" | grep -o '.*::' | sed 's/::$//g')
+	string=$(echo "$1" | grep -o '::.*' | sed 's/^:://g')
+
+	mkdir $cache/remind/$fdate -p
+	num=$(ls $cache/remind/$fdate | wc -l)
+	echo "$string" >> $cache/remind/$fdate/$num && echo 'reminder set' || echo 'failed to set reminder'
+}
+
+num(){
+	ls $cache/remind/$date 2>/dev/null | wc -l
+}
+
+_echo(){
+	cat $cache/remind/$date/*
+}
+
+_clear(){
+	rm -rf $cache/remind/$date
+}
+
+_date(){
+	cat $cache/remind/$1/*
+}
+
+date=$(date +%d%%%m%%%y)
+mkdir -p $cache/remind
+[ -z $1 ] && usage
+while [ "$#" != "0" ]
+do
+	echo "$1" | grep "[a-zA-Z0-0]=" >/dev/null && {
+		arg_opt=$(echo "$1" | sed 's/=.*//g')
+		arg_opr=$(echo "$1" | sed 's/.*=//g')
+	} || {
+		arg_opt="$1"
+		echo "$arg_opt" | grep -E -- '-a|-d' >/dev/null && {
+			shift
+			arg_opr="$1"
+		}
+	}
+	case "$arg_opt" in
+		-a) add "$arg_opr" ;;
+		-n) num ;;
+		-e) _echo ;;
+		-r) _clear ;;
+		-d) _date "$arg_opr" ;;
+		*) echo "$arg_opt not recognized"; usage ;;
+	esac
+	shift
+done

@@ -1,0 +1,128 @@
+#!/bin/sh
+#
+# schedule
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+
+dir="${XDG_CACHE_HOME:=$HOME/.cache}/schedule"
+current="${XDG_CACHE_HOME:=$HOME/.cache}/schedule-current"
+config="${XDG_CONFIG_HOME:=$HOME/.config}"
+
+mkdir -p $config/schedule
+touch $config/schedule/config
+. $config/schedule/config
+
+usage(){
+	echo "usage: schedule $(tput bold)ARGS$(tput sgr0)
+
+ARGS:
+	-n NAME - create a new schedule
+	-c NAME - choose from list of schedules
+	-t - interactively deal with today's schedule
+	-o - list number of started, yet uncomplete tasks
+	-l - list schedules
+	"
+}
+
+new(){
+	mkdir $dir/$1/
+	for day in "mon" "tue" "wed" "thu" "fri" "sat" "sun"
+	do
+		printf "# everything preceded by a hash/sharp symbol is a comment\n#=== TIME\n# the above ^ signifies (commented) the start of an event, TIME being the hh:mm (\`date +%%H:%%M\`) at which it begins.\n\n" > $dir/$1/$day
+	done
+	printf "Schedule in $dir/$1. Edit files as you like.\n$dir/$1 set as main schedule.\n"
+	echo "export MAIN=\"$1\"" > $config/schedule/config
+	export MAIN="$1"
+}
+
+choose(){
+	echo "export MAIN=\"$1\"" > $config/schedule/config
+	export MAIN="$1"
+	echo "$1 set as main schedule."
+}
+
+list(){
+	find $dir/ -type d | tail -n +2
+}
+
+_day(){
+	case "$(date +%u)" in
+		1) day=mon ;;
+		2) day=tue ;;
+		3) day=wed ;;
+		4) day=thu ;;
+		5) day=fri ;;
+		6) day=sat ;;
+		7) day=sun ;;
+		*) echo "Could not determine day of the week... exiting."; exit 1 ;;
+	esac
+}
+
+_copy(){
+	_day
+	printf "#DATE: $(date +%d/%m/%y)\n#the above note is core to schedule(1)'s functionality\n#to 'complete' a task, delete it, then save this file.\n" | cat /dev/stdin $dir/$MAIN/$day > $current
+}
+
+today(){
+	# doing some checks
+	[ -f $current ] && {
+		date=$(grep -o '^#DATE: [0-9/]*' < $current | sed 's/^#DATE: //g')
+		rdate=$(date +%d/%m/%y)
+		echo "'$date' '$rdate'"
+		[ "$date" != "$rdate" ] && _copy
+	} || _copy
+	[ -z $EDITOR ] && {
+		print "Please set the \$EDITOR variable in the future.\nEDITOR: "
+		read EDITOR < /dev/tty
+		export $EDITOR
+	}
+	$EDITOR $current
+}
+
+num(){
+	# doing some checks
+	[ -f $current ] && {
+		date=$(grep -o '^#DATE: [0-9/]*' < $current | sed 's/^#DATE: //g')
+		rdate=$(date +%d/%m/%y)
+		echo "'$date' '$rdate'"
+		[ "$date" != "$rdate" ] && _copy
+	} || _copy
+	count=0
+	for time in $(grep "^===" < $current | sed 's/^===//g;s/://g')
+	do
+		rtime=$(date +%H%M)
+		[ $rtime -ge $time ] && count=$(($count+1))
+	done
+	echo $count
+}
+
+echo(){
+	printf '%s\n' "$@"
+}
+
+mkdir -p $dir
+[ -z $1 ] && usage
+while [ "$#" != "0" ]
+do
+	echo "$1" | grep "[a-zA-Z0-0]=" >/dev/null && {
+		arg_opt=$(echo "$1" | sed 's/=.*//g')
+		arg_opr=$(echo "$1" | sed 's/.*=//g')
+	} || {
+		arg_opt="$1"
+		echo "$arg_opt" | grep -E -- '-n|-c' >/dev/null && {
+			shift
+			arg_opr="$1"
+		}
+	}
+	case "$arg_opt" in
+		-n) new "$arg_opr" ;;
+		-c) choose "$arg_opr" ;;
+		-l) list ;;
+		-t) today ;;
+		-o) num ;;
+		*) echo "$arg_opt not recognized"; usage ;;
+	esac
+	shift
+done

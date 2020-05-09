@@ -2,7 +2,8 @@ unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
-set-option -g default-terminal "xterm-256color"
+# set-option -g default-terminal "xterm-256color"
+set-option -g default-terminal "st-256color"
 
 bind z split-window -h
 bind Z split-window -v
@@ -54,3 +55,6 @@ setw -g window-status-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249
 
 # messages
 set -g message-style 'fg=colour232 bg=colour16 bold'
+
+#vi mode
+set-window-option mode-keys vi
