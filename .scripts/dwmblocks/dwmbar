@@ -26,7 +26,7 @@ done &
 
 while true
 do
-	block net
+	# block net
 	block news
 	block disk
 	block disk2

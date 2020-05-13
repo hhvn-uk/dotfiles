@@ -2,14 +2,14 @@
 
 t=$(mktemp -d)
 
-for o in $(ls --color "$@")
+for o in $(ls --color $@)
 do
-	o2=$(echo "$o" | perl -pe 's/\e\[?.*?[\@-~]//g') 
-	[ -f $o2 ] && echo "$o" >> $t/file && fin="y"
-	[ -d $o2 ] && echo "$o" >> $t/dir && fin="y"
-	[ "$fin" != "y" ] && echo "$o" >> $t/other
-	unset fin
+	o2="$(echo "$@" | sed 's~[[:alnum:][:punct:]]$~&/~')$(echo "$o" | perl -pe 's/\e\[?.*?[\@-~]//g')"
+	[ -d $o2 ] && echo "$o" >> $t/dir || echo "$o" >> $t/file
 done
 
-pr -mtw "$(tput cols)" $t/*
+[ ! -f $t/dir ] && ls --color $@ && exit 0
+[ ! -f $t/file ] && ls --color $@ && exit 0
+
+diff -y -W $(tput cols) $t/* | sed 's/ *>[[:space:]]*//g;s/<//g;s/|\t/\t/g'
 rm -rf $t

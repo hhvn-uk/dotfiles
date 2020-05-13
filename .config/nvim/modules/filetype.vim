@@ -8,13 +8,28 @@ function Shconfig()
 	nnoremap <buffer> <localleader>$co i$config
 	nnoremap <buffer> <localleader><space> i[[:space:]]<esc>
 	nnoremap <buffer> <localleader><localleader><space> [[:space:]]
-	iabbrev ccachedir cache=${XDG_CACHE_HOME:=$HOME/.cache}
-	iabbrev cconfigdir cache=${XDG_CONFIG_HOME:=$HOME/.config}
+	iabbrev <buffer> ccachedir cache=${XDG_CACHE_HOME:=$HOME/.cache}
+	iabbrev <buffer> cconfigdir cache=${XDG_CONFIG_HOME:=$HOME/.config}
+endfunction
+
+function Gphconfig()
+	nnoremap <buffer> <localleader>c :call GphCitation()<CR>
+endfunction
+
+function GphCitation()
+	redir! >/tmp/vim-cite | silent! %s/\[[0-9]*\]//gn | redir END
+	let count=system("tail -n 1 < /tmp/vim-cite | awk '{print $1}'")
+	let void=system("echo '' > /tmp/vim-cite")
+	let done=1
+	normal G
+	while done <= count
+		redir! >> /tmp/vim-cite | silent! echo "[<++>|[". done ."]|<++>|<++>|<++>]" | redir END
+		let done+=1
+	endwhile
+	read /tmp/vim-cite
 endfunction
 
 augroup autocmd
-	"greet
-	autocmd BufRead *.greet set syntax=greet
 	"netrw
 	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
 
@@ -30,4 +45,7 @@ augroup autocmd
 
 	"SH
 	autocmd FileType sh :call Shconfig()
+
+	"GPH
+	autocmd FileType *.gph :call Gphconfig()
 augroup END

@@ -43,9 +43,9 @@ hi FoldColumn	cterm=none ctermfg=249 ctermbg=1 guifg=#b2b2b2 gui=none
 
 " Following section entirely created by Hayden Hamilton
 hi Error ctermfg=10 ctermbg=0 guifg=#892b2b guibg=#141726 gui=none
-hi NvimInternalError ctermfg=10 ctermbg=0 guifg=#892b2b guibg=#141726 gui=none
+hi link NvimInternalError Error
 hi ErrorMsg ctermfg=0 ctermbg=10 guibg=#892b2b guifg=#141726 gui=none
-hi WarningMsg ctermfg=0 ctermbg=10 guibg=#590b0b guifg=#141726 gui=none
+hi link WarningMsg ErrorMsg
 hi MsgArea ctermbg=0 guibg=#141726 gui=none
 hi MsgSeparator ctermbg=1 guibg=#24283c gui=none
 hi Todo cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
@@ -62,3 +62,4 @@ hi MatchParen ctermfg=30 cterm=reverse guifg=#003740 gui=reverse
 hi Underlined cterm=underline ctermfg=23 gui=underline guifg=#005f5f
 hi QuickScopePrimary guifg=#892b2b gui=bold,reverse
 hi QuickScopeSecondary guifg=#d750d7 gui=bold,reverse
+hi ColorColumn guibg=#24283c

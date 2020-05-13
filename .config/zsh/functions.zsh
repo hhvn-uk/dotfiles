@@ -41,21 +41,16 @@ radio(){
 	mpv $1 --input-ipc-server=/tmp/mpv-socket3
 }
 
-notebook(){
-	nvim $HOME/.local/notes
-}
-
 diary(){
-	for o in "public" "private"
-	do
-		echo "===$o===" > ~/.local/${o}d
-	done
+	date=$(date +%d%m%y)
+	wdate=$(date +%d/%m/%y)
+	echo "===private===" > ~/.local/privated
+	echo "#Daily Entry - $wdate" > ~/.local/public.gph
 
 	phlog="$HOME/web/alcl/write"
-	mkdir -p $phlog/daily.accomplishments ~/.local/diary
+	mkdir -p $phlog/daily.entries ~/.local/diary
 	vim -O ~/.local/publicd ~/.local/privated
-	date=$(date +%d%m%y)
 	printf '.txt or .gph?'; read ftype < /dev/tty
-	mv ~/.local/publicd $phlog/daily.accomplishments/Accomplishments.of.$date.$ftype
+	mv ~/.local/publicd $phlog/daily.entries/entry.of.$date.$ftype
 	mv ~/.local/privated ~/.local/diary/$date
 }

@@ -1,7 +1,7 @@
-l		\ls --color
-la		\ls --color -A
-ll		\ls --color -lh
-lla		\ls --color -lAh
+l		\lsc
+la		\lsc -A
+ll		\lsc -lh
+lla		\lsc -lAh
 r		\rm
 rr		\rm -rf
 m		\mv

@@ -1,5 +1,5 @@
 "
-" .bashrc
+" .config/nvim/init.vim
 " Created by Hayden Hamilton
 "
 " haydenvh.com
@@ -92,7 +92,7 @@ noremap <leader>u' ds'
 noremap <leader>sp o<esc>pi
 noremap <leader>Ee :edit 
 noremap <leader>yv :reg<CR>
-noremap <leader>8 :set tw=80<CR>:set fo+=t<CR>
+noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 
 noremap <leader>nn :set number! relativenumber!<CR>
 noremap <leader><leader>nn :setlocal number! relativenumber!<CR>
