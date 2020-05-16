@@ -49,8 +49,8 @@ diary(){
 
 	phlog="$HOME/web/alcl/write"
 	mkdir -p $phlog/daily.entries ~/.local/diary
-	vim -O ~/.local/publicd ~/.local/privated
+	vim -O ~/.local/public.gph ~/.local/privated
 	printf '.txt or .gph?'; read ftype < /dev/tty
-	mv ~/.local/publicd $phlog/daily.entries/entry.of.$date.$ftype
+	mv ~/.local/public.gph $phlog/daily.entries/entry.of.$date.$ftype
 	mv ~/.local/privated ~/.local/diary/$date
 }

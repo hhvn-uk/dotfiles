@@ -23,8 +23,8 @@ hi special		ctermfg=255 guifg=#eeeeee gui=none
 hi link ErrorMsg Error
 hi link WarningMsg Error
 hi Cursor		cterm=reverse ctermfg=255 guifg=#eeeeee gui=reverse
-hi Search		cterm=bold,underline ctermbg=5 guibg=#777b8e gui=bold,underline
-hi IncSearch	cterm=bold,underline ctermbg=5 guibg=#777b8e gui=bold,underline
+hi Search		cterm=bold ctermbg=5 guibg=#777b8e gui=bold
+hi IncSearch	cterm=bold ctermbg=5 guibg=#777b8e gui=bold
 hi title		ctermfg=225 guifg=#ffd7ff gui=none
 " hi ShowMarksHL ctermfg=cyan ctermbg=lightblue cterm=bold guifg=yellow guibg=black  gui=bold
 hi label		ctermfg=255 guifg=#eeeeee gui=none

@@ -255,7 +255,7 @@ settings = {
   core = {
     real_name = "haydenh";
     user_name = "haydenh";
-    nick = "haydenh";
+    nick = "haydenh_";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };

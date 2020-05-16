@@ -1,2 +1,2 @@
 au BufNewFile,BufRead *.gph :set filetype=gph
-setlocal syntax=gph
+au BufNewFile,BufRead *.gph :set syntax=gph
