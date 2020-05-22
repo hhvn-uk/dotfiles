@@ -7,7 +7,7 @@ function Shconfig()
 	nnoremap <buffer> <localleader>$ca i$cache
 	nnoremap <buffer> <localleader>$co i$config
 	nnoremap <buffer> <localleader><space> i[[:space:]]<esc>
-	nnoremap <buffer> <localleader><localleader><space> [[:space:]]
+	inoremap <buffer> <localleader><localleader><space> [[:space:]]
 	iabbrev <buffer> ccachedir cache=${XDG_CACHE_HOME:=$HOME/.cache}
 	iabbrev <buffer> cconfigdir cache=${XDG_CONFIG_HOME:=$HOME/.config}
 endfunction
@@ -30,22 +30,11 @@ function GphCitation()
 endfunction
 
 augroup autocmd
-	"netrw
 	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
-
-	"Get rid of shitty indenting
 	autocmd FileType html :normal gg=G
-
-	"Nowrap
 	autocmd FileType html :setlocal nowrap
-
-	"C
 	autocmd FileType c :noremap <buffer> <localleader>e $a;<esc>
 	autocmd FileType c :inoremap <buffer> <localleader><localleader>e <esc>$a;<esc>
-
-	"SH
 	autocmd FileType sh :call Shconfig()
-
-	"GPH
 	autocmd FileType *.gph :call Gphconfig()
 augroup END

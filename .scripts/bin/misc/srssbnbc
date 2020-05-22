@@ -1,0 +1,123 @@
+#!/bin/sh
+#
+# SRSSBNBC - simple RSSBNB client
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+cache=${XDG_CACHE_HOME:=$HOME/.cache}
+config=${XDG_CONFIG_HOME:=$HOME/.config}
+
+[ ! -z $1 ] && grep -rnw $cache/srssbnbc/ -e 'Read[[:space:]]*:[[:space:]]*unread' | wc -l && exit
+
+parseconfig(){
+	mkdir -p $config/srssbnbc
+	[ ! -f $config/srssbnbc/feeds ] && {
+		printf "No feed file!\nSyntax: url^1\n        url^2\n        ...\n        url^N\n"
+		exit 1
+	}
+	while IFS= read -r line
+	do
+		f=$(mktemp)
+		curl -qs $line > $f
+		parsefile $f "$(echo "$line" | base32)" "$line"
+		rm $f
+	done < $config/srssbnbc/feeds
+}
+
+parsefile(){
+	# usage $1=file, $2=id, $3=name
+	mkdir -p $cache/srssbnbc/$2 -p
+	sed 's/\\:/\&#58;/g;s/\\,/\&#44;/g' < $1 | tr '\t\n:' '\f\t\n' | sed '/^[[:space:]]*$/d' | awk -v "cachedir=$cache/srssbnbc/$2" '
+		BEGIN { 
+			FS=","
+			count="0"
+		}
+
+		$1 == "main" { 
+			if (seenmain=="yes")
+			 	exit 2
+			seenmain="yes" 
+			printf("Read  : Null\nTitle : %s\nLink  : %s\n\n%s\n\n", $2, $3, $4) > cachedir"/main.txt"
+		}
+		
+		$1 != "main" {
+			count++
+			if (system("test -f " cachedir"/"count".txt") != "0")
+				printf("Read  : unread\nTitle : %s\nLink  : %s\n\n%s\n", $2, $3, $4) > cachedir"/"count".txt"
+		}
+	'
+
+	[ "$?" = "2" ] && echo "Two 'main' items... quiting in feed $3" >/dev/stderr && exit
+}
+
+_ui(){
+	count=0
+	dirs=$(ls $cache/srssbnbc/ | nl)
+	IFS='
+'
+	while true
+	do
+		clear
+
+		for d in $dirs
+		do
+			dir=$(echo "$d" | awk '{$1="";print $0}' | sed 's/[[:space:]]//g')
+			num=$(echo "$d" | awk '{print $1}')
+			name=$(grep 'Title[[:space:]]*:' < $cache/srssbnbc/$dir/main.txt | awk '{$1="";$2="";print $0}' | sed 's/^[[:space:]]*/ /')
+			unread=$(grep -rnw $cache/srssbnbc/$dir -e 'Read[[:space:]]*:[[:space:]]*unread' | wc -l)
+			[ $unread -gt 0 ] && echo "$num $name $(tput bold)*$unread UNREAD ENTRIES*$(tput sgr0)" || echo "$num $name"
+		done | sed 's/&#58;/:/g;s/&#44;/,/g'
+
+		printf '\n\nSelect a feed: '
+		read feed < /dev/tty
+		cd $cache/srssbnbc/$(echo "$dirs" | grep "^[[:space:]]*$feed[[:space:]]" | awk '{$1="";print $0}' | sed 's/[[:space:]]//g')
+
+		while true
+		do
+			clear
+
+			temp=$(mktemp)
+			files=$(ls | nl | sed '/main\.txt/d')
+			for f in $files
+			do
+				file=$(echo "$f" | awk '{$1="";print $0}' | sed 's/[[:space:]]//g')
+				num=$(echo "$f" | awk '{print $1}')
+				name=$(grep 'Title[[:space:]]*:' < $file | awk '{$1="";$2="";print $0}' | sed 's/^[[:space:]]*/ /')
+				grep 'Read[[:space:]]*:[[:space:]]*unread' < $file >/dev/null && echo "$num $name $(tput bold)*UNREAD*$(tput sgr0)" || echo "$num $name"
+			done > $temp
+			tail -n 20 < $temp | cat main.txt /dev/stdin | sed 's/&#58;/:/g;s/&#44;/,/g'
+			printf "\n\nSelect an item, 'list' to veiw all items, or 'q' to go back: "
+			read choice < /dev/tty
+			[ "$choice" = "list" ] && less $temp && printf "\n\nSelect an item: " && read choice < /dev/tty
+			[ "$choice" = "q" ] && break
+			fchoice=$(echo "$files" | grep "^[[:space:]]*$choice[[:space:]]*" | awk '{$1="";print $0}' | sed 's/[[:space:]]//g')
+			tr '\f\t' '\t\n' < $fchoice | sed 's/&#58;/:/g;s/&#44;/,/g' | less
+			out=$(sed '/^Read[[:space:]]*:[[:space:]]*unread/d' < $fchoice)
+			echo "$out" > $fchoice
+		done
+	done
+}
+
+
+parseconfig
+_ui

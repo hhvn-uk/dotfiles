@@ -1,0 +1,22 @@
+#!/bin/sh
+
+chars="‾ (overline)
+░ (block)
+▒ (block)
+▓ (block)
+█ (block)
+┌ (box)
+┐ (box)
+┼ (box)
+┘ (box)
+┤ (box)
+├ (box)
+└ (box)"
+
+#NOTE: a char being in this file, does not mean you should use it! Avoid the box
+#drawing chars, as your art becomes TOO bland if they are everywhere.
+
+chars=$(echo "$chars" | nl | tee /dev/stderr)
+printf 'Select a number: '
+read num < /dev/tty
+echo "$chars" | grep "^[[:space:]]*$num[[:space:]]" | awk '{print $2}' | tr -d '[[:space:]]' | xclip

@@ -12,7 +12,8 @@ vimb --no-maximize
 xclip
 webimg
 webkmv
-st -e curl" | dmenu -i -p "Select a handler:")
+popupcurl
+popupcgo" | dmenu -i -p "Select a handler:")
 
 pkill mpvlisten
 hmpv pause /tmp/mpv-socket
