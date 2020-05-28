@@ -1,36 +1,28 @@
 #!/bin/bash
 #
-# i3blocks/bat
+# dwmblocks/bat
 # Created by Hayden Hamilton
 #
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
-
-setunfull(){
-	[ "$full" != "y" ] && unfull="y"
-}
-
-unset unfull
+total=0
+charge=0
 for b in $(find /sys/class/power_supply -name "BAT*")
 do
-	read charge < $b/capacity
-	read stat < $b/status
-
-	case "$stat" in
-		Charging) stat="^c#00ff00^+" && setunfull;;
-		Discharging) stat="^c#aa5555^-" && setunfull ;;
-		Full) stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f8^" ; charge="" ; full="y" ;;
-		*) stat="^c#aaaaaa^" ;;
-	esac
-
-
-	[ "$charge" = "100" ] || [ "$charge" = "99" ] && stat="^c#00ff00^^r0,3,10,9^^f2^^c#00ff00^!^c#00ff00^^f2^" && charge="" || setunfull
-	[ $charge -le 10 ] && stat="^c#ff0000^!!!"
-
-	printf "%s:%s%s" "^c#aaaaaa^$(echo "$b" | grep -o "[0-9]*$")" "$stat" "$charge"
-	unset full
-done > /tmp/bat
-[ "$unfull" = "y" ] && read output < /tmp/bat && printf "[B $output]"
+	total=$(($total+100))
+	read cap < $b/capacity
+	charge=$(($charge+$cap))
+	grep -i 'charg' < $b/status >/dev/null && charging='y'
+	grep -i 'discharg' < $b/status >/dev/null && discharging='y'
+done
+num=$(echo "scale=2; ($charge/$total)*21" | bc | sed 's~\..*$~~')
+colour="#aa6600"
+[ "$charging" = "y" ] && colour="#00aa00" 
+[ $num -ge 19 ] && colour="#00aa00"
+[ "$discharging" = "y" ] && colour="#aa0000"
+echo "^r0,5,2,4^^r2,2,22,10^^c#000000^^r3,3,20,8^^c$colour^^r$((23-$num)),3,$num,8^^d^^f24^" > /tmp/bat
+read output < /tmp/bat
+printf "[B $output]"
 echo
 echo
 echo \#C625C8

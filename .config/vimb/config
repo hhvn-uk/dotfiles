@@ -19,6 +19,8 @@ nnoremap vh :sh! vimbhist<CR>
 nnoremap Q :q!<CR>
 nmap B :sh! mpv "$(xclip -o)"<CR>
 
+nnoremap h <C-o>
+
 shortcut-add sx=https://searx.me/
 shortcut-add sch=https://occusearch.de/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0

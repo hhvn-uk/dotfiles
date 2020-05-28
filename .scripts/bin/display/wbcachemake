@@ -6,8 +6,7 @@
 # haydenvh.com
 # Copyright (c) 2020 Hayden Hamilton
 
-${XDG_CACHE_HOME:=$HOME/.cache}
-cache="$XDG_CACHE_HOME"
+cache=$HOME/general/cache/
 
 donorm(){
 	[ "$args" = "" ] && {
@@ -22,7 +21,7 @@ donorm(){
 mkdir -p $cache/wallblur
 rm $cache/wallblur/*
 
-files=$(find images/wallpapers -type f -name "*.png")
+files=$(find images/wallpapers/ -type f -name "*.png")
 half=$(echo "$files" | wc -l)
 half=$(($half/2))
 top=$(echo "$files" | head -n $half)

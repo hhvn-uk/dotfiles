@@ -9,11 +9,11 @@
 dir=$1
 count="$2"
 filetypes="mp3 opus mkv mp4 flac m4a webm wav"
-getfiles() {
-	files+=$(find $dir | awk "/$1/ {print}")
+getfiles(){
+	files+=$(find $dir | awk "/$1/"' {print}')
 }
 
-allfiles() {
+allfiles(){
 	for filetype in $filetypes
 	do
 		getfiles $filetype

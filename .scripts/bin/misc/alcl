@@ -1,0 +1,34 @@
+#!/bin/sh
+
+PHLOG="$HOME/net/alcl/write"
+RSSBNB="$HOME/net/phlog.rssbnb"
+
+_list(){
+	for f in $(find $PHLOG/$1 -type f -name "*.gph" -o -name "*.txt" -not -name "links.gph")
+	do
+		echo "$(stat -c '%y' $f)##$f"
+	done | sort -r | sed "s/^.*##//;s~$PHLOG/$1[/]*~~g" |
+		while IFS= read -r line
+		do
+			echo "$line $(grep '^#[[:space:]A-Z0-9a-z]' < $PHLOG/$1/$line)"
+		done | head -n "$(($(tput lines)-2))"
+}
+
+_new(){
+	[ -d "$PHLOG/$1" ] && dir="$PHLOG/$1" && shift || dir="$PHLOG"
+	name="$@"
+	filename=$(echo "$@" | tr '[[:space:]]' '.' | tr -dc '[A-Za-z0-9-.+=%#!]')
+	echo "#$name" >> $dir/$filename
+	$EDITOR $dir/$filename
+}
+
+case "$1" in
+	ls) _list "$2" ;;
+	new) _new "$2" ;;
+	*) echo 'usage: alcl <subcommand>
+
+SUBCOMMANDS:
+	ls
+	new' ;;
+esac
+

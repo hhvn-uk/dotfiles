@@ -10,12 +10,7 @@ ${XDG_CACHE_HOME:=$HOME/.cache}
 cache=$XDG_CACHE_HOME
 
 printf '' > /tmp/dimg
-[ ! -z $1 ] && dir="$1" || dir="$HOME/general/images/wallpapers"
-
-case $(printf 'wallpaper\nview' | dmenu -i -p 'Select option:') in
-	view) sxiv $(find $dir -type f | shuf | dmenu -i -p "Select image:") ;;
-	wallpaper) setwall ;;
-esac
+[ ! -z $1 ] && dir="$1" || dir="$HOME/general/images/wallpapers/"
 
 setwall(){
 	monitors=$(xrandr --listmonitors | awk '/Monitors/{print $2}')
@@ -27,3 +22,8 @@ setwall(){
 	echo "$files" | sed 's/^[[:space:]]*//g;s/[[:space:]]*$//g' > $cache/rfeh/prev
 	fehffile $cache/rfeh/prev
 }
+
+case $(printf 'wallpaper\nview' | dmenu -i -p 'Select option:') in
+	view) sxiv $(find $dir -type f | shuf | dmenu -i -p "Select image:") ;;
+	wallpaper) setwall ;;
+esac

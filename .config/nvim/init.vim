@@ -187,6 +187,8 @@ noremap <c-y> "*
 nnoremap <leader>Tt :vsplit term://zsh<CR><c-h><c-l>
 nnoremap <leader>TT :split term://zsh<CR><c-k><c-j>
 tnoremap <leader><Esc> <C-\><C-n>
+nnoremap <leader>shs :call Shmenu("~/.scripts/", "select a script")<CR>
+nnoremap <leader>sho :let file=system("cat /tmp/shmenu-out")<CR>:execute 'edit! ' . file<CR>
 
 "Modules
 source ~/.config/nvim/modules/abbrs.vim

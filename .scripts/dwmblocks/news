@@ -1,14 +1,15 @@
 #!/bin/bash
 #
-# i3blocks/news
+# dwmblocks/news
 # Created by Hayden Hamilton
 #
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-newsboat -x reload 2>/dev/null
-unread=$(newsboat -x print-unread | sed 's/ unread articles//g')
-[ "$unread" = "0" ] || [ "$unread" = "" ] && exit 1
-echo "[NWS $unread]"
-echo
-echo \#498364
+newsboat -x reload 2>/dev/null && {
+	unread=$(newsboat -x print-unread | sed 's/ unread articles//g')
+	[ "$unread" = "0" ] || [ "$unread" = "" ] && exit 1
+	echo "[NWS $unread]"
+	echo
+	echo \#498364
+}

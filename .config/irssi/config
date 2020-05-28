@@ -213,19 +213,6 @@ statusbar = {
     more = "-- more --";
   };
   default = {
-    window = {
-      disabled = "no";
-      type = "window";
-      placement = "bottom";
-      position = "1";
-      visible = "active";
-      items = {
-        barstart = { priority = "100"; };
-        act = { priority = "10"; };
-        more = { priority = "-1"; alignment = "right"; };
-        barend = { priority = "100"; alignment = "right"; };
-      };
-    };
     window_inact = {
       type = "window";
       placement = "bottom";
@@ -253,9 +240,9 @@ statusbar = {
 };
 settings = {
   core = {
-    real_name = "haydenh";
+    real_name = "haydenvh.com";
     user_name = "haydenh";
-    nick = "haydenh_";
+    nick = "blerghghgh";
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
   };
@@ -267,3 +254,4 @@ settings = {
   };
   "irc/core" = { alternate_nick = "haydenh_"; };
 };
+logs = { };

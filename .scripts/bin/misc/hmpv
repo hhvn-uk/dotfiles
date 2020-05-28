@@ -66,6 +66,10 @@ gettime() {
 }
 quit() {
 	echo '{ "command": ["quit"] }' | socat - $socket > /dev/null
+	rm /tmp/blocks/mpv
+	rm /tmp/dwmblocks/mpv
+	rm /tmp/blocks/mpv
+	rm /tmp/dwmblocks/mpv
 }
 
 if [ "$action" = "toggle" ]
@@ -89,3 +93,4 @@ then
 else
 	seek
 fi
+$HOME/.scripts/dwmblocks/mpv > /tmp/blocks/mpv

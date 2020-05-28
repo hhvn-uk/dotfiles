@@ -32,6 +32,7 @@ git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
 git add .config/neomutt/sidebar
 git add .config/neomutt/mailcap
+git add .config/git/
 git add .config/nvim/ 
 git rm --cache .config/nvim/.netrwhist
 git rm --cache .config/zsh/.zcompdump

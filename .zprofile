@@ -13,6 +13,7 @@ export SCRIPTS="$HOME/.scripts/bin"
 scripts=$(ls -d $SCRIPTS/*/ | tr '\n' ':')
 export PATH="$PATH:$scripts"
 export EDITOR="nvim"
+export PAGER="less"
 export TERMINAL="st"
 export BROWSER="vimb"
 export work="$HOME/work"

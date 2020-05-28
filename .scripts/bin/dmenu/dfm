@@ -9,7 +9,7 @@
 
 if [ "$(echo $1 | awk '/help/ {print}')" != "" ]
 then
-	echo "dfm [fm for standard mode/name of program for file-selection] [/path/to/dir - enter at start]
+	echo "dfm <fm for standard mode/name of program for file-selection> </path/to/dir - enter at start>
 $(tput bold)CONFIG:$(tput sgr0)
 DFM_CONF_DIR=[insert /path/to/confdir] <-- Default: $HOME/.config/dfm
 DFM_DOT=[0/1 to show dotfiles] <-- Default: 1
@@ -25,6 +25,7 @@ When in standard file management mode, you will now get the option to automatica
 Written by Hayden Hamilton <haydenvh.com>"
 	exit 0
 fi
+
 forn1="$1"
 lsforce="$3"
 if [ "$1" = "" ]

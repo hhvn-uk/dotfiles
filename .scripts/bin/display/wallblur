@@ -5,8 +5,7 @@
 #
 # haydenvh.com
 
-${XDG_CACHE_HOME:=$HOME/.cache}
-cache=$XDG_CACHE_HOME
+cache=$HOME/general/cache/
 
 backend="xwallpaper"
 args=$(echo "$@" | sed 's/--force//g;s/force//g')
@@ -21,7 +20,7 @@ donorm(){
 	}
 	files="$files $1"
 }
-input=$(cat $cache/rfeh/prev)
+input=$(cat $XDG_CACHE_HOME/rfeh/prev)
 count=0
 files=""
 mkdir -p $cache/wallblur/
@@ -31,7 +30,7 @@ do
 	count=$(($count+1))
 	[ "$(echo "$@" | grep "force")" = "" ] && {
 		[ -f $cache/wallblur/$(basename $file) ] && {
-			files="$cache/wallblur/$(basename $file) $files"
+			files="$files $cache/wallblur/$(basename $file)"
 		} || {
 			donorm "$cache/wallblur/$(basename $file)"
 		}

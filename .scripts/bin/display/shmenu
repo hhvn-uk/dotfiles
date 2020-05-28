@@ -1,0 +1,26 @@
+#!/bin/bash
+
+[ -z $1 ] && echo "usage: shmenu prompt
+
+stdin is given to the user to search through
+stdout contains the selection
+stderr contains the user interface" && exit
+
+cleanup(){
+	echo "$files" | grep "$query" | tail -n 1
+	exit
+}
+
+files=$(cat /dev/stdin)
+
+while true
+do
+	clear > /dev/stderr
+	query=".*$(echo "$prev" | sed 's/./&\.\*/g')"
+	echo "$files" | grep "$query" > /dev/stderr
+	printf "$1> $prev" > /dev/stderr
+	read -rsn1 key < /dev/tty
+	[ "$key" = "$(echo -e '')" ] && cleanup "$2"
+	newkey=$(echo "$key" | grep '[[:print:]]')
+	[ "$newkey" = "" ] && prev=$(echo "$prev" | sed 's/.$//') || prev="${prev}${newkey}"
+done

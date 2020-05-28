@@ -32,11 +32,12 @@ cleancache 	sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/web
 mkconfall	mkmailpass; mkalias
 tmux		tmux -f ~/.config/tmux/config
 nw		pkill newsboat; newsboat
-nm		neomutt ; rm /tmp/mail
+nm		neomutt ; rm /tmp/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail
 maic		sudo make all install clean
 homesync	rsync --port 222 --delete -azPe 'ssh -p 222' --exclude=general --exclude=.cache --exclude=.local/cache $HOME/ void@192.168.1.20:/home/void/homedir/
 tmux		\tmux -f $HOME/.config/tmux/config
 notes		vim ~/.local/notes
+fwknop		fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls

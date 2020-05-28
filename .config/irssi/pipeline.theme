@@ -51,10 +51,10 @@ abstracts = {
 
   # some kind of comment is printed
   #comment = "$*";
-  comment = "%b[%n$*%b]%n";
+  comment = "%b$*%n";
 
   # reason for something is printed (part, quit, kick, ..)
-  reason = "{comment %_$*%_}";
+  reason = "{comment $*}";
 
   # mode change is printed ([+o nick])
   #mode = "{comment %n[%W$*]%n}";
@@ -63,14 +63,6 @@ abstracts = {
   ##
   ## channel specific messages
   ##
-
-  # highlighted nick/host is printed (joins)
-  channick_hilight = "$*";
-  chanhost_hilight = "{nickhost $*}";
-
-  # nick/host is printed (parts, quits, etc.)
-  channick = "%W$*%n";
-  chanhost = "{nickhost $*}";
 
   # highlighted channel name is printed
   channelhilight = "%R$*%n";
@@ -113,8 +105,7 @@ abstracts = {
 
   # public message in channel meant for me, $0 = nick mode, $1 = nick
   #pubmsgmenick = "%Y{msgnick %B$0%n %w$1%n}%w";
-  pubmsgmenick = "{msgnick $0$1-}";
-  menick = "%g$*%n";
+  pubmsgmenick = "$0$1%K %_#%_%n %|";
 
   # public highlighted message in channel
   # $0 = highlight color, $1 = nick mode, $2 = nick
@@ -130,7 +121,7 @@ abstracts = {
 
   # private message from you, $0 = "msg", $1 = target nick
   #ownprivmsg = "%b.%c.%C.%n[%cmsg%n(%c$1%n)] ";
-  ownprivmsg = "{msgnick  $*}";
+  ownprivmsg = "{msgnick $*}";
 
   # own private message in query
   ownprivmsgnick = "{msgnick %W$*%w}";
@@ -144,23 +135,14 @@ abstracts = {
   ##
 
   # used internally by this theme
-  action_core = "%W*%w $*%n";
+  action_core = "%w*%w  %_$0%_ $1";
 
   # generic one that's used by most actions
   action = "%w{action_core %w$*} ";
 
-  # own action, both private/public
-  ownaction = "{action $*}";
-
-  # own action with target, both private/public
-  ownaction_target = "{action_core $0}%K:%b$1%n ";
-
   # private action sent by others
   pvtaction = "%w $*%n ";
   pvtaction_query = "{action $*}";
-
-  # public action sent by others
-  pubaction = "{action $*}";
 
 
   ##
@@ -212,7 +194,7 @@ abstracts = {
   ##
 
   # background of statusbar
-  sb_background = "%N";
+  sb_background = "%0";
   isbstart = "%0"
 
 
@@ -242,29 +224,29 @@ abstracts = {
 # %r%n%_$0%_$1%K |%n %|
 formats = {
   "fe-common/core" = {
-    pubmsg = "{pubmsgnick $2 {pubnick $[-16]0}}$1";
-    join = " %_%B--->%_%K |%n %g{channick_hilight $0}%K!%n{chanhost_hilight $1}";
-    part = " %_%G<---%_%K |%n %W{channick $0}%K!%n{chanhost $1}: {reason $3}";
-    kick = " %_%G<<<!%_%K |%n %r{channick $0} %nby {nick $2} from {channel $1}: {reason $3}";
-    quit = " %_%G<<--%_%K |%n %W{channick $0}%K!%n{chanhost $1}: {reason $2}";
-    nick_changed = " %_%Bnick%_%K |%n {nick %w$0%n} %Nis now {nick %W$1%n}";
+    pubmsg = "{pubmsgnick $2 {pubnick $0}}$1";
+    join = "%_%B+%_{pubnick $0} %n$1";
+    part = "%_%G-{pubnick $0} %n$1 {reason $3}";
+    kick = "%_%G!{pubnick $0} %nby {pubnick $2} from {channel $1} {reason $3}";
+    quit = "%_%G<{pubnick $0} %n$1 {reason $2}";
+    nick_changed = "{nick %w$0%n} %Nis now {nick %W$1%n}";
     endofnames = "{channel $0}: {hilight $1} nicks ({comment @/{hilight $2} +/{hilight $3}  -/{hilight $4}})";
     own_msg = "{ownmsgnick $2 {ownnick $[-16]0}}$1";
     own_msg_channel = "{ownmsgnick $3 {ownnick $[-16]0}{msgchannel $1}}$2";
-    pubmsg_me = "{pubmsgmenick $2 {menick $[-16]0}}$1";
-    pubmsg_me_channel = "{pubmsgmenick $3 {menick $[-16]0}{msgchannel $1}}$2";
-    pubmsg_hilight = "{pubmsghinick $0 $3 $[-16]1}$2";
-    pubmsg_channel = "{pubmsgnick $3 {pubnick $[-16]0}{msgchannel $1}}$2";
-    chanmode_change = " %_%Bmode%_%K |%n {$channel $0} %W{channick_hilight $2} %nsets mode %B{$mode $1}";
-    channel_mode = " %_%Bmode%_%K |%n {$channel $0} %W{channick_hilight $2} %nsets mode %B{$mode $1}";
+    pubmsg_me = "{pubmsgmenick $2 {pubnick $0}}$1";
+    pubmsg_me_channel = "{pubmsgmenick $3 {pubnick $[-16]0}{msgchannel $1}}$2";
+    pubmsg_hilight = "{pubmsghinick $0 $3 $1}$2";
+    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}$2";
+    chanmode_change = " {$channel $0} %W{pubnick $2} %nsets mode %B{$mode $1}";
+    channel_mode = " {$channel $0} %W{pubnick $2} %nsets mode %B{$mode $1}";
   };
   "fe-common/text" = { window_info_sticky = "%#  Sticky  : $0"; };
   "fe-common/irc" = {
-    chanmode_change = " %_%Bmode%_%K |%n %y{channick_hilight $2} %nsets mode %b{$mode $1} %non {$channelhilight $0}";
+    chanmode_change = "%y{pubnick $2} %nsets mode %b{$mode $1} %non {$channelhilight $0}";
     whois = "{hilight $0} [{nickhost $1@$2}] [$whois_country]%: ircname  : $3";
-    server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
+    server_chanmode_change = " {netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
     whois_server = "server : $1 ({comment $2})";
-    own_action = "{ownaction  $0}%|$1";
-    action_public = "{pubaction  $0}%|$1";
+    own_action = "{action_core $0 $1}";
+    action_public = "{action_core $0 $1}";
   };
 };

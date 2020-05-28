@@ -4,8 +4,9 @@ then
 	amixer set Master $1
 	volume=$(amixer sget Master | awk '/Mono/ {print $6}' | sed 's/\[//g' | sed 's/\]//g')
 	volume=$(echo $volume | sed -ne 's/.*/Volume set to &/p')
-	notify-send "$volume"
 else
 	amixer set Master $1
 	volume=$(amixer sget Master | awk '/Mono/ {print $4}' | sed 's/\[//g' | sed 's/\]//g')
 fi
+
+$HOME/.scripts/dwmblocks/vol > /tmp/blocks/vol

@@ -1,9 +1,13 @@
 0x0(){
-	curl -n -F "file=<-" http://0x0.st < /dev/stdin | tee /dev/stderr | xclip
+	curl -n -F "file=@/dev/stdin" https://0x0.st < /dev/stdin | tee /dev/stderr | xclip
 }
 
 ix(){
 	curl -n -F "f:1=<-" http://ix.io < /dev/stdin | tee /dev/stderr | xclip
+}
+
+yt(){
+	cgo "haydenh.null/7/exec/idiot/youtube/gopher.dcgi"
 }
 
 me0w(){
@@ -47,10 +51,19 @@ diary(){
 	echo "===private===" > ~/.local/privated
 	echo "#Daily Entry - $wdate" > ~/.local/public.gph
 
-	phlog="$HOME/web/alcl/write"
+	phlog="$HOME/net/alcl/write"
 	mkdir -p $phlog/daily.entries ~/.local/diary
 	vim -O ~/.local/public.gph ~/.local/privated
 	printf '.txt or .gph?'; read ftype < /dev/tty
 	mv ~/.local/public.gph $phlog/daily.entries/entry.of.$date.$ftype
 	mv ~/.local/privated ~/.local/diary/$date
+}
+
+sttab(){
+	nohup tabbed st -w > /tmp/txid &
+}
+
+newtab(){
+	read txid < /tmp/txid
+	nohup st -w $txid -e cgo haydenh.null > /dev/null &
 }

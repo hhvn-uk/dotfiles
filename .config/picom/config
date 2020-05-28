@@ -22,6 +22,7 @@ opacity-rule = [
 	"100:_NET_WM_STATE@[3]:32a *= '_NET_WM_STATE_FULLSCREEN'",
 	"100:_NET_WM_STATE@[4]:32a *= '_NET_WM_STATE_FULLSCREEN'",
 	"100:_NET_WM_STATE@[5]:32a *= '_NET_WM_STATE_FULLSCREEN'",
+	"100:class_g ?= 'slop'",
 	"87:class_g ?= 'urxvt' && !focused",
 	"84:class_g ?= 'urxvt' && focused",
 	"87:class_g ?= 'st-256color' && !focused",
