@@ -11,7 +11,7 @@ set record = "~/general/mail/sent"
 set postponed = "~/general/mail/drafts"
 set trash = "~/general/mail/rubbish"
 # mailboxes =inbox =sent =drafts =rubbish # These are probably what you want
-mailboxes =inbox =sent =drafts =rubbish ="===============" =exmouth =exmouthsent =exmouthrubbish# Configured by my mkmailbox script
+mailboxes =inbox =sent =drafts =rubbish =spam ="===============" =exmouth =exmouthsent =exmouthrubbish# Configured by my mkmailbox script
 
 set mbox_type = Maildir
 

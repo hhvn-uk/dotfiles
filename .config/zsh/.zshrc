@@ -75,6 +75,7 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 
 ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=5,bold'
 ZSH_HIGHLIGHT_STYLES[command]='fg=13'
+ZSH_HIGHLIGHT_STYLES[function]='fg=13,bold'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=13,bold'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=13,underline,bold'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=13,underline,bold'

@@ -2,8 +2,21 @@ function! Termstart()
 	let s="term"
 	if stridx(expand('%:p'), s) == '0'
 		setlocal nonumber norelativenumber
-		setlocal notermguicolors
 	endif
+endfunction
+
+function! Termend()
+	let s="term"
+	if stridx(expand('%:p'), s) == '0'
+		set termguicolors
+	endif
+endfunction
+
+function! Quickterm()
+	call Shwin()
+	setlocal winhl=Normal:Float
+	set notermguicolors
+	terminal
 endfunction
 
 function! Shmenu(dir, prompt)
@@ -28,4 +41,5 @@ endfunction
 
 augroup terminal
 	autocmd WinNew,BufNew,BufNewFile,BufEnter,WinEnter * call Termstart()
+	autocmd WinLeave,BufLeave,BufWinLeave * call Termend()
 augroup END

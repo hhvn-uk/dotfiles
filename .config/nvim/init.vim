@@ -68,6 +68,7 @@ noremap <leader>cd :chdir
 noremap <leader>ca :ColorizerAttachToBuffer<CR>
 noremap <leader>cd :ColorizerDetachFromBuffer<CR>
 noremap <leader>C :!sudo make all install clean<CR>
+noremap <leader>CC :call Centre()<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 noremap <leader>sv :!sent % \| set linebreak<CR> 
 noremap <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
@@ -93,6 +94,7 @@ noremap <leader>sp o<esc>pi
 noremap <leader>Ee :edit 
 noremap <leader>yv :reg<CR>
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
+noremap <leader>Gi :!git 
 
 noremap <leader>nn :set number! relativenumber!<CR>
 noremap <leader><leader>nn :setlocal number! relativenumber!<CR>
@@ -203,6 +205,7 @@ source ~/.config/nvim/modules/window.vim
 source ~/.config/nvim/modules/message.vim
 source ~/.config/nvim/modules/openc.vim
 source ~/.config/nvim/modules/filetype.vim
+source ~/.config/nvim/modules/textmanipulation.vim
 
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']

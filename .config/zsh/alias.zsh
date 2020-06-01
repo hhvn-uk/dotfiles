@@ -51,6 +51,7 @@ alias homesync=" rsync --port 222 --delete -azPe 'ssh -p 222' --exclude=general 
 alias tmux=" \tmux -f $HOME/.config/tmux/config"
 alias notes=" vim ~/.local/notes"
 alias fwknop=" fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full"
+alias edconf=" nvim ~/.config/zsh/.zshrc"
 alias ~d=" cd ~/general/downloads; ls"
 alias ~do=" cd ~/general/documents; ls"
 alias ~iw=" cd ~/images/wallpapers; ls"

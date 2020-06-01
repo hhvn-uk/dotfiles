@@ -4,6 +4,7 @@ export LS_COLORS="$(echo 'di=35
 :ln=33
 :ex=91;01
 :*.sh=91
+:*.zsh=91
 :*.hex=91
 :*.html=92
 :*.css=97
@@ -15,9 +16,15 @@ export LS_COLORS="$(echo 'di=35
 :*.h.rej=94;01
 :*.mk=96
 :*LICENSE=90
+:*FAQ=90
+:*MODIFIED=90
+:*DESIGN=90
 :*Makefile=90
 :*make.sh=90
-:*README=97
+:*configure=90
+:*configure.sh=90
+:*autogen.sh=90
+:*README=90
 :*TODO=97
 :*.c.orig=94;01
 :*.c.rej=94;01

@@ -38,6 +38,7 @@ homesync	rsync --port 222 --delete -azPe 'ssh -p 222' --exclude=general --exclud
 tmux		\tmux -f $HOME/.config/tmux/config
 notes		vim ~/.local/notes
 fwknop		fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full
+edconf		nvim ~/.config/zsh/.zshrc
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls
