@@ -23,7 +23,7 @@ nnoremap h <C-o>
 nnoremap l <C-i>
 
 shortcut-add sx=https://searx.me/
-shortcut-add sch=https://occusearch.de/?q=$0
+shortcut-add sch=https://searx.ninja/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/

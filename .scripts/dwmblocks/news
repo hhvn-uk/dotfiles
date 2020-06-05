@@ -7,8 +7,8 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 newsboat -x reload 2>/dev/null && {
-	unread=$(newsboat -x print-unread | sed 's/ unread articles//g')
-	[ "$unread" = "0" ] || [ "$unread" = "" ] && exit 1
+	rss=$(newsboat -x print-unread | sed 's/ unread articles//g')
+	rssbnb=$(srssbnbc -n)
 	echo "[NWS $unread]"
 	echo
 	echo \#498364

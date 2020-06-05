@@ -1,10 +1,4 @@
 #!/bin/bash
-#
-# input/keyboard
-# Created by Hayden Hamilton
-#
-# haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton.
 
 setxkbmap -layout us
 setxkbmap -option caps:escape

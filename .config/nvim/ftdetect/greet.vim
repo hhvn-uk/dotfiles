@@ -1,2 +1,2 @@
 au BufNewFile,BufRead *.greet set filetype=greet
-au BufNewFile,BufRead *.greet set syntax=great
+au BufNewFile,BufRead *.greet set syntax=greet

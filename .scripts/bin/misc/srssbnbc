@@ -22,7 +22,18 @@
 cache=${XDG_CACHE_HOME:=$HOME/.cache}
 config=${XDG_CONFIG_HOME:=$HOME/.config}
 
-[ ! -z $1 ] && grep -rnw $cache/srssbnbc/ -e 'Read[[:space:]]*:[[:space:]]*unread' | wc -l && exit
+[ "$1" = "-n" ] && grep -rnw $cache/srssbnbc/ -e 'Read[[:space:]]*:[[:space:]]*unread' | wc -l && exit
+[ "$1" = "-h" ] && {
+	echo "usage: [-h] [-n]
+
+-n	count number of unread entries
+-h	display this usage
+
+files:
+	$config/srssbnbc/feeds	one rssbnbc url on each line
+	$config/srssbnbc/rss	first column is a url, second is a name for the feed
+				columns are seperated with tab chars '\t'" && exit 1
+}
 
 parseconfig(){
 	mkdir -p $config/srssbnbc
@@ -37,6 +48,25 @@ parseconfig(){
 		parsefile $f "$(echo "$line" | base32)" "$line"
 		rm $f
 	done < $config/srssbnbc/feeds
+}
+
+parserssconfig(){
+	[ ! -f $config/srssbnbc/rss ] && return
+
+	while IFS= read -r line
+	do
+		f=$(mktemp)
+		curl ${line%%	*} > $f
+		sfeed < $f | sed 's/:/\&#58;/g;s/,/\&#44;/g' | awk '
+			BEGIN {
+				FS="\t"
+			}
+
+			//{print ":sub,"$2","$3","$4":"}' | sed 's~\\t~\t~g;s~\\n~\n~g;s~\\\\~\\~g' | awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }'> $f
+		parsefile $f "$(echo "${line##*	}" | base32 | head -n 1)" "${line%%	*}"
+		printf  "Read  : Null\nTitle : %s\nLink  :\n\n" "${line##*	}" > $cache/srssbnbc/$(echo "${line##*	}" | base32 | head -n 1)/main.txt
+		rm $f
+	done < $config/srssbnbc/rss
 }
 
 parsefile(){
@@ -63,7 +93,7 @@ parsefile(){
 		}
 	'
 
-	[ "$?" = "2" ] && echo "Two 'main' items... quiting in feed $3" >/dev/stderr && exit
+	[ "$?" = "2" ] && echo "Two 'main' items... quiting in feed $3" >/dev/stderr && return
 }
 
 _ui(){
@@ -123,4 +153,5 @@ _ui(){
 
 
 parseconfig
+parserssconfig
 _ui

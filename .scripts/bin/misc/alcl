@@ -1,7 +1,13 @@
 #!/bin/sh
 
-PHLOG="$HOME/net/alcl/write"
+GOPHERDIR="/alcl/write"
+PHLOG="$HOME/net/$GOPHERDIR"
 RSSBNB="$HOME/net/phlog.rssbnb"
+HOSTNAME="haydenh.null"
+
+sanitise(){
+	sed 's/\\:/\&#58;/g;s/\\,/\&#44;/g;s/:/\&#58;/g;s/,/\&#44;/g' < /dev/stdin
+}
 
 _list(){
 	for f in $(find $PHLOG/$1 -type f -name "*.gph" -o -name "*.txt" -not -name "links.gph")
@@ -15,11 +21,36 @@ _list(){
 }
 
 _new(){
-	[ -d "$PHLOG/$1" ] && dir="$PHLOG/$1" && shift || dir="$PHLOG"
-	name="$@"
-	filename=$(echo "$@" | tr '[[:space:]]' '.' | tr -dc '[A-Za-z0-9-.+=%#!]')
-	echo "#$name" >> $dir/$filename
-	$EDITOR $dir/$filename
+	[ -d "$PHLOG/$1" ] && {
+		dir="$PHLOG/$1" 
+		gopherdir="$GOPHERDIR/$1"
+	} || {
+		dir="$PHLOG"
+		gopherdir="$GOPHERDIR"
+	}
+	printf "Entry title? " && read name < /dev/tty
+	filename=$(echo "$name" | tr '[[:space:]]' '.' | tr '[:upper:]' '[:lower:]' | tr -dc '[A-Za-z0-9-.+=%#!]')
+	printf "gph or txt? " && read filetype < /dev/tty
+	[ -f $dir/$filename$filetype ] && echo "Entry already exists... quitting" && exit 1
+	case "$filetype" in
+		gph) gophertype="1";;
+		*) gophetype="0";;
+	esac
+	echo "#$name" > $dir/$filename$filetype
+	$EDITOR $dir/$filename$filetype
+	[ ! -f $RSSBNB ] && {
+		printf "No RSSBNB file... creating.\nPhlog title? "
+		read title < /dev/tty
+		printf "Phlog link? "
+		read link < /dev/tty
+		printf "! Phlog description?\n! All lines starting with '!' are ignored\n" > /tmp/desc.alcl
+		$EDITOR /tmp/desc.alcl
+		echo ":main,$(echo "$title" | sanitise),$(echo "$link" | sanitise),$(sed '/^\!/d' < /tmp/desc.alcl | sanitise):"
+	}
+
+	printf "! Entry description?\n! All lines starting with '!' are ignored\n" > /tmp/desc.alcl
+	$EDITOR /tmp/desc.alcl
+	echo ":sub,$(echo "$name" | sanitise),gopher\://$(echo "$HOSTNAME" | sanitise)/$gophertype$(echo "$gopherdir" | sanitise)/$filename$filetype,$(sanitise < /tmp/desc.alcl | sed '/^\!/d'):" >> $PHLOG
 }
 
 case "$1" in
@@ -28,7 +59,7 @@ case "$1" in
 	*) echo 'usage: alcl <subcommand>
 
 SUBCOMMANDS:
-	ls
-	new' ;;
+	ls [dir]
+	new [dir]' ;;
 esac
 
