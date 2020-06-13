@@ -1,6 +1,6 @@
 #!/bin/bash
 
-link=$(grep -Eo 'https://.*|http://.*|gopher://.*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
+link=$(grep -Eo '[A-Za-z][A-Za-z]*://\S*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
 
 IFS=$'\n'
 
@@ -9,9 +9,9 @@ popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
 vimb --no-maximize
-xclip
-webimg
-webkmv
+toxclip
+netimg
+netvid
 popupcurl
 popupcgo" | dmenu -i -p "Select a handler:")
 

@@ -19,24 +19,14 @@ donorm(){
 }
 
 mkdir -p $cache/wallblur
-rm $cache/wallblur/*
 
 files=$(find images/wallpapers/ -type f -name "*.png")
-half=$(echo "$files" | wc -l)
-half=$(($half/2))
-top=$(echo "$files" | head -n $half)
-bot=$(echo "$files" | tail -n $half)
 
-for file in $top 
+for file in $files
 do
-	echo $file start
-	donorm "$cache/wallblur/$(basename $file)"
-	echo $file done
-done &
-
-for file in $bot
-do
-	echo $file start
-	donorm "$cache/wallblur/$(basename $file)"
-	echo $file done
-done &
+	[ ! -f $cache/wallblur/$(basename "$file") ] && {
+		echo $file start
+		donorm "$cache/wallblur/$(basename $file)"
+		echo $file done
+	}
+done

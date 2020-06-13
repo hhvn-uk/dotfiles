@@ -1,5 +1,5 @@
 set download-path=~/general/downloads/
-set editor-command="urxvt -e vim %s"
+set editor-command="st -e nvim %s"
 set history-max-items=99999
 
 set input-autohide=false
@@ -22,8 +22,29 @@ nmap B :sh! mpv "$(xclip -o)"<CR>
 nnoremap h <C-o>
 nnoremap l <C-i>
 
+nnoremap gt :sh! xdotool key --window $VIMB_XID alt+shift+l<CR><Esc>
+nnoremap gT :sh! xdotool key --window $VIMB_XID alt+shift+h<CR><Esc>
+nnoremap 1gt :sh! xdotool key --window $VIMB_XID alt+1<CR><Esc>
+nnoremap 2gt :sh! xdotool key --window $VIMB_XID alt+2<CR><Esc>
+nnoremap 3gt :sh! xdotool key --window $VIMB_XID alt+3<CR><Esc>
+nnoremap 4gt :sh! xdotool key --window $VIMB_XID alt+4<CR><Esc>
+nnoremap 5gt :sh! xdotool key --window $VIMB_XID alt+5<CR><Esc>
+nnoremap 6gt :sh! xdotool key --window $VIMB_XID alt+6<CR><Esc>
+nnoremap 7gt :sh! xdotool key --window $VIMB_XID alt+7<CR><Esc>
+nnoremap 8gt :sh! xdotool key --window $VIMB_XID alt+8<CR><Esc>
+nnoremap 9gt :sh! xdotool key --window $VIMB_XID alt+9<CR><Esc>
+nnoremap 0gt :sh! xdotool key --window $VIMB_XID alt+0<CR><Esc>
+
+set default-font=DejaVu Sans Mono
+set monospace-font=DejaVu Sans Mono
+set sans-serif-font=DejaVu Sans Mono
+set serif-font=DejaVu Sans Mono
+set default-zoom=75
+
+shortcut-default sch
+
 shortcut-add sx=https://searx.me/
-shortcut-add sch=https://searx.ninja/?q=$0
+shortcut-add sch=https://searx.lukesmith.xyz/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/
@@ -40,3 +61,4 @@ shortcut-add map=https://map.openaerialmap.org/#/
 shortcut-add ebay=https://www.ebay.co.uk/sch/$0
 shortcut-add am=https://www.amazon.co.uk/s?k=$0
 shortcut-add 8=https://8kun.top/$0/catalog.html
+shortcut-add dict=https://dict.css/?s=$0

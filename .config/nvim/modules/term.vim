@@ -39,6 +39,8 @@ function! Shwin()
 	call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
 endfunction
 
+command! -nargs=0 Quickterm call Quickterm()
+
 augroup terminal
 	autocmd WinNew,BufNew,BufNewFile,BufEnter,WinEnter * call Termstart()
 	autocmd WinLeave,BufLeave,BufWinLeave * call Termend()

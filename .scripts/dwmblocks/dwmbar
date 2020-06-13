@@ -44,5 +44,5 @@ do
 	do
 		grep '[[:alnum:]]' < $f >/dev/null && cp $f /tmp/dwmblocks
 	done
-	xsetroot -name "$(for void in $(seq 150); do printf "  "; done) $(cat * | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
+	xsetroot -name "$(for void in $(seq 150); do printf "  "; done) $(cat mpv bat cpu mem disk disk2 news mail rem time vol time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
 done &

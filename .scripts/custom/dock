@@ -5,5 +5,5 @@ do
 	ds="$ds --output $d --off"
 done
 
-xrandr $ds --output LVDS1 --mode 1920x1080 --primary --pos 0x0 
-xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0 --rotate left
+xrandr $ds --output LVDS1 --mode 1280x800 --primary --pos 0x0 
+xrandr --output HDMI2 --mode 1920x1080 --pos 1920x0

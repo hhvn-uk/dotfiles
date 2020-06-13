@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
 	name = Hayden Hamilton
-	email = hayden@haydenvh.com
+	email = haydenh@sdf.org
 [blame]
 	date = human
 

@@ -95,6 +95,7 @@ noremap <leader>Ee :edit
 noremap <leader>yv :reg<CR>
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>Gi :!git 
+noremap <leader>P :w !nc haydenh.null 9999<CR>
 
 noremap <leader>nn :set number! relativenumber!<CR>
 noremap <leader><leader>nn :setlocal number! relativenumber!<CR>
@@ -117,6 +118,8 @@ inoremap <leader><leader>" ""<Esc><Left>i
 inoremap <leader><leader>' ''<Esc><Left>i
 inoremap <leader><leader>{ {}<Esc><Left>i
 inoremap <leader><leader>< <><Esc><Left>i
+
+inoremap <c-;> <esc>:
 
 "General stuff
 noremap dw diw
