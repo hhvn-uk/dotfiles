@@ -39,9 +39,9 @@ sanitise(){
 }
 
 _list(){
-	for f in $(find $PHLOG/$1 -type f -name "*.gph" -o -name "*.txt" -not -name "links.gph")
+	for f in $(find $PHLOG/$1 -type f -not -name "*links.gph*" -name "*.gph" -o -name "*.txt")
 	do
-		echo "$(stat -c '%y' $f)##$f"
+		echo "$(echo "$f" | awk -F"/" '{print $NF}' | sed 's~-.*$~~')##$f"
 	done | sort -r | sed "s/^.*##//;s~$PHLOG/$1[/]*~~g" |
 		while IFS= read -r line
 		do
@@ -66,15 +66,24 @@ _new(){
 		}
 	}
 	printf "Entry title? " && read name < /dev/tty
-	filename=$(echo "$name" | tr '[[:space:]]' '.' | tr '[:upper:]' '[:lower:]' | tr -dc '[A-Za-z0-9-.+=%#!]' | sed 's/\.\./\./g')
+	num=$(find $PHLOG/ -name "*.txt" -o -name "*.gph" -not -name "*links.gph" | wc -l)
+	num=$(($num+1))
+	filename="$(printf "%05d" "$num")-$(echo "$name" | tr '[[:space:]]' '.' | tr '[:upper:]' '[:lower:]' | tr -dc '[A-Za-z0-9-.+=%#!]' | sed 's/\.\./\./g')"
 	printf "gph or txt? " && read filetype < /dev/tty
 	[ -f $dir/$filename$filetype ] && echo "Entry already exists... quitting" && exit 1
 	case "$filetype" in
 		gph) gophertype="1";;
-		*) gophetype="0";;
+		*) gophertype="0";;
 	esac
 	printf "$HEAD\n\n#$name\n\n<++>\n\n$FOOT\n\n" > $dir/$filename$filetype
 	$EDITOR $dir/$filename$filetype
+
+	[ ! -f $dir/$filename$filetype ] && {
+		printf "Cancelling...\nDraft entry moved to $HOME/$filename$filetype, use \`alcl import\` later.\n"
+		printf "!! FILE: $dir/$filename$filetype\n!! DRAFT PHLOG ENTRY\n" | cat /dev/stdin $dir/$filename$filetype > $HOME/$filename$filetype
+		exit 2
+	}
+
 	[ ! -f $RSSBNB ] && {
 		printf "No RSSBNB file... creating.\nPhlog title? "
 		read title < /dev/tty
@@ -85,13 +94,8 @@ _new(){
 		echo ":main,$(echo "$title" | sanitise),$(echo "$link" | sanitise),$(sed '/^\!/d' < /tmp/desc.alcl | sanitise):"
 	}
 
-	printf "! Entry description?\n! All lines starting with '!' are ignored\n! Add a single line containing a single char, 'X' to cancel your entry.\n" > /tmp/desc.alcl
+	printf "! Entry description?\n! All lines starting with '!' are ignored.\n" > /tmp/desc.alcl
 	$EDITOR /tmp/desc.alcl
-	sed '/^!/d;/^$/d' < /tmp/desc.alcl | head -n 1 | grep '^X$' >/dev/null && {
-		printf "Cancelling...\nDraft entry moved to $HOME/$filename$filetype, use \`alcl import\` later.\n"
-		printf "!! FILE: $dir/$filename$filetype\n!! DRAFT PHLOG ENTRY\n" | cat /dev/stdin $dir/$filename$filetype > $HOME/$filename$filetype
-		exit 2
-	}
 	echo ":sub,$(echo "$name" | sanitise),gopher\://$(echo "$HOSTNAME" | sanitise)/$gophertype$(echo "$gopherdir" | sanitise)/$filename$filetype,$(sanitise < /tmp/desc.alcl | sed '/^\!/d'):" >> $RSSBNB
 }
 
@@ -137,7 +141,7 @@ _find(){
 	# rest is secondary
 	contents=$(grep "$1" $files | awk -F: '{print $1}')
 
-	printf "$title\n$contents\n" | uniq -c | tail -n +2 | sort -r
+	printf "$title\n$contents\n" | sed "s~$PHLOG~$GOPHERDIR~" | uniq -c | tail -n +2 | sort -r
 }
 
 

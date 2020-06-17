@@ -10,6 +10,9 @@ super + b
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
+super + n
+	tabbed -c st -w > /tmp/txid
+
 super + ctrl + b
 	queuevid
 
@@ -53,7 +56,7 @@ super + ctrl + u
 	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
 
 super + alt + {y,u}
-	rmpv ~/general/{videos,music}/ 100
+	rmpv general/{videos,music}/ 150
 
 super + ctrl + {i,p}
 	hmpv {back,forward} /tmp/mpv-socket

@@ -39,12 +39,11 @@ set default-font=DejaVu Sans Mono
 set monospace-font=DejaVu Sans Mono
 set sans-serif-font=DejaVu Sans Mono
 set serif-font=DejaVu Sans Mono
-set default-zoom=75
 
 shortcut-default sch
 
 shortcut-add sx=https://searx.me/
-shortcut-add sch=https://searx.lukesmith.xyz/?q=$0
+shortcut-add sch=https://rapu.nz/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/

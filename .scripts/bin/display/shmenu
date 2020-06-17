@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -z $1 ] && echo "usage: shmenu prompt
+[ -z $1 ] && echo "usage: shmenu <prompt>
 
 stdin is given to the user to search through
 stdout contains the selection

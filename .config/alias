@@ -39,6 +39,9 @@ tmux		\tmux -f $HOME/.config/tmux/config
 notes		vim ~/.local/notes
 fwknop		fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full
 edconf		nvim ~/.config/zsh/.zshrc
+gnu.matrix	fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full -sn gnu.matrix && ssh gnu.matrix
+sdf		ssh haydenh@tty.sdf.org
+localserve	ssh void@192.168.1.20
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls

@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# compare dir $11 and dir $2
+
+d1=$(mktemp)
+d2=$(mktemp)
+
+find $1 -type f | sed "s~^$1[/]*~~" > $d1
+find $2 -type f | sed "s~^$2[/]*~~" > $d2
+
+printf "> $1\n< $2\n"
+diff $d1 $d2
+rm $d1 $d2

@@ -17,7 +17,7 @@ function Gphconfig()
 	nnoremap <buffer> <localleader>t :%s/\t/        /g<CR>
 	nnoremap <buffer> <localleader>l :call GphZettel("")<left><left>
 	inoremap <buffer> <localleader>l <esc>:call GphZettel("")<left><left>
-	nnoremap <buffer> <localleader>s :%s/\/home\/hayden\/net\//gopher:\/\/haydenh.null/g<CR>
+	nnoremap <buffer> <localleader>s :mark `<CR>:%s/\/home\/hayden\/net\//gopher:\/\/haydenh.null/g<CR>:normal ``j$<CR>
 endfunction
 
 function GphZettel(srch)
@@ -29,8 +29,8 @@ function GphZettelFin()
 	mark `
 	read !sed -n 's/[[:space:]]*\[/\t[/;s/][[:space:]]*/]\t/;/^\!/p' < /tmp/vim.zettel | awk -F'\t' '{print $2}'
 	normal G
-	read !sed -n 's/[[:space:]]*\[/\t[/;s/][[:space:]]*/]\t/;/^\!/p' < /tmp/vim.zettel | awk -F'\t' '{print "[<++|$2|$3|server|port]}'
-	normal ``kJA
+	read !sed -n 's/[[:space:]]*\[/\t[/;s/][[:space:]]*/]\t/;/^\!/p' < /tmp/vim.zettel | awk -F'\t' '{print "[<++>|"$2"|"$3"|server|port]"}'
+	normal ``kJ$
 endfunction
 
 function GphCitation()

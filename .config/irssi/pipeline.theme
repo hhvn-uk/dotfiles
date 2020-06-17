@@ -28,7 +28,8 @@ abstracts = {
 
   # timestamp styling, nothing by default
   # timestamp = "%B$*%n"; # shown
-  timestamp = ""; #hidden
+  timestamp = "";
+  #hidden
 
   # any kind of text that needs hilighting, default is to bold
   hilight = "%_$*%_";
@@ -195,7 +196,7 @@ abstracts = {
 
   # background of statusbar
   sb_background = "%0";
-  isbstart = "%0"
+  isbstart = "%0";
 
 
   # default statusbar item style
@@ -224,10 +225,10 @@ abstracts = {
 # %r%n%_$0%_$1%K |%n %|
 formats = {
   "fe-common/core" = {
-    pubmsg = "{pubmsgnick $2 {pubnick $0}}$1";
-    join = "%_%B+%_{pubnick $0} %n$1";
-    part = "%_%G-{pubnick $0} %n$1 {reason $3}";
-    kick = "%_%G!{pubnick $0} %nby {pubnick $2} from {channel $1} {reason $3}";
+    pubmsg = "{pubmsgnick $2 {pubnick \00315$0}}$1";
+    join = "%_%B+%_{pubnick \00315$0} %n%w$1";
+    part = "%_%G-{pubnick \00315$0} %n%w$1 {reason $3}";
+    kick = "%_%G!{pubnick \00315$0} %nb%wy {pubnick $2} from ${channel $1} {reason $3}";
     quit = "%_%G<{pubnick $0} %n$1 {reason $2}";
     nick_changed = "{nick %w$0%n} %Nis now {nick %W$1%n}";
     endofnames = "{channel $0}: {hilight $1} nicks ({comment @/{hilight $2} +/{hilight $3}  -/{hilight $4}})";
