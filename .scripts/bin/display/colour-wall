@@ -1,0 +1,10 @@
+#!/bin/sh
+
+uptime=$(uptime -s | tr -dc '0-9')
+unix=$(date +%s)
+mem=$(free | head -n 2 | tail -n 1 | awk '{print $2 + $3 + $4 + $5 + $6 + $7}')
+
+# hex=$(echo "scale=0;obase=16;ibase=A; (($uptime*$unix)/$mem)%16581375" | bc)
+hex=$(echo "scale=0;obase=16;ibase=A; (($uptime*$unix)/$mem)" | bc | grep -o '......$')
+convert -size 1x1 xc:"#$hex" /tmp/colour.jpg
+xwallpaper --zoom /tmp/colour.jpg

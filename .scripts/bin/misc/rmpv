@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # rmpv
 # Created by Hayden Hamilton
@@ -9,30 +9,11 @@
 dir=$1
 count="$2"
 filetypes="mp3 opus mkv mp4 flac m4a webm wav"
-getfiles(){
-	files+=$(find $dir | awk "/$1/"' {print}')
+
+files=$(find $dir | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n $count)
+echo "$files" | grep '[[:alnum:]]' >/dev/null || {
+	echo "No files found..."
+	exit 1
 }
 
-allfiles(){
-	for filetype in $filetypes
-	do
-		getfiles $filetype
-	done
-	if [ "$files" = "" ]
-	then
-		echo "No files found..."
-		exit 1
-	fi
-}
-
-randomize() {
-	filearray=($files)
-	length=${#filearray[@]}
-	randoms=$(od -vAn -N2 -tu2 < /dev/urandom)
-	randomn=$((1+$randoms%$length))
-	echo ${filearray[$randomn]}
-}
-
-allfiles
-files=$(for i in `seq $count`; do randomize; done)
 echo "$1" | grep "music" && mpv --input-ipc-server=/tmp/mpv-socket $files --no-video || mpv --input-ipc-server=/tmp/mpv-socket $files

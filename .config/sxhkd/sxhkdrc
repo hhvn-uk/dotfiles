@@ -49,6 +49,9 @@ super + ctrl + w
 super + alt + w
 	fehffile ~/.cache/rfeh/prev
 
+super + shift + w
+	colour-wall
+
 super + ctrl + y
 	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
 

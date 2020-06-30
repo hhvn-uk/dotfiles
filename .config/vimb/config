@@ -43,7 +43,7 @@ set serif-font=DejaVu Sans Mono
 shortcut-default sch
 
 shortcut-add sx=https://searx.me/
-shortcut-add sch=https://rapu.nz/?q=$0
+shortcut-add sch=http://searx.tyil.nl/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/

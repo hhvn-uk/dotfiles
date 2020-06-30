@@ -60,6 +60,8 @@ do
 	. $file
 done
 
+. $HOME/.local/knock
+
 # Highlighted man pages
 export LESS_TERMCAP_mb=$'\e[1;32m'
 export LESS_TERMCAP_md=$'\e[1;35m'

@@ -15,7 +15,7 @@
 				Plugins collected by Hayden Hamilton
 				init.vim created by Hayden Hamilton
 				modules/ created by Hayden Hamilton
-				Find more stuff at http://haydenvh.com
+				More stuff at gopher://haydenvh.com
 
 		:edit ~/.config/nvim/init - Contains mappings and settings for neovim.
 

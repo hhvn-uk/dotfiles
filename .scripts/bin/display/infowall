@@ -1,0 +1,37 @@
+#!/bin/sh
+
+LC_ALL=C
+
+(
+	echo "Uptime:$(uptime -p | awk '{$1="";print $0}')"
+	echo "Time: $(date '+%A %d, %B, %Y - %H:%M:%S %Z')"
+	free -h | tail -n +2 | awk '{print $1" "$3"/"$2}' | sed "/Mem:/ s~$~ (most intensive: $(ps aux | awk '{$1="";$2="";$3="";print $0}' | sed 's/\.//' | sort -n -r | awk '{print $8}' | head -n 1))~"
+	echo "Running processes: $(ps a | wc -l)"
+	threads=$(grep -c ^processor /proc/cpuinfo)
+	[ ! -z $TERM ] && echo "Terminal: $TERM"
+	[ ! -z $EDITOR ] && echo "Editor: $EDITOR"
+	[ ! -z $SHELL ] && {
+		printf "Shell: $SHELL "
+		[ ! -z $SHLVL ] && echo "($SHLVL deep)" || echo
+	}
+	echo "CPU cores/threads: $threads"
+	echo "CPU usage: $(echo "scale=2; $(ps -e -o %cpu | awk '{s+=$1} END {print s}')/$threads" | bc | sed 's/^\./0\./')% (most intensive: $(ps aux | awk '{$1="";$2="";print $0}' | sed 's/\.//' | sort -n -r | awk '{print $9}' | head -n 1))"
+	echo "External IPv4: $(curl -qs icanhazip.com)"
+	echo "Internal IP*: $(ip a | grep '^[[:space:]]*inet' | grep -Ev '127.0.0.1/8|::1/128' | awk '{print $2}' | tr '\n' '\t' | sed 's/\t/, /g;s~/[0-9]*,~,~g')"
+	uname -a | awk '{printf "Host: "$2"\nKernel: "$1" "$3"\nOS: "$13"\nArch: "$12"\n"}'
+	libc=$(ldd 2>&1 | head -n 1 | sed 's/(.*//')
+	[ "$libc" != "" ] && echo "libc: $libc"
+	echo "Distro: $(sed 's/.*="//g;s/"$//g' < /etc/os-release | tail -n 1)"
+	[ -e /usr/bin/xbps-query ] && {
+		echo "Pkgs (xbps): $(xbps-query -l | wc -l)"
+		echo "Manually inst. pkgs (xbps): $(xbps-query -m | wc -l)" 
+		echo "Orphan pkgs (xbps): $(xbps-query -O | wc -l)"
+	}
+	df -h | tail -n +2 | awk '$1 != "tmpfs" && $1 != "devtmpfs" && $1 != "cgroup" {print "Disk "$1": "$3"/"$2" (on "$6")"}'
+	for colour in $(seq 16)
+	do
+		printf "$(tput setaf $(($colour-1)))$(tput setab $(($colour-1)))   $(tput sgr0)"
+		[ $colour = 8 ] && printf '\n'
+	done | sed 's/^/Colours: /'
+	echo
+) | sed "s~^~$(tput bold)$(tput setaf 3)~g;s/: /$(tput sgr0)\t: $(tput setaf 5)/" | column --table -s '	'
