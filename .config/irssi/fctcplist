@@ -1,0 +1,7 @@
+time	Time to get a watch
+advert	Server: hlirc.haydenvh.com, port: 6667, 6697
+whoami	stupid
+hitthisoneifyouareaflooder	fuck off
+ping	pong
+version	git://haydenvh.com/dotfiles (.config/irssi)
+clientinfo	ITTHISONEIFYOUAREAFLOODER PING VERSION TIME CLIENTINFO USERINFO WHOAMI ADVERT

@@ -17,7 +17,6 @@ function Gphconfig()
 	nnoremap <buffer> <localleader>t :%s/\t/        /g<CR>
 	nnoremap <buffer> <localleader>l :call GphZettel("")<left><left>
 	inoremap <buffer> <localleader>l <esc>:call GphZettel("")<left><left>
-	nnoremap <buffer> <localleader>s :mark `<CR>:%s/\/home\/hayden\/net\//gopher:\/\/haydenh.null/g<CR>:normal ``j$<CR>
 endfunction
 
 function GphZettel(srch)

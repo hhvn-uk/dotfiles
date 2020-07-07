@@ -1,0 +1,2 @@
+#Triggers file version 1.2.4
+-all -regexp '\t' -replace '        ' 

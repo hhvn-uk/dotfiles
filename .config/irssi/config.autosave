@@ -190,7 +190,7 @@ aliases = {
   super = "mode $0 +q $1";
   desuper = "mode $0 -q $1";
   deadmin = "mode $0 -a $1";
-  save = "/layout save; /ADDALLCHANS; /save";
+  save = "/layout save; /ADDALLCHANS; /save; /unexpand";
   halfop = "mode $0 +h $1";
   dehalfop = "mode $0 -h $1";
   vm_add = " /^statusbar prompt add -after input -alignment right more; /^statusbar prompt add -after input -alignment right vim_cmd_mode";
@@ -348,29 +348,29 @@ channels = (
   { name = "#asciiart"; chatnet = "efnet"; autojoin = "yes"; },
   { name = "#opers"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#users"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#service"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#test"; chatnet = "hlircnet"; autojoin = "yes"; }
+  { name = "#service"; chatnet = "hlircnet"; autojoin = "yes"; }
 );
 windows = {
   1 = {
     immortal = "yes";
     name = "[control-panel]";
-    level = "CRAP PUBLICS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS HILIGHTS";
+    level = "CRAP PUBLICS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS CLIENTNOTICES CLIENTCRAP HILIGHTS";
     sticky = "yes";
+    parent = "11";
   };
   2 = {
     immortal = "yes";
     name = "[notices]";
     level = "SNOTES CTCPS WALLOPS INVITES";
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   3 = {
     immortal = "yes";
     name = "[msgs]";
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS DCC DCCMSGS";
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   4 = {
     items = (
@@ -413,7 +413,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   8 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -426,7 +426,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   9 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -439,7 +439,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   10 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -452,7 +452,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   11 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -465,7 +465,6 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
   };
   12 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -478,7 +477,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   13 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -491,7 +490,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   14 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -504,7 +503,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   15 = {
     items = (
@@ -526,7 +525,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   17 = {
     items = (
@@ -538,7 +537,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "11";
   };
   18 = {
     items = (
@@ -582,10 +581,10 @@ windows = {
   };
 };
 mainwindows = {
-  1 = { 
+  11 = {
     first_line = "1";
     lines = "44";
     first_column = "0";
-    columns = "146";
+    columns = "132";
   };
 };

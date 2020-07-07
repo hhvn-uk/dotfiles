@@ -6,11 +6,7 @@
 # haydenvh.com
 # Copyright (c) 2019-2020 Hayden Hamilton.
 
-dir=$1
-count="$2"
-filetypes="mp3 opus mkv mp4 flac m4a webm wav"
-
-files=$(find $dir | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n $count)
+files=$(find $1 -type f | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n $2)
 echo "$files" | grep '[[:alnum:]]' >/dev/null || {
 	echo "No files found..."
 	exit 1

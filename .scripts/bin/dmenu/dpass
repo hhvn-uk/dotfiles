@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # dmenu/dpass
 # Created by Hayden Hamilton
@@ -7,37 +7,25 @@
 # Copyright (c) 2019-2020 Hayden Hamilton.
 #
 
-if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
-then
-	echo "dpass [\"option that your terminal uses to execute the argument\"]
-
-$(tput bold)ENVIRONMENTAL:$(tput sgr0) (must be set in .profile, .bash_profile .zprofile etc...)
-PASS=\"/path/to/password/file\"
-TERMINAL=\"name of terminal binary\"
-
-Written by Hayden Hamilton <haydenvh.com>"
-	exit 0
-fi
-dmenu="dmenu"
-
+[ -z $PASS ] && PASS=$HOME/.local/pass
 [ ! -f $PASS ] && touch $PASS
-pass=$(printf "GENERATE\nEDIT\n$(cat $PASS | awk '// {print $1}')" | $dmenu -l 50 -i -p "Select a password/generate/edit:" | tr '[:upper:]' '[:lower:]')
-getpass=$(cat "$PASS" | awk "/$pass/ "'{print $0}')
-if [ "$pass" = "" ]
-then
-	exit 0
-elif [ "$pass" = "generate" ]
-then
-	password=$(head -c 500 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 35 | head -n 1)
-	passname=$(echo "" | $dmenu -l 50 -i -p "Name for password (only 1 word):")
-	[ "$passname" = "" ] && passname="pleaseeditthis"
-	echo "$passname: $password" >> $PASS
-	[ "$(printf "No\nYes" | $dmenu -i -p "Edit the pasword file?")" = "Yes" ] && $TERMINAL "$1" vim $PASS
-elif [ "$pass" = "edit" ]
-then
-	$TERMINAL "$1" vim $PASS
-else
-	echo "$getpass" | sed "s/$pass.//g" | tr " " "\n" | $dmenu $2 -P -l 20 -p "Password:" | xclip
-	sleep 5
-	printf '' | xclip # self destruct clipboard
-fi
+chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i -p "Select a password, or GENERATE:" | tr '[:upper:]' '[:lower:]')
+passwd=$(grep "^$chosen: " < $PASS)
+
+case "$chosen" in
+	"") exit 1 ;;
+	generate)
+		new=$(head -c 2000 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 35 | shuf | shuf | shuf | head -n 1)
+		newname=$(echo | dmenu -i -p "Name for passwd (must contain no colons)?")
+		[ "$newname" = "" ] && newname="pleaseeditthis"
+		echo "$newname: $new" >> $PASS
+		;;
+	*)
+		printf "${passwd##*: }\n" | xclip
+		(
+			sleep 5
+			printf '' | xclip	# destroy clipboard to stop accidental pasting
+						# tbh, you should make a cronjob with this, run once per minute :)
+		) &
+		;;
+esac
