@@ -6,9 +6,6 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:MIT
 #
 
-export LC_CTYPE="en_US.UTF-8"
-export LANG="en_US.UTF-8"
-export LC_ALL="C"
 export SCRIPTS="$HOME/.scripts/bin"
 scripts=$(ls -d $SCRIPTS/*/ | tr '\n' ':')
 export PATH="$PATH:$scripts"
@@ -22,6 +19,7 @@ export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 export PASS="$HOME/.local/pass"
 export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
+export CC="tcc"
 . .config/zsh/ls.zsh
 [ "$hostname" != "" ] && {
 	echo > /dev/null
@@ -54,4 +52,4 @@ export LC_ADDRESS="sv_SE.UTF-8"
 export LC_TELEPHONE="sv_SE.UTF-8"
 export LC_MEASUREMENT="sv_SE.UTF-8"
 export LC_IDENTIFICATION="sv_SE.UTF-8"
-export LC_ALL=
+export LC_ALL="sv_SE.UTF-8"

@@ -9,7 +9,7 @@
 newsboat -x reload 2>/dev/null && {
 	rss=$(newsboat -x print-unread | sed 's/ unread articles//g')
 	rssbnb=$(srssbnbc -n)
-	echo "[NWS $unread]"
+	echo "[NWS $(($rss + $rssbnb))]"
 	echo
 	echo \#498364
 }

@@ -77,7 +77,7 @@ abstracts = {
 
   # the basic styling of how to print message, $0 = nick mode, $1 = nick
   #msgnick = "<%C$0%n$1-%n> %|";
-  msgnick = "$0$1%K |%n %|";
+  msgnick = "$0$1%K │%n %|";
 
   # message from you is printed. "msgownnick" specifies the styling of the
   # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
@@ -97,32 +97,22 @@ abstracts = {
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}%W";
-  ownnick = "%y$*%n";
+  ownnick = "%y$*";
 
   # public message in channel, $0 = nick mode, $1 = nick
   pubmsgnick = "{msgnick $0%n %w$1%n}";
   #pubmsgnick = "{msgnick $0$1-}";
-  pubnick = "%w$nickcolor$*%n";
+  pubnick = "%w$nickcolor$*";
 
   # public message in channel meant for me, $0 = nick mode, $1 = nick
-  #pubmsgmenick = "%Y{msgnick %B$0%n %w$1%n}%w";
+  #pu]bmsgmenick = "%Y{msgnick %B$0%n %w$1%n}%w";
   pubmsgmenick = "$0$1%K %_#%_%n %|";
-
-  # public highlighted message in channel
-  # $0 = highlight color, $1 = nick mode, $2 = nick
-  #pubmsghinick = "%Y{msgnick %B$1 %w$2}%w";
-  pubmsghinick = "{msgnick $1 $0$2-%n}";
 
   # channel name is printed with message
   msgchannel = "%b:$*%n";
 
-  # private message, $0 = nick, $1 = host
-  #privmsg = "%b.%c.%C.%n(%c$0%n[%c$1]) ";
-  privmsg = "[%w$0!%b$1-%n] ";
-
-  # private message from you, $0 = "msg", $1 = target nick
-  #ownprivmsg = "%b.%c.%C.%n[%cmsg%n(%c$1%n)] ";
-  ownprivmsg = "{msgnick $*}";
+  privmsg = "%R<---$0 %K%_#%_%N $1}";
+  ownprivmsg = "$0%K--->$1 %K%_│%_%N%W $2}";
 
   # own private message in query
   ownprivmsgnick = "{msgnick %W$*%w}";
@@ -139,11 +129,12 @@ abstracts = {
   action_core = "%w*%w  %_$0%_ $1";
 
   # generic one that's used by most actions
-  action = "%w{action_core %w$*} ";
+  action = "{action_core $*} ";
 
   # private action sent by others
-  pvtaction = "%w $*%n ";
-  pvtaction_query = "{action $*}";
+  pvaction = "%R<---%_$0%_ %K# %w*%w %_$0%_ $1";
+
+  ownaction_target = "$0%K--->$1 %K| %w*%w %_$0%_ ";
 
 
   ##
@@ -151,15 +142,14 @@ abstracts = {
   ##
 
   # notices
-  ownnotice = "%b>%c>%C> %c$0%B!%c$1%n: ";
-  notice = "%b$*%n ";
-  pubnotice_channel = "%K:%m$*";
-  pubnotice_host = "%K(%m$*%K)";
+  ownnotice = "$0%K--->$1 %K%_:%_%N%W $2}";
+  notice = " {pubnick $*}%K : %N";
   servernotice = "%g!$*%n ";
 
   # CTCPs
-  ownctcp = "%b>%c>%C> %c$0%B!%c$1%n: ";
-  ctcp = "%m$*%n";
+  ownctcp = "{ownnick $N}%K--->$0 %K%_?%_%N %_$1%_";
+  ctcp = "%R<---$1 %K%_A%_%N %_$0:%_ $2-";
+  rctcp = "%R<---$0 %K%_?%_%N %_$1%_";
 
   # wallops
   wallop = "%W$*%n: ";
@@ -198,11 +188,12 @@ abstracts = {
   sb_background = "%0";
   isbstart = "%0";
 
+  opered = " (ircop: $*)";
 
   # default statusbar item style
-  sb = "%N%M%_──[%_%G$*%M]";
+  sb = "%N%K%_──[%_%G$*%K]";
   sb2 = "%m[%G$*%m]%n";
-  sb3 = "%N%M%_[%_%G$*%M]";
+  sb3 = "%N%K%_[%_%G$*%K]";
   sbmode = " %b+%G$*";
   sbaway = " (away: $*)";
   sbservertag = "$0";
@@ -222,7 +213,7 @@ abstracts = {
   sb_uc_normal = "%_.%_%G/%W$*%n";
   sb_uc_space = " ";
 
-  sb_act_hilight = "%M$*";
+  sb_act_hilight = "%K$*";
   sb_act_hilight_color = "$0$1-%n";
   sb_act_sep = "%c$*";
   sb_act_text = "%c$*";
@@ -243,7 +234,7 @@ formats = {
     own_msg_channel = "{ownmsgnick $3 {ownnick $[-16]0}{msgchannel $1}}$2";
     pubmsg_me = "{pubmsgmenick $2 {pubnick $0}}$1";
     pubmsg_me_channel = "{pubmsgmenick $3 {pubnick $0}{msgchannel $1}}$2";
-    pubmsg_hilight = "{pubmsghinick $4 {pubnick $1}}$2";
+    pubmsg_hilight = "{pubmsgmenick $3 {pubnick $1}}$2";
     pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}$2";
     chanmode_change = " {$channel $1} {pubnick $2} %nsets mode %B{$mode $1}";
     channel_mode = " {$channel $0} {pubnick $2} %nsets mode %B{$mode $1}";
@@ -251,7 +242,7 @@ formats = {
     line_start = "{line_start}";
     line_start_irssi = "{line_start}{hilight Irssi:} ";
     servertag = "[$0] ";
-    daychange = "Day changed to %%d %%b %%Y";
+    daychange = "       %_----%_ %%d %%b %%Y %_----%_";
     talking_with = "You are now talking with {nick $0}";
     refnum_too_low = "Window number must be greater than 1";
     error_server_sticky = "Window's server is sticky and it cannot be changed without -unsticky option";
@@ -329,10 +320,10 @@ formats = {
     chansetup_header = "%#Channel         Network    Password   Settings";
     chansetup_line = "%#{channel $[15]0} %|$[10]1 $[10]2 $3";
     chansetup_footer = "";
-    own_msg_private = "{ownprivmsg {ownnick $N}%K--->{pubnick $0}}%W$1";
+    own_msg_private = "{ownprivmsg {ownnick $N} {pubnick $0} $1}";
     own_msg_private_query = "{ownprivmsgnick {ownprivnick $2}}$1";
     pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}$3";
-    msg_private = "{ownprivmsg %R<---{pubnick $0}}$2";
+    msg_private = "{privmsg {pubnick $0}}$2";
     msg_private_query = "{privmsgnick $0}$2";
     no_msgs_got = "You have not received a message from anyone yet";
     no_msgs_sent = "You have not sent a message to anyone yet";
@@ -464,8 +455,8 @@ formats = {
     whois = "%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
     server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
     whois_server = "{whois server %|$1 ({comment $2})}";
-    own_action = "{action_core $0 $1}";
-    action_public = "{action_core $0 $1}";
+    own_action = "{action_core {ownnick $0} $1}";
+    action_public = "{action_core {pubnick $0}}$1";
     away = "%_%G----->";
     unaway = "%_%B<-----";
     end_of_whois = "%|";
@@ -535,29 +526,29 @@ formats = {
     nick_in_use = "Nick {nick $0} is already in use";
     nick_unavailable = "Nick {nick $0} is temporarily unavailable";
     your_nick_owned = "Your nick is owned by {nick $3} {comment $1@$2}";
-    whowas = "{nick $0} {nickhost $1@$2}%:{whois was $3}";
+    whowas = "%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
     whois_idle = "{whois idle %|$1 days $2 hours $3 mins $4 secs}";
     whois_modes = "{whois modes $1}";
     whois_usermode = "{whois usermode $1}";
     whois_channels = "{whois channels %|$1}";
     whois_away = "{whois away %|$1}";
-    end_of_whowas = "End of WHOWAS";
+    end_of_whowas = "%|";
     who = "%#{channelhilight $[-10]0} %|{nick $[!9]1} $[!3]2 $[!2]3 $4@$5 {comment {hilight $6}}";
     end_of_who = "End of /WHO list";
-    own_notice = "{ownnotice notice $0}$1";
-    own_action_target = "{ownaction_target $0 $2}$1";
-    own_ctcp = "{ownctcp ctcp $0}$1 $2";
+    own_notice = "{ownnotice {ownnick $N} {pubnick $0}}$1";
+    own_action_target = "{ownaction_target {ownnick $0} {pubnick $2}}$1";
+    own_ctcp = "{ownctcp $0 $1}";
     notice_server = "{servernotice $0}$1";
-    notice_public = "{notice $0{pubnotice_channel $1}}$2";
-    notice_private = "{notice $0{pvtnotice_host $1}}$2";
-    action_private = "{pvtaction $0}$2";
-    action_private_query = "{pvtaction_query $0}$2";
-    action_public_channel = "{pubaction $0{msgchannel $1}}$2";
-    ctcp_reply = "CTCP {hilight $0} reply from {nick $1}: $2";
-    ctcp_reply_channel = "CTCP {hilight $0} reply from {nick $1} in channel {channel $3}: $2";
-    ctcp_ping_reply = "CTCP {hilight PING} reply from {nick $0}: $1.$[-3.0]2 seconds";
-    ctcp_requested = "{ctcp {hilight $0} {comment $1} requested CTCP {hilight $2} from {nick $4}}: $3";
-    ctcp_requested_unknown = "{ctcp {hilight $0} {comment $1} requested unknown CTCP {hilight $2} from {nick $4}}: $3";
+    notice_public = "{notice $0}$2";
+    notice_private = "{notice $0}$2";
+    action_private = "{pvaction {pubnick $0}}$2";
+    action_private_query = "{pvaction {pubnick $0}}$2";
+    action_public_channel = "{action_core {pubnick $0}}$2";
+    ctcp_reply = "{ctcp $0 {pubnick $1} $2}";
+    ctcp_reply_channel = "{ctcp $0 {pubnick $1} $2}";
+    ctcp_ping_reply = "{ctcp PING {pubnick $0} $1-}";
+    ctcp_requested = "{rctcp {pubnick $0} $2}";
+    ctcp_requested_unknown = "{rctcp {pubnick $0} $2}";
     online = "Users online: {hilight $0}";
     pong = "PONG received from $0: $1";
     wallops = "{wallop WALLOP {wallop_nick $0}} $1";
@@ -603,7 +594,7 @@ formats = {
     own_dcc = "{dccownmsg dcc {dccownnick $1}}$2";
     own_dcc_action = "{dccownaction_target $0 $1}$2";
     own_dcc_action_query = "{dccownaction $0}$2";
-    own_dcc_ctcp = "{ownctcp ctcp $0}$1 $2";
+    own_dcc_ctcp = "{ownctcp $0 $1}";
     dcc_msg = "{dccmsg dcc $0}$1";
     action_dcc = "{dccaction $0}$1";
     action_dcc_query = "{dccaction $0}$1";
@@ -730,4 +721,22 @@ formats = {
     welcome_firsttime = "- - - - - - - - - - - - - - - - - - - - - - - - - - - -\012Hi there! If this is your first time using Irssi, you%:might want to go to our website and read the startup%:documentation to get you going.%:%:Our community and staff are available to assist you or%:to answer any questions you may have.%:%:Use the /HELP command to get detailed information about%:the available commands.%:%:For Debian specific help type \"/connect OFTC\" and%:\"/join #debian\" (without the quotes) and ask your%:question.%:- - - - - - - - - - - - - - - - - - - - - - - - - - - -";
     welcome_init_settings = "The following settings were initialized";
   };
+  "Irssi::Script::ctcpspoof" = {
+    fctcp_request = "{rctcp {pubnick $0} $1}";
+    fctcp_info = " # ctcpitem             ctcpreply";
+    fctcp_empty = "%R>>%n %_FCTCP:%_ Your fake ctcp list is empty.";
+    fctcp_added = "%R>>%n %_FCTCP:%_ Added %_$0%_ ($1) to the fake ctcp list.";
+    fctcp_replaced = "%R>>%n %_FCTCP:%_ Replaced the old fake reply %_$0%_ with the new one ($1)";
+    fctcp_delled = "%R>>%n %_FCTCP:%_ Deleted %_$0%_ from the fake ctcp list.";
+    fctcp_nfound = "%R>>%n %_FCTCP:%_ Can't find $0 in the fake ctcp list.";
+    fctcp_delusage = "%R>>%n %_FCTCP:%_ Usage: /FCTCP -del <ctcp-item>";
+    fctcp_usage = "%R>>%n %_FCTCP:%_ Usage: /FCTCP -add <ctcp-item> <ctcp-reply>";
+    fctcp_repusage = "%R>>%n %_FCTCP:%_ Usage: /FCTCP -replace <ctcp-item> <ctcp-reply>";
+    fctcp_nload = "%R>>%n %_FCTCP:%_ Could not load the fake ctcp list.";
+    fctcp_loaded = "%R>>%n %_FCTCP:%_ The fake reply %_$0%_ already exists, use %_/FCTCP -del $0%_ to remove it from the list.";
+    fctcp_print = "$[!-2]0 $[20]1 $2";
+    fctcp_help = "$0";
+    loaded = "%R>>%n %_Scriptinfo:%_ Loaded $0 version $1 by $2.";
+  };
+  "Irssi::Script::tmux_away" = { tmux_away_crap = "$0"; };
 };

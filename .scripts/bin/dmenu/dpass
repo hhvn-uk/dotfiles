@@ -9,6 +9,7 @@
 
 [ -z $PASS ] && PASS=$HOME/.local/pass
 [ ! -f $PASS ] && touch $PASS
+[ ! -z $1 ] && passwd=$(grep "^$1: " < $PASS) && shift && echo "$@ ${passwd##*: }" && exit
 chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i -p "Select a password, or GENERATE:" | tr '[:upper:]' '[:lower:]')
 passwd=$(grep "^$chosen: " < $PASS)
 

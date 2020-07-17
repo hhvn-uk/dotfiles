@@ -45,6 +45,7 @@ irc		ssh -p 15551 hayden@77.68.91.186
 vps2		ssh -p 15552 hayden@vps2.haydenvh.com
 dd		echo PLEASE TRIPLE CHECK, THEN RUN ddd
 ddd		dd
+diff		colordiff
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls

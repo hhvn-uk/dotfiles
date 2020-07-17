@@ -1,5 +1,15 @@
 servers = (
   { address = "irc.rizon.net"; chatnet = "rizon"; port = "6667"; },
+  { 
+    address = "irc.freenode.net";
+    chatnet = "freenode";
+    port = "6667";
+  },
+  {
+    address = "irc.nebulacentre.net";
+    chatnet = "nebulacentre";
+    port = "6667";
+  },
   {
     address = "irc.haydenvh.com";
     chatnet = "hlircnet";
@@ -16,19 +26,42 @@ servers = (
     chatnet = "darkscience";
     use_tls = "yes";
     port = "6697";
-  }
+  },
+  { address = "genoce.org"; chatnet = "genoce"; port = "6667"; }
 );
 chatnets = {
-  Rizon = { type = "IRC"; };
-  hlircnet = { type = "IRC"; };
-  sdf = { type = "IRC"; };
-  efnet = { type = "IRC"; };
-  unix = { type = "IRC"; };
-  darkscience = { type = "IRC"; };
+  Rizon = {
+    type = "IRC";
+    autosendcmd = "/exec - -msg NickServ dpass irc.rizon.net identify; wait 2000";
+    usermode = "+w-z";
+  };
+  hlircnet = {
+    type = "IRC";
+    autosendcmd = "/oper haydenh !!!; wait 2500; /cycle #users; /cycle #service";
+  };
+  sdf = { type = "IRC"; usermode = "+w-x"; };
+  efnet = { type = "IRC"; usermode = "+w"; };
+  unix = {
+    type = "IRC";
+    autosendcmd = "/exec - -msg NickServ dpass unix.chat identify; wait 2000";
+    usermode = "+w-x";
+  };
+  darkscience = {
+    type = "IRC";
+    usermode = "+w-x";
+    autosendcmd = "/exec - -msg NickServ dpass irc.darkscience.net identify; wait 2000";
+  };
+  nebulacentre = { type = "IRC"; };
+  genoce = { type = "IRC"; usermode = "+w-x"; };
+  freenode = {
+    type = "IRC";
+    autosendcmd = "/exec - -msg NickServ dpass irc.freenode.net identify; wait 2000";
+  };
 };
 aliases = {
   ATAG = "WINDOW SERVER";
   ADDALLCHANS = "SCRIPT EXEC foreach my \\$channel (Irssi::channels()) { Irssi::command(\"CHANNEL ADD -auto \\$channel->{name} \\$channel->{server}->{tag} \\$channel->{key}\")\\;}";
+  ACMSG = "/action";
   B = "BAN";
   BACK = "AWAY";
   BANS = "BAN";
@@ -185,12 +218,12 @@ aliases = {
   night = "/away -all sleeping";
   day = "back";
   gone = "away -all somewhere";
-  wave = "SAY\0110/;SAY /|;SAY / \\\\";
+  wave = "SAY 0/;SAY /|;SAY / \\\\";
   admin = "mode $0 +a $1";
   super = "mode $0 +q $1";
   desuper = "mode $0 -q $1";
   deadmin = "mode $0 -a $1";
-  save = "/layout save; /ADDALLCHANS; /save";
+  save = "/layout save; /ADDALLCHANS; /save -formats";
   halfop = "mode $0 +h $1";
   dehalfop = "mode $0 -h $1";
   vm_add = " /^statusbar prompt add -after input -alignment right more; /^statusbar prompt add -after input -alignment right vim_cmd_mode";
@@ -203,16 +236,32 @@ aliases = {
   gline = "quote GLINE";
   zline = "quote ZLINE";
   gzline = "quote GZLINE";
-  bet = "/say I bet $0 imaginary moneys $1 $2 $3 $4 $5 $6 $7 $8 $9";
+  bet = "/say I bet $0 hlirccens (imaginary moneys) $1 $2 $3 $4 $5 $6 $7 $8 $9";
   disgust = "/exec - -out head -n 100 < /dev/urandom | tr -d '\\n' | fold -w 20 2>/dev/null | head -n 1";
-  time = "/exec - -out date +%H:%M:%S";
+  theme = "/set theme";
+  retheme = "/set theme default; /set theme $0";
+  reply = "/msg $, $*";
+  rep = "/reply";
+  helpop = "/quote helpop";
+  cycle = "/cycle cycling";
+  replay = " ";
+  saumode = "/quote saumode";
+  "runauto;" = "/script load autorun/$0";
+  runauto = "/script load autorun/$0";
+  dns = "/quote dns";
+  clones = "/quote clones";
+  ttime = "/exec - -out date +%H:%M:%S";
+  arep = "/ACMSG $, $*";
+  AAAA = "SAY \\\\0/;SAY  |;SAY / \\\\";
+  matrix = "SAY I'd like to interject for a moment, what you're referring to as Matrix, is in fact GNU/matrix, or as I've recently taken to calling it, GNU+matrix. Matrix is not an ideology unto itself, but rather another free component of a fully functioning method of thought.";
+  quickcon = "/connect sdf; /connect darkscience; /connect rizon; /connect unix; /connect efnet; /connect genoce; /connect hlircnet";
 };
 statusbar = {
   items = {
     barstart = "{sbstart}";
     ibarstart = "{isbstart}";
     barend = "{sbend}";
-    user = "{sb $N +$usermode{sbaway $A}}";
+    user = "{sb $P$N +$usermode{sbaway $A}{opered $O}}";
     winref = "{sb $winname$itemname{sbmode $M}}{sb3 $winref}";
     server = "{sb {sbservertag $tag}}";
     prompt = "{prompt $[.15]itemname}";
@@ -222,7 +271,7 @@ statusbar = {
     lag = "{sb Lag: $0-}";
     act = "{sb Act: $0-}";
     more = "{sb3 -- more --}";
-    end = "%N%M%_────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────";
+    end = "%N%K%_───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────";
     none = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ";
   };
   default = {
@@ -261,6 +310,8 @@ settings = {
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
     hostname = "vps1.haydenvh.com";
+    quit_message = "pain is temporary";
+    STATUS_OPER = "yes";
   };
   "fe-text" = {
     actlist_sort = "refnum";
@@ -275,33 +326,41 @@ settings = {
     emphasis_italics = "yes";
     beep_msg_level = "msgs hilight dccmsgs";
     show_names_on_join = "no";
-    window_check_level_first = "no";
+    window_check_level_first = "yes";
     autocreate_own_query = "no";
     autocreate_windows = "yes";
     use_msgs_window = "no";
     autocreate_query_level = "NONE";
+    emphasis = "yes";
+    emphasis_multiword = "yes";
+    emphasis_replace = "yes";
+    window_default_level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
   };
   "perl/core/scripts" = {
     ascii_figlet_path = "/usr/bin/figlet";
-    nickcolor_colors = "4 8 9 10 11 12 13 14 15";
+    nickcolor_coltag = "4 8 9 10 11 12 13 14 15";
     nicklist_width = "21";
     nicklist_height = "46";
     dim_nicks_color = "r";
     awl_shared_sbar = "OFF";
     awl_block = "25";
     awl_sort = "active/server/tag";
-    trackbar_string = "%_─%_";
-    trackbar_style = "%M%_";
+    trackbar_string = "─";
+    trackbar_style = "%K%_";
     trackbar_print_timestamp = "no";
     uberprompt_load_hook = "/^vm_add";
     uberprompt_unload_hook = "/^vm_del";
     cmdind_warn_text = "%G%_MSG?";
     cmdind_text = "%g%_CMD: ";
+    tmux_away_window = "[control-panel]";
+    tmux_away_message = "(set away by a script)";
+    neat_colors = "RX4CX6CX5EX3CX2JX1CGcX1ZBX3HX2TX3MX25X4NMX3AX4GX42X6BX51";
   };
   "irc/core" = {
     alternate_nick = "haydenh_";
     ctcp_version_reply = "UNIVERSE v42";
     ctcp_userinfo_reply = "gopher://haydenvh.com:73";
+    part_message = "pain is temporary";
   };
 };
 logs = { };
@@ -349,30 +408,36 @@ channels = (
   { name = "#opers"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#users"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#service"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#test"; chatnet = "hlircnet"; autojoin = "yes"; }
+  { name = "#test"; chatnet = "hlircnet"; autojoin = "yes"; },
+  { name = "#cgo"; chatnet = "hlircnet"; autojoin = "yes"; },
+  { name = "#general"; chatnet = "nebulacentre"; autojoin = "yes"; },
+  { name = "#books"; chatnet = "genoce"; autojoin = "yes"; },
+  { name = "#general"; chatnet = "genoce"; autojoin = "yes"; }
 );
+notifies = { Passivity = { }; };
 windows = {
   1 = {
     immortal = "yes";
     name = "[control-panel]";
-    level = "CRAP PUBLICS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS HILIGHTS";
+    level = "CRAP PUBLICS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS";
     sticky = "yes";
+    parent = "3";
   };
   2 = {
     immortal = "yes";
     name = "[notices]";
-    level = "SNOTES CTCPS WALLOPS INVITES";
+    level = "PUBLICS NOTICES SNOTES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS INVITES NICKS";
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
   3 = {
     immortal = "yes";
     name = "[msgs]";
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS DCC DCCMSGS";
+    level = "MSGS NOTICES CTCPS ACTIONS KICKS TOPICS NICKS DCC DCCMSGS";
     sticky = "yes";
-    parent = "1";
   };
   4 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -383,6 +448,7 @@ windows = {
     );
   };
   5 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -393,6 +459,7 @@ windows = {
     );
   };
   6 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -413,7 +480,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
   8 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -426,22 +493,9 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
   9 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#bots";
-        tag = "hlircnet";
-      }
-    );
-    sticky = "yes";
-    parent = "1";
-  };
-  10 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -452,7 +506,20 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
+  };
+  10 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#haydenvh.com";
+        tag = "hlircnet";
+      }
+    );
+    sticky = "yes";
+    parent = "3";
   };
   11 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -465,7 +532,7 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
   12 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -478,22 +545,9 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
   13 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#haydenvh.com";
-        tag = "hlircnet";
-      }
-    );
-    sticky = "yes";
-    parent = "1";
-  };
-  14 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -504,9 +558,10 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
-  15 = {
+  14 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -516,7 +571,8 @@ windows = {
       }
     );
   };
-  16 = {
+  15 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -526,9 +582,10 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
-  17 = {
+  16 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -538,9 +595,10 @@ windows = {
       }
     );
     sticky = "yes";
-    parent = "1";
+    parent = "3";
   };
-  18 = {
+  17 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       { 
         type = "CHANNEL";
@@ -550,7 +608,8 @@ windows = {
       }
     );
   };
-  19 = {
+  18 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -560,7 +619,8 @@ windows = {
       }
     );
   };
-  20 = {
+  19 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -570,7 +630,8 @@ windows = {
       }
     );
   };
-  21 = {
+  20 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
         type = "CHANNEL";
@@ -580,12 +641,75 @@ windows = {
       }
     );
   };
+  21 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#test";
+        tag = "hlircnet";
+      }
+    );
+    sticky = "yes";
+    parent = "3";
+  };
+  22 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#cgo";
+        tag = "hlircnet";
+      }
+    );
+    sticky = "yes";
+    parent = "3";
+  };
+  23 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#general";
+        tag = "genoce";
+      }
+    );
+    sticky = "yes";
+    parent = "3";
+  };
+  24 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#books";
+        tag = "genoce";
+      }
+    );
+    sticky = "yes";
+    parent = "3";
+  };
+  25 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#bots";
+        tag = "hlircnet";
+      }
+    );
+  };
 };
 mainwindows = {
-  1 = { 
+  3 = { 
     first_line = "1";
-    lines = "44";
+    lines = "62";
     first_column = "0";
-    columns = "146";
+    columns = "130";
   };
 };
