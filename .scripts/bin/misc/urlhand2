@@ -1,9 +1,5 @@
 #!/bin/bash
 
-link=$(grep -Eo '[A-Za-z][A-Za-z]*://\S*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
-
-IFS=$'\n'
-
 hand=$(printf "mpvms video
 mpvms
 popupmpv
@@ -19,5 +15,5 @@ popupcgo" | dmenu -i -p "Select a handler:")
 pkill mpvlisten
 hmpv pause /tmp/mpv-socket
 hmpv pause /tmp/mpv-socket2
-sh -c "$hand $link"
+sh -c "$hand $1"
 mpvlisten /tmp/mpv-socket2 /tmp/mpv-socket &

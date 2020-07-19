@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ "$1" = "video" ] && {
+	shift
+	mpv --input-ipc-server=/tmp/mpv-socket2 $@
+} || {
+	mpv --input-ipc-server=/tmp/mpv-socket --no-video $@
+}

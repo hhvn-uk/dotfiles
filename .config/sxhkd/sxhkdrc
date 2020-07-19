@@ -1,5 +1,5 @@
-super + {shift, ctrl, alt} + v
-	dinput "Are you sure?" "{sudo zzz, sudo halt, sudo reboot}"
+super + {shift, ctrl, alt, shift + ctrl, shift + alt} + v
+	dinput "Are you sure?" "{sudo zzz, sudo halt, sudo reboot, sudo ZZZ, pkill dwm}"
 
 super + Return
 	st
@@ -17,7 +17,7 @@ super + ctrl + b
 	queuevid
 
 super + c
-	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2
+	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 super + d
 	dmenu_run
@@ -51,6 +51,12 @@ super + alt + w
 
 super + shift + w
 	colour-wall
+
+super + ctrl + t
+	chradio
+
+super + akt + t
+	hmpv quit /tmp/mpv-socket3
 
 super + ctrl + y
 	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz

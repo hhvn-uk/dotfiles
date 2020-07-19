@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: <sed exp> <file> ..."
+
+sedexp="$1"
+shift
+
+for file in $@
+do
+	mv "$file" "$(echo "$file" | sed "$sedexp")"
+done

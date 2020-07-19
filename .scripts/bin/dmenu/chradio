@@ -1,0 +1,6 @@
+#!/bin/sh
+
+station=$(echo "http://relay4.slayradio.org:8000/
+http://bitreich.org:3232/live" | dmenu -i -p "Station? ")
+
+mpv --input-ipc-server=/tmp/mpv-socket3 $station

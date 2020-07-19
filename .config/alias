@@ -41,10 +41,11 @@ irc-us.oscss.eu	ssh -p 222 hayden@140.82.11.69
 freebsd.oscss	ssh -p 22122 hayden@freebsd.oscss.eu
 sdf		ssh haydenh@tty.sdf.org
 localserve	ssh void@192.168.1.20
+sfeed_curses	sfeed_update $XDG_CONFIG_HOME/sfeed/config && SFEED_PLUMBER=urlhand2 \sfeed_curses $XDG_CACHE_HOME/sfeed/*
 irc		ssh -p 15551 hayden@77.68.91.186
 vps2		ssh -p 15552 hayden@vps2.haydenvh.com
 dd		echo PLEASE TRIPLE CHECK, THEN RUN ddd
-ddd		dd
+ddd		\dd
 diff		colordiff
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls

@@ -12,21 +12,39 @@ usage(){
 	echo "usage: remind $(tput bold)ARGS$(tput sgr0)
 
 ARGS:
-	-a DATE::STRING - add STRING as reminder for DATE (follows \`date +%d%%%m%%%y\` format)
-	-n - print number of reminders for today
-	-e - print reminders for today
-	-r - clear today's reminders
-	-d DATE - get reminders for DATE (follows \`date +%d%%%m%%%y\` format)"
+$(echo "	-a DATE||STRING	- add STRING as reminder for DATE (follows \`date +%d/%m/%y\` format)
+	-a DATE|TIME|STRING	- add STRING as a reminder for DATE (\`date +%d/%m/%y|%H:%M\` format), will create a popup using ${EDITOR:-st} (requires \`at\`, and it's respective daemon running)
+	-n	- print number of reminders for today
+	-e	- print reminders for today
+	-r	- clear today's reminders
+	-d DATE 	- get reminders for DATE (follows \`date +%d/%m/%y\` format)" | column -t -s "$(printf "\t")")"
 	exit 1
 }
 
 add(){
-	fdate=$(echo "$1" | grep -o '.*::' | sed 's/::$//g')
-	string=$(echo "$1" | grep -o '::.*' | sed 's/^:://g')
+	echo "$1" | grep '^[0-9/%]*|[0-9:]*|' > /dev/null && {
+		pdate=${1%%|*} && fdate=$(echo "$pdate" | tr '/' '%')
+		ftime=${1#*|} && ftime=${ftime%%|*}
+		string=${1#*|*|}
 
-	mkdir $cache/remind/$fdate -p
-	num=$(ls $cache/remind/$fdate | wc -l)
-	echo "$string" >> $cache/remind/$fdate/$num && echo 'reminder set' || echo 'failed to set reminder'
+		mkdir $cache/remind/$fdate -p
+		num=$(ls $cache/remind/$fdate | wc -l)
+		echo "$string" >> $cache/remind/$fdate/$num || {
+			echo 'failed to set reminder (writing to file failed)'
+			exit 1
+		}
+		echo "${EDITOR:-st} -e sh -c 'cat \"$cache/remind/$fdate/$num\" /dev/stdin'" | at "$ftime $(echo "$pdate" | tr '/' '.')" && echo "reminder set" || {
+			echo 'failed to set reminder (`at` failed)'
+			exit 1
+		}
+	} || {
+		fdate=${1%%||*}
+		string=${1#*||}
+
+		mkdir $cache/remind/$fdate -p
+		num=$(ls $cache/remind/$fdate | wc -l)
+		echo "$string" >> $cache/remind/$fdate/$num && echo 'reminder set' || echo 'failed to set reminder'
+	}
 }
 
 num(){

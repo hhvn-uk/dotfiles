@@ -1,6 +1,7 @@
 #!/bin/bash
 socket1="$1"
 socket2="$2"
+socket3="$3"
 
 echo "dmpv/rmpv: $(hmpv state $socket1)" > ~/.cache/socket
 echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
@@ -8,17 +9,13 @@ echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
 	hmpv pause $socket1
 	sleep 0.2
 	hmpv pause $socket2
-	sleep 0.2
-	hmpv pause $socket2
-	sleep 0.2
-	hmpv pause $socket2
+	hvol toggle
 ) &
-bat=$(head -n 1 < $HOME/.cache/blocks/bat | perl -pe 's/\^.*?\^//g;s/^\[B //g;s/\]$//g;s/$/ /g;s/ /% /g' | head -n 1)
-weather=$(head -n 1 < $HOME/.cache/blocks/weather | perl -pe 's/\^.*?\^//g;s/^\[//g;s/\]$//g' | head -n 1)
-slock -m "$(echo -e "Locked at $(date) | $USER@$hostname\nBatteries (time of screen-locking) | $bat\nWeather | $weather" | tr -s ' ')"
+slock -m "$(echo "Locked at $(date) | $USER@$hostname" | tr -s ' ')"
 
 state=$(cat ~/.cache/socket | awk '/:/')
 state1=$(echo "$state" | head -n -1 | awk '{print $2}')
 state2=$(echo "$state" | tail +2 | awk '{print $2}')
 [ "$state1" = "playing" ] && hmpv unpause $socket1
 [ "$state2" = "playing" ] && hmpv unpause $socket2
+hvol toggle

@@ -1,12 +1,4 @@
-#!/bin/bash
-if [ "$1" = "toggle" ]
-then
-	amixer set Master $1
-	volume=$(amixer sget Master | awk '/Mono/ {print $6}' | sed 's/\[//g' | sed 's/\]//g')
-	volume=$(echo $volume | sed -ne 's/.*/Volume set to &/p')
-else
-	amixer set Master $1
-	volume=$(amixer sget Master | awk '/Mono/ {print $4}' | sed 's/\[//g' | sed 's/\]//g')
-fi
+#!/bin/sh
+amixer set Master $1
 
 $HOME/.scripts/dwmblocks/vol > /tmp/blocks/vol
