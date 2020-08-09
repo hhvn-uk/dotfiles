@@ -19,6 +19,9 @@ super + ctrl + b
 super + c
 	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
+super + shift + c
+	slock
+
 super + d
 	dmenu_run
 
@@ -59,10 +62,10 @@ super + akt + t
 	hmpv quit /tmp/mpv-socket3
 
 super + ctrl + y
-	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs fuzz
+	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs 
 
 super + ctrl + u
-	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video fuzz
+	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video
 
 super + alt + {y,u}
 	rmpv general/{videos,music}/ 150

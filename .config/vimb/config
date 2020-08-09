@@ -10,7 +10,7 @@ set completion-selected-css=background-color:#141726;color:#1e5eb3
 set status-css=background-color:#30404e;color:#ffffff;border-bottom;padding-bottom:1px;border-bottom:1px solid #0a0a10
 set status-ssl-css=background-color:#30404e;color:#ffffff;border-bottom;padding-bottom:1px;border-bottom:1px solid #0a0a10
 
-set home-page=http://www.haydenvh.com/h/
+set home-page=http://haydenvh.com/
 
 set smooth-scrolling=false
 set webinspector=true
@@ -43,7 +43,7 @@ set serif-font=DejaVu Sans Mono
 shortcut-default sch
 
 shortcut-add sx=https://searx.me/
-shortcut-add sch=http://searx.tyil.nl/?q=$0
+shortcut-add sch=http://nibblehole.com/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/
@@ -61,3 +61,5 @@ shortcut-add ebay=https://www.ebay.co.uk/sch/$0
 shortcut-add am=https://www.amazon.co.uk/s?k=$0
 shortcut-add 8=https://8kun.top/$0/catalog.html
 shortcut-add dict=https://dict.css/?s=$0
+shortcut-add unreal=https://www.unrealircd.org/docwiki/index.php?search=$0
+shortcut-add coords=https://map.openaerialmap.org/#/$0,16

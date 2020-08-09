@@ -1,0 +1,125 @@
+#!/bin/sh
+#
+# quik - mispelt script for deploying vps' quikly
+#
+# Copyright (c) 2020 haydenh (gopher://haydenvh.com)
+# Copyright (c) 2020 wfnintr (gopher://wfnintr.net)
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the      
+# terms of the Do What The Fuck You Want To Public License, Version 2,       
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
+
+echo(){
+	printf "%s\n" "$@"
+}
+
+usage(){
+	echo "usage:	$pname list -l  (lists all options)"
+	echo "	$pname list <max cost> <hours> [number of instances]"
+	echo "	$pname deploy <slug> /path/to/sshpubkey [number of instances]"
+	echo "	$pname rm <name or ip> [name2 or ip2] ..."
+	exit 1
+}
+
+list(){
+	list=$(doctl compute size list)
+	[ "$1" = "-l" ] && echo "$list" && exit
+	[ -z $1 ] || [ -z $2 ] && {
+		echo "usage:	$pname list -l  (lists all options)"
+		echo "	$pname list <max cost> <hours> <number of instances>"
+		exit 1
+	}
+	n=${3:-1}
+
+	echo "$list" | awk -v "m=$1" -v "h=$2" -v "i=$n" '
+		BEGIN {
+			print "ID/Name	Memory	vCPUs	Cost (total)"
+		}
+
+		/[[:space:]][0-9]/ && (i * ($6 * h)) < m {
+			print $1 "\t" $2 "\t" $3 "\t" (i * ($6 * h))
+		}
+	' | column -t -s "	"
+}
+
+listrunning(){
+	doctl compute droplet list --format Status,Name,Region,PublicIPv4,Memory,VCPUs,Disk | awk '
+		BEGIN {
+			OFS="\t"
+			print "Status\tName\tRegion\tIPv4\tMem\tvCPUS\tDisk"
+		}
+
+		$1 == "active" {print $1, $2, $3, $4, $5, $6, $7}' | column -t -s "	"
+}
+
+
+deploy(){
+	[ -z "$1" ] || [ -z $2 ] && {
+		echo "usage:	$pname deploy <slug> /path/to/sshpubkey [number of instances]"
+		echo 'You must enter a size slug to deploy.'
+		echo 'You must also provide a ssh pubkey for now. [ /path/to/pub.key ].'
+		exit 1
+	}
+
+	size_slug="$1"
+	echo 'importing your ssh key...'
+	doctl compute ssh-key import "$USER" --public-key-file "$2" >/dev/null 
+	ssh_key=$(doctl compute ssh-key list | grep "$USER" | awk '{print $3}')
+	region=nyc1 # list from `doctl compute region list` TODO: make this customizable
+	printf "deploying %d droplets in region %s, of size %s...\n" "${3:-1}" "$region" "$size_slug"
+	image_id=$(doctl compute image list | awk '/voidlinux/{print $1}') 
+	
+	
+	# i'm considering hard-coding the default image as voidlinux for now
+	# and also randomizing the defaults for region ~~and name (done)~~
+	# the less required options, the faster it will be to type...
+
+	for void in $(seq ${3:-1})
+	do
+		(
+			name="voidlinux-$(head -c 1000 /dev/urandom | tr -dc 'A-Za-z0-9' | head -n 1 | cut -zc-10)"
+			doctl compute droplet create "$name" --image "$image_id" --size "$size_slug" --region "$region" --ssh-keys "$ssh_key" 1>/dev/null
+		) &
+	done
+	sleep 20
+	listrunning
+	printf "\n\nPlease wait a few moments before logging in, to allow the sshd(s) to start, and ssh key(s) to be copied over.\n"
+}	
+
+delete(){
+        [ -z "$1" ] && echo "usage:	$pname rm <name or ip> [name2 or ip2] ..."
+	for nameip in $@
+	do
+		name=$(doctl compute droplet ls --format Name,PublicIPv4 | awk "\$1 == \"$nameip\" || \$2 == \"$nameip\""' {print $1}')
+		[ "$name" != "" ] && doctl compute droplet d "$name" -f || echo "$(tput bold)error:$(tput sgr0) no droplet has name/ip: $nameip"
+	done
+}
+
+rmall(){
+	list=$(doctl compute droplet ls --format Name | awk '$1 != "Name"')
+	for droplet in $list
+	do
+		echo "Deleting $droplet..."
+		doctl compute droplet d "$droplet" -f &
+	done
+}
+
+pname=$(basename $0)
+[ -z $1 ] && usage
+cmd="$1" && shift
+case "$cmd" in
+	list) list $@ ;;
+	deploy) deploy $@ ;;
+	rm) delete $@ ;;
+	list-running) listrunning $@ ;;
+	rm-all) rmall ;;
+	*) usage ;;
+esac

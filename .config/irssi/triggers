@@ -1,3 +1,8 @@
 #Triggers file version 1.2.4
 -all -regexp '\t' -replace '        ' 
 -all -regexp '([[:alnum:]]) ([[:punct:]])[[:space:]]*$' -replace '$1$2' 
+-rawin -regexp 'Client connecting:' -replace '12CONNECT:' 
+-rawin -regexp 'Client exiting:' -replace '9QUIT:' 
+-rawin -regexp 'OperOverride --' -replace '14OPEROVERRIDE:' 
+-publics -regexp 'Oh my.' -replace '{nebula Oh my.}' 
+-all -regexp 'Alright, I (\w*)' -replace '{nebula Alright, I $1}' 

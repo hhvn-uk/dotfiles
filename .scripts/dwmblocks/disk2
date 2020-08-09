@@ -8,5 +8,3 @@
 
 sda2=$(df -h | awk '/sda2/ {print $3 "/" $2}')
 echo "[SDA2 $sda2]"
-echo
-echo \#3157B5

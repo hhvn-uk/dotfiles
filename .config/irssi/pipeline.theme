@@ -1,16 +1,10 @@
 #!/bin/bash
 #
-#  pipeline
+#  pipeline2
 #
-#  An Irssi theme inspired by madcow and skeita
-#
-#  Copyright (c) 2016 Beau Hastings. All rights reserved.
-#  License: GNU General Public License v2
-#
-#  Author: Beau Hastings <beausy@gmail.com>
-#  URL: https://github.com/hastinbe/irssi-theme-pipeline
-#
-#  Modified by: Hayden Hamilton <hayden@haydenvh.com>
+#  Inspired by the original pipeline theme
+#  Created by: Hayden Hamilton <hayden@haydenvh.com>
+#  License: wtfpl
 
 replaces = { "/[]=" = "%K$*%n"; "*@+." = "%B$*%n"; };
 
@@ -18,193 +12,102 @@ replaces = { "/[]=" = "%K$*%n"; "*@+." = "%B$*%n"; };
 info_eol = "false";
 
 abstracts = {
-  ##
-  ## generic
-  ##
-
-  # text to insert at the beginning of each non-message line
-  #line_start = "%b.%c.%C.%n ";
+  # abstracts that do not take arguments - only for replicating certain text
   line_start = "";
+  timestamp = "%G%%H:%%M%b ";
 
-  # timestamp styling, nothing by default
-  # timestamp = "%B$*%n"; # shown
-  timestamp = "";
-  #hidden
-
-  # any kind of text that needs hilighting, default is to bold
+  # usage agnostic text hilighting
   hilight = "%_$*%_";
-
-  # any kind of error message, default is bright red
   error = "%R$*%n";
-
-  # channel name is printed
-  #channel = "$*";
   channel = "%_$*%_";
-
-  # nick is printed
-  nick = "$*";
-
-  # nick host is printed
-  nickhost = "$*";
-
-  # server name is printed
-  server = "%_$*%_";
-
-  # some kind of comment is printed
-  #comment = "$*";
+  server = "%R%_$*%_";
   comment = "%b$*%n";
-
-  # reason for something is printed (part, quit, kick, ..)
   reason = "{comment $*}";
-
-  # mode change is printed ([+o nick])
-  #mode = "{comment %n[%W$*]%n}";
   mode = "%b$*%n";
-
-  ##
-  ## channel specific messages
-  ##
-
-  # highlighted channel name is printed
   channelhilight = "%R$*%n";
-
-  # ban/ban exception/invite list mask is printed
   ban = "%r$*%n";
-
-  ##
-  ## messages
-  ##
-
-  # the basic styling of how to print message, $0 = nick mode, $1 = nick
-  #msgnick = "<%C$0%n$1-%n> %|";
-  msgnick = "$0$1%K │%n %|";
-
-  # message from you is printed. "msgownnick" specifies the styling of the
-  # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
-  # whole line.
-
-  # Example1: You want the message text to be green:
-  #  ownmsgnick = "{msgnick $0 $1-}%g";
-  # Example2.1: You want < and > chars to be yellow:
-  #  ownmsgnick = "%Y{msgnick $0 $1-%Y}%n";
-  #  (you'll also have to remove <> from replaces list above)
-  # Example2.2: But you still want to keep <> grey for other messages:
-  #  pubmsgnick = "%K{msgnick $0 $1-%K}%n";
-  #  pubmsgmenick = "%K{msgnick $0 $1-%K}%n";
-  #  pubmsghinick = "%K{msgnick $1 $0$2-%n%K}%n";
-  #  ownprivmsgnick = "%K{msgnick  $*%K}%n";
-  #  privmsgnick = "%K{msgnick  %R$*%K}%n";
-
-  # $0 = nick mode, $1 = nick
-  ownmsgnick = "{msgnick $0 $1-}%W";
-  ownnick = "%y$*";
-
-  # public message in channel, $0 = nick mode, $1 = nick
-  pubmsgnick = "{msgnick $0%n %w$1%n}";
-  #pubmsgnick = "{msgnick $0$1-}";
-  pubnick = "%w$nickcolor$*";
-
-  # public message in channel meant for me, $0 = nick mode, $1 = nick
-  #pu]bmsgmenick = "%Y{msgnick %B$0%n %w$1%n}%w";
-  pubmsgmenick = "$0$1%K %_#%_%n %|";
-
-  # channel name is printed with message
   msgchannel = "%b:$*%n";
+  ownnick = "%y$*";
+  dcc = "%b$*%n";
+  dccfile = "%_$*%_";
 
-  privmsg = "%R<---$0 %K%_#%_%N $1}";
-  ownprivmsg = "$0%K--->$1 %K%_│%_%N%W $2}";
-
-  # own private message in query
-  ownprivmsgnick = "{msgnick %W$*%w}";
-  ownprivnick = "%W$0%n%w";
-
-  # private message in query
-  privmsgnick = "{msgnick %B$*%w}";
-
-  ##
-  ## Actions (/ME stuff)
-  ##
-
-  # used internally by this theme
-  action_core = "%w*%w  %_$0%_ $1";
-
-  # generic one that's used by most actions
+  # kept for compatibility
+  nick = "$*";
+  nickhost = "$*";
   action = "{action_core $*} ";
 
-  # private action sent by others
-  pvaction = "%R<---%_$0%_ %K# %w*%w %_$0%_ $1";
+  # hilighting with nickcolor-expando.pl
+  pubnick = "%w$nickcolor$*";
+  # constructs for basic message
+  msgnick = "$0$1%K %_|%_%N ";
+  himsg = "$0$1%K %_#%_%N ";
+  nticenick = "$0$1%K %_:%_%N ";
+  askctcp = "$0$1%K %_?%_%N%_ ";
+  ansctcp = "$0$1%K %_A%_%N%_ ";
 
-  ownaction_target = "$0%K--->$1 %K| %w*%w %_$0%_ ";
+  # msgs
+  ownmsgnick = "{msgnick $0 $1-}%W";
+  pubmsgnick = "{msgnick $0 $1}";
+  pubmsgmenick = "{himsg $0 $1}";
+  ownprivmsgnick = "{msgnick $*}";
+  privmsgnick = "{msgnick $*}";
+  privmsg = "{himsg %R<---$0}$1}";
+  ownprivmsg = "{msgnick $0%K--->$1}$2}";
+  ownprivnick = "%W$0%n%w";
 
+  # used internally for actions
+  action_core = "  %w*%w%_$0%_ $1";
+  action_nsp = "%w*%w%_$0%_ $1";
 
-  ##
-  ## other IRC events
-  ##
+  # actions
+  pvaction = "%R<---{action_nsp $0 $1}";
+  ownaction_target = "$0%K--->$1{action_nsp $0}";
 
   # notices
-  ownnotice = "$0%K--->$1 %K%_:%_%N%W $2}";
-  notice = " {pubnick $*}%K : %N";
-  servernotice = "%g!$*%n ";
+  ownnotice = "{nticenick $0%K--->$1}%W$2}";
+  notice = " {nticenick {nick $*}}%N";
+  servernotice = "%w!$*%n ";
 
   # CTCPs
-  ownctcp = "{ownnick $N}%K--->$0 %K%_?%_%N %_$1%_";
-  ctcp = "%R<---$1 %K%_A%_%N %_$0:%_ $2-";
-  rctcp = "%R<---$0 %K%_?%_%N %_$1%_";
+  ownctcp = "{askctcp {ownnick $N}%K--->$0}$1";
+  ctcp = "{ansctcp %R<---$1}$0:%_ $2-";
+  rctcp = "{askctcp %R<---$0}$1";
 
   # wallops
-  wallop = "%W$*%n: ";
-  wallop_nick = "%n$*";
-  wallop_action = "%W * $*%n ";
+  wallop = "%n[%WWALLOP%n] $*";
 
   # netsplits
-  netsplit = "%B$*%n";
-  netjoin = "%B$*%n";
+  netsplit = "%GSplit: %N$0 %R<-> $1 %N%_Quits:%_ {nick $2} ($3 more)";
+  netjoin = "%BSplit over: %N%_joins:%_ {nick $0} ($1 more)";
 
   # /names list
   names_nick = "[%_$0%_%w$1-%n] ";
   names_users = "%b$*%n:";
   names_channel = "%B$*%n";
 
-  # DCC
-  dcc = "%b$*%n";
-  dccfile = "%_$*%_";
-
-  # DCC chat, own msg/action
-  dccownmsg = "[%b$0%K($1-%K)%n] ";
-  dccownnick = "%B$*%n";
-  dccownaction = "{action $*}";
+  # I don't use dcc, someone else can figure this stuff out
+  dccownmsg = "{ownprivmsg $*}";
+  dccownnick = "{ownnick $*}";
+  dccownaction = "{action_core $*}";
   dccownaction_target = "{action_core $0}%K:%b$1%n ";
-
-  # DCC chat, others
   dccmsg = "[%B$1-%K(%b$0%K)%n] ";
   dccquerynick = "%B$*%n";
   dccaction = "%W (*dcc*) $*%n %|";
 
-  ##
-  ## statusbar
-  ##
-
-  # background of statusbar
+  # statusbar
   sb_background = "%0";
   isbstart = "%0";
-
   opered = " (ircop: $*)";
-
-  # default statusbar item style
   sb = "%N%K%_──[%_%G$*%K]";
   sb2 = "%m[%G$*%m]%n";
   sb3 = "%N%K%_[%_%G$*%K]";
   sbmode = " %b+%G$*";
   sbaway = " (away: $*)";
   sbservertag = "$0";
-  sbmore = "%_-- more --%_";
+  sbmore = "%_+more+%_";
   sblag = "{sb L: %B$*}";
   sbmail = "{sb M: $*}";
-
-  # activity. Det is used for hilights when display doesn't support colors
   sbact_det = " D: $*";
-
-  # usercount
   sb_usercount = "{sb %W$0%n $1-}";
   sb_uc_ircops = "%_.*%_%G/%G$*%n";
   sb_uc_ops = "%_.@%_%G/%G$*%n";
@@ -212,8 +115,7 @@ abstracts = {
   sb_uc_voices = "%_.+%_%G/%Y$*%n";
   sb_uc_normal = "%_.%_%G/%W$*%n";
   sb_uc_space = " ";
-
-  sb_act_hilight = "%K$*";
+  sb_act_hilight = "%M$*";
   sb_act_hilight_color = "$0$1-%n";
   sb_act_sep = "%c$*";
   sb_act_text = "%c$*";
@@ -223,24 +125,24 @@ abstracts = {
 # %r%n%_$0%_$1%K |%n %|
 formats = {
   "fe-common/core" = {
-    pubmsg = "{pubmsgnick $2 {pubnick $0}}$1";
-    join = "%_%B+%_{pubnick $0} %n%w$1";
-    part = "%_%G-{pubnick $0} %n%w$1 {reason $3}";
-    kick = "%_%G!{pubnick $0} %n%wby {pubnick $2}, {reason $3}, from $1";
-    quit = "%_%G<{pubnick $0} %n%w$1 {reason $2}";
-    nick_changed = " {pubnick $0} is now {pubnick $1}";
+    pubmsg = "$nickalign{pubmsgnick %G$2 {pubnick $0}$nicktrunc}$1";
+    join = "%_%B+{pubnick %_$0%_} $1";
+    part = "%_%G-%_{pubnick %_$0%_} $1 {reason $3}";
+    kick = "%_%G!%_$0 %n%wby {pubnick $2}, {reason $3}, from $1";
+    quit = "%_%G<%_{pubnick %_$0%_} $1 {reason $2}";
+    nick_changed = "{pubnick $0}%w %_-->%_ $1";
     endofnames = "{channel $0}: {hilight $1} nicks ({comment @/{hilight $2} +/{hilight $3}  -/{hilight $4}})";
-    own_msg = "{ownmsgnick $2 {ownnick $0}}$1";
-    own_msg_channel = "{ownmsgnick $3 {ownnick $[-16]0}{msgchannel $1}}$2";
-    pubmsg_me = "{pubmsgmenick $2 {pubnick $0}}$1";
-    pubmsg_me_channel = "{pubmsgmenick $3 {pubnick $0}{msgchannel $1}}$2";
-    pubmsg_hilight = "{pubmsgmenick $3 {pubnick $1}}$2";
-    pubmsg_channel = "{pubmsgnick $3 {pubnick $0}{msgchannel $1}}$2";
-    chanmode_change = " {$channel $1} {pubnick $2} %nsets mode %B{$mode $1}";
-    channel_mode = " {$channel $0} {pubnick $2} %nsets mode %B{$mode $1}";
-    timestamp = "%G%%H:%%M%g ";
+    own_msg = "$nickalign{ownmsgnick %G$2 {ownnick $0}$nicktrunc}$1";
+    own_msg_channel = "$nickalign{ownmsgnick %G$3 {ownnick $0}$nicktrunc{msgchannel $1}}$2";
+    pubmsg_me = "$nickalign{pubmsgmenick %G$2 {pubnick $0}$nicktrunc}$1";
+    pubmsg_me_channel = "$nickalign{pubmsgmenick %G$3 {pubnick $0}$nicktrunc{msgchannel $1}}$2";
+    pubmsg_hilight = "$nickalign{pubmsgmenick %G$3 {pubnick $1}$nicktrunc}$2";
+    pubmsg_channel = "$nickalign{pubmsgnick %G$4 {pubnick $0}$nicktrunc{msgchannel $1}}$2";
+    chanmode_change = " {$channel $1} {nick $2} %nsets mode %B{$mode $1}";
+    channel_mode = " {$channel $0} {nick $2} %nsets mode %B{$mode $1}";
+    timestamp = "%G%%H:%%M%b ";
     line_start = "{line_start}";
-    line_start_irssi = "{line_start}{hilight Irssi:} ";
+    line_start_irssi = "{hilight}";
     servertag = "[$0] ";
     daychange = "       %_----%_ %%d %%b %%Y %_----%_";
     talking_with = "You are now talking with {nick $0}";
@@ -253,8 +155,8 @@ formats = {
     window_set_immortal = "Window is now immortal";
     window_unset_immortal = "Window isn't immortal anymore";
     window_immortal_error = "Window is immortal, if you really want to close it, say /WINDOW IMMORTAL OFF";
-    windowlist_header = "%#Ref  Name                 Active item     Server          Level";
-    windowlist_line = "%#$[4]0 %|$[20]1 $[15]2 $[15]3 $4";
+    windowlist_header = "%#Ref    Name                   Active item       Server            Level%:-----------------------------------------------------------------------";
+    windowlist_line = "%#$[4]0 | %|$[20]1 | $[15]2 | $[15]3 | $4";
     windowlist_footer = "";
     windows_layout_saved = "Layout of windows is now remembered";
     windows_layout_reset = "Layout of windows reset to defaults";
@@ -288,9 +190,9 @@ formats = {
     server_changed = "Changed to {hilight $2} server {server $1}";
     unknown_server_tag = "Unknown server tag {server $0}";
     no_connected_servers = "Not connected to any servers";
-    server_list = "{server $0}: $1:$2 ($3)";
-    server_lookup_list = "{server $0}: $1:$2 ($3) (connecting...)";
-    server_reconnect_list = "{server $0}: $1:$2 ($3) ($5 left before reconnecting)";
+    server_list = "{server $[15]0} $[25]1 $[6]2 $[15]3";
+    server_lookup_list = "{server $[15]0} $[25]1 $[6]2 $[15]3 (connecting...)";
+    server_reconnect_list = "{server $[20]0} $[25]1 $[6]2 $[15]3 ($5 left before reconnecting)";
     server_reconnect_removed = "Removed reconnection to server {server $0} port {hilight $1}";
     server_reconnect_not_found = "Reconnection tag {server $0} not found";
     setupserver_added = "Server {server $0} saved";
@@ -300,9 +202,9 @@ formats = {
     quit_once = "{channel $3} {channick $0} {chanhost $1} has quit {reason $2}";
     invite = "{nick $0} invites you to {channel $1}";
     not_invited = "You have not been invited to a channel!";
-    new_topic = "{nick $0} changed the topic of {channel $1} to: $2";
+    new_topic = "{nick $0} changed the topic of {channel $1}: $2";
     topic_unset = "Topic unset by {nick $0} on {channel $1}";
-    your_nick_changed = "You're now known as {nick $1}";
+    your_nick_changed = "{ownnick $0}%w %_-->%_ {ownnick $1}";
     talking_in = "You are now talking in {channel $0}";
     not_in_channels = "You are not on any channels";
     current_channel = "Current channel {channel $0}";
@@ -317,12 +219,12 @@ formats = {
     chansetup_not_found = "Channel {channel $0} not found";
     chansetup_added = "Channel {channel $0} saved";
     chansetup_removed = "Channel {channel $0} removed";
-    chansetup_header = "%#Channel         Network    Password   Settings";
-    chansetup_line = "%#{channel $[15]0} %|$[10]1 $[10]2 $3";
+    chansetup_header = "%#Channel           Network        Password     Settings%:------------------------------------------------------";
+    chansetup_line = "%#{channel $[15]0} | %|$[12]1 | $[10]2 | $3";
     chansetup_footer = "";
     own_msg_private = "{ownprivmsg {ownnick $N} {pubnick $0} $1}";
     own_msg_private_query = "{ownprivmsgnick {ownprivnick $2}}$1";
-    pubmsg_hilight_channel = "{pubmsghinick $0 $4 $1{msgchannel $2}}$3";
+    pubmsg_hilight_channel = "$nickalign{pubmsgmenick %G$4 {pubnick $1$nicktrunc{msgchannel $2}}$3";
     msg_private = "{privmsg {pubnick $0}}$2";
     msg_private_query = "{privmsgnick $0}$2";
     no_msgs_got = "You have not received a message from anyone yet";
@@ -339,8 +241,8 @@ formats = {
     alias_added = "Alias $0 added";
     alias_removed = "Alias $0 removed";
     alias_not_found = "No such alias: $0";
-    aliaslist_header = "%#Aliases:";
-    aliaslist_line = "%#$[10]0 $1";
+    aliaslist_header = "%#Alias          Action%:-----------------------------";
+    aliaslist_line = "%#$[10]0 |   $1";
     aliaslist_footer = "";
     log_opened = "Log file {hilight $0} opened";
     log_closed = "Log file {hilight $0} closed";
@@ -349,8 +251,8 @@ formats = {
     log_not_open = "Log file {hilight $0} not open";
     log_started = "Started logging to file {hilight $0}";
     log_stopped = "Stopped logging to file {hilight $0}";
-    log_list_header = "%#Logs:";
-    log_list = "%#$0 $1: $2 $3$4$5";
+    log_list_header = "%#Path                                               |    Chan & net                       |    Levels%:--------------------------------------------------------------------------------------------------------";
+    log_list = "%#$[50]1 |    $[32]2 |    $3$4$5";
     log_list_footer = "";
     windowlog_file = "Window LOGFILE set to $0";
     windowlog_file_logging = "Can't change window's logfile while log is on";
@@ -415,7 +317,7 @@ formats = {
     recode_line = "%#%|$[!30]0 $1";
     unknown_chat_protocol = "Unknown chat protocol: $0";
     unknown_chatnet = "Unknown chat network: $0 (create it with /NETWORK ADD)";
-    not_toggle = "Value must be either ON, OFF or TOGGLE";
+    not_toggle = "boolean - ON/OFF only";
     perl_error = "Perl error: $0";
     bind_header = "%#Key                  Action";
     bind_list = "%#$[!20]0 $1 $2";
@@ -433,8 +335,8 @@ formats = {
     set_not_boolean = "Setting {hilight $0} isn't boolean, use /SET";
     no_completions = "There are no completions";
     completion_removed = "Removed completion $0";
-    completion_header = "%#Key        Value                                    Auto";
-    completion_line = "%#$[10]0 $[!40]1 $2";
+    completion_header = "%#Key        |   Value                                    | Auto%:--------------------------------------------------------------";
+    completion_line = "%#$[10]0 |   $[!40]1 | $2";
     completion_footer = "";
     capsicum_enabled = "Capability mode enabled";
     capsicum_disabled = "Capability mode not enabled";
@@ -451,12 +353,12 @@ formats = {
   };
   "fe-common/text" = { window_info_sticky = "%#  Sticky  : $0"; };
   "fe-common/irc" = {
-    chanmode_change = " {pubnick $2} %nsets mode %b{$mode $1} %non {$channelhilight $0}";
+    chanmode_change = " {nick $2} %nsets mode %b{$mode $1} %non {$channelhilight $0}";
     whois = "%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
-    server_chanmode_change = "{netsplit ServerMode}/{channelhilight $0}: {mode $1} by {nick $2}";
+    server_chanmode_change = "%RServermode: {mode $1} by {server $2}";
     whois_server = "{whois server %|$1 ({comment $2})}";
-    own_action = "{action_core {ownnick $0} $1}";
-    action_public = "{action_core {pubnick $0}}$1";
+    own_action = "$nickalign{action_core {ownnick $0$nicktrunc}}$1";
+    action_public = "$nickalign{action_core {pubnick $0$nicktrunc}}$1";
     away = "%_%G----->";
     unaway = "%_%B<-----";
     end_of_whois = "%|";
@@ -466,9 +368,9 @@ formats = {
     whois_special = "{whois info %|$1}";
     whois_extra = "{whois extra %|$1}";
     whois_not_found = "$0 doesn't exist";
-    netsplit = "{netsplit Netsplit} {server $0} <-> {server $1} quits: $2";
-    netsplit_more = "{netsplit Netsplit} {server $0} <-> {server $1} quits: $2 (+$3 more, use /NETSPLIT to show all of them)";
-    netsplit_join = "{netjoin Netsplit} over, joins: $0";
+    netsplit = "{netsplit {server $0} {server $1} $2 0}";
+    netsplit_more = "{netsplit {server $0} {server $1} $2 $3}";
+    netsplit_join = "{netjoin $0 0}";
     netsplit_join_more = "{netjoin Netsplit} over, joins: $0 (+$1 more)";
     no_netsplits = "There are no net splits";
     netsplits_header = "%#Nick      Channel    Server               Split server";
@@ -506,7 +408,7 @@ formats = {
     url = "Home page for {channelhilight $0}: $1";
     topic = "Topic for {channelhilight $0}: $1";
     no_topic = "No topic set for {channelhilight $0}";
-    topic_info = "Topic set by {nick $0} {nickhost $2} {comment $1}";
+    topic_info = "Topic set by {pubnick $0} {nickhost $2} {comment $1}";
     channel_mode = "mode/{channelhilight $0} {mode $1}";
     bantype = "Ban type changed to {channel $0}";
     no_bans = "No bans in channel {channel $0}";
@@ -526,7 +428,7 @@ formats = {
     nick_in_use = "Nick {nick $0} is already in use";
     nick_unavailable = "Nick {nick $0} is temporarily unavailable";
     your_nick_owned = "Your nick is owned by {nick $3} {comment $1@$2}";
-    whowas = "%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
+    whowas = "%: %_WHOWAS%_%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
     whois_idle = "{whois idle %|$1 days $2 hours $3 mins $4 secs}";
     whois_modes = "{whois modes $1}";
     whois_usermode = "{whois usermode $1}";
@@ -551,8 +453,8 @@ formats = {
     ctcp_requested_unknown = "{rctcp {pubnick $0} $2}";
     online = "Users online: {hilight $0}";
     pong = "PONG received from $0: $1";
-    wallops = "{wallop WALLOP {wallop_nick $0}} $1";
-    action_wallops = "{wallop WALLOP {wallop_action $0}} $1";
+    wallops = "{wallop {pubnick $0} %K| $1}";
+    action_wallops = "{wallop {action_core {pubnick $0}} $1}";
     kill = "You were {error killed} by {nick $0} {nickhost $1} {reason $2} {comment Path: $3}";
     kill_server = "You were {error killed} by {server $0} {reason $1} {comment Path: $2}";
     error = "{error ERROR} $0";
@@ -717,8 +619,8 @@ formats = {
     statusbar_unknown_visibility = "Statusbar visibility must be 'always', 'active' or 'inactive'";
     paste_warning = "Pasting $0 lines to $1. Press Ctrl-K if you wish to do this or Ctrl-C to cancel.";
     paste_prompt = "Hit Ctrl-K to paste, Ctrl-C to abort?";
-    irssi_banner = " ___           _%:|_ _|_ _ _____(_)%: | || '_(_-<_-< |%:|___|_| /__/__/_|%:Irssi v$J - https://irssi.org";
-    welcome_firsttime = "- - - - - - - - - - - - - - - - - - - - - - - - - - - -\012Hi there! If this is your first time using Irssi, you%:might want to go to our website and read the startup%:documentation to get you going.%:%:Our community and staff are available to assist you or%:to answer any questions you may have.%:%:Use the /HELP command to get detailed information about%:the available commands.%:%:For Debian specific help type \"/connect OFTC\" and%:\"/join #debian\" (without the quotes) and ask your%:question.%:- - - - - - - - - - - - - - - - - - - - - - - - - - - -";
+    irssi_banner = " ";
+    welcome_firsttime = " ";
     welcome_init_settings = "The following settings were initialized";
   };
   "Irssi::Script::ctcpspoof" = {
@@ -739,4 +641,24 @@ formats = {
     loaded = "%R>>%n %_Scriptinfo:%_ Loaded $0 version $1 by $2.";
   };
   "Irssi::Script::tmux_away" = { tmux_away_crap = "$0"; };
+  "Irssi::Script::keepnick" = {
+    keepnick_crap = "{line_start}{hilight Keepnick:} $0";
+    keepnick_add = "{line_start}{hilight Keepnick:} Now keeping {nick $0} on [$1]";
+    keepnick_remove = "{line_start}{hilight Keepnick:} Stopped trying to keep {nick $0} on [$1]";
+    keepnick_hold = "{line_start}{hilight Keepnick:} Nickkeeping deactivated on [$1]";
+    keepnick_unhold = "{line_start}{hilight Keepnick:} Nickkeeping reactivated on [$1]";
+    keepnick_list_empty = "{line_start}{hilight Keepnick:} No nicks in keep list";
+    keepnick_list_header = "";
+    keepnick_list_line = "{line_start}{hilight Keepnick:} Keeping {nick $0} in [$1] ($2)";
+    keepnick_list_footer = "";
+    keepnick_got_nick = "%N{hilight Keepnick:} Nickstealer left [$1], got {nick $0} back";
+  };
+  "Irssi::Script::nm2" = {
+    neat_style = " , p , , , , , t , , ,";
+    neat_action_style = " , p , , t , ";
+    neat_pad_char = "%g ";
+    neat_truncate_char = "%m+";
+    neat_notruncate_char = "";
+    neat_custom_modes = "&%B&%n | @%g@%n | +%y+%n";
+  };
 };

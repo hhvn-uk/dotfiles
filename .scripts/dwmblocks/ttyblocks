@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd /tmp/dwmblocks
+while true
+do
+	cat mpv bat cpu mem disk disk2 news mail rem time vol time2 host | tr '\n' ' ' | tr -s ' ' | sed 's/\^[^^]*\^//g'
+	sleep 1
+	clear
+done 2>/dev/null

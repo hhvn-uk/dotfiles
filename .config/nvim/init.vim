@@ -71,7 +71,7 @@ noremap <leader>C :!sudo make all install clean<CR>
 noremap <leader>CC :call Centre()<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 noremap <leader>sv :!sent % \| set linebreak<CR> 
-noremap <leader>sc :setlocal spell! spelllang=en_us \| set linebreak<CR>
+noremap <leader>sc :setlocal spell! spelllang=en_gb \| set linebreak<CR>
 noremap <leader>sf mm[s1z=`m<CR>
 noremap <leader>ssf mm[sz=`m
 noremap <leader>Ff :r !find \| set linebreak<CR>
@@ -138,7 +138,6 @@ inoremap <c-d> <esc>ddi
 inoremap <c-c> <esc>cci
 inoremap <c-r> <esc>lr
 inoremap <c-R> <esc>lR
-inoremap <c-v> <esc>lv
 inoremap <c-p> <esc>lpli
 inoremap <c-P> <esc>lPli
 

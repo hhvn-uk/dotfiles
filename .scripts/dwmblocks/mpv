@@ -62,8 +62,6 @@ fi
 if [ "$color" = "true" ]
 then
 	echo "[MPV $out]"
-	echo
-	echo \#666b1b
 elif [ "$color" = "false" ]
 then
 	exit 0

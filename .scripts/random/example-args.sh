@@ -3,7 +3,7 @@
 
 while [ "$#" != "0" ]
 do
-	echo "$1" | grep "[a-zA-Z0-0]=" >/dev/null && {
+	echo "$1" | grep "[a-zA-Z0-9]=" >/dev/null && {
 		arg_opt=$(echo "$1" | sed 's/=.*//g')
 		arg_opr=$(echo "$1" | sed 's/.*=//g')
 	} || {

@@ -8,68 +8,13 @@
 
 backend="xwallpaper"
 
-if [ "$(echo $1 | awk '/help/ {print $0}')" != "" ]
-then
-	echo 'rfeh /path/to/folder [number of monitors or "auto"] [true for locking] [program to lock with]
+[ -z $1 ] && echo 'rfeh /path/to/folder [number of monitors or "auto"] [true for locking] [program to lock with]
 
-Written by Hayden Hamilton <hayden@haydenvh.com>'
-	exit 0
-fi
-dir=$1
-filetypes="png jpg jpeg jpe tiff"
-getfiles() {
-	files+=$(ls $dir | awk "/$1/ {print}")
-}
+Written by Hayden Hamilton <hayden@haydenvh.com>' && exit 0
 
-monitors=$2
-if [ "$2" = "" ]
-then
-	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
-elif [ "$2" = "auto" ]
-then
-	monitors=$(xrandr --listmonitors | awk '/Monitors/ {print $2}')
-fi
 
-[ "$(echo "$3" | awk '/left|right/')" != "" ] && monitors=1
-
-allfiles() {
-	for filetype in $filetypes
-	do
-		getfiles $filetype
-	done
-	if [ "$files" = "" ]
-	then
-		echo "No files found..."
-		exit 1
-	fi
-	files=$(echo $files | tr " " "\n" | sed "s~^~$dir~g")
-}
-
-randomize() {
-	filearray=($files)
-	length=${#filearray[@]}
-	randoms=$(od -vAn -N2 -tu2 < /dev/urandom)
-	randomn=$((1+$randoms%$length))
-	echo ${filearray[$randomn]}
-}
-
-allfiles
-files=$(for i in `seq $monitors`; do randomize; done)
-if [ -d ~/.cache/rfeh/ ]
-then
-	echo > /dev/null
-else
-	mkdir -p ~/.cache/rfeh
-fi
-[ "$3" = "right" ] && {
-	left=$(awk '{print $1}' < $HOME/.cache/rfeh/prev)
-	files="$left $files"
-} || [ "$3" = "left" ] && {
-	right=$(awk '{print $2}' < $HOME/.cache/rfeh/prev)
-	files="$files $right"
-	
-};
-echo $files
+monitors=2
+files=$(find $1/ -name "*png" | shuf | head -n $monitors)
 echo $files > $HOME/.cache/rfeh/prev
 files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
 for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')

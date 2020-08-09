@@ -2,5 +2,3 @@
 rem=$(remind -n)
 [ "$rem" = "0" ] && rm /tmp/blocks/rem /tmp/dwmblocks/rem && exit 1
 echo "[Reminders: ^c#892b2b^$rem!!]"
-echo
-echo \#000000

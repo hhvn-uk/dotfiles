@@ -404,13 +404,50 @@ sub expire_hist {
 
 sub msg_line_tag {
     my ($srv, $msg, $nick, $addr, $targ) = @_;
-    my $obj = $srv->channel_find($targ);
-    clear_ref(), return unless $obj;
-    my $nickobj = $obj->nick_find($nick);
-    $nick = $nickobj->{nick} if $nickobj;
-    my $colour = colourise_nt($srv->{tag}.'/'.$obj->{name}, $nick);
+    my $colour = colourise_nt('/'.$nick, $nick);
     $expando = $colour ? format_expand('%X'.$colour) : '';
     $iexpando = $colour ? format_expand('%x'.$colour) : '';
+}
+
+# messy stuff below, hacked together by a non-perler (haydenh)
+sub join2mlt {
+	my ($srv, $channel, $nick, $addr, $acc, $real) = @_;
+	msg_line_tag($srv, $acc, $nick, $acc);
+}
+
+sub part2mlt {
+	my ($srv, $channel, $nick, $addr, $reason) = @_;
+	msg_line_tag($srv, $addr, $nick, $reason);
+}
+
+sub quit2mlt {
+	my ($srv, $nick, $addr, $reason) = @_;
+	msg_line_tag($srv, $addr, $nick, $reason);
+}
+ 
+sub kick2mlt {
+	my ($srv, $channel, $nick, $kicker, $address, $reason) = @_;
+	msg_line_tag($srv, $nick, $kicker, $reason);
+}
+
+sub nick2mlt {
+	my ($srv, $nnick, $onick, $addr) = @_;
+	msg_line_tag($srv, $addr, $onick, $addr);
+}
+
+sub invite2mlt {
+	my ($srv, $chan, $nick, $addr) = @_;
+	msg_line_tag($srv, $chan, $nick, $addr);
+}
+
+sub inviteo2mlt {
+	my ($srv, $chan, $inv, $nick, $addr) = @_;
+	msg_line_tag($srv, $chan, $inv, $addr);
+}
+
+sub topic2mlt {
+	my ($srv, $chan, $topic, $nick, $addr) = @_;
+	msg_line_tag($srv, $chan, $nick, $addr);
 }
 
 sub msg_line_tag_xmppaction {
@@ -544,7 +581,7 @@ sub save_colours {
 	print $fid '';
     }
     my $time = time;
-    print $fid '[session]';
+    print $fid '[set]';
     my %session_colour;
     for my $netch (sort keys %last_time) {
 	for my $nick (sort keys %{ $last_time{$netch} }) {
@@ -993,6 +1030,16 @@ init_nickcolour();
 Irssi::expando_create('nickcolor', \&expando_neatcolour, {
     'message public' 	 => 'none',
     'message own_public' => 'none',
+    'message private' 	 => 'none',
+    'message own_private'=> 'none',
+    'message join'	 => 'none',
+    'message part'	 => 'none',
+    'message quit'	 => 'none',
+    'message kick'	 => 'none',
+    'message nick'	 => 'none',
+    'message invite'	 => 'none',
+    'message invite_other'	 => 'none',
+    'message topic'	 => 'none',
     (map { ("message $_ action"     => 'none',
 	    "message $_ own_action" => 'none')
        } @action_protos),
@@ -1009,6 +1056,17 @@ Irssi::expando_create('inickcolor', \&expando_neatcolour_inv, {
 Irssi::signal_add({
     'message public'	 => 'msg_line_tag',
     'message own_public' => 'msg_line_clear',
+    'message private'	 => 'msg_line_tag',
+    'message own_private'=> 'msg_line_tag',
+    'message join'	 => 'join2mlt',
+    'message part'	 => 'part2mlt',
+    'message quit'	 => 'quit2mlt',
+    'message kick'	 => 'kick2mlt',
+    'message nick'	 => 'nick2mlt',
+    'message invite'	 => 'invite2mlt',
+    'message invite_other'	 => 'inviteo2mlt',
+    'message topic'	 => 'topic2mlt',
+    'message irc mode'	 => 'msg_line_clear',
     (map { ("message $_ action"     => 'msg_line_tag',
 	    "message $_ own_action" => 'msg_line_clear')
        } qw(irc silc)),

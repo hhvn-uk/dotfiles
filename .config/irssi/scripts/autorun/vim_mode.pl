@@ -2734,12 +2734,10 @@ sub got_key {
         print "Buffer Timer tag: $input_buf_timer" if DEBUG;
 
     } elsif ($mode == M_INS) {
-
-        if ($key == 3) { # Ctrl-C enters command mode
-            _update_mode(M_CMD);
-            _stop();
-            return;
-
+	 if ($key == 5) { # Ctrl-C enters command mode
+	    _update_mode(M_CMD);
+	    _stop();
+	    return;
         } elsif ($key == 10) { # enter.
             _commit_line();
 

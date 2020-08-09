@@ -15,5 +15,3 @@ temp=" $temp"
 [ $temp -gt 70 ] && temp=" ^c#ff0000^^b#770000^$temp"
 [ $temp -lt 40 ] && temp=" ^c#7777dd^^b#222277^$temp"
 echo "[C $cpu%${temp}C]"
-echo
-echo \#7525C8

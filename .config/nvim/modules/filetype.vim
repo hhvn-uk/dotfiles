@@ -1,5 +1,6 @@
 function Shconfig()
 	nnoremap <buffer> <localleader>s i#!/bin/sh<CR>#<CR># <++><CR># Created by Hayden Hamilton<CR>#<CR># haydenvh.com<CR># Copyright (c) <++> Hayden Hamilton<CR><CR>cache=${XDG_CACHE_HOME:=$HOME/.cache}<CR>config=${XDG_CONFIG_HOME:=$HOME/.config}<esc>
+	nnoremap <buffer> <localleader>S i# <++><CR># Created by Hayden Hamilto<CR>#<CR># haydenvh.com<CR># Copyright (c) <++> Hayden Hamilton<CR>#<CR># THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<CR># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,<CR># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<CR># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER<CR># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,<CR># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE<CR># SOFTWARE.<CR>#<CR># This work is free. You can redistribute it and/or modify it under the<CR># terms of the Do What The Fuck You Want To Public License, Version 2,       <CR># as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.<CR><CR># <++><CR><CR>cache=${XDG_CACHE_HOME:=$HOME/.cache}<CR>config=${XDG_CONFIG_HOME:=$HOME/.config}<esc>
 	nnoremap <buffer> <localleader>x :!chmod +x %<CR>
 	nnoremap <buffer> <localleader>f i(){<CR><CR>}<esc>kk0i
 	nnoremap <buffer> <localleader>$ i$()<esc>i
@@ -17,6 +18,9 @@ function Gphconfig()
 	nnoremap <buffer> <localleader>t :%s/\t/        /g<CR>
 	nnoremap <buffer> <localleader>l :call GphZettel("")<left><left>
 	inoremap <buffer> <localleader>l <esc>:call GphZettel("")<left><left>
+	setlocal colorcolumn=80
+	setlocal tw=80
+	setlocal fo+=t
 endfunction
 
 function GphZettel(srch)
@@ -45,6 +49,13 @@ function GphCitation()
 	read /tmp/vim-cite
 endfunction
 
+function Txtconfig()
+	setlocal colorcolumn=80
+	setlocal tw=80
+	setlocal fo+=t
+	setlocal syntax=markdown
+endfunction
+
 augroup filetypes
 	autocmd FileType,WinEnter,BufEnter netrw call Configurenetrw()
 	autocmd FileType html :normal gg=G
@@ -53,4 +64,5 @@ augroup filetypes
 	autocmd FileType c :inoremap <buffer> <localleader><localleader>e <esc>$a;<esc>
 	autocmd FileType sh :call Shconfig()
 	autocmd FileType gph :call Gphconfig()
+	autocmd FileType text :call Txtconfig()
 augroup END

@@ -9,5 +9,3 @@
 ip=$(curl -s http://n0a110w.xyz/ip.sh || echo "No network.")
 ip=$(echo "$ip" | tail -n 1)
 echo "[$ip]"
-echo
-echo \#4Da0C6

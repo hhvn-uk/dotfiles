@@ -7,5 +7,3 @@
 # Copyright (c) 2019 Hayden Hamilton.
 
 echo "[$(date +%d/%m)]"
-echo
-echo \#ff7777

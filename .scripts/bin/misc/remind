@@ -60,7 +60,7 @@ _clear(){
 }
 
 _date(){
-	cat $cache/remind/$1/*
+	cat $cache/remind/$(echo "$1" | tr '/' '%')/*
 }
 
 date=$(date +%d%%%m%%%y)

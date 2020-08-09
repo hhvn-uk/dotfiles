@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+# gophcheck.sh
+# Created by Hayden Hamilton
+#
+# haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the      
+# terms of the Do What The Fuck You Want To Public License, Version 2,       
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
+
+# downloads & caches gophermaps
+# compares later updates
+# usage: gophcheck 		(compares the "current" files and "old")
+#	 gophcheck update	(moves the "current" files to "old", and pulls in new 
+#					"current" files)
+
+# configuration:
+uris="gopher://1436.ninja/1/Phlog
+gopher://wfnintr.net/
+gopher://go-beyond.org/
+gopher://baud.baby/1/phlog"
+readcmd="cgo -f"
+
+cache=${XDG_CACHE_HOME:=$HOME/.cache}
+old=$cache/gophcheck/old
+current=$cache/gophcheck/current
+mkdir -p $old $current
+
+echo(){
+	printf "%s\n" "$@"
+}
+
+[ -z $1 ] && {
+	tmp=$(mktemp)
+	for f in $(ls $current)
+	do
+		f2="$old/$f"
+		f3="$current/$f"
+		[ -f $f2 ] && {
+			diff=$(diff $f2 $f3 | grep '^>' | sed -E 's/> (.*)/\1/')
+			echo "$diff" | grep '[[:alnum:]]' >/dev/null && {
+				echo "[$(tput setaf 40)  DIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
+				echo "i$f	null	null	null" | tr '%' '/' >> $tmp
+				echo "$diff" >> $tmp
+				echo "i 	null	null	null" >> $tmp
+				ydiff="y"
+			} || echo "[$(tput setaf 88)NODIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
+		} || cp $f3 $f2
+	done
+	[ "$ydiff" = "y" ] && clear && $readcmd $tmp
+	rm $tmp
+	exit 0
+} || {
+	[ "$1" = "update" ] && {
+		rm -rf $old/*
+		mv $current/* $old
+		for u in $uris
+		do
+			name=$(echo "$u" | tr '/' '%')
+			curl -qs $u > $current/$name && echo "[$(tput setaf 40)OKAY$(tput sgr0)] $u" || echo "[$(tput 88)FAIL$(tput sgr0)] $u"
+		done
+	} || {
+		echo "No such command, edit/read script for configuration/usage"
+		exit 1
+	}
+}

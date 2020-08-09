@@ -21,7 +21,7 @@ do
 	echo "$files" | grep "$query" > /dev/stderr
 	printf "$1> $prev" > /dev/stderr
 	read -rsn1 key < /dev/tty
-	[ "$key" = "$(echo -e '')" ] && cleanup "$2"
+	[ "$key" = "$(echo -e '')" ] && cleanup
 	newkey=$(echo "$key" | grep '[[:print:]]')
 	[ "$newkey" = "" ] && prev=$(echo "$prev" | sed 's/.$//') || prev="${prev}${newkey}"
 done

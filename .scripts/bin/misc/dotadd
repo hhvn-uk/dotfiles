@@ -34,5 +34,9 @@ git add .config/nvim/
 git rm --cache .config/nvim/.netrwhist
 git rm --cache .config/zsh/.zcompdump
 git rm --cache .config/irssi/*log*
+git rm --cache .config/irssi/config.autosave 
+git rm --cache .config/irssi/default.theme
+git rm --cache .config/irssi/saved_nick_colors
+git rm -rf --cache .config/irssi/nicklist*
 git add .config/galias
 git add .config/redshift/

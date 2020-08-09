@@ -40,7 +40,7 @@ do
 
 done
 
-files=$(echo "$files" | sed 's~[[:space:]]*$~~g;s~^[[:space:]]*~~g' | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
+files=$(echo "$files" | sed 's~[[:space:]]*$~~g;s~^[[:space:]]*~~g;s~//~/~g' | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
 echo $files
 for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
 do

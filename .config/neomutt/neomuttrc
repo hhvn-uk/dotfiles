@@ -6,11 +6,11 @@ set mailcap_path = "~/.config/neomutt/mailcap"
 set smtp_authenticators = "plain"
 
 set folder = "~/general/mail/"
-set spoolfile = "~/general/mail/inbox-airmail"
+set spoolfile = "~/general/mail/inbox"
 set record = "~/general/mail/sent"
 set postponed = "~/general/mail/drafts"
 set trash = "~/general/mail/rubbish"
-mailboxes =inbox-airmail =sent =drafts =rubbish =spam-airmail ="===============" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =inbox =sent =drafts =rubbish =spam ="===============" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
 

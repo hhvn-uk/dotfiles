@@ -14,5 +14,3 @@ then
 	dunstify "Current window title" "$out2"
 fi
 echo "[$out1 - $(echo "$out2" | cut -zc-25)]"
-echo
-echo \#4a6b1b

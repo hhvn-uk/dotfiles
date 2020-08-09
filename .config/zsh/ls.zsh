@@ -24,7 +24,7 @@ export LS_COLORS="$(echo 'di=35
 :*configure=90
 :*configure.sh=90
 :*autogen.sh=90
-:*README=90
+:*README*=90
 :*TODO=97
 :*.c.orig=94;01
 :*.c.rej=94;01

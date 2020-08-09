@@ -1,0 +1,17 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: patchmultibranch <message> <patch> <branch1> <branch2> ..." && exit 1 
+message="$1" && shift
+patch="$1" && shift
+
+while [ $# != 0 ]
+do
+	git checkout "$1"
+	patch < $patch
+	git add .
+	git commit -m "$message"
+	shift
+done
+
+printf "Push? " && read push < /dev/tty
+echo "$push" | grep -i 'y' >/dev/null && git push --all origin

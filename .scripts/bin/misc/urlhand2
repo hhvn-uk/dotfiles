@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+
+tor=$(printf "yes\nno" | dmenu -i -p "Tor?")
 
 hand=$(printf "mpvms video
 mpvms
@@ -12,8 +14,4 @@ netvid
 popupcurl
 popupcgo" | dmenu -i -p "Select a handler:")
 
-pkill mpvlisten
-hmpv pause /tmp/mpv-socket
-hmpv pause /tmp/mpv-socket2
-sh -c "$hand $1"
-mpvlisten /tmp/mpv-socket2 /tmp/mpv-socket &
+[ "$tor" = "yes" ] && sh -c "torsocks $hand $1" || sh -c "$hand $1"
