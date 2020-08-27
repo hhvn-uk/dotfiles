@@ -5,4 +5,4 @@ setxkbmap haydenh &
 xsetroot -cursor_name sailboat &
 sxhkd &
 
-exec dwm
+exec st -e dwm

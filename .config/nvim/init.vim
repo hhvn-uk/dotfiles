@@ -96,6 +96,13 @@ noremap <leader>yv :reg<CR>
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>Gi :!git 
 noremap <leader>P :w !nc haydenh.null 9999<CR>
+noremap <leader>l 80a-<esc>
+
+function SE(output, recipient, pass)
+	:exec ':w !gpg --encrypt --sign --armor --batch --output ' . a:output . ' -r ' . a:recipient . ' --passphrase ' . a:pass .' /dev/stdin'
+endfunction
+
+noremap <leader>SE :call SE(")<left>
 
 noremap <leader>nn :set number! relativenumber!<CR>
 noremap <leader><leader>nn :setlocal number! relativenumber!<CR>

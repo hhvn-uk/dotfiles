@@ -5,6 +5,8 @@ dmenu="dmenu"
 if [ "$5" = "fuzz" ]
 then
 	com="find"
+else
+	com="ls"
 fi
 
 hmpv pause $3

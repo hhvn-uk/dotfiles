@@ -1,0 +1,8 @@
+#!/bin/sh
+
+dim=$(slop | sed 's/+/,/g2')
+[ -z $1 ] && echo "usage: slopvid <output file>" && exit
+[ "$dim" = "" ] && exit 1
+echo "${dim%%+*}"
+echo "${dim##*+}"
+ffmpeg -framerate 60 -hide_banner -stats -video_size "${dim%%+*}" -f x11grab -i :0+${dim##*+} -y $1

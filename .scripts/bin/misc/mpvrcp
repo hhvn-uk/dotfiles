@@ -1,0 +1,101 @@
+#!/bin/sh
+#
+# mpvrcp - mpv remote control panel
+# Created by Hayden Hamilton
+#
+# hayden@haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the      
+# terms of the Do What The Fuck You Want To Public License, Version 2,       
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
+
+# This script interacts with mpv through it's socket based ipc communications.
+# Dependencies: mpv, socat, jq, posix
+# 
+# Example usage:
+#	mpv --input-ipc-server=/tmp/mpv-socket
+#	mpvrcp
+
+clear
+trap 'tput cnorm; exit' 2
+trap 'clear' 28 #SIGWINCH
+
+drw_line(){
+	tput cup $1 0
+	tput el
+	len=$(echo "$2" | sed "s/$(printf "\033")[^m]*m//g" | wc -c)
+	pad=$(($(tput cols)-$len+1))
+	printf "$2"
+	for void in $(seq $pad); do printf ' '; done
+}
+
+get(){
+	echo '{command:["get_property", "'"$1"'"]}' | socat /tmp/mpv-socket - | jq .data | sed 's/^"//;s/"$//'
+}
+
+getm(){
+	echo "$(centre "$(tput bold)$2:$(tput sgr0) $(get "$1" | sed "$3")")"
+}
+
+convertsecs() {
+        h=$((${1}/3600))
+        m=$((${1}%3600))
+        m=$(($m/60))
+        s=$((${1}%60))
+        printf "%02d:%02d:%02d\n" $h $m $s
+}
+
+centre(){
+	len=$(echo "$1" | sed "s/$(printf "\033")[^m]*m//g" | wc -c)
+	for void in $(seq $((($(tput cols)-$len)/2))); do printf ' '; done
+	printf "$1"
+}
+
+draw_main(){
+	line=0
+	dis=$(getm "media-title" "Title" | tr '.' ' '
+		getm "metadata/artist" "Artist"
+		getm "metadata/genre" "Genre"
+		getm "metadata/album" "Album"
+		getm "path" "Dir" "s~.*music/~~;s~/[^/]*$~~"
+		getm "file-format" "FF")
+
+	[ "$dis" != "$olddis" ] && {
+		while [ $line -lt $((($(tput lines)/2)-6)) ]
+		do
+			drw_line $line ""
+			line=$(($line+1))
+		done
+
+		echo "$dis" | while IFS= read -r s
+		do
+			drw_line $line "$s"
+			line=$(($line+1))
+		done
+	}
+
+	olddis="$dis"
+
+	state=$(get "pause" | sed 's/false/Playing/;s/true/Paused/')
+	time=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat /tmp/mpv-socket - | jq .data | sed 's/\..*$//'))
+	duration=$(convertsecs $(echo '{ "command": ["get_property", "duration"] }' | socat /tmp/mpv-socket - | jq .data | sed 's/\..*$//'))
+	playlist_pos=$(get "playlist-pos")
+	playlist_count=$(get "playlist-count")
+	drw_line $(tput lines) "$(tput setaf 7; tput rev; tput bold; centre "$(printf "%s | %s/%s | Pos: %s/%s" "$state" "$time" "$duration" "$playlist_pos" "$playlist_count")")"
+	tput sgr0
+}
+
+tput civis
+while true
+do
+	draw_main
+done

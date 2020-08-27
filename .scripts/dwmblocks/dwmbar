@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 
 mkdir -p /tmp/blocks
 block(){
 	$HOME/.scripts/dwmblocks/$1 > /tmp/blocks/$1 &
 }
 
-block host
 block vol
 fetchmail &
 while true
@@ -18,7 +17,6 @@ done &
 
 while true
 do
-	block mpv
 	block time
 	block time2
 	sleep 1
@@ -26,7 +24,6 @@ done &
 
 while true
 do
-	# block net
 	block news
 	block disk
 	block disk2
@@ -44,5 +41,5 @@ do
 	do
 		grep '[[:alnum:]]' < $f >/dev/null && cp $f /tmp/dwmblocks
 	done
-	xsetroot -name "$(for void in `seq 200`; do printf " "; done) $(cat mpv bat cpu mem disk disk2 news mail rem time vol time2 host | sed '/^#/d;/^$/d' | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
+	xsetroot -name "$(for void in `seq 200`; do printf " "; done) $(cat bat cpu mem disk disk2 news mail time vol time2 2>/dev/null | sed '1~2s/^/\^c#ffaaaa\^/;2~2s/^/\^c#aaaaff\^/;s~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')    "
 done &

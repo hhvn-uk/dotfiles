@@ -10,7 +10,7 @@ set spoolfile = "~/general/mail/inbox"
 set record = "~/general/mail/sent"
 set postponed = "~/general/mail/drafts"
 set trash = "~/general/mail/rubbish"
-mailboxes =inbox =sent =drafts =rubbish =spam ="===============" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =inbox =inbox-haydenvh-com =sent =drafts =rubbish =spam ="===============" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
 
@@ -23,5 +23,6 @@ bind index,pager M compose-to-sender
 set new_mail_command="echo N:%n U:%u > /tmp/mail &"
 
 set sort=threads
+set signature=`rand-sig`
 
 # source ~/.config/neomutt/gpg.rc

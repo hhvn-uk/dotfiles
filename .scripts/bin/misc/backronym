@@ -1,0 +1,8 @@
+#!/bin/sh
+
+printf "$1: "
+for a in $(echo "$1" | sed 's/./& /g')
+do
+	[ "$a" = "-" ] && printf -- "- "
+	grep -i "^$a" < /usr/share/dict/british-english | shuf | head -n 1 | tr '\n' ' '
+done

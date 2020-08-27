@@ -1,0 +1,7 @@
+#!/bin/sh
+
+(
+	echo "$USER" 
+	shuf < $HOME/.config/neomutt/signatures | head -n 1 | tr '\t' '\n' | fold -sw 80| sed 's/^/>/'
+) > /tmp/signature
+echo /tmp/signature

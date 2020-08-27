@@ -3,7 +3,7 @@
 # gophcheck.sh
 # Created by Hayden Hamilton
 #
-# haydenvh.com
+# hayden@haydenvh.com
 # Copyright (c) 2020 Hayden Hamilton
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -28,7 +28,8 @@
 uris="gopher://1436.ninja/1/Phlog
 gopher://wfnintr.net/
 gopher://go-beyond.org/
-gopher://baud.baby/1/phlog"
+gopher://baud.baby/1/phlog
+gopher://dataswamp.org/1/~solene"
 readcmd="cgo -f"
 
 cache=${XDG_CACHE_HOME:=$HOME/.cache}
@@ -40,27 +41,7 @@ echo(){
 	printf "%s\n" "$@"
 }
 
-[ -z $1 ] && {
-	tmp=$(mktemp)
-	for f in $(ls $current)
-	do
-		f2="$old/$f"
-		f3="$current/$f"
-		[ -f $f2 ] && {
-			diff=$(diff $f2 $f3 | grep '^>' | sed -E 's/> (.*)/\1/')
-			echo "$diff" | grep '[[:alnum:]]' >/dev/null && {
-				echo "[$(tput setaf 40)  DIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
-				echo "i$f	null	null	null" | tr '%' '/' >> $tmp
-				echo "$diff" >> $tmp
-				echo "i 	null	null	null" >> $tmp
-				ydiff="y"
-			} || echo "[$(tput setaf 88)NODIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
-		} || cp $f3 $f2
-	done
-	[ "$ydiff" = "y" ] && clear && $readcmd $tmp
-	rm $tmp
-	exit 0
-} || {
+[ ! -z $1 ] && {
 	[ "$1" = "update" ] && {
 		rm -rf $old/*
 		mv $current/* $old
@@ -74,3 +55,23 @@ echo(){
 		exit 1
 	}
 }
+
+tmp=$(mktemp)
+for f in $(ls $current)
+do
+	f2="$old/$f"
+	f3="$current/$f"
+	[ -f $f2 ] && {
+		diff=$(diff $f2 $f3 | grep '^>' | sed -E 's/> (.*)/\1/')
+		echo "$diff" | grep '[[:alnum:]]' >/dev/null && {
+			echo "[$(tput setaf 40)  DIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
+			echo "i$f	null	null	null" | tr '%' '/' >> $tmp
+			echo "$diff" >> $tmp
+			echo "i 	null	null	null" >> $tmp
+			ydiff="y"
+		} || echo "[$(tput setaf 88)NODIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
+	} || cp $f3 $f2
+done
+[ "$ydiff" = "y" ] && clear && $readcmd $tmp
+rm $tmp
+exit 0

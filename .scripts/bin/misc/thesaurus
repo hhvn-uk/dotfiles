@@ -1,0 +1,3 @@
+#!/bin/sh
+
+curl https://www.thesaurus.com/browse/"$@" | sed 's/>/\n>/g' | grep -o '"term":"[^"]*"' | sed 's/.*:"/"/' | head -n 20 | tr '\n' ',' | sed 's/,/, /g' | tr -d '"'

@@ -1,10 +1,4 @@
-#!/bin/bash
-#
-# dwmblocks/disk2
-# Created by Hayden Hamilton
-#
-# haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton.
+#!/bin/sh
 
 sda2=$(df -h | awk '/sda2/ {print $3 "/" $2}')
 echo "[SDA2 $sda2]"

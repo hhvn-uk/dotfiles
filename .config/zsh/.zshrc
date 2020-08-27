@@ -93,9 +93,10 @@ ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=7'
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=7'
 ZSH_HIGHLIGHT_STYLES[path]='fg=7'
 
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias hi="printf '  0/\n /|\n / \\ \n' | tee /dev/stderr | xclip"
+
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # boot into X
 [ "$(tty)" = "/dev/tty1" ] && startx

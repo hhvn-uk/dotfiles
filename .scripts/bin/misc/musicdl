@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: dir/subdir... <url>
+env: \$MUSICDIR" && exit
+
+[ -z $MUSICDIR ] && export MUSICDIR="$HOME/music"
+
+mkdir -p $MUSICDIR/$1
+cd $MUSICDIR/$1
+youtube-dl --add-metadata -xic -o '%(title)s.%(ext)s'

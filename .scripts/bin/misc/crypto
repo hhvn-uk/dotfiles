@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: crypto <amount> <input currency> in <output currency>" && exit
+
+from="$2"
+to="$4"
+
+mult=$(curl -qs "https://min-api.cryptocompare.com/data/price?fsym=$from&tsyms=$to" | awk -F"[\"}{:]" '{print $5}')
+
+echo "scale=15; $1 * $mult" | bc

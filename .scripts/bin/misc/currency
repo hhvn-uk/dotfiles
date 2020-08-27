@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: currency <amount> <input currency> in <output currency>"
+
+table=$(curl https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
+
+inputrate=$(echo "$table" | grep -oi "<Cube currency=\"$2\"[^>]*" | head -n 1 | awk -F\" '{print $4}')
+outputrate=$(echo "$table" | grep -oi "<Cube currency=\"$4\"[^>]*" | head -n 1 | awk -F\" '{print $4}')
+
+echo "scale=5; $1 / $inputrate * $outputrate" | bc

@@ -2,6 +2,9 @@ set download-path=~/general/downloads/
 set editor-command="st -e nvim %s"
 set history-max-items=99999
 
+set header=User-Agent,Accept-Language
+set user-agent=freedom
+
 set input-autohide=false
 set input-css=background-color:#30404e;color:#ffffff
 set completion-css=background-color:#0a0a10;color:#1e5eb3
@@ -43,7 +46,7 @@ set serif-font=DejaVu Sans Mono
 shortcut-default sch
 
 shortcut-add sx=https://searx.me/
-shortcut-add sch=http://nibblehole.com/?q=$0
+shortcut-add sch=http://searx.olymp.to/?q=$0
 shortcut-add bit=https://bitchute.com/search?q=$0
 shortcut-add yt=https://youtube.com/results?search_query=$0
 shortcut-add hh=http://www.haydenvh.com/h/
@@ -63,3 +66,5 @@ shortcut-add 8=https://8kun.top/$0/catalog.html
 shortcut-add dict=https://dict.css/?s=$0
 shortcut-add unreal=https://www.unrealircd.org/docwiki/index.php?search=$0
 shortcut-add coords=https://map.openaerialmap.org/#/$0,16
+shortcut-add sound=https://soundcloud.com/search?q=$0
+shortcut-add ud=https://urbandictionary.com/define.php?term=$0

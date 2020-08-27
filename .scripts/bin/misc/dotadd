@@ -29,6 +29,7 @@ git add .config/neomutt/neomuttrc
 git add .config/neomutt/colours
 git add .config/neomutt/sidebar
 git add .config/neomutt/mailcap
+git add .config/neomutt/signatures
 git add .config/git/
 git add .config/nvim/ 
 git rm --cache .config/nvim/.netrwhist
@@ -40,3 +41,4 @@ git rm --cache .config/irssi/saved_nick_colors
 git rm -rf --cache .config/irssi/nicklist*
 git add .config/galias
 git add .config/redshift/
+git add .ssh/config

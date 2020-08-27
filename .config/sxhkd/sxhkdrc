@@ -10,8 +10,20 @@ super + b
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
-super + n
+super + shift + l
 	tabbed -c st -w > /tmp/txid
+
+super + n
+	st -e mpvrcp /tmp/mpv-socket
+
+super + shift + n 
+	st -e neomutt
+
+super + r
+	st -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.cache/sfeed/*'
+
+super + x
+	sxhkdrestart
 
 super + ctrl + b
 	queuevid
@@ -40,8 +52,8 @@ super + ctrl + q
 super + s
 	dpass
 
-super + ctrl + s
-	maim -s > ~/tmp.png
+super + shift + s
+	maim -s | hlpaste "png"
 
 super + w
 	rfeh ~/images/wallpapers/
@@ -62,7 +74,7 @@ super + akt + t
 	hmpv quit /tmp/mpv-socket3
 
 super + ctrl + y
-	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs 
+	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs ls
 
 super + ctrl + u
 	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video

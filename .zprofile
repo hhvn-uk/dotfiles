@@ -19,6 +19,7 @@ export SUDO_ASKPASS="$HOME/.scripts/bin/dmenu/daskpass"
 export PASS="$HOME/.local/pass"
 export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
+export CURLHOME="$HOME/.config/curl/"
 export CC="tcc"
 . .config/zsh/ls.zsh
 [ "$hostname" != "" ] && {
@@ -53,3 +54,5 @@ export LC_TELEPHONE="sv_SE.UTF-8"
 export LC_MEASUREMENT="sv_SE.UTF-8"
 export LC_IDENTIFICATION="sv_SE.UTF-8"
 export LC_ALL="sv_SE.UTF-8"
+
+alias emacs="vim" # :)

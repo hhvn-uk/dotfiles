@@ -4,24 +4,44 @@
 
 stdin is given to the user to search through
 stdout contains the selection
-stderr contains the user interface" && exit
+stderr contains the user interface
+
+Use ctrl+h or ctrl+l to navigate between options." && exit
 
 cleanup(){
-	echo "$files" | grep "$query" | tail -n 1
+	clear > /dev/stderr
+	echo "$files" | grep -i "$query" | tail -n $selected | head -n 1
 	exit
 }
 
 files=$(cat /dev/stdin)
 
+selected=1
 IFS=''
 while true
 do
 	clear > /dev/stderr
 	query=".*$(echo "$prev" | sed 's/./&\.\*/g')"
-	echo "$files" | grep "$query" > /dev/stderr
-	printf "$1> $prev" > /dev/stderr
+	output=$(echo "$files" | grep -i "$query") 
+	echo "$output" | sed 's/^/  /g' > /dev/stderr
+	printf "$(tput setaf 10)$1>$(tput sgr0) $prev" > /dev/stderr
+	tput sc >/dev/stderr
+	[ $(echo "$output" | wc -l) -gt $(tput lines) ] && {
+		len=$(($(tput lines)-1-$selected))
+	} || {
+		len=$(($(echo "$output" | wc -l)-$selected))
+	}
+	tput cup $len 0 >/dev/stderr
+	tput setaf 7 >/dev/stderr
+	printf -- '>-' >/dev/stderr
+	tput sgr0 >/dev/stderr
+	tput rc >/dev/stderr
 	read -rsn1 key < /dev/tty
-	[ "$key" = "$(echo -e '')" ] && cleanup
+	[ "$key" = "$(echo)" ] && cleanup
+	echo "$key" | grep "">/dev/null && selected=$(($selected+1)) && continue
+	echo "$key" | grep "">/dev/null && {
+		[ ! $selected -eq 1 ] && selected=$(($selected-1))
+	} && continue
 	newkey=$(echo "$key" | grep '[[:print:]]')
 	[ "$newkey" = "" ] && prev=$(echo "$prev" | sed 's/.$//') || prev="${prev}${newkey}"
 done

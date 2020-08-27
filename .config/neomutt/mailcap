@@ -1,4 +1,4 @@
-text/html		; w3m '%s'
+text/html		; lynx -stdin -dump < '%s' | less
 text/*			; nvim '%s'
 
 application/pdf		; zathura '%s'

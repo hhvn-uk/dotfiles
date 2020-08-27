@@ -11,7 +11,13 @@ echo "dmpvurl: $(hmpv state $socket2)" >> ~/.cache/socket
 	hmpv pause $socket2
 	hvol toggle
 ) &
-slock -m "$(echo "Locked at $(date) | $USER@$hostname" | tr -s ' ')"
+export LC_ALL=c
+
+# slock -m "$(figlet -f $(find /usr/share/figlet/ -name "*.flf" | sed 's/\.flf$//;s~.*/~~' | shuf | head -n 1) locked)"
+
+slock -m "$(doas 2>&1)"
+
+# slock -m "$(infowall | sed "s/$(printf "\033")[^m]*m//g;/^Colours/d")"
 
 state=$(cat ~/.cache/socket | awk '/:/')
 state1=$(echo "$state" | head -n -1 | awk '{print $2}')

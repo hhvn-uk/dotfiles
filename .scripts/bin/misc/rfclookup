@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# ident.sh
+# rfclookup.sh
 # Created by Hayden Hamilton
 #
-# haydenvh.com
+# hayden@haydenvh.com
 # Copyright (c) 2020 Hayden Hamilton
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -22,7 +22,7 @@
 #	 rfclookup.sh -n <number>
 
 [ "$1" = "-s" ] && {
-	resp=$(curl https://www.ietf.org/download/rfc-index.txt | grep '^[0-9][0-9][0-9][0-9] ' | grep -iE "$2")
+	resp=$(curl https://www.ietf.org/download/rfc-index.txt | tr '\n' '\t' | sed 's/\t\t/\n/g' | tr '\t' ' ' | tr -s ' ' | grep '^[0-9][0-9][0-9][0-9] ' | grep -iE "$2")
 	[ "$(echo "$resp" | wc -l)" = 0 ] && echo "error: no such docu" > /dev/stderr|| \
 	[ "$(echo "$resp" | wc -l)" = 1 ] && curl https://ietf.org/rfc/rfc${resp%% *}.txt || {
 		echo "$resp" > /dev/stderr
