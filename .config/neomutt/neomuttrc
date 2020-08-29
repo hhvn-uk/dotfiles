@@ -1,7 +1,9 @@
+#source users/hayden@haydenvh.com
+#source users/irc@hlirc.net
+source users/backtrack@airmail.cc
+
 set ssl_starttls = yes
 set ssl_force_tls = yes
-source user
-source pass
 set mailcap_path = "~/.config/neomutt/mailcap"
 set smtp_authenticators = "plain"
 
@@ -26,3 +28,8 @@ set sort=threads
 set signature=`rand-sig`
 
 # source ~/.config/neomutt/gpg.rc
+
+# mark all mail as read
+macro index A \
+    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "mark all new as read"
