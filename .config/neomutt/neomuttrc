@@ -1,6 +1,6 @@
-#source users/hayden@haydenvh.com
-#source users/irc@hlirc.net
-source users/backtrack@airmail.cc
+source users/hayden@haydenvh.com	#user
+#source users/backtrack@airmail.cc	#user
+#source users/irc@hlirc.net	#user
 
 set ssl_starttls = yes
 set ssl_force_tls = yes
@@ -8,28 +8,39 @@ set mailcap_path = "~/.config/neomutt/mailcap"
 set smtp_authenticators = "plain"
 
 set folder = "~/general/mail/"
-set spoolfile = "~/general/mail/inbox"
-set record = "~/general/mail/sent"
-set postponed = "~/general/mail/drafts"
-set trash = "~/general/mail/rubbish"
-mailboxes =inbox =inbox-haydenvh-com =sent =drafts =rubbish =spam ="===============" =exmouth =exmouthsent =exmouthrubbish
+set spoolfile = "+inbox-haydenvh-com"
+set record = "+sent"
+set postponed = "+drafts"
+set trash = "+rubbish"
+mailboxes =inbox-haydenvh-com =inbox-master =inbox-hlircnet =inbox-lists =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
+set abort_key = "<Esc>"
+set abort_nosubject = no
+set abort_unmodified = no
+set alias_file = "~/.config/neomutt/alias"
 
 source colours
 source sidebar
+source alias
 
 bind index D purge-message
 bind index,pager M compose-to-sender
+#bind index R source
+bind index \Ct collapse-thread
+bind index \Ca collapse-all
 
 set new_mail_command="echo N:%n U:%u > /tmp/mail &"
-
 set sort=threads
+set collapse_all
+
 set signature=`rand-sig`
 
 # source ~/.config/neomutt/gpg.rc
 
 # mark all mail as read
 macro index A \
-    "<tag-pattern>~N<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" \
+    "<clear-flag>O<untag-pattern>.<enter>" \
     "mark all new as read"
+
+my_hdr X-Mailer: neomutt & procmail

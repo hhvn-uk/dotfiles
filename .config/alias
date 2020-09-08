@@ -6,10 +6,9 @@ ll		\ls --color=auto -Flh
 lla		\ls --color=auto -FlAh
 r		\rm
 rr		\rm -rf
-m		\mv
 v		nvim
 g		\git
-c		\cp
+c		\clear
 f		\find
 xi		sudo xbps-install
 xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu; sudo xbps-remove -Ooy; rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst* ~/.dbus ~/.w3m ~/.config/vimb/cookies.db; sudo vkpurge rm all
@@ -29,7 +28,7 @@ rmst		bash ~/.scripts/random/gnulinux.sh
 vimb		\vimb --no-maximize
 mkconfall	mkmailpass; mkalias
 make		\make CC=tcc
-nm		neomutt ; rm /tmp/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail
+nm		export ESCDELAY=5 ; neomutt ; rm /tmp/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail ; rm /tmp/blocks/mail ; rm /tmp/dwmblocks/mail
 maic		sudo make install clean
 homesync	rsync --port 22 --delete -azPe 'ssh -p 222' --exclude=general --exclude=.cache --exclude=.local/cache $HOME/ void@192.168.1.20:/home/void/homedir/
 tmux		\tmux -f $HOME/.config/tmux/config

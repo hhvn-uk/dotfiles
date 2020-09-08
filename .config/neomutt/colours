@@ -1,4 +1,7 @@
 # vim: filetype=neomuttrc
+
+set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %-3.3M %s"
+
 # Default index colors:
 color index yellow default '.*'
 color index_author magenta default '.*'
@@ -6,12 +9,19 @@ color index_number magenta default
 color index_subject cyan default '.*'
 
 # For new mail:
-color index blue default "~N"
 color index_author color12 default "~N"
 color index_subject color12 default "~N"
-color index blue default "~O"
 color index_author color12 default "~O"
 color index_subject color12 default "~O"
+
+# For threads
+color index_subject default default "~v"
+color index_flags color12 default "~(~N)" # matches threads which contain unread entries
+color index_flags color12 default "~(~O)" # ditto
+
+# PGP'd
+color index_subject color8 default "~k"
+color index_subject color8 default "~V"
 
 # Header colors:
 color header blue default ".*"
@@ -54,10 +64,6 @@ color body brightblue default "^# \.*" # Headings as bold blue
 color body brightcyan default "^## \.*" # Subheadings as bold cyan
 color body brightgreen default "^### \.*" # Subsubheadings as bold green
 color body yellow default "^(\t| )*(-|\\*) \.*" # List items as yellow
-color body brightcyan default "[;:][-o][)/(|]" # emoticons
-color body brightcyan default "[;:][)(|]" # emoticons
-color body brightcyan default "[ ][*][^*]*[*][ ]?" # more emoticon?
-color body brightcyan default "[ ]?[*][^*]*[*][ ]" # more emoticon?
 color body red default "(BAD signature)"
 color body cyan default "(Good signature)"
 color body brightblack default "^gpg: Good signature .*"

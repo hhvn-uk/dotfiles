@@ -661,7 +661,7 @@ sub exit_save {
 
 sub get_nick_color2 {
     my ($tag, $chan, $nick, $format) = @_;
-    my $col = colourise_nt($tag.'/'.$chan, $nick, 1);
+    my $col = colourise_nt('/'.$nick, $nick);
     $col ? $format ? format_expand('%X'.$col) : $col : ''
 }
 

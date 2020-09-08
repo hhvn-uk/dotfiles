@@ -61,6 +61,7 @@ sub sig_printtext {
         (!is_ignored($dest))
     ) {
         my $window = Irssi::window_find_name('[hilights]');
+        $text =~ s/^[[:space:]]*/ /; # fix nm2.pl output
         
         if ($dest->{level} & MSGLEVEL_PUBLIC) {
             $text = $dest->{target} . '14]' . $text;

@@ -183,13 +183,13 @@ sub reset_nicklist {
 	$colour = "\e[37m" if $nick->{'gone'};
         print($fifo "NICK");
         if ($nick->{'op'}) {
-          print($fifo "\e[32m\@$colour".$_real->($nick)."\e[39m");
+          print($fifo "\e[92m\@$colour".$_real->($nick)."\e[39m");
         } elsif ($nick->{'halfop'}) {
-          print($fifo "\e[34m%$colour".$_real->($nick)."\e[39m");
+          print($fifo "\e[92m%$colour".$_real->($nick)."\e[39m");
         } elsif ($nick->{'voice'}) {
-          print($fifo "\e[33m+$colour".$_real->($nick)."\e[39m");
+          print($fifo "\e[92m+$colour".$_real->($nick)."\e[39m");
         } elsif ($nick->{'other'}>32) {
-          print($fifo "\e[31m".(chr $nick->{'other'})."$colour".$_real->($nick)."\e[39m");
+          print($fifo "\e[92m".(chr $nick->{'other'})."$colour".$_real->($nick)."\e[39m");
         } else {
           print($fifo " $colour".$_real->($nick)."\e[39m");
         }

@@ -56,7 +56,7 @@ echo(){
 	}
 }
 
-tmp=$(mktemp)
+tmp=$HOME/net/gophcheck.tmp
 for f in $(ls $current)
 do
 	f2="$old/$f"
@@ -72,6 +72,6 @@ do
 		} || echo "[$(tput setaf 88)NODIFF$(tput sgr0)] $(echo "$f" | tr '%' '/')"
 	} || cp $f3 $f2
 done
-[ "$ydiff" = "y" ] && clear && $readcmd $tmp
-rm $tmp
-exit 0
+
+trap "rm $tmp; exit 0" 2
+[ "$ydiff" = "y" ] && clear && cgo haydenvh.com/1/gophcheck.tmp

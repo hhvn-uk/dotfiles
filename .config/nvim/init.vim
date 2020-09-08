@@ -92,6 +92,7 @@ noremap <leader>' ea'<esc>bi'<esc>
 noremap <leader>u' ds'
 noremap <leader>sp o<esc>pi
 noremap <leader>Ee :edit 
+noremap <leader>EE :edit 
 noremap <leader>yv :reg<CR>
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>Gi :!git 
@@ -127,6 +128,7 @@ inoremap <leader><leader>{ {}<Esc><Left>i
 inoremap <leader><leader>< <><Esc><Left>i
 
 inoremap <c-;> <esc>:
+noremap <localleader>V ggO# vim:   :<left><left>
 
 "General stuff
 noremap dw diw

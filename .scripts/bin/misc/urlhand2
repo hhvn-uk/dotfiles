@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tor=$(printf "yes\nno" | dmenu -i -p "Tor?")
+tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
 
 hand=$(printf "mpvms video
 mpvms

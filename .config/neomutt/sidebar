@@ -1,14 +1,13 @@
 # vim: filetype=neomuttrc
 
 set sidebar_visible
-set sidebar_width=15
+set sidebar_width=25
 set sidebar_format = "%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
 set sort_browser="unsorted"
 set sidebar_short_path=yes
 
 bind index,pager \CK sidebar-prev
-bind index,pager \CO sidebar-open
 bind index,pager \CL sidebar-open
 bind index,pager \CJ sidebar-next
 
@@ -17,3 +16,5 @@ color sidebar_highlight color7 default
 color sidebar_new color12 default
 color sidebar_unread color12 default
 mono sidebar_indicator reverse
+
+bind index,pager B sidebar-toggle-visible

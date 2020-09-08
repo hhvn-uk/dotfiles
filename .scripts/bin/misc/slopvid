@@ -5,4 +5,4 @@ dim=$(slop | sed 's/+/,/g2')
 [ "$dim" = "" ] && exit 1
 echo "${dim%%+*}"
 echo "${dim##*+}"
-ffmpeg -framerate 60 -hide_banner -stats -video_size "${dim%%+*}" -f x11grab -i :0+${dim##*+} -y $1
+ffmpeg -framerate 60 -hide_banner -stats -video_size "${dim%%+*}" -f x11grab -i :$DISPLAY+${dim##*+} -y $1

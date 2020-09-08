@@ -1,0 +1,11 @@
+#!/bin/sh
+
+a="$1"
+shift
+
+case "$a" in
+	export-key) gpg --export --armour $1 ;;
+	export-keyring) gpg --export --armour ;;
+	list) gpg --list-keys && gpg --list-secret-keys ;;
+	encrypt) gpg --encrypt --sign --armour --passphrase "$(dpass gpg2key)" -r "$1" ;;
+esac

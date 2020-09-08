@@ -438,7 +438,7 @@ sub syncLines {
 		    $title = eval qq{"$title"};
 		    $title .= ' ';
 		}
-		my $pat = defined $text ? "{sb $title\$*}" : '{sb }';
+		my $pat = defined $text ? "{sb_awl $title\$*}" : '{sb_awl }';
 		$text //= '';
 		$item->default_handler($get_size_only, $pat, $text, 0);
 	    };
@@ -470,7 +470,7 @@ sub awl {
     my ($line, $item, $get_size_only) = @_;
 
     my $text = $actString[$line];
-    my $pat = defined $text ? '{sb $*}' : '{sb }';
+    my $pat = defined $text ? '{sb_awl $*}' : '{sb_awl }';
     $text //= '';
     $item->default_handler($get_size_only, $pat, $text, 0);
 }
@@ -1486,7 +1486,7 @@ return sub {
 		    ( lc1459(as_uni($k)) => $v ) }
 		    split ' ', $S{detach}));
 
-    my @sb_base = split /\177/, sb_format_expand("{sbstart}{sb \177}{sbend}"), 2;
+    my @sb_base = split /\177/, sb_format_expand("{sbstart}{sb_awl \177}{sbend}"), 2;
     $sb_base_width_pre = sb_length($sb_base[0]);
     $sb_base_width_post = max 0, sb_length($sb_base[1])-1;
     $sb_base_width = $sb_base_width_pre + $sb_base_width_post;

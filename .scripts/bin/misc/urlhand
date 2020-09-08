@@ -3,7 +3,7 @@
 link=$(grep -Eo '[A-Za-z][A-Za-z]*://\S*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
 [ "$link" = "" ] && exit 1
 
-tor=$(printf "yes\nno" | dmenu -i -p "Tor?")
+tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
 
 hand=$(printf "mpvms video
 mpvms

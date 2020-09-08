@@ -1,0 +1,11 @@
+#!/bin/sh
+
+awk -v "header=$1" '
+	NF == 0 {
+		if(added!="y") {
+			print header
+			print
+		}
+	}
+
+	NF != 0'

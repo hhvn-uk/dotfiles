@@ -41,7 +41,13 @@ servers = (
     use_tls = "yes";
     port = "6697";
   },
-  { address = "genoce.org"; chatnet = "genoce"; port = "6667"; }
+  { address = "genoce.org"; chatnet = "genoce"; port = "6667"; },
+  {
+    address = "irc.dataswamp.org";
+    chatnet = "dataswamp";
+    port = "6697";
+    use_tls = "yes";
+  }
 );
 chatnets = {
   Rizon = {
@@ -51,7 +57,7 @@ chatnets = {
   };
   hlircnet = {
     type = "IRC";
-    autosendcmd = "/oper haydenh !!!; wait 2500; /cycle #users; /cycle #service; /mode #hlircnet +q haydenh; /mode #hlircnet -o haydenh";
+    autosendcmd = "/oper haydenh !!!; wait 2500; /cycle #users; /cycle #service;";
   };
   sdf = { type = "IRC"; autosendcmd = "/mode haydenh -x; wait 2000"; };
   efnet = { type = "IRC"; };
@@ -61,7 +67,7 @@ chatnets = {
   };
   darkscience = {
     type = "IRC";
-    autosendcmd = "/exec - -msg NickServ dpass irc.darkscience.net identify; /mode haydenh -x; wait 5000;";
+    autosendcmd = "/exec - -msg NickServ dpass irc.darkscience.net identify; /mode haydenh -x; wait 2000;";
   };
   nebulacentre = { type = "IRC"; };
   cyberia = { type = "IRC"; };
@@ -78,6 +84,12 @@ chatnets = {
     type = "IRC";
     autosendcmd = "/mode haydenh -x; wait 2000";
   };
+  dataswamp = {
+    type = "IRC";
+    autosendcmd = "/mode hhvn -C";
+    nick = "hhvn";
+  };
+  hlircnettor = { type = "IRC"; };
 };
 aliases = {
   ATAG = "WINDOW SERVER";
@@ -234,12 +246,11 @@ aliases = {
   97 = "WINDOW GOTO 97";
   98 = "WINDOW GOTO 98";
   99 = "WINDOW GOTO 99";
-  quit = "/randompq; /quit";
   ADDALLCHANNELS = "script exec foreach my $$channel (Irssi::channels()) { Irssi::command(\"channel add -auto $$channel->{name} $$channel->{server}->{tag} $$channel->{key}\") }";
   night = "/away -all sleeping";
   day = "back";
   gone = "away -all somewhere";
-  wave = "SAY 0/;SAY /|;SAY / \\\\";
+  wave = "/SAY \\ 0/;SAY /|;SAY / \\\\";
   admin = "/mode * +a $0";
   super = "/mode * +q $0";
   desuper = "/mode * -q $0";
@@ -257,7 +268,6 @@ aliases = {
   zline = "quote ZLINE";
   gzline = "quote GZLINE";
   bet = "/say I bet $0 hlirccens (imaginary moneys) $1 $2 $3 $4 $5 $6 $7 $8 $9";
-  disgust = "/exec - -out head -n 100 < /dev/urandom | tr -d '\\n' | fold -w 20 2>/dev/null | head -n 1";
   theme = "/set theme";
   retheme = "/set theme default; /set theme $0";
   reply = "/msg $, $*";
@@ -274,7 +284,7 @@ aliases = {
   arep = "/ACMSG $, $*";
   AAAA = "SAY \\\\0/;SAY  |;SAY / \\\\";
   matrix = "SAY I'd like to interject for a moment, what you're referring to as Matrix, is in fact GNU/matrix, or as I've recently taken to calling it, GNU+matrix. Matrix is not an ideology unto itself, but rather another free component of a fully functioning method of thought.";
-  quickcon = "/connect sdf; /connect darkscience; /connect rizon; /connect unix; /connect efnet; /connect genoce; /connect hlircnet";
+  quickcon = "/connect sdf; /connect darkscience; /connect rizon; /connect unix; /connect efnet; /connect genoce; /connect hlircnet; /connect dataswamp; /connect unrealircd; /connect cyberia";
   rules = "/quote rules";
   mkpasswd = "/quote mkpasswd";
   vhost = "/quote vhost";
@@ -285,14 +295,24 @@ aliases = {
   ircops = "/quote ircops";
   module = "/quote module";
   marvvin = "/^msg marvvin";
-  part = "/randompq; /part";
-  disconnect = "/randompq; /disconnect";
   ALLLASTLOG = "script exec foreach (Irssi::windows()) {Irssi::command(lastlog  -window \\$_->{refnum} $*)\\;}";
   TAG = "script exec Irssi::server_find_tag(‘$0′)->command(‘$1-’);";
   CONNECTIONUPTIME = "script exec \\$a=`date +%s` – Irssi::active_win->{‘active_server’}->{‘connect_time’}\\; Irssi::print( int(\\$a/3600/24).”d “.int(\\$a/3600%24).”h “. int(\\$a/60%60).”m “. int(\\$a%60).”s”)\\;";
   smotd = "/quote smotd";
   sadmin = "/quote admin";
-  lastlog = "/exec - echo \"$$(tput -T st-256color setaf 13)LASTLOG $*$$(tput -T st-256color sgr0)\" >> ~/.cache/irc/lastlog; /lastlog -file ~/.cache/irc/lastlog $*";
+  ping = "/quote ping";
+  awl_sbar = "/script load autorun/adv_windowlist; /set awl_viewer off; /format awl_display_nokey %m$$N$n$$H$$C$$S; /format awl_display_key %m$$Q%n$$H$$C$$S; /format awl_display_nokey_active %m$$N%K$$C; /format awl_display_key_active %m$$Q%K$$C; /format awl_display_header %K[%m$$C%K]";
+  awl_nosbar = "/script load autorun/adv_windowlist; /set awl_viewer on; /format awl_display_nokey %N $$H$$C$$S %N$$N; /format awl_display_key %N $$H$$C$$S%N %mM-$$Q; /format awl_display_nokey_active %N%K $$C %N$$N; /format awl_display_key_active %N%K $$C %mM-$$Q; /format awl_display_header %1 %Y$$C ($${N}); /format awl_display_nokey_visible %N%K $$C %N$$N; /format awl_display_key_visible %N%K $$C %mM-$$Q";
+  sajoin = "/quote sajoin";
+  chgident = "/quote chgident";
+  shrug = "/SAY . _0_ .; SAY \\ ` | `; SAY \\ \\ \\ |; SAY \\ \\ / \\\\";
+  plop = "/SAY | \\ \\ \\ \\ |; SAY |~~-.-|; SAY | 0 \\ .|; SAY |o \\ . |; SAY |_____|";
+  ll = "/lastlog";
+  llc = "/lastlog -clear";
+  quickconn = "/connect nebulacentre; connect sdf; connect unrealircd; connect unix; connect Rizon; connect cyberia; connect genoce; connect darkscience; connect efnet; connect hlircnet";
+  "expose-self" = "/mode $N -x";
+  rm_awl_sbar = "/sbar modify -disable awl_0; sbar modify -disable awl_1; sbar modify -disable awl_2; sbar modify -disable awl_3";
+  decloak = "mode $N -x";
 };
 statusbar = {
   items = {
@@ -304,12 +324,14 @@ statusbar = {
     server = "{sb {sbservertag $tag}}";
     prompt = "{prompt $[.15]itemname}";
     prompt_empty = "{prompt $winname}";
-    topic = "{sb1 $topic}";
+    topic = "{sb_topic $topic}";
+    topicend = "%0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ";
     vim_cmd_mode = "{sb3 $vim_cmd_mode}";
     lag = "{sb Lag: $0-}";
     act = "{sb Act: $0-}";
     more = "{sb3 {sbmore}}";
     end = "%N%K%_───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────";
+    inact = "%N%G%_────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────";
     none = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ";
   };
   default = {
@@ -317,8 +339,9 @@ statusbar = {
       type = "window";
       placement = "bottom";
       position = "1";
-      visible = "inactive";
-      items = { none = { priority = "1"; }; };
+      visible = "never";
+      items = { inact = { alignment = "left"; priority = "100"; }; };
+      disabled = "yes";
     };
     window = {
       items = {
@@ -329,6 +352,34 @@ statusbar = {
         lag = { priority = "40"; };
         server = { priority = "50"; };
       };
+      type = "window";
+      position = "0";
+      visible = "active";
+    };
+    topic = {
+      type = "window";
+      position = "0";
+      visible = "always";
+      items = {
+        topic = { priority = "1"; };
+        topicend = { alignment = "right"; };
+      };
+    };
+    awl_3 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_3 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+      disabled = "yes";
+    };
+    awl_2 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_2 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+      disabled = "yes";
     };
     prompt = {
       items = {
@@ -337,6 +388,14 @@ statusbar = {
         vim_cmd_mode = { alignment = "right"; };
       };
       position = "100";
+    };
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+      disabled = "yes";
     };
   };
 };
@@ -348,12 +407,14 @@ settings = {
     recode_transliterate = "no";
     timestamp_format = "%H:%M:%S";
     hostname = "";
-    quit_message = "tweak til you live, tweak til you're free, tweak til you die";
+    quit_message = "pain is temporary";
     STATUS_OPER = "yes";
     resolve_prefer_ipv6 = "no";
     awaylog_file = "~/.cache/irc/away.log";
     chanmode_expando_strip = "yes";
-    server_reconnect_time = "1min";
+    server_reconnect_time = "5secs";
+    server_connect_timeout = "20secs";
+    rawlog_lines = "10000";
   };
   "fe-text" = {
     actlist_sort = "refnum";
@@ -375,11 +436,12 @@ settings = {
     autocreate_query_level = "NONE";
     emphasis = "yes";
     emphasis_multiword = "yes";
-    emphasis_replace = "yes";
+    emphasis_replace = "no";
     window_default_level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     autolog_path = "~/.cache/irc/$tag/$0.log";
     autolog_level = "all";
     autolog_colors = "yes";
+    completion_keep_privates = "50";
   };
   "perl/core/scripts" = {
     ascii_figlet_path = "/usr/bin/figlet";
@@ -391,15 +453,15 @@ settings = {
     awl_block = "25";
     awl_sort = "active/server/tag";
     trackbar_string = "─";
-    trackbar_style = "%K%_";
+    trackbar_style = "%g%_";
     trackbar_print_timestamp = "no";
     uberprompt_load_hook = "/^vm_add";
     uberprompt_unload_hook = "/^vm_del";
     cmdind_warn_text = "%G%_MSG?";
     cmdind_text = "%g%_CMD: ";
-    tmux_away_window = "[control-panel]";
+    tmux_away_window = "";
     tmux_away_message = "(set away by a script)";
-    neat_colors = "RX4CX6CX5EX3CX2JX1CGcX1ZBX3HX2TX3MX25X4NMX3AX4GX42X6BX51";
+    neat_colors = "RX4CX6CX5EX3CX2DX2JX1CGX1UcX1ZBX3HX2TX3MX25X4NX3AX4GX42X63X6BX6HX51";
     hilightwin_show_network = "yes";
     hilightwin_showprivmsg = "no";
     neat_history = "10000000";
@@ -408,14 +470,22 @@ settings = {
     vim_mode_map_leader = ";";
     dim_nicks_ignore_hilights = "no";
     awl_maxcolumns = "1";
+    awl_viewer = "yes";
+    awl_path = "/tmp/_windowlist";
+    awl_placement = "bottom";
+    ascii_default_font = "small";
+    ascii_default_kickreason = "irssi script :)";
+    trackbar_ignore_windows = "[control-panel] [hilights]";
+    hilightwin_ignore_targets = "#users #service";
   };
   "irc/core" = {
     alternate_nick = "hhvn";
     ctcp_version_reply = "UNIVERSE v42";
     ctcp_userinfo_reply = "gopher://haydenvh.com:73";
-    part_message = "tweak til you live, tweak til you're free, tweak til you die";
+    part_message = "pain is temporary";
     split_line_start = "";
     usermode = "+iw";
+    join_auto_chans_on_invite = "yes";
   };
   proxy = {
     irssiproxy_password = "awDhuK15^";
@@ -428,7 +498,6 @@ logs = { };
 keyboard = (
   { key = "meta-u"; id = "change_window"; data = "17"; },
   { key = "meta-i"; id = "change_window"; data = "18"; },
-  { key = "^u"; id = "command"; data = "nicklist scroll +10"; },
   { key = "^i"; id = "command"; data = "nicklist scroll -10"; },
   { key = "meta-j"; id = "change_window"; data = "27"; },
   { key = "meta-k"; id = "change_window"; data = "28"; },
@@ -436,7 +505,7 @@ keyboard = (
   { key = "meta-s"; id = "change_window"; data = "22"; },
   { key = "meta-b"; id = "change_window"; data = "34"; },
   { key = "meta-n"; id = "change_window"; data = "35"; },
-  { key = "^Z"; id = "nothing"; data = ""; },
+  { key = "^Z"; id = "next_window_item"; data = ""; },
   { key = "meta-o"; id = "change_window"; data = "19"; },
   { key = "meta-p"; id = "change_window"; data = "20"; },
   { key = "meta-a"; id = "change_window"; data = "21"; },
@@ -459,25 +528,61 @@ keyboard = (
   { key = "meta-m"; id = "change_window"; data = "36"; },
   { key = "meta-,"; id = "change_window"; data = "37"; },
   { key = "meta-."; id = "change_window"; data = "38"; },
-  { key = "meta-/"; id = "change_window"; data = "39"; }
+  { key = "meta-/"; id = "change_window"; data = "39"; },
+  { key = "^I"; id = "key"; data = "tab"; },
+  { key = "^Y"; id = "command"; data = "awl_sbar "; },
+  { 
+    key = "^U";
+    id = "command";
+    data = "script unload adv_windowlist";
+  },
+  { key = "^T"; id = "command"; data = "awl_nosbar "; },
+  { key = "meta-;"; id = "change_window"; data = "40"; },
+  { key = "meta-'"; id = "change_window"; data = "41"; },
+  { key = "meta-\\"; id = "change_window"; data = "42"; },
+  { key = "meta-["; id = "change_window"; data = "43"; },
+  { key = "meta-]"; id = "change_window"; data = "44"; },
+  { key = "meta-="; id = "change_window"; data = "45"; },
+  { key = "meta--"; id = "change_window"; data = "46"; },
+  {
+    key = "^X";
+    id = "multi";
+    data = "erase_line;insert_text /window server ";
+  },
+  { key = "^D"; id = "multi"; data = "erase_line"; }
 );
 hilights = (
   { text = "haydenh"; nick = "yes"; word = "yes"; },
-  { text = "hayden"; nick = "yes"; word = "yes"; }
+  { text = "hayden"; nick = "yes"; word = "yes"; },
+  { text = "hhvn"; nick = "yes"; word = "yes"; }
 );
 channels = (
-  { name = "#hlircnet"; chatnet = "hlircnet"; autojoin = "yes"; },
+  {
+    name = "#hlircnet";
+    chatnet = "hlircnet";
+    autojoin = "yes";
+    autosendcmd = "WAIT 5000; MODE #hlircnet +q haydenh";
+  },
   { name = "#GNU/matrix"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#help"; chatnet = "hlircnet"; autojoin = "yes"; },
+  {
+    name = "#help";
+    chatnet = "hlircnet";
+    autojoin = "yes";
+    autosendcmd = "WAIT 5000; MODE #help +q haydenh";
+  },
   { name = "#gopher"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#vhosts"; chatnet = "hlircnet"; autojoin = "yes"; },
+  {
+    name = "#vhosts";
+    chatnet = "hlircnet";
+    autojoin = "yes";
+    autosendcmd = "WAIT 5000; MODE #vhosts +q haydenh";
+  },
   { name = "#opers"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#users"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#service"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#cgo"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#hlfm"; chatnet = "hlircnet"; autojoin = "yes"; },
   { name = "#darkscience"; chatnet = "darkscience"; autojoin = "yes"; },
-  { name = "#efnet"; chatnet = "efnet"; autojoin = "yes"; },
   { name = "#asciiart"; chatnet = "efnet"; autojoin = "yes"; },
   { name = "#unix"; chatnet = "unix"; autojoin = "yes"; },
   { name = "#/g/technology"; chatnet = "Rizon"; autojoin = "yes"; },
@@ -496,11 +601,18 @@ channels = (
     autojoin = "yes";
   },
   { name = "#unreal-devel"; chatnet = "unrealircd"; autojoin = "yes"; },
-  { name = "#movies"; chatnet = "darkscience"; autojoin = "yes"; },
+  {
+    name = "#movies";
+    chatnet = "darkscience";
+    autojoin = "yes";
+    autosendcmd = "WAIT 5000; JOIN #movies";
+  },
   { name = "#test"; chatnet = "hlircnet"; autojoin = "yes"; },
-  { name = "#bitreich-radio"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#2f30"; chatnet = "cyberia"; autojoin = "yes"; },
-  { name = "#cyberia"; chatnet = "cyberia"; autojoin = "yes"; }
+  { name = "#cyberia"; chatnet = "cyberia"; autojoin = "yes"; },
+  { name = "#dataswamp"; chatnet = "dataswamp"; autojoin = "yes"; },
+  { name = "#political"; chatnet = "efnet"; autojoin = "yes"; },
+  { name = "#LRH"; chatnet = "efnet"; autojoin = "yes"; }
 );
 completions = {
   hubus = { value = "hub.us.hlircnet."; };
@@ -512,34 +624,33 @@ completions = {
   aftn = { value = "Afternoon"; };
   aft = { value = "Afternoon"; };
 };
-ignores = ( { mask = "ARS"; level = "NOTICES"; } );
+ignores = (
+  { mask = "ARS"; level = "NOTICES"; },
+  { level = "NO_ACT ALL"; channels = ( "#service" ); },
+  { level = "NO_ACT ALL"; channels = ( "#users" ); },
+  { mask = "[control-panel]"; level = "NO_ACT ALL"; },
+  { mask = "[hilights]"; level = "NO_ACT ALL"; },
+  { level = "NO_ACT ALL"; servertag = "hlircnettor"; }
+);
 windows = {
   1 = {
     immortal = "yes";
     name = "[control-panel]";
     level = "CRAP PUBLICS JOINS PARTS QUITS KICKS MODES TOPICS NICKS CLIENTNOTICES CLIENTCRAP CLIENTERRORS";
-    sticky = "yes";
   };
   2 = {
     immortal = "yes";
     name = "[notices]";
+    servertag = "hlircnet";
     level = "PUBLICS NOTICES SNOTES ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS WALLOPS INVITES NICKS";
-    sticky = "yes";
-    parent = "1";
   };
   3 = {
     immortal = "yes";
     name = "[msgs]";
+    servertag = "hlircnet";
     level = "MSGS NOTICES CTCPS ACTIONS KICKS TOPICS NICKS DCC DCCMSGS";
-    sticky = "yes";
-    parent = "1";
   };
-  4 = {
-    name = "[hilights]";
-    level = "HILIGHTS";
-    sticky = "yes";
-    parent = "1";
-  };
+  4 = { name = "[hilights]"; servertag = "hlircnet"; level = "HILIGHTS"; };
   5 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
@@ -667,23 +778,12 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#efnet";
-        tag = "efnet";
+        name = "#unix";
+        tag = "unix";
       }
     );
   };
   17 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#asciiart";
-        tag = "efnet";
-      }
-    );
-  };
-  18 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -694,29 +794,7 @@ windows = {
       }
     );
   };
-  19 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#darkscience";
-        tag = "darkscience";
-      }
-    );
-  };
-  20 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#unix";
-        tag = "unix";
-      }
-    );
-  };
-  21 = {
+  18 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -727,7 +805,7 @@ windows = {
       }
     );
   };
-  22 = {
+  19 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       { 
@@ -738,7 +816,7 @@ windows = {
       }
     );
   };
-  23 = {
+  20 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -749,7 +827,7 @@ windows = {
       }
     );
   };
-  24 = {
+  21 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -760,7 +838,7 @@ windows = {
       }
     );
   };
-  25 = {
+  22 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       { 
@@ -771,7 +849,7 @@ windows = {
       }
     );
   };
-  26 = {
+  23 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -782,7 +860,7 @@ windows = {
       }
     );
   };
-  27 = {
+  24 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -793,29 +871,7 @@ windows = {
       }
     );
   };
-  28 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#unreal-support";
-        tag = "unrealircd";
-      }
-    );
-  };
-  29 = {
-    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#unreal-devel";
-        tag = "unrealircd";
-      }
-    );
-  };
-  30 = {
+  25 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -826,7 +882,7 @@ windows = {
       }
     );
   };
-  31 = {
+  26 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
     items = (
       {
@@ -834,6 +890,61 @@ windows = {
         chat_type = "IRC";
         name = "#general";
         tag = "genoce";
+      }
+    );
+  };
+  27 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#2f30";
+        tag = "cyberia";
+      }
+    );
+  };
+  28 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#cyberia";
+        tag = "cyberia";
+      }
+    );
+  };
+  29 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#unreal-support";
+        tag = "unrealircd";
+      }
+    );
+  };
+  30 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#unreal-devel";
+        tag = "unrealircd";
+      }
+    );
+  };
+  31 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#darkscience";
+        tag = "darkscience";
       }
     );
   };
@@ -847,8 +958,6 @@ windows = {
         tag = "darkscience";
       }
     );
-    sticky = "yes";
-    parent = "1";
   };
   33 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -856,12 +965,10 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#2f30";
-        tag = "cyberia";
+        name = "#dataswamp";
+        tag = "dataswamp";
       }
     );
-    sticky = "yes";
-    parent = "1";
   };
   34 = {
     level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
@@ -869,19 +976,45 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#cyberia";
-        tag = "cyberia";
+        name = "#asciiart";
+        tag = "efnet";
       }
     );
-    sticky = "yes";
-    parent = "1";
+  };
+  35 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#political";
+        tag = "efnet";
+      }
+    );
+  };
+  36 = {
+    level = "MSGS PUBLICS NOTICES CTCPS ACTIONS JOINS PARTS QUITS KICKS MODES TOPICS NICKS";
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#LRH";
+        tag = "efnet";
+      }
+    );
   };
 };
 mainwindows = {
-  1 = { 
-    first_line = "1";
-    lines = "52";
+  10 = {
+    first_line = "10";
+    lines = "43";
     first_column = "0";
-    columns = "175";
+    columns = "161";
+  };
+  4 = { 
+    first_line = "0";
+    lines = "10";
+    first_column = "0";
+    columns = "161";
   };
 };

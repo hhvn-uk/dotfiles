@@ -11,6 +11,7 @@ unbind '"'
 unbind %
 
 bind r source-file ~/.tmux.conf
+bind R source-file ~/.config/tmux/config
 
 bind-key h select-pane -L
 bind-key j select-pane -D

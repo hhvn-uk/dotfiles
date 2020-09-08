@@ -4,6 +4,12 @@ super + {shift, ctrl, alt, shift + ctrl, shift + alt} + v
 super + Return
 	st
 
+super + a
+	addrbook
+
+super + shift + a
+	mailselect
+
 super + b
 	tabbed -c vimb -e
 

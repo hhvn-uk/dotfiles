@@ -71,7 +71,7 @@ sub find_figlet_path {
 
 # int randcolor()
 sub randcolor {
-	return $ascii_colors[int(rand(12)+2)];
+	return $ascii_colors[int(rand(12)+18)];
 }
 
 # str colorline($colormode, $text)

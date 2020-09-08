@@ -1,6 +1,8 @@
-text/html		; lynx -stdin -dump < '%s' | less
+#text/html		; lynx -stdin -dump < '%s' | less
+text/html		; vimb - < '%s'
 text/*			; nvim '%s'
 
 application/pdf		; zathura '%s'
+application/*		; whatdoido '%s'
 
 image/*			; sxiv '%s'
