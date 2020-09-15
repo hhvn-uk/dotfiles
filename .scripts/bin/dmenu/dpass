@@ -15,14 +15,14 @@
 	[ -z $1 ] && echo "${passwd##*: }"|| echo "$@ ${passwd##*: }"
 	exit
 }
-chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i -p "Select a password, or GENERATE:" | tr '[:upper:]' '[:lower:]')
+chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i -p "Select:" | tr '[:upper:]' '[:lower:]')
 passwd=$(grep "^$chosen: " < $PASS)
 
 case "$chosen" in
 	"") exit 1 ;;
 	generate)
 		new=$(head -c 2000 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 35 | shuf | shuf | shuf | head -n 1)
-		newname=$(echo | dmenu -i -p "Name for passwd (must contain no colons)?")
+		newname=$(echo | dmenu -i -p "Name for passwd?")
 		[ "$newname" = "" ] && newname="pleaseeditthis"
 		echo "$newname: $new" >> $PASS
 		;;
@@ -30,7 +30,7 @@ case "$chosen" in
 		printf "${passwd##*: }\n" | xclip
 		(
 			sleep 5
-			printf '' | xclip	# destroy clipboard to stop accidental pasting
+			printf '' | xclip	# destroy clipboard to prevent accidental pasting
 						# tbh, you should make a cronjob with this, run once per minute :)
 		) &
 		;;

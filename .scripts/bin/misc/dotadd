@@ -2,6 +2,7 @@
 git add .config/sxhkd/
 git add .local/xauth
 git add .local/xres
+git add .local/ascii
 git add .config/alias
 git add .config/tmux/config
 git add .zprofile

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+bmf=$HOME/.local/bookmarks
+
+selectfs(){
+	while true
+	do
+		f=$(ls -F | sed '1s/.*/\*\n\.\./;s/\@$//;s/|//;s/\*$//' | dmenu -i -p "$(pwd)")
+		[ "$f" = "" ] && exit
+		[ "$f" = "*" ] && exec open *
+		[ ! -d "$f" ] && {
+			exec open "$f"
+		}
+		[ -d "$f" ] && cd "$f"
+	done
+}
+
+rmbookmark(){
+	bm=$(nl < $bmf | tr '\t' ' ' | dmenu -i | awk '{print $1}')
+	[ "$bm" = "" ] && return
+	nl < $bmf | sed 's/[[:space:]]*//' | awk -v "num=$bm" -F"	" '$1 != num {print $2}' > $bmf.new
+	mv $bmf.new $bmf
+}
+
+while true
+do
+	choice=$(printf "OTHER\nRMBOOKMARK\n" | cat - $bmf 2>/dev/null | dmenu -i)
+	case "$choice" in
+		"") exit ;;
+		OTHER) selectfs ;;
+		RMBOOKMARK) rmbookmark ;;
+		*) open "$choice" ;;
+	esac
+done

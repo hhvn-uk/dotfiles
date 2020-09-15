@@ -27,7 +27,7 @@
 
 clear
 trap 'tput cnorm; exit' 2
-trap 'clear' 28 #SIGWINCH
+trap 'clear; olddis=blah' 28 #SIGWINCH
 
 drw_line(){
 	tput cup $1 0
@@ -60,7 +60,22 @@ centre(){
 	printf "$1"
 }
 
+invert(){
+	$@ 2>/dev/null && return 1 || return 0
+}
+
 draw_main(){
+	socat /tmp/mpv-socket /dev/null 2>/dev/null || {
+		clear
+		while invert socat /tmp/mpv-socket /dev/null
+		do
+			tput cup 0 0
+			echo "Can't connect to socket"
+			sleep 0.1
+		done
+	}
+
+
 	line=0
 	dis=$(getm "media-title" "Title" | tr '.' ' '
 		getm "metadata/artist" "Artist"
@@ -70,7 +85,7 @@ draw_main(){
 		getm "file-format" "FF")
 
 	[ "$dis" != "$olddis" ] && {
-		while [ $line -lt $((($(tput lines)/2)-6)) ]
+		while [ $line -lt $((($(tput lines)/2)-4)) ]
 		do
 			drw_line $line ""
 			line=$(($line+1))
@@ -79,6 +94,13 @@ draw_main(){
 		echo "$dis" | while IFS= read -r s
 		do
 			drw_line $line "$s"
+			line=$(($line+1))
+		done
+
+		line=$(($line+6))
+		while [ $line -ne $(($(tput lines)-1)) ]
+		do
+			drw_line $line ""
 			line=$(($line+1))
 		done
 	}

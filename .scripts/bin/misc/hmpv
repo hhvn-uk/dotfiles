@@ -93,4 +93,3 @@ then
 else
 	seek
 fi
-$HOME/.scripts/dwmblocks/mpv > /tmp/blocks/mpv

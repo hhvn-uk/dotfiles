@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[ -z "$1" ] && ls $HOME/.local/ascii | sed 's/\.txt//' && exit
+sed '/^>/d;s/hhvn//' < $HOME/.local/ascii/$@.txt

@@ -5,7 +5,7 @@ set history-max-items=99999
 set header=User-Agent,Accept-Language
 set user-agent=freedom
 
-set input-autohide=false
+set input-autohide=true
 set input-css=background-color:#30404e;color:#ffffff
 set completion-css=background-color:#0a0a10;color:#1e5eb3
 set completion-hover-css=background-color:#141726;color:#1e5eb3
@@ -61,6 +61,7 @@ shortcut-add aw=https://wiki.archlinux.org/index.php?search=$0
 shortcut-add karta=https://minkarta.lantmateriet.se/
 shortcut-add map=https://map.openaerialmap.org/#/
 shortcut-add ebay=https://www.ebay.co.uk/sch/$0
+shortcut-add ebayus=https://www.ebay.com/sch/$0
 shortcut-add am=https://www.amazon.co.uk/s?k=$0
 shortcut-add 8=https://8kun.top/$0/catalog.html
 shortcut-add dict=https://dict.css/?s=$0

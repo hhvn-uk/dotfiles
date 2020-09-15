@@ -8,11 +8,11 @@ set mailcap_path = "~/.config/neomutt/mailcap"
 set smtp_authenticators = "plain"
 
 set folder = "~/general/mail/"
-set spoolfile = "+inbox-haydenvh-com"
+set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =inbox-haydenvh-com =inbox-master =inbox-hlircnet =inbox-lists =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
@@ -23,6 +23,7 @@ set alias_file = "~/.config/neomutt/alias"
 source colours
 source sidebar
 source alias
+source gpg
 
 bind index D purge-message
 bind index,pager M compose-to-sender
@@ -30,7 +31,7 @@ bind index,pager M compose-to-sender
 bind index \Ct collapse-thread
 bind index \Ca collapse-all
 
-set new_mail_command="echo N:%n U:%u > /tmp/mail &"
+set new_mail_command="sh -c 'echo N:%n U:%u > /tmp/mail && herbe \"New mail: %n\" \"Unread mail: %u\"' &"
 set sort=threads
 set collapse_all
 
@@ -40,7 +41,10 @@ set signature=`rand-sig`
 
 # mark all mail as read
 macro index A \
-    "<clear-flag>O<untag-pattern>.<enter>" \
-    "mark all new as read"
+    "<clear-flag>O" \
+    "mark mail as read"
 
 my_hdr X-Mailer: neomutt & procmail
+hdr_order Subject From To Date
+
+#folder-hook sent

@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# see gopher://haydenvh.com/1/alcl/write/other/00060-new.thinkpad.new.phone.oh.and.also.thanks.google.-.120920.gph
+
+w3m "https://www.google.com/search?q=site:haydenvh.com$(echo " $1" | xxd -p | tr -d '\n' | sed 's/../%&/g')"

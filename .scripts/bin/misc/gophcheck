@@ -48,7 +48,7 @@ echo(){
 		for u in $uris
 		do
 			name=$(echo "$u" | tr '/' '%')
-			curl -qs $u > $current/$name && echo "[$(tput setaf 40)OKAY$(tput sgr0)] $u" || echo "[$(tput 88)FAIL$(tput sgr0)] $u"
+			curl -qs $u > $current/$name && echo "[$(tput setaf 40)OKAY$(tput sgr0)] $u" || echo "[$(tput setaf 88)FAIL$(tput sgr0)] $u"
 		done
 	} || {
 		echo "No such command, edit/read script for configuration/usage"

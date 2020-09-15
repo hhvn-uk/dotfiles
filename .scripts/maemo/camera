@@ -1,0 +1,10 @@
+#!/bin/sh
+
+c=$(printf "no\nstay the same\nyes" | dmenu -i -p "Flash?")
+
+[ "$c" = "yes" ] && offlater=y && $ML flash on
+[ "$c" = "no" ] && $ML flash off
+
+ls /dev/video* | dmenu -i -p "Cameras:" | xargs mpv --profile=low-latency --
+
+[ "$offlater" = "y" ] && $ML flash off 

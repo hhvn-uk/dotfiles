@@ -10,8 +10,8 @@ cache=$HOME/general/cache/
 
 donorm(){
 	[ "$args" = "" ] && {
-		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.0,-3.2,1   /tmp/blurmap.png
-		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 8 -composite $1
+		convert $file -sparse-color Barycentric '0,0 black 0,%h white' -function polynomial 3.5,-3.2,1.15   /tmp/blurmap.png
+		convert $file /tmp/blurmap.png -compose Blur -set option:compose:args 9 -composite $1
 	} || {
 		convert $file $args $1
 	}

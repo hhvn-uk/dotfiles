@@ -1,3 +1,4 @@
 #!/bin/sh
 
+hmpv pause /tmp/mpv-socket
 exec $TERMINAL -e mpv $@

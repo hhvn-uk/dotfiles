@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# this is what most factory default ISP-issued wifi APs' passphrases look like
+# there are 2821109907456 different combinations.. so
+
+cat /dev/urandom | tr -dc 'A-Z0-9' | fold -w 8

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-link=$(grep -Eo '[A-Za-z][A-Za-z]*://\S*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
+link=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ >),]*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i -p 'Select url')
 [ "$link" = "" ] && exit 1
 
 tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
@@ -17,5 +17,4 @@ netvid
 popupcurl
 popupcgo" | dmenu -i -p "Select a handler:")
 
-hmpv pause /tmp/mpv-socket
 [ "$tor" = "yes" ] && sh -c "torsocks $hand $link" || sh -c "$hand $link"

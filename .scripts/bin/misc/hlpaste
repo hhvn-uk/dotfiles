@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cp /dev/stdin /tmp/hlpaste
-id=$(mktemp -u /var/gopher/paste/XXXXXXXXX)
-scp /tmp/hlpaste hlirc.net:$id.$1
-printf "gopher://hlirc.net/9/paste/$(basename $id).$1" | xclip
+id=$(mktemp -u /paste/XXXXXXXXX)
+
+scp /tmp/hlpaste hlirc.net:/var/gopher/$id.${1:-txt}
+printf "gopher://hlirc.net/9/$id.${1:-txt}" | xclip

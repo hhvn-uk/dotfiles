@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# ytsrch2.sh
+# Created by Hayden Hamilton
+#
+# hayden@haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+
+[ -z $1 ] 2>/dev/null && echo "usage: ytsrch2 <query> [number of items]
+usage: ytsrch2 -t <query> [number of items]" && exit
+[ "$1" = "-t" ] && tab=y && shift
+content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$1" | xxd -p | tr -d '\n' | sed 's/../%&/g')")
+
+# this is just fucking braindead obfuscation, fuck youtube
+titles=$(echo "$content" | grep -o '"width":336*,"height":188}]},"title":{"runs":\[{"text":"[^"]*' | sed 's~"width":336,"height":188}\]},"title":{"runs":\[{"text":"~~' | nl)
+authors=$(echo "$content" | grep -o 'ownerText":{"runs":\[{"text":"[^"]*' | sed 's~ownerText":{"runs":\[{"text":"~~' | nl)
+length=$(echo "$content" | grep -o '"lengthText":{"accessibility":{"accessibilityData":{"label":"[^"]*' | sed 's~"lengthText":{"accessibility":{"accessibilityData":{"label":"~~' | nl)
+dates=$(echo "$content" | grep -o '"publishedTimeText":{"simpleText":"[^"]*"},"lengthText":' | sed 's~"publishedTimeText":{"simpleText":"~~;s~"},"lengthText":$~~' | nl)
+views=$(echo "$content" | grep -o '"simpleText":"[^"]*"},"viewCountText":{"simpleText":"[0-9,]* views"},"navigationEndpoint":{"clickTrackingParams":"' | sed -E 's/.*"simpleText":"([0-9,]*) views".*/\1/' | nl)
+uris=$(echo "$content" | grep -o '{"videoId":"[^"]*","thumbnail":{"thumbnails":\[{"url":"https://i.ytimg.com/vi/' | sed -E 's~.*"videoId":"([^"]*)",".*~https://www.youtube.com/embed/\1~' | nl)
+
+getelem(){
+	echo "$2" | awk -v "num=$1" '$1 == num' | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//'
+}
+
+tab(){
+	[ "$tab" = "y" ] && {
+		tr -d '\n' | sed 's/============================/\n/g' | column -t -s "	" 
+	} || {
+		tr -d '\t' | sed 's/============================//g' | cat | less
+	}
+}
+
+for i in $(seq ${2:-20})
+do
+	printf "============================\nURI:       %s\t\nTitle:     %s\t\nAuthor:    %s\t\nPublished: %s\t\nLength:    %s\t\nViews:     %s\t\n" \
+		"$(getelem $i "$uris")" \
+		"$(getelem $i "$titles")" \
+		"$(getelem $i "$authors")" \
+		"$(getelem $i "$dates")" \
+		"$(getelem $i "$length")" \
+		"$(getelem $i "$views")"
+done | tab

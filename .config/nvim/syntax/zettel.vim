@@ -7,8 +7,8 @@ syn match zettelBrackl '\[' contained
 syn match zettelBrackr '\]' contained
 syn match zettelBrackText '[^\[\]]' contained
 
-syn region zettelSelected start=/^!/ end=/$/ oneline contains=zettelExc,zettelBracks
-syn region zettelBracks start=/\[/ end=/\]/ contained contains=zettelBrackl,zettelBrackr,zettelBrackText
+syn match zettelSelected '^!.*$' contains=zettelExc,zettelBracks
+syn match zettelBracks '\[.*\]' contained contains=zettelBrackl,zettelBrackr,zettelBrackText
 
 hi zettelPunc guifg=#a1a1d9
 hi link zettelExc zettelPunc

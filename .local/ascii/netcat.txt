@@ -1,0 +1,38 @@
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+################################################################################
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMU   MM  GU       J        .M        G    B         JMMMMMMMMMMMMM
+MMMMMMMMMMMMMMU   `'  GU  9MMMMMMMMU  GMMU` GMMMMMU` M  MMMU  GMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMU       GU       JMMMU  GMMU  GMMMMMU      MMU  GMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMU  o    GU  9MMMMMMMMU  GMMU  GMMMMMU  MMM  MU  GMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMU  GM   GU       JMMMU  GMMU       GY  MMMM  M  GMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+################################################################################
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+ | / / /| \ ||  | //| /  | \ | |\  / / \  / | | |||\  /| /| /| \|  /|\\ | / /| |
+\ \ |\| | | /| /\| |||  /| | / \ || |  /\ | | | ||\ |//|// | |\ | / |||||| | |/|
+| | |\\  \|\ \/ |\ ||| ||| ||  /|/| | | /|| | |/ |\\| |\|\ | | \|/ / ||\||/| |||
+/\| \ ||\ \_\_\ | / |\ || \|| | | | | / ||// // /||/|\\ / ||/\ ||\_| //|||/\ //|
+ / //||| | |\ \\|/  ||\\\ |/\ | |\\\\/  || | |||/ ||\ ||\ / | || \ |/| | \| |||/
+/ /| |\ \ \|  |||| / | \\ \ | | | |\|\ / /\ \||/| / |\\| |\ | || | /|| |\ |_/ ||
+ / //| \/\ \\__| \\| |/| | \|/| | ||||\\| |\ |/ / |/ /||/| || /| || | \ \\|\ /_\
+/ | | \|| |\\_ \ | \\/ | |  | |/|/ |/| |\ |  ||| /||/ /\ | \|| |/ |/|\/\| |\|/||
+_///|\ |/ / \ \ /| |/| / |\ \/ ||\ |/| \ | \//||// ||/\ \| |\|/| /| |||||/| | |/
+ /| || /\ | | | || |\|/| | | \ |/ || | |\  /|\|\ | /|| | |/ /||\| \  \\|| |/\/| 
+// _/| | | \|/ //| / |\|/ \ \_\| /|| |/  || | | |\/ || | /\| |/ | /| | |//| /|//
+/ /\  \\  \\| /| \|  |||\  |/| / |/| |\ /|\ | / / \ / /|/ |\ \ / | |\|/||/|||| |
+ //|  /\\_ \\| /  |\/ || | | \ | |\|/ ||/ |\|/ |\  | | |\/ /| \| |/ /|/ / /| | |
+ ||\ / /\ \  /\| /| \ \/ | |  || | \| |||  \|  | | |\| | || | || || || | ||/\|/|
+//  | | |  \| ||//   ||  |/  / //  | /  \\ |\  |\ \| \/ / | |// / | | \| |\hhvn|
+                                                                                
+>    Copyright (C) 2020 Hayden Hamilton <hayden@haydenvh.com>                   
+>    This work is free. You can redistribute it and/or modify it under the      
+>    terms of the Do What The Fuck You Want To Public License, Version 2,       
+>    as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
+                                                                                

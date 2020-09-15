@@ -6,6 +6,9 @@ shift
 case "$a" in
 	export-key) gpg --export --armour $1 ;;
 	export-keyring) gpg --export --armour ;;
-	list) gpg --list-keys && gpg --list-secret-keys ;;
+	list*) 
+		[ ! -z $1 ] && args="--keyid-format $1"
+		gpg --list-keys $args && gpg --list-secret-keys $args
+		;;
 	encrypt) gpg --encrypt --sign --armour --passphrase "$(dpass gpg2key)" -r "$1" ;;
 esac

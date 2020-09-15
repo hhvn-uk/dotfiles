@@ -4,6 +4,12 @@ super + {shift, ctrl, alt, shift + ctrl, shift + alt} + v
 super + Return
 	st
 
+super + t
+	pkill -SIGUSR1 herbe
+
+super + shift + t
+	pilll -SIGKILL herbe; herbe "Killed & fixed herbe"
+
 super + a
 	addrbook
 
@@ -60,6 +66,9 @@ super + s
 
 super + shift + s
 	maim -s | hlpaste "png"
+
+super + ctrl + s
+	maim | hlpaste "png"
 
 super + w
 	rfeh ~/images/wallpapers/

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export ML=maemo-launch
+[ -f $HOME/.scripts/maemo/"$1" ] && {
+	a1="$1"
+	shift
+	$HOME/.scripts/maemo/"$a1" $@
+} || {
+	$@
+}

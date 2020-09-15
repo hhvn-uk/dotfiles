@@ -373,14 +373,6 @@ statusbar = {
       };
       disabled = "yes";
     };
-    awl_2 = {
-      items = {
-        barstart = { priority = "100"; };
-        awl_2 = { };
-        barend = { priority = "100"; alignment = "right"; };
-      };
-      disabled = "yes";
-    };
     prompt = {
       items = {
         uberprompt = { priority = "-1"; };
@@ -395,7 +387,6 @@ statusbar = {
         awl_0 = { };
         barend = { priority = "100"; alignment = "right"; };
       };
-      disabled = "yes";
     };
   };
 };

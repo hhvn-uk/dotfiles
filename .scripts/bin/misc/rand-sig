@@ -1,7 +1,7 @@
 #!/bin/sh
 
 (
-	echo "$USER" 
-	shuf < $HOME/.config/neomutt/signatures | head -n 1 | tr '\t' '\n' | fold -sw 80| sed 's/^/>/'
+	awk -v "user=$(whoami)" -F":" '$1 == user {print $5}' < /etc/passwd
+	sed '/^#/d' < $HOME/.config/neomutt/signatures | shuf | head -n 1 | tr '\t' '\n' | fold -sw 80 | sed 's/^/>/'
 ) > /tmp/signature
 echo /tmp/signature

@@ -114,19 +114,6 @@ inoremap <leader><leader>j <Esc>0/<++><Enter>"_c4l
 noremap <leader>C i<++><Esc>
 inoremap <leader><leader>c <++><Enter>
 
-noremap <leader><leader>[ i[]<Esc><Left>i
-noremap <leader><leader>( i()<Esc><Left>i
-noremap <leader><leader>" i""<Esc><Left>i
-noremap <leader><leader>' i''<Esc><Left>i
-noremap <leader><leader>{ i{}<Esc><Left>i
-noremap <leader><leader>< i<><Esc><Left>i
-inoremap <leader><leader>[ []<Esc><Left>i
-inoremap <leader><leader>( ()<Esc><Left>i
-inoremap <leader><leader>" ""<Esc><Left>i
-inoremap <leader><leader>' ''<Esc><Left>i
-inoremap <leader><leader>{ {}<Esc><Left>i
-inoremap <leader><leader>< <><Esc><Left>i
-
 inoremap <c-;> <esc>:
 noremap <localleader>V ggO# vim:   :<left><left>
 

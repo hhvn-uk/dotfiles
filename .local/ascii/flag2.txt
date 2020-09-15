@@ -1,0 +1,30 @@
+                                                                                
+_________                                                                       
+_)       \_                                                                     
+|          \______________________________________                              
+|                   |    |                        \                             
+|                   |    |                         `-.                          
+|                   |    |                            `-..                      
+|                   |    |                                `.                    
+|                   |    |                                  `-..                
+|______________    /    /                                       `--.            
+\              \___|    |____________                               `|          
+ |                                   \_______________                |          
+ |_________________      __________                  \_______________|          
+ |                 |    |          \________________                 |          
+ |                 |    |                           \________        |          
+ |                 |    |                                    \_______|          
+ |                 |    |                                            \          
+ |                 |    |                                             |         
+ |                /     /                                             |         
+ |          _____|_____|                                              |         
+(‾)________/            \_________________                            |         
+                                          \                           |         
+                                           \__________________________\         
+                                                                                
+>    flag2.txt - 1st tear                                                       
+>    Copyright (C) 2020 Hayden Hamilton <hayden@haydenvh.com>                   
+>    This work is free. You can redistribute it and/or modify it under the      
+>    terms of the Do What The Fuck You Want To Public License, Version 2,       
+>    as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
+                                                                                

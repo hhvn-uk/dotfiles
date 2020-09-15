@@ -2,7 +2,18 @@
 
 xrdb ~/.local/xres &
 setxkbmap haydenh &
-xsetroot -cursor_name sailboat &
+mpvlisten /tmp/mpv-socket2 /tmp/mpv-socket &
+./.scripts/input/keyboard &
+(
+	cd .scripts/dwmblocks
+	./dwmbar
+) &
 sxhkd &
+cu dock &
+st -e &
 
-exec st -e dwm
+#/usr/libexec/xscreensaver/galaxy -root -count 5
+/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -no-bigdots -speed 0.2 &
+
+xsetroot -cursor_name sailboat &
+exec dwm

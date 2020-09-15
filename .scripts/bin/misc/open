@@ -1,7 +1,14 @@
 #!/bin/sh
 
-case $1 in
-	*.png|*.gif|*.jpg|*.jpeg) sxiv "$@" ;;
-	*.mp4|*.mkv|*.m4a|*.wav|*.flac|*.opus) mpv "$@" ;;
-	*) nvim "$@" ;;
+run(){
+	nohup $@ | tee
+}
+
+case "$1" in
+	*.png|*.gif|*.jpg|*.jpeg) run sxiv "$@";;
+	*.mp4|*.mkv|*.ogv) run mpv "$@" ;;
+	*.mp3|*.m4a|*.wav|*.flac|*.opus|*.ogg) run popupmpvmpv "$@" ;;
+	*) $(printf '' | dmenu -p "$(file $1)") $1 ;;
 esac
+
+[ "$ML" != "" ] && printf "no\nyes" | dmenu -i -p "Bookmark?" | grep y >/dev/null && echo "$1" > $HOME/.local/bookmarks

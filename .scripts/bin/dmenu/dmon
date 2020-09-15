@@ -13,6 +13,7 @@ do
 	bchoice="$choice"
 	choice=$(printf "DONE\nRight\nLeft\nAbove\nBelow" | dmenu -i -p "Add monitor to:")
 	case $choice in
+		"") exit ;;
 		Right) direction="right-of" ;;
 		Left) direction="left-of" ;;
 		Above) direction="above" ;;

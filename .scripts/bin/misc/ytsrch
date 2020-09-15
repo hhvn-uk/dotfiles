@@ -1,0 +1,70 @@
+#!/bin/sh
+#
+# ytsrch.sh
+# Created by Hayden Hamilton
+#
+# hayden@haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+#
+# usage: ytsrch <search query> [number of results]
+#
+# TODO:
+# - Grab metadata from the search page itself, this will make it a lot faster.
+#   The reason it grabs from individual pages is because I already had written
+#   the code for that.
+
+echo "Use ytsrch2 instead. This is a demo of how not to something" && exit
+
+tmp=$(mktemp -d)
+urls=$(curl -qsL "https://www.youtube.com/results?search_query=$(echo "$1" | xxd -p | tr -d '\n' | sed 's/../%&/g')" | grep -o "/watch?v=[^\"]*" | cut -c-20 | awk '!lines[$0]++ {print "https://www.youtube.com" $0}' | head -n "${2:-20}")
+count=0
+
+for u in $urls
+do
+	count=$(($count+1))
+	(
+		touch $tmp/$(printf "%04d.lock" $count)
+		content=$(curl -qs "$u")
+		printf "==============[%02d]\n\
+			URI:           %s\n\
+			Title:         %s\n\
+			Auther:        %s\n\
+			Auther's atom: %s\n\
+			Upload Date:   %s\n\
+			Veiws:         %s\n\
+			Length:        %s\n" \
+				"$count" \
+				"$(echo "$u" | sed 's,watch?v=,embed/,')" \
+				"$(echo "$content" | grep '\[{\"videoPrimaryInfoRenderer\":{\"title\":{\"runs\"\:\[{\"text\":' | sed 's/.*\[{\"videoPrimaryInfoRenderer\":{\"title\":{\"runs\"\:\[{\"text\":// ; s/}\]}.*// ; s/\\//g ; s/^\"// ; s/.$//')" \
+				"$(echo "$content" | grep -o 'author":[^}]*}' | sed -E 's/.*:"([^"]*).*/\1/g')" \
+				"$(echo "$content" | grep -o 'channelId":"[^"]*' | sed -E 's~.*"([^"]*)$~https://www.youtube.com/feeds/videos.xml?channel_id=\1~' | head -n 1)" \
+				"$(echo "$content" | grep -o 'uploadDate":[^}]*}' | sed -E 's/.*:"([^"]*).*/\1/g; s~([0-9]*)-([0-9]*)-([0-9]*)~\3/\2/\1~')" \
+				"$(echo "$content" | grep -o 'viewCount":[^}]*}' | head -n 1 | grep -o 'simpleText":[^}]*}' | sed -E 's/.*:"([^"]*).*/\1/g; s/ views//; s/ Aufrufe//g;s/\./,/g')" \
+				"$(echo "$content" | grep '\<meta itemprop=\"duration\"' | sed 's/.*content\=//; s/"//g; s/PT//; s/./\L&/g ; s/.$//')" | sed 's/^[[:space:]]*//' | tr '\t' '        ' > $tmp/$(printf "%04d.lock" $count)
+		mv $tmp/$(printf "%04d.lock" $count) $tmp/$count.show
+	) &
+		#list=$(printf "%s\n%s\n" "$list" "[$count] $u")
+done
+
+while true;
+do
+	sleep 0.5
+	ls $tmp | grep lock >/dev/null || break
+done
+
+cat $tmp/*.show
+rm -rf $tmp
+
+#echo "$list" | dmenu -i -p "Select a uri:" | xargs mpv

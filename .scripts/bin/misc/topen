@@ -1,0 +1,3 @@
+#!/bin/sh
+
+st -e $SHELL -c "$(printf '' | dmenu -p "Program:") $@"

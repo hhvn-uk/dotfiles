@@ -2,11 +2,19 @@ if exists("b:current_syntax")
  	finish
 endif
 
+" The below aren't actually going to afffect the content, they're just there
+" for my eyes. Comment at will.
 runtime! syntax/markdown.vim
+syn match  gphCitation '\[[^|]*\]' contains=gphCitationText,gphCitationBracks
+syn match  gphCitationText '[^\[\]]' contained
+syn match  gphCitationBracks '[\[\]]' contained
 
+hi gphCitationText guifg=#005f5f
+hi gphCitationBracks guifg=#a1a1d9
+" END comment spree
 
-syn region  gphSelector start=/|/ end=/\]$/ oneline contains=gphPipe,gphServer,gphURL,gphURI,gphFileDir,gphFileGph,gphFileCGI,gphFileDCGI,gphFileHTML
-syn region  gphType start=/^\[/ end=/|/ oneline contains=gphBrackl,gphType1,gphType2,gphSelector
+syn match  gphSelector "|.*\]$" contains=gphPipe,gphServer,gphURL,gphURI,gphFileDir,gphFileGph,gphFileCGI,gphFileDCGI,gphFileHTML,gphCitation
+syn match  gphType "^\[.*\]$" contains=gphBrackl,gphType1,gphType2,gphSelector
 
 syn match   gphType1 "[0123456789gmsITi\+:;<PcMd\*\.]" contained
 syn match   gphType2 "[hH]" contained
@@ -22,6 +30,7 @@ syn match   gphURI "URI:[^|]*|" contained contains=gphPipe
 syn match   gphBrackl '^\[' contained
 syn match   gphBrackr '\]$' contained
 syn match   gphPipe '|' contained
+syn match   gphEscapeTT '^tt'
 syn match   gphEscape '^t'
 syn match   gphTab '	'
 syn keyword gphSelf server port contained
@@ -38,6 +47,7 @@ hi gphType2 guifg=#ebaa22
 hi gphServer2 guifg=#a84b8d
 
 hi gphFileGph guifg=#777b8e
+hi link gphEscapeTT gphFileGph
 hi link gphFileDir gphFileGph
 hi gphFileCGI guifg=#00af87
 hi link gphFileDCGI gphFileCGI

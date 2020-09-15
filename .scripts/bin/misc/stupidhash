@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# utterly useless script that isn't really a hash
+
+head -c 500 /dev/urandom | tr -dc "$1"
