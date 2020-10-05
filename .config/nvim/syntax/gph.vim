@@ -1,3 +1,5 @@
+set expandtab
+
 if exists("b:current_syntax")
  	finish
 endif

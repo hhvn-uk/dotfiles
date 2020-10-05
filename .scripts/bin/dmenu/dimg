@@ -16,7 +16,7 @@ setwall(){
 	monitors=$(xrandr --listmonitors | awk '/Monitors/{print $2}')
 	for i in $(seq $monitors)
 	do
-		files="$files $(find $dir -type f | shuf | dmenu -i -p "Select wallpaper $i:")"
+		files="$files $(find $dir -type f | shuf | dmenu -i)"
 	done
 
 	echo "$files" | sed 's/^[[:space:]]*//g;s/[[:space:]]*$//g' > $cache/rfeh/prev

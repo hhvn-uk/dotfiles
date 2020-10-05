@@ -9,13 +9,11 @@ color index_number magenta default
 color index_subject cyan default '.*'
 
 # For new mail:
-color index_author color12 default "~N"
-color index_subject color12 default "~N"
-color index_author color12 default "~O"
-color index_subject color12 default "~O"
+color index_flags color12 default "~N"
+color index_flags color12 default "~O"
 
 # For threads
-color index_subject default default "~v"
+#color index_subject default default "~v"
 color index_flags color12 default "~(~N)" # matches threads which contain unread entries
 color index_flags color12 default "~(~O)" # ditto
 

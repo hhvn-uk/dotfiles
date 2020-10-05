@@ -26,9 +26,6 @@ let &t_EI.="\033[2 q" "EI = NORMAL mode (ELSE)
 
 "Tab completion
 set path+=**
-set wildmenu
-set wildmode=longest,list,full
-set incsearch
 
 "Misc
 set encoding=utf-8

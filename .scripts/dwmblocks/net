@@ -6,6 +6,7 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-ip=$(curl -s http://n0a110w.xyz/ip.sh || echo "No network.")
+ip=$(curl -s http://icanhazip.com)
+[ -z $ip ] && exit
 ip=$(echo "$ip" | tail -n 1)
 echo "[$ip]"

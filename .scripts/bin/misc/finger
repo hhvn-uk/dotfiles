@@ -18,11 +18,13 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,       
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
 
-# usage: finger <host> [user]
+# usage: finger [user]@<host>
 
+user=${1%%@*}
+host=${1#*@}
 
-[ -z $2 ] && {
-	printf "\r\n" | nc $1 79
+[ -z $user ] && {
+	printf "\r\n" | nc $host 79 | tr -d '\r'
 } || {
-	printf "$2\r\n" | nc $1 79
+	printf "$user\r\n" | nc $host 79 | tr -d '\r'
 }

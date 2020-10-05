@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# autowifi.sh
+# wifioff.sh
 # Created by Hayden Hamilton
 #
 # hayden@haydenvh.com
@@ -18,7 +18,7 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,       
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
 #
-# depends: inetutils-ifconfig, wireless_tools, wpa_supplicant, dhclient
+# depends: autowifi.sh's dependacies, and the env left from it
 
 [ $(id | sed -E 's~uid=([0-9]*).*~\1~') -eq 0 ] && super="" || {
 	command -v doas >/dev/null && super=doas || super=sudo
@@ -34,15 +34,10 @@
 	}
 } || interface="$1"
 
-$super ifconfig $interface up
-
-ssid=$($super iwlist $interface scan 2>&1 | grep SSID | sed -E 's/.*:"([^"]*)"/\1/' | dmenu -i)
-pass=$(printf '' | dmenu -i -p "Passphrase:")
-
-wpa_passphrase "$ssid" "$pass" > /tmp/"$ssid".wpa.conf
-$super wpa_supplicant -B -i "$interface" -c /tmp/"$ssid".wpa.conf
-$super dhclient
-$super ifconfig $interfaceeth down
+$super ifconfig $interfaceeth up
+$super ifconfig $interface down
+$super pkill wpa_supplicant
+$super pkill dhclient
 
 sleep 2
 tput setaf 10

@@ -1,38 +1,45 @@
 #!/bin/sh
-git add .config/sxhkd/
-git add .local/xauth
-git add .local/xres
-git add .local/ascii
-git add .config/alias
-git add .config/tmux/config
-git add .zprofile
-git add .config/zsh/
-git add ./.scripts/
-git add ./.xinitrc
-git add .config/picom/config
-git add .config/irssi
-git add .config/grub/grub.cfg
-git add .config/grub
-git add .config/grub/grub
-git add .config/grub/background.png
-git add .config/grub/autoinstall.sh
-git add .config/youtube-dl/config
-git add .config/dfm/config
-git add .config/dfm/bookmarks
-git add .config/youtube-viewer/youtube-viewer.conf
-git add .config/newsboat/config
-git add .config/mpv/input.conf
-git add .config/mpv/mpv.conf
-git add .config/vimb/config
-git add .config/vimb/style.css
-git add .config/vimb/scripts.js
-git add .config/neomutt/neomuttrc
-git add .config/neomutt/colours
-git add .config/neomutt/sidebar
-git add .config/neomutt/mailcap
-git add .config/neomutt/signatures
-git add .config/git/
-git add .config/nvim/ 
+gitadd(){
+	echo "$1..."
+	git add "$1"
+}
+gitadd .config/sxhkd/
+gitadd .local/xauth
+gitadd .local/xres
+gitadd .local/ascii
+gitadd .config/alias
+gitadd .config/tmux/config
+gitadd .zprofile
+gitadd .config/zsh/
+gitadd ./.scripts/
+gitadd ./.xinitrc
+gitadd .config/picom/config
+gitadd .config/irssi
+gitadd .config/grub/grub.cfg
+gitadd .config/grub
+gitadd .config/grub/grub
+gitadd .config/grub/background.png
+gitadd .config/grub/autoinstall.sh
+gitadd .config/youtube-dl/config
+gitadd .config/dfm/config
+gitadd .config/dfm/bookmarks
+gitadd .config/youtube-viewer/youtube-viewer.conf
+gitadd .config/newsboat/config
+gitadd .config/mpv/input.conf
+gitadd .config/mpv/mpv.conf
+gitadd .config/vimb/config
+gitadd .config/vimb/style.css
+gitadd .config/vimb/scripts.js
+gitadd .config/neomutt/neomuttrc
+gitadd .config/neomutt/colours
+gitadd .config/neomutt/sidebar
+gitadd .config/neomutt/mailcap
+gitadd .config/neomutt/signatures
+gitadd .config/git/
+gitadd .config/nvim/ 
+gitadd .config/surf/cookies.txt
+gitadd .config/surf/script.js
+gitadd .config/surf/styles
 git rm --cache .config/nvim/.netrwhist
 git rm --cache .config/zsh/.zcompdump
 git rm --cache .config/irssi/*log*
@@ -40,6 +47,7 @@ git rm --cache .config/irssi/config.autosave
 git rm --cache .config/irssi/default.theme
 git rm --cache .config/irssi/saved_nick_colors
 git rm -rf --cache .config/irssi/nicklist*
-git add .config/galias
-git add .config/redshift/
-git add .ssh/config
+git rm --cache .config/surf/bookmarks.txt
+gitadd .config/galias
+gitadd .config/redshift/
+gitadd .ssh/config

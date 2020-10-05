@@ -5,7 +5,7 @@ mkalias
 precmd(){
 	prev="$?"
 	branch=$(\git branch 2>/dev/null | grep "\*" | tr -d '\*')
-	#dir=$(pwd | sed "s~$HOME~~")
+	# dir=$(pwd | sed "s#$HOME#~#")
 	dir=$(pwd)
 	prompt="%{$(tput setab 3)%0G%} %{$(tput sgr0)%0G%} "
 	[ "$prev" != "0" ] && prompt+="%F{10}$prev "
@@ -38,21 +38,6 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -v '^?' 	  backward-delete-char
-
-# Keys
-typeset -g -A key
-key[Home]="${terminfo[khome]}"
-key[End]="${terminfo[kend]}"
-key[Insert]="${terminfo[kich1]}"
-key[Backspace]="${terminfo[kbs]}"
-key[Delete]="${terminfo[kdch1]}"
-key[Up]="${terminfo[kcuu1]}"
-key[Down]="${terminfo[kcud1]}"
-key[Left]="${terminfo[kcub1]}"
-key[Right]="${terminfo[kcuf1]}"
-key[PageUp]="${terminfo[kpp]}"
-key[PageDown]="${terminfo[knp]}"
-key[ShiftTab]="${terminfo[kcbt]}"
 
 # Load .zsh files
 for file in $(find $ZDOTDIR -name "*.zsh")

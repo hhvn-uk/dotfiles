@@ -1,4 +1,4 @@
 #!/bin/sh
 
-regex=$(echo '' | dmenu -i -p "Enter regex (no '/'s on either side):")
-grep "$regex" < /dev/stdin | dmenu -i -p "Select line:" | xclip
+regex=$(printf '' | dmenu -i -p "Regex")
+grep "$regex" < /dev/stdin | dmenu -i | xclip

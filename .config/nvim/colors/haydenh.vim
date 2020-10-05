@@ -63,3 +63,9 @@ hi Underlined cterm=underline ctermfg=23 gui=underline guifg=#005f5f
 hi QuickScopePrimary guifg=#892b2b gui=bold,reverse
 hi QuickScopeSecondary guifg=#d750d7 gui=bold,reverse
 hi ColorColumn guibg=#24283c
+
+" menu from ctrl+n or tab completions
+hi Pmenu guifg=#1e5eb3 guibg=#141726
+hi PmenuSel guifg=#141726 guibg=#777b8e gui=bold
+hi PmenuSbar guibg=#24283c
+hi PmenuThumb guibg=#892b2b

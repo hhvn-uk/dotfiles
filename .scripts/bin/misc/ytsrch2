@@ -19,13 +19,11 @@
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
 
 
-[ -z $1 ] 2>/dev/null && echo "usage: ytsrch2 <query> [number of items]
-usage: ytsrch2 -t <query> [number of items]" && exit
-[ "$1" = "-t" ] && tab=y && shift
+[ -z $1 ] 2>/dev/null && echo "usage: ytsrch2 <query> [number of items]" && exit
 content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$1" | xxd -p | tr -d '\n' | sed 's/../%&/g')")
 
 # this is just fucking braindead obfuscation, fuck youtube
-titles=$(echo "$content" | grep -o '"width":336*,"height":188}]},"title":{"runs":\[{"text":"[^"]*' | sed 's~"width":336,"height":188}\]},"title":{"runs":\[{"text":"~~' | nl)
+titles=$(echo "$content" | sed 's/"}\],"accessibility"/\n/g' | grep -o '"width":336*,"height":188}]},"title":{"runs":\[{"text":".*' | sed 's~"width":336,"height":188}\]},"title":{"runs":\[{"text":"~~' | nl)
 authors=$(echo "$content" | grep -o 'ownerText":{"runs":\[{"text":"[^"]*' | sed 's~ownerText":{"runs":\[{"text":"~~' | nl)
 length=$(echo "$content" | grep -o '"lengthText":{"accessibility":{"accessibilityData":{"label":"[^"]*' | sed 's~"lengthText":{"accessibility":{"accessibilityData":{"label":"~~' | nl)
 dates=$(echo "$content" | grep -o '"publishedTimeText":{"simpleText":"[^"]*"},"lengthText":' | sed 's~"publishedTimeText":{"simpleText":"~~;s~"},"lengthText":$~~' | nl)
@@ -36,21 +34,13 @@ getelem(){
 	echo "$2" | awk -v "num=$1" '$1 == num' | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//'
 }
 
-tab(){
-	[ "$tab" = "y" ] && {
-		tr -d '\n' | sed 's/============================/\n/g' | column -t -s "	" 
-	} || {
-		tr -d '\t' | sed 's/============================//g' | cat | less
-	}
-}
-
 for i in $(seq ${2:-20})
 do
-	printf "============================\nURI:       %s\t\nTitle:     %s\t\nAuthor:    %s\t\nPublished: %s\t\nLength:    %s\t\nViews:     %s\t\n" \
-		"$(getelem $i "$uris")" \
-		"$(getelem $i "$titles")" \
+	printf "\nURI:       %s\nTitle:     %s\nAuthor:    %s\nPublished: %s\nLength:    %s\nViews:     %s\n" \
+		"$(getelem $i "$uris"   )" \
+		"$(getelem $i "$titles" )" \
 		"$(getelem $i "$authors")" \
-		"$(getelem $i "$dates")" \
-		"$(getelem $i "$length")" \
-		"$(getelem $i "$views")"
-done | tab
+		"$(getelem $i "$dates"  )" \
+		"$(getelem $i "$length" )" \
+		"$(getelem $i "$views"  )"
+done | less

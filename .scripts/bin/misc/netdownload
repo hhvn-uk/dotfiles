@@ -1,0 +1,18 @@
+#!/bin/sh
+
+cd $HOME/general/downloads
+while true
+do
+	df=$(
+		(
+			echo " $(basename $1)"
+			echo "../"
+			echo "$HOME/"
+			find -maxdepth 1 -type d | sed '/^\.$/d;s~^\./~~;s~$~/~'
+		) | dmenu -i -w $3 -c -p "$(pwd)" | tr -d ' ')
+	[ "$df" = "" ] && exit
+	[ -d "$df" ] && cd "$df" || {
+		st -w $(xwininfo -children -id $3 | awk '$1 == "Parent" {print $4}') -e sh -c "curl '$1' --cookie '$2' --cookie-jar '$2' > '$df'"
+		exit
+	}
+done

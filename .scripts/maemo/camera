@@ -2,9 +2,12 @@
 
 c=$(printf "no\nstay the same\nyes" | dmenu -i -p "Flash?")
 
-[ "$c" = "yes" ] && offlater=y && $ML flash on
-[ "$c" = "no" ] && $ML flash off
+[ "$c" = "yes" ] && offlater=y && $PHONE flash on
+[ "$c" = "no" ] && $PHONE flash off
 
-ls /dev/video* | dmenu -i -p "Cameras:" | xargs mpv --profile=low-latency --
+dev=$(ls /dev/video* | dmenu -i -p "Cameras:")
 
-[ "$offlater" = "y" ] && $ML flash off 
+echo "$dev" > $HOME/.local/camera
+mpv --profile=low-latency -- $dev
+
+[ "$offlater" = "y" ] && $PHONE flash off 

@@ -15,7 +15,7 @@
 	[ -z $1 ] && echo "${passwd##*: }"|| echo "$@ ${passwd##*: }"
 	exit
 }
-chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i -p "Select:" | tr '[:upper:]' '[:lower:]')
+chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i | tr '[:upper:]' '[:lower:]')
 passwd=$(grep "^$chosen: " < $PASS)
 
 case "$chosen" in

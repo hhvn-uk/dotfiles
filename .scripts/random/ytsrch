@@ -23,7 +23,7 @@
 # TODO:
 # - Grab metadata from the search page itself, this will make it a lot faster.
 #   The reason it grabs from individual pages is because I already had written
-#   the code for that.
+#   the code for that. [fixed in ytsrch2]
 
 echo "Use ytsrch2 instead. This is a demo of how not to something" && exit
 

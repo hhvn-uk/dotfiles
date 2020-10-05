@@ -26,8 +26,10 @@
 
 # configuration:
 uris="gopher://1436.ninja/1/Phlog
+gopher://nebulacentre.net/1
 gopher://wfnintr.net/
 gopher://go-beyond.org/
+gopher://bitreich.org/1/news.gph
 gopher://baud.baby/1/phlog
 gopher://dataswamp.org/1/~solene"
 readcmd="cgo -f"

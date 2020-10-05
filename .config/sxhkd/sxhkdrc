@@ -1,5 +1,5 @@
-super + {shift, ctrl, alt, shift + ctrl, shift + alt} + v
-	dinput "Are you sure?" "{sudo zzz, sudo halt, sudo reboot, sudo ZZZ, pkill dwm}"
+super + {, shift, ctrl, alt, shift + alt} + v
+	dinput "Are you sure?" "{halt zzz, halt halt, halt reboot, halt ZZZ, pkill dwm}"
 
 super + Return
 	st
@@ -8,7 +8,10 @@ super + t
 	pkill -SIGUSR1 herbe
 
 super + shift + t
-	pilll -SIGKILL herbe; herbe "Killed & fixed herbe"
+	pkill -SIGUSR2 herbe
+
+super + ctrl + t
+	pkill -SIGKILL herbe; herbe; herbe "Fixed herbe"
 
 super + a
 	addrbook
@@ -17,7 +20,7 @@ super + shift + a
 	mailselect
 
 super + b
-	tabbed -c vimb -e
+	tabbed -c surf -e > /tmp/tabbed.xid
 
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
@@ -35,7 +38,7 @@ super + r
 	st -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.cache/sfeed/*'
 
 super + x
-	sxhkdrestart
+	sxhkdrestart; herbe "Restarted sxhkd" && st -e nvim $XDG_CONFIG_HOME/sxhkd/sxhkdrc
 
 super + ctrl + b
 	queuevid
@@ -82,10 +85,13 @@ super + alt + w
 super + shift + w
 	colour-wall
 
-super + ctrl + t
+super + shift + g
 	chradio
 
-super + akt + t
+super + g
+	st -e sh -c 'nvim ~/.local/notes'
+
+super + alt + t
 	hmpv quit /tmp/mpv-socket3
 
 super + ctrl + y
@@ -111,3 +117,15 @@ super + {minus,equal}
 
 super + shift {minus,equal}
 	hvol 6%{-,+}
+
+{XF86AudioLowerVolume, XF86AudioRaiseVolume}
+	hvol 3%{-,+}
+
+shift + {XF86AudioLowerVolume, XF86AudioRaiseVolume}
+	hvol 6%{-,+}
+
+super + y
+	st -e sh -c 'autowifi && cu undock'
+
+super + shift + y
+	st -e sh -c 'wifioff && cu dock'

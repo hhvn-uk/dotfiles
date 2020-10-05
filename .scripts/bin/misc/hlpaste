@@ -1,7 +1,10 @@
 #!/bin/sh
+# usage: <command> | hlpaste [file extension]
+# 	 hlpaste [file extension] < /path/to/file
 
 cp /dev/stdin /tmp/hlpaste
-id=$(mktemp -u /paste/XXXXXXXXX)
+id=$(mktemp -u paste/XXXXXXXXX)
 
+gtype=$(file /tmp/hlpaste | tr '[:upper:]' '[:lower:]' | sed -E 's~.*(binary|video|audio).*~9~;s~.*image.*~I~' | grep -o '^.$' || echo "0")
 scp /tmp/hlpaste hlirc.net:/var/gopher/$id.${1:-txt}
-printf "gopher://hlirc.net/9/$id.${1:-txt}" | xclip
+printf "gopher://hlirc.net/$gtype/$id.${1:-txt}" | xclip

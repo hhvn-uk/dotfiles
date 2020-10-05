@@ -31,11 +31,11 @@ bind index,pager M compose-to-sender
 bind index \Ct collapse-thread
 bind index \Ca collapse-all
 
-set new_mail_command="sh -c 'echo N:%n U:%u > /tmp/mail && herbe \"New mail: %n\" \"Unread mail: %u\"' &"
+set new_mail_command="sh -c 'echo N:%n U:%u > /tmp/mail &'"
 set sort=threads
 set collapse_all
 
-set signature=`rand-sig`
+set signature=~/.config/neomutt/signatures
 
 # source ~/.config/neomutt/gpg.rc
 

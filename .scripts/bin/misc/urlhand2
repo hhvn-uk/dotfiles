@@ -7,11 +7,11 @@ mpvms
 popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
-vimb --no-maximize
+surf -e $(cat /tmp/tabbed.xid)
 toxclip
 netimg
 netvid
 popupcurl
-popupcgo" | dmenu -i -p "Select a handler:")
+popupcgo" | dmenu -i)
 
 [ "$tor" = "yes" ] && sh -c "torsocks $hand $1" || sh -c "$hand $1"

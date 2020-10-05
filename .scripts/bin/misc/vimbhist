@@ -1,3 +1,3 @@
 #!/bin/sh
 
-tail -n 100 < ~/.config/vimb/history | dmenu -i -p "Select a link:" | awk '{print $1}' | xclip
+tail -n 100 < ~/.config/vimb/history | dmenu -i | awk '{print $1}' | xclip

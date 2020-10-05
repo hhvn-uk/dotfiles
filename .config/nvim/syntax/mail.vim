@@ -87,21 +87,20 @@ else
     syn sync minlines=100
 endif
 
-" Define the default highlighting.
 hi def link mailVerbatim	Special
-hi def link mailHeader		Statement
+hi mailHeader guifg=#575b72
 hi def link mailHeaderKey	Type
 hi def link mailSignature	PreProc
 hi def link mailHeaderEmail	mailEmail
 hi def link mailEmail		Special
 hi def link mailURL		String
 hi def link mailSubject		Title
-hi def link mailQuoted1		Comment
-hi def link mailQuoted3		mailQuoted1
-hi def link mailQuoted5		mailQuoted1
-hi def link mailQuoted2		Identifier
-hi def link mailQuoted4		mailQuoted2
-hi def link mailQuoted6		mailQuoted2
+hi mailQuoted1 guifg=#40445c
+hi mailQuoted2 guifg=#575b72
+hi mailQuoted3 guifg=#777b8e
+hi mailQuoted4 guifg=#a3a6b3
+hi mailQuoted5 guifg=#c7cad9
+hi mailQuoted6 guifg=#40445c
 hi def link mailQuoteExp1	mailQuoted1
 hi def link mailQuoteExp2	mailQuoted2
 hi def link mailQuoteExp3	mailQuoted3

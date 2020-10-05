@@ -15,33 +15,41 @@ cleanup(){
 }
 
 files=$(cat /dev/stdin)
+tput civis
 
 selected=1
 IFS=''
 while true
 do
-	clear > /dev/stderr
-	query=".*$(echo "$prev" | sed 's/./&\.\*/g')"
+	query=".*$(echo "$prev" | sed 's/./&\.\*/g')" # fuzzyfy
 	output=$(echo "$files" | grep -i "$query") 
-	echo "$output" | sed 's/^/  /g' > /dev/stderr
-	printf "$(tput setaf 10)$1>$(tput sgr0) $prev" > /dev/stderr
-	tput sc >/dev/stderr
+	[ "$output" != "$oldoutput" ] && {
+		clear > /dev/stderr
+		echo "$output" | sed 's/^/  /g' > /dev/stderr
+		printf "$(tput setaf 10)$1>$(tput sgr0) $prev" > /dev/stderr
+	}
 	[ $(echo "$output" | wc -l) -gt $(tput lines) ] && {
 		len=$(($(tput lines)-1-$selected))
 	} || {
 		len=$(($(echo "$output" | wc -l)-$selected))
 	}
-	tput cup $len 0 >/dev/stderr
+	tput sc >/dev/stderr
+	tput cup $(($len-1)) 0 >/dev/stderr
+	printf '  ' >/dev/stderr
+	tput cup $(($len)) 0 >/dev/stderr
 	tput setaf 7 >/dev/stderr
 	printf -- '>-' >/dev/stderr
 	tput sgr0 >/dev/stderr
+	tput cup $(($len+1)) 0 >/dev/stderr
+	printf '  '
 	tput rc >/dev/stderr
+	tput cnorm
 	read -rsn1 key < /dev/tty
+	tput civis
+	oldoutput="$output"
 	[ "$key" = "$(echo)" ] && cleanup
 	echo "$key" | grep "">/dev/null && selected=$(($selected+1)) && continue
-	echo "$key" | grep "">/dev/null && {
-		[ ! $selected -eq 1 ] && selected=$(($selected-1))
-	} && continue
+	echo "$key" | grep "">/dev/null && { [ ! $selected -eq 1 ] && selected=$(($selected-1)); } && continue
 	newkey=$(echo "$key" | grep '[[:print:]]')
 	[ "$newkey" = "" ] && prev=$(echo "$prev" | sed 's/.$//') || prev="${prev}${newkey}"
 done

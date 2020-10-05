@@ -2,4 +2,4 @@
 
 addrs=${ADDRESSBOOK:-~/general/mail/addr}
 
-tr '\t' ',' < $addrs | dmenu -i -p "To?" | awk -F',' '{print $2}' | xclip
+tr '\t' ',' < $addrs | dmenu -i | awk -F',' '{print $2}' | xclip

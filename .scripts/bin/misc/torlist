@@ -1,0 +1,10 @@
+#!/bin/sh
+
+(
+cat <<- EOF
+zl7kawb6nd3aqzrwo5cz57id7rnp3k7rvsme5seopv65lcgm56ey2oyd.onion   haydenvh.com
+lightingtexfqcor.onion                                           mys
+4b27t6tm5pzgpsrqpzukmlzztfn3ur55dcufaj5esu6brge5qu5nirad.onion   tor.hlircnet.
+avbkoghhuh2q6agbyqvvtglsi27cir6qvjsrn3owkc6ihaegw4kesfid.onion   anselmo
+EOF
+) | dmenu -i | awk '{print $1}' | xclip

@@ -3,7 +3,7 @@
 doas xbps-install -Syu xbps
 doas xbps-install -yu
 doas xbps-remove -Ooy
-doas rm -rf ~/.cache ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst* ~/.dbus ~/.w3m ~/.config/vimb/cookies.db
+doas rm -rf ~/.cache/vimb ~/.mozilla ~/.local/share/webkitgtk ~/.viminfo ~/.wget-hsts ~/.lesshst ~/.sh_history ~/.python_history ~/.*history ~/.*hst* ~/.dbus ~/.w3m ~/.config/vimb/cookies.db
 doas  vkpurge rm all
 (
 	getascii voidlinux

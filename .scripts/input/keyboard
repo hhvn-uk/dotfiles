@@ -2,3 +2,4 @@
 
 setxkbmap -layout us
 setxkbmap -option caps:escape
+xcape -e 'Shift_L=parenleft;Shift_R=parenright'

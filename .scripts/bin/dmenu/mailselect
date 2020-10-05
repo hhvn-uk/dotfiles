@@ -1,6 +1,6 @@
 #!/bin/sh
 
-user=$(grep '#user' < ${XDG_CONFIG_HOME:-$HOME/.config}/neomutt/neomuttrc | awk '{print $2}' | dmenu -i -p "select profile: ")
+user=$(grep '#user' < ${XDG_CONFIG_HOME:-$HOME/.config}/neomutt/neomuttrc | awk '{print $2}' | dmenu -i)
 
 [ "$user" = "" ] && printf "no profile selected" && exit 1
 

@@ -1,3 +1,5 @@
+vsplit		vim -O
+split		vim -o
 l		\ls --color=auto -Fh
 ls		\ls --color=auto
 d		\ls --color=auto -FCash
@@ -15,7 +17,6 @@ xiu		sudo xbps-install -S; sudo xbps-install -yu xbps; sudo xbps-install -yu; su
 xq		sudo xbps-query
 xr		sudo xbps-remove
 wget		\wget --hsts-file="/dev/null"
-irssi		\irssi --config ~/.config/irssi/config
 pipes		\pipes -R -r 10000 -c 10 -c 11 -c 12 -c 13 -c 14 -c 15 -s 15
 clock		tty-clock -s -c -C 7
 ytdl		youtube-dl --add-metadata -ic
@@ -37,8 +38,6 @@ fwknop		fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full
 edconf		nvim ~/.config/zsh/.zshrc
 gnu.matrix	fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full -sn gnu.matrix && ssh gnu.matrix
 rss		sfeed_update $XDG_CONFIG_HOME/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $XDG_CACHE_HOME/sfeed/*
-dd		echo PLEASE TRIPLE CHECK, THEN RUN ddd
-ddd		\dd
 diff		colordiff
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls

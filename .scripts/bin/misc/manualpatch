@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for f in *.rej
+do
+	vim ${f%%.rej} $f -O
+done

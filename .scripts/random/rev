@@ -1,0 +1,14 @@
+#!/bin/awk -f
+
+function reverse_print(fwd, rev, i, n) {
+	n = length(fwd)
+	for (i = n; i >= 1; i--)
+		rev = rev substr(fwd, i, 1);
+	return rev
+}
+
+{
+	for (i = 1; i <= NF; i++)
+		$i = reverse_print($i)
+	print
+}

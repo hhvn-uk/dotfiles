@@ -14,5 +14,5 @@ socket2="$2"
 do_url() {
 	hmpv pause $socket; echo $url | xargs $1
 }
-url=$(xclip -o | tr " " "\n" | awk '/http|gopher/ {print $0}' | $dmenu -p "URL:")
+url=$(xclip -o | tr " " "\n" | awk '/http|gopher/ {print $0}' | $dmenu)
 do_url "mpv --input-ipc-server=$socket2"
