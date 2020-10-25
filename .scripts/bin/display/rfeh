@@ -15,6 +15,7 @@ Written by Hayden Hamilton <hayden@haydenvh.com>' && exit 0
 
 monitors=2
 files=$(find $1/ -name "*png" | shuf | head -n $monitors)
+mkdir -p $HOME/.cache/rfeh
 echo $files > $HOME/.cache/rfeh/prev
 files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
 for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')

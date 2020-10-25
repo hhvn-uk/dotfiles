@@ -25,9 +25,6 @@ super + b
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
-super + shift + l
-	tabbed -c st -w > /tmp/txid
-
 super + n
 	st -e mpvrcp /tmp/mpv-socket
 
@@ -129,3 +126,9 @@ super + y
 
 super + shift + y
 	st -e sh -c 'wifioff && cu dock'
+
+super + shift + {h,j,k,l}
+	xdotool mousemove_relative -- {-10 0,0 10,0 -10,10 0}
+
+super + ctrl + {h,j,k,l}
+	xdotool mousemove_relative -- {-40 0,0 40,0 -40,40 0}

@@ -11,7 +11,8 @@ do
 			find -maxdepth 1 -type d | sed '/^\.$/d;s~^\./~~;s~$~/~'
 		) | dmenu -i -w $3 -c -p "$(pwd)" | tr -d ' ')
 	[ "$df" = "" ] && exit
-	[ -d "$df" ] && cd "$df" || {
+	[ -d "$df" ] && cd "$df"
+	[ ! -d "$df" ] && {
 		st -w $(xwininfo -children -id $3 | awk '$1 == "Parent" {print $4}') -e sh -c "curl '$1' --cookie '$2' --cookie-jar '$2' > '$df'"
 		exit
 	}

@@ -1,9 +1,10 @@
+# vim: set syntax=tmux :
+
 unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
-# set-option -g default-terminal "xterm-256color"
-set-option -g default-terminal "st-256color"
+set-option -g default-terminal "xterm-256color"
 
 bind z split-window -h
 bind Z split-window -v
@@ -11,7 +12,6 @@ unbind '"'
 unbind %
 
 bind r source-file ~/.tmux.conf
-bind R source-file ~/.config/tmux/config
 
 bind-key h select-pane -L
 bind-key j select-pane -D
@@ -24,7 +24,7 @@ bind-key -r C-k resize-pane -U
 bind-key -r C-l resize-pane -R
 
 set-option -g status-justify right
-set-option -g status-bg black
+set-option -g status-bg black # colour213 # pink
 set-option -g status-fg cyan
 set-option -g status-interval 5
 set-option -g status-left-length 30
@@ -44,18 +44,15 @@ set -g pane-active-border-style 'fg=colour10'
 set -g status-position bottom
 set -g status-justify centre
 set -g status-style 'bg=colour0 fg=colour11'
-set -g status-left '[#(whoami)@#H] > '
-set -g status-right '[#(pwd | sed "s~/home/~~g")] [#(git branch)] #[bg=colour4] %d/%m #[bg=colour10] %H:%M:%S '
+set -g status-left '[#(whoami)@#H]'
+set -g status-right '#[bg=colour11,fg=colour10] %d/%m/%y #[bg=colour10,fg=colour11] %H:%M:%S '
 set -g status-right-length 45
 set -g status-left-length 45
 
 setw -g window-status-current-style 'fg=colour7 bg=colour3 bold'
-setw -g window-status-current-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
+setw -g window-status-current-format ' #[fg=colour255]#W '
 setw -g window-status-style 'fg=colour7 bg=colour2 dim'
-setw -g window-status-format ' #I#[fg=colour249]:#[fg=colour255]#W#[fg=colour249]#F '
+setw -g window-status-format ' [#I#[fg=colour249]]#[fg=colour255]#W#[fg=colour249] '
 
 # messages
-set -g message-style 'fg=colour232 bg=colour16 bold'
-
-#vi mode
-set-window-option mode-keys vi
+set -g message-style 'fg=colour232 bg=colour7 bold'

@@ -1,11 +1,11 @@
 #!/bin/sh
 #
 # mkmaildir - create a mail directory that neomutt recognizes
-# usage: mkmaildir /path/to/maildir1 [/path/to/maildir2] ...
+# usage: mkmaildir maildir1 [maildir2] ...
 
 for d in $*
 do
-	mkdir -p $d/cur
-	mkdir -p $d/tmp
-	mkdir -p $d/new
+	mkdir -p $HOME/general/mail/$d/cur
+	mkdir -p $HOME/general/mail/$d/tmp
+	mkdir -p $HOME/general/mail/$d/new
 done

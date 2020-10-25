@@ -20,10 +20,18 @@
 
 
 [ -z $1 ] 2>/dev/null && echo "usage: ytsrch2 <query> [number of items]" && exit
-content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$1" | xxd -p | tr -d '\n' | sed 's/../%&/g')")
+query="$1"
+while ! [ $2 -gt 0 ] && [ ! -z $2 ]
+do
+	query="$query $2"
+	shift
+done 2>/dev/null
+content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$query" | xxd -p | tr -d '\n' | sed 's/../%&/g')")
 
 # this is just fucking braindead obfuscation, fuck youtube
-titles=$(echo "$content" | sed 's/"}\],"accessibility"/\n/g' | grep -o '"width":336*,"height":188}]},"title":{"runs":\[{"text":".*' | sed 's~"width":336,"height":188}\]},"title":{"runs":\[{"text":"~~' | nl)
+
+# titles=$(echo "$content" | sed 's/"}\],"accessibility"/\n/g' | grep -o '"width":336*,"height":188}]},"title":{"runs":\[{"text":".*' | sed 's~"width":336,"height":188}\]},"title":{"runs":\[{"text":"~~' | nl)
+titles=$(echo "$content" | sed 's/"}\],"accessibility"/\n/g' | grep -o ',"title":{"runs":\[{"text":".*' | sed 's/,"title":{.*\[{"text":"//g' | nl) # nice fix from Nebula_W2081d
 authors=$(echo "$content" | grep -o 'ownerText":{"runs":\[{"text":"[^"]*' | sed 's~ownerText":{"runs":\[{"text":"~~' | nl)
 length=$(echo "$content" | grep -o '"lengthText":{"accessibility":{"accessibilityData":{"label":"[^"]*' | sed 's~"lengthText":{"accessibility":{"accessibilityData":{"label":"~~' | nl)
 dates=$(echo "$content" | grep -o '"publishedTimeText":{"simpleText":"[^"]*"},"lengthText":' | sed 's~"publishedTimeText":{"simpleText":"~~;s~"},"lengthText":$~~' | nl)
@@ -31,7 +39,7 @@ views=$(echo "$content" | grep -o '"simpleText":"[^"]*"},"viewCountText":{"simpl
 uris=$(echo "$content" | grep -o '{"videoId":"[^"]*","thumbnail":{"thumbnails":\[{"url":"https://i.ytimg.com/vi/' | sed -E 's~.*"videoId":"([^"]*)",".*~https://www.youtube.com/embed/\1~' | nl)
 
 getelem(){
-	echo "$2" | awk -v "num=$1" '$1 == num' | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//'
+	echo "$2" | awk -v "num=$1" '$1 == num' | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//;s/\\u0026/\&/g'
 }
 
 for i in $(seq ${2:-20})

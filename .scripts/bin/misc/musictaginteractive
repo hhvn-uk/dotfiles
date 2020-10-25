@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# usage: musictaginteractive [artist] [album]
+
+[ "$1" != "" ] && sartist=1 && artist="$1"
+[ "$2" != "" ] && salbum=1 && album="$2"
+
+get(){
+	printf "$1? "
+	read $1 </dev/tty
+}
+
+num=0
+for f in *
+do
+	num=$(($num+1))
+	echo "$(tput setaf 10)$f:$(tput sgr0)"
+	[ $sartist -ne 1 ] && get artist
+	get title
+	[ $salbum -ne 1 ] && get album
+	musictag "$f" "$artist" "$title" "$album" "$(printf "%02d" "$num")"
+done

@@ -1,22 +1,14 @@
-*,div,pre,textarea,body,input,td,tr,p {
+* {
 	background-color: #0a0a10 !important;
 	background-image: none !important;
 	color: #1e5eb3 !important;
-	border-radius:0; /* I don't like round-edge'd rectangles, thank you very much. */
-	border-color:#008787;
-}
-button,input,textarea {
-	border:1px solid #008787;
-	border:1px solid #008787;
 }
 h1,h2,h3,h4 {
-	background-color: #0a0a10 !important;
-	background-image: none !important;
-	color: #8599a7 !important;
-}
-img {
-	opacity: 0.6;
+	color: #a3a6b3 !important;
 }
 a {
 	color: #575b72 !important;
+}
+img {
+	opacity: .5;
 }

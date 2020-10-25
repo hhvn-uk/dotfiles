@@ -27,14 +27,12 @@
 # guess the wireless interface
 [ -z $1 ] && {
 	interface=$(ip a | grep -o '^[0-9]*: w[^:]*:' | sed -E 's/[0-9]*: ([^:]*):/\1/')
-	interfaceeth=$(ip a | grep -o '^[0-9]*: e[^:]*:' | sed -E 's/[0-9]*: ([^:]*):/\1/')
 	echo "$interface" | grep '[[:alnum:]]' >/dev/null || {
 		echo "Couldn't guess the interface, please provide one as argument 1"
 		exit 1
 	}
 } || interface="$1"
 
-$super ifconfig $interfaceeth up
 $super ifconfig $interface down
 $super pkill wpa_supplicant
 $super pkill dhclient
@@ -51,3 +49,5 @@ ping -c 5 example.com 2>&1 | tee /dev/stderr | grep '5 received,' >/dev/null && 
 	tput setaf 10
 	echo "Something broke.. :("
 }
+
+rm .ssh/session*

@@ -37,8 +37,10 @@ notes		vim ~/.local/notes
 fwknop		fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full
 edconf		nvim ~/.config/zsh/.zshrc
 gnu.matrix	fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full -sn gnu.matrix && ssh gnu.matrix
-rss		sfeed_update $XDG_CONFIG_HOME/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $XDG_CACHE_HOME/sfeed/*
+rss		sfeed_update $XDG_CONFIG_HOME/sfeed/config && . $XDG_CONFIG_HOME/sfeed/config && sfeed_curses $XDG_CACHE_HOME/sfeed/*
 diff		colordiff
+irc		(sleep 1 && xdotool type 'tmux a' && xdotool key Return) & ssh local
+cgo		rlwrap cgo
 ~d		cd ~/general/downloads; ls
 ~do		cd ~/general/documents; ls
 ~iw		cd ~/images/wallpapers; ls
@@ -53,7 +55,6 @@ diff		colordiff
 ~sbdm		cd ~/.scripts/bin/dmenu; ls
 ~sbi		cd ~/.scripts/bin/i3; ls
 ~sbm		cd ~/.scripts/bin/misc; ls
-~vrc		vim ~/.vimrc
 ~		cd
 ..		cd ..
 ...		cd ../..

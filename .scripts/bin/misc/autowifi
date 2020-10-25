@@ -26,8 +26,7 @@
 
 # guess the wireless interface
 [ -z $1 ] && {
-	interface=$(ip a | grep -o '^[0-9]*: w[^:]*:' | sed -E 's/[0-9]*: ([^:]*):/\1/')
-	interfaceeth=$(ip a | grep -o '^[0-9]*: e[^:]*:' | sed -E 's/[0-9]*: ([^:]*):/\1/')
+	interface=$(ip a | grep -o '^[0-9]*: w[^:]*:' | sed -E 's/[0-9]*: ([^:]*):/\1/' | head -n 1)
 	echo "$interface" | grep '[[:alnum:]]' >/dev/null || {
 		echo "Couldn't guess the interface, please provide one as argument 1"
 		exit 1
@@ -40,19 +39,20 @@ ssid=$($super iwlist $interface scan 2>&1 | grep SSID | sed -E 's/.*:"([^"]*)"/\
 pass=$(printf '' | dmenu -i -p "Passphrase:")
 
 wpa_passphrase "$ssid" "$pass" > /tmp/"$ssid".wpa.conf
-$super wpa_supplicant -B -i "$interface" -c /tmp/"$ssid".wpa.conf
+$super wpa_supplicant -B -i $interface -c /tmp/"$ssid".wpa.conf
 $super dhclient
-$super ifconfig $interfaceeth down
 
 sleep 2
 tput setaf 10
 echo "...testing..."
 sleep 7
 tput sgr0
-ping -c 5 example.com 2>&1 | tee /dev/stderr | grep '5 received,' >/dev/null && {
+ping -I $interface -c 5 example.com 2>&1 | tee /dev/stderr | grep '5 received,' >/dev/null && {
 	tput setaf 10
 	echo "Yup"
 } || {
 	tput setaf 10
 	echo "Something broke.. :("
 }
+
+rm .ssh/session*

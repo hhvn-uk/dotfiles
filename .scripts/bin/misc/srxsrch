@@ -1,0 +1,50 @@
+#!/bin/sh
+
+location=/exec/srxsrch.dcgi
+instance=searx.sunless.cloud
+
+# this script works both as a gopher frontend & cmdline frontend
+[ -z $1 ] 2>/dev/null && echo "usage: srxsrch <query> [page]"
+#
+# gopher: [7|srxsrch|searx.dcgi|server|port]
+# gopher: [7|srxsrch|searx.dcgi?page|server|port]
+#                              ^^^^^
+# gopher: [1|srxsrch|searx.dcgi?page:query|server|port]
+#                              ^^^^^^^^^^^
+# will generate links if it can find env variables for geomyidae
+# eg: search again, next page, and http links
+
+echo "$2" | grep ':' >/dev/null && {
+	query=${2##*:}
+	page=${2%%:*}
+} || {
+	query="$1"
+	page="${2:-1}"
+}
+
+gopherize(){
+	[ "$SERVER_PROTOCOL" = "gopher/1.0" ] && {
+		echo "[7|Search again|$location|server|port]"
+		echo "[1|Next page|$location?$(($page+1)):$query|server|port]"
+		echo
+		tr '|\n' ':\t' | sed -E 's~\t(\[[0-9]*\])~\n\1~g' | awk -F"	" '{printf("[h|%s %s|URL:%s|server|port]\n%s\n\n", $1, $3, $2, $4)}'
+		echo
+		echo "[1|Next page|$location?$(($page+1)):$query|server|port]"
+		echo "[7|Search again|$location|server|port]"
+		echo "Powered by searx at http://$instance"
+	} || cat
+}
+
+dorecode(){
+	command -v recode >/dev/null && recode html.. || cat
+}
+
+curl -H "Accept-Language: en-US" -qsL "https://$instance/?q=$(echo "$query" | xxd -p | tr -d '\n' | sed 's/../%&/g')&pageno=$page" \
+	| grep '<div class="result' | sed -E '
+		s~<[^>]*><[^>]*id="result-([0-9]*)">~[\1] ~;
+		s~<a href="([^"]*)"~\n'"$(tput setaf 9)\1$(tput sgr0)"'~;
+		s~ rel="noreferrer"[^>]*>~\n~;
+		s~</a></h4><p class="result-content">~\n~;
+		s~</p><div class="clearfix".*~\n~;
+		s~<span class="highlight">~'"$(tput bold)~g;
+		s~</span>~$(tput sgr0)~g" | dorecode | gopherize | less -R

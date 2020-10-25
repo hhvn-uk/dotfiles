@@ -11,7 +11,6 @@
 " surround - allows operation on surrounding characters
 " commentary - comments stuff out
 " repeat - repeat things
-" vimling (ipa, deadkeys) - deadkeys
 " vimagit - git in vim
 " quickscope - find stuff easer 
 
@@ -66,6 +65,7 @@ noremap <leader>ca :ColorizerAttachToBuffer<CR>
 noremap <leader>cd :ColorizerDetachFromBuffer<CR>
 noremap <leader>C :!sudo make all install clean<CR>
 noremap <leader>CC :call Centre()<CR>
+noremap <leader>Cc :call PlaceCC()<CR>
 noremap <leader>oc :!groff -T pdf % - > /tmp/grff \| zathura -<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 noremap <leader>sv :!sent % \| set linebreak<CR> 
 noremap <leader>sc :setlocal spell! spelllang=en_gb \| set linebreak<CR>

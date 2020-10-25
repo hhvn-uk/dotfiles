@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# bandcampsrch.sh
+#
+# hayden@haydenvh.com
+# Copyright (c) 2020 hhvn
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+[ -z $1 ] 2>/dev/null && echo "usage: bandcampsrch <query>" && exit
+location=/exec/bandcampsrch.dcgi
+
+#
+# gopher: [7|bandcampsrch|bandcampsrch.dcgi|server|port]
+#
+# gopher: [1|bandcampsrch|bandcampsrch.dcgi?query|server|port]
+#                                          ^^^^^^
+
+# This has been one of the nicest services to frontedize yet.
+# Works very nicely with awk :)
+
+gopherize(){
+	[ "$SERVER_PROTOCOL" = "gopher/1.0" ] && {
+		echo "[7|Search again|$location|server|port]"
+		sed -E 's/ (http.*$)/[h|\1|URL:\1|server|port]/'
+	} || cat
+}
+		
+curl -H "Accept-Language: en-US" -qsL "https://bandcamp.com/search?q=$(echo "$@" | xxd -p | tr -d '\n' | sed 's/../%&/g')" | \
+sed 's/^[[:space:]]*//g' | awk -v "c0=$(tput sgr0)" -v "c1=$(tput setaf 4)" -v "c2=$(tput setaf 6)" -v "c3=$(tput setaf 8)" '
+	## Start of a "block"
+	/^ARTIST/ {
+		artist=1
+		geturl=1
+		printf("\n%s[ARTIST]%s\n", c1, c0) 
+		next
+	}
+	/^ALBUM/ {
+		album=1
+		geturl=1
+		printf("\n%s[ALBUM]%s\n", c2, c0)
+		next
+	}
+	/^TRACK/ {
+		track=1
+		geturl=1
+		printf("\n%s[TRACK]%s\n", c3, c0)
+		next
+	}
+
+	## End of a "block"
+	/^<div class="releases">/ {
+		artist=0
+	}
+	/^<div class="itemurl">/ {
+		album=0
+		track=0
+	}
+
+	## Generic printing
+	/^<a href="/ {
+		if (geturl == 1)
+			print " " $0
+		geturl=0
+	}
+	/^[A-Za-z0-9]/ {
+		if (artist == 1 || album == 1 || track == 1)
+			print " " $0
+	}
+' | sed -E 's/<a href="([^?]*).*/\1/' | gopherize | less -R

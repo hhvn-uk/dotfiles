@@ -1,18 +1,9 @@
 #!/bin/bash
-#
 # dmenu/dmpvurl
-# Created by Hayden Hamilton
-#
-# hayden@haydenvh.com
-# Copyright (c) 2019-2020 Hayden Hamilton.
-#
 
-dmenu="dmenu"
-. $HOME/.dmenurc
 socket="$1"
 socket2="$2"
-do_url() {
-	hmpv pause $socket; echo $url | xargs $1
-}
-url=$(xclip -o | tr " " "\n" | awk '/http|gopher/ {print $0}' | $dmenu)
-do_url "mpv --input-ipc-server=$socket2"
+url=$(xclip -o | tr " " "\n" | awk '/http|gopher/ {print $0}')
+
+hmpv pause $socket
+mpvms video "$url"

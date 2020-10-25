@@ -55,4 +55,4 @@ export LC_MEASUREMENT="sv_SE.UTF-8"
 export LC_IDENTIFICATION="sv_SE.UTF-8"
 export LC_ALL="sv_SE.UTF-8"
 
-alias emacs="vim" # :)
+cd $HOME # welcome home (st inherits / from hildon)

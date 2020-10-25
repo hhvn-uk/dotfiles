@@ -12,7 +12,7 @@ set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =lists =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =money =dataswamporg =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
@@ -44,7 +44,7 @@ macro index A \
     "<clear-flag>O" \
     "mark mail as read"
 
-my_hdr X-Mailer: neomutt & procmail
+my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date
 
 #folder-hook sent

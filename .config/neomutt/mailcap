@@ -1,8 +1,9 @@
 #text/html		; lynx -stdin -dump < '%s' | less
-text/html		; vimb '%s'
+text/html		; surf '%s'
 text/*			; nvim '%s'
 
 application/pdf		; zathura '%s'
 application/*		; whatdoido '%s'
 
 image/*			; sxiv '%s'
+video/*			; mpv '%s'

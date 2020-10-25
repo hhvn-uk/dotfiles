@@ -10,3 +10,8 @@ function! Centre()
 	endwhile
 	echo c
 endfunction
+
+function! PlaceCC()
+	let cols=col(".")
+	exec 'set cc=' . cols
+endfunction

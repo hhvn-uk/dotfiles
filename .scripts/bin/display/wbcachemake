@@ -1,10 +1,5 @@
 #!/bin/sh
-#
-# wbcachemake
-# Created by Hayden Hamilton
-#
-# hayden@haydenvh.com
-# Copyright (c) 2020 Hayden Hamilton
+# usage: wbcachemake
 
 cache=$HOME/general/cache/
 

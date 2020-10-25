@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# bandcampdl.sh <url to album> [media player]
+#
+# Looks like youtube-dl won't be getting worked on for a while
+# Fuck the RIAA
+#
+# bandcamp seems to use mp3 exclusively.. but if that's not the case.. :)
+
+url="$1"
+[ ! -z $2 ] && out="xargs $2" || out="dl"
+
+dl(){
+	mkdir -p "$(basename "$url")"
+	num=0
+	while IFS= read -r input
+	do
+		num=$(($num+1))
+		curl "$input" > "$(basename "$url")/$num.mp3"
+	done
+}
+
+# this is criminally easy.
+curl "$url" | grep -o 'https://[^}]*/mp3-128/[^}]*' | sed 's~\&amp;~\&~g;s~\&quot;~~' | $out

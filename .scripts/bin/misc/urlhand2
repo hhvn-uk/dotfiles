@@ -7,7 +7,7 @@ mpvms
 popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
-surf -e $(cat /tmp/tabbed.xid)
+surf -e $(cat /tmp/tabbed.xid || echo 0x0)
 toxclip
 netimg
 netvid

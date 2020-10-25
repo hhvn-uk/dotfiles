@@ -4,7 +4,11 @@
 [ "$1" = "video" ] && {
 	shift
 	hmpv pause /tmp/mpv-socket
-	mpv --input-ipc-server=/tmp/mpv-socket2 $@
+	herbe "Playing video(s): $@" &
+	mpv --input-ipc-server=/tmp/mpv-socket2 $@ || herbe "Failed to play video(s): $@"
+	exit
 } || {
-	mpv --input-ipc-server=/tmp/mpv-socket --no-video $@
+	herbe "Playing music: $@" &
+	mpv --input-ipc-server=/tmp/mpv-socket --no-video $@ || herbe "Failed to play music: $@"
+	exit
 }

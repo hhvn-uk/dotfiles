@@ -1,6 +1,15 @@
 #!/bin/sh
 
 station=$(echo "http://relay4.slayradio.org:8000/
-http://bitreich.org:3232/live" | dmenu -i)
+http://bitreich.org:3232/live
+https://hls.absoluteradio.co.uk/absoluteclassicrock.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute60s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute70s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute80s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute90s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute00s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absolute10s.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absoluteradio.aac/playlist.m3u8
+https://hls.absoluteradio.co.uk/absoluteradio.aac/playlist.m3u8" | dmenu -i)
 
 mpv --input-ipc-server=/tmp/mpv-socket3 $station
