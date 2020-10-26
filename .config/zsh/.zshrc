@@ -1,4 +1,5 @@
 # Make alias'
+PATH="$PATH:$HOME/.scripts/bin"
 mkalias
 
 # Prompt

@@ -36,18 +36,3 @@
 $super ifconfig $interface down
 $super pkill wpa_supplicant
 $super pkill dhclient
-
-sleep 2
-tput setaf 10
-echo "...testing..."
-sleep 7
-tput sgr0
-ping -c 5 example.com 2>&1 | tee /dev/stderr | grep '5 received,' >/dev/null && {
-	tput setaf 10
-	echo "Yup"
-} || {
-	tput setaf 10
-	echo "Something broke.. :("
-}
-
-rm .ssh/session*

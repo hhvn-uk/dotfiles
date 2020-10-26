@@ -16,7 +16,7 @@ dl(){
 	while IFS= read -r input
 	do
 		num=$(($num+1))
-		curl "$input" > "$(basename "$url")/$num.mp3"
+		curl "$input" > "$(basename "$url")/$(printf "%02d" "$num").mp3"
 	done
 }
 

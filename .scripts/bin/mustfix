@@ -1,0 +1,7 @@
+#!/bin/sh
+
+locate -b .mustfix | while IFS= read -r f
+do
+	printf "$f: "
+	cat "$f"
+done

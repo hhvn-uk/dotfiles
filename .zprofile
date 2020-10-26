@@ -6,9 +6,7 @@
 # Copyright (c) 2019 Hayden Hamilton. LICENSE:MIT
 #
 
-export SCRIPTS="$HOME/.scripts/bin"
-scripts=$(ls -d $SCRIPTS/*/ | tr '\n' ':')
-export PATH="$PATH:$scripts"
+export PATH="$PATH:$HOME/.scripts/bin"
 export EDITOR="nvim"
 export PAGER="less"
 export TERMINAL="st"
