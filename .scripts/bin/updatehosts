@@ -1,6 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] && echo "usage: script /path/to/dnsfile" && exit 1
-
-[ ! -f /etc/hosts.old ] && cp /etc/hosts /etc/hosts.old && echo "Copying /etc/hosts to /etc/hosts.old - if you want to manually add to your hosts, please append /etc/hosts.old, and rerun this script, as anything added to /etc/hosts will be overwritten in next run of this script."
-cat /etc/hosts.old hosts > newhosts && echo "new hosts file saved to 'newhosts'"

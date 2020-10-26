@@ -37,7 +37,6 @@ gitadd .config/neomutt/mailcap
 gitadd .config/neomutt/signatures
 gitadd .config/git/
 gitadd .config/nvim/ 
-gitadd .config/surf/cookies.txt
 gitadd .config/surf/script.js
 gitadd .config/surf/styles
 git rm --cache .config/nvim/.netrwhist
@@ -47,7 +46,6 @@ git rm --cache .config/irssi/config.autosave
 git rm --cache .config/irssi/default.theme
 git rm --cache .config/irssi/saved_nick_colors
 git rm -rf --cache .config/irssi/nicklist*
-git rm --cache .config/surf/bookmarks.txt
 gitadd .config/galias
 gitadd .config/redshift/
 gitadd .ssh/config

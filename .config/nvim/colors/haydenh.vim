@@ -36,7 +36,7 @@ hi Visual		cterm=reverse gui=reverse
 " hi DiffText		guibg=olivedrab
 " hi DiffAdd		guibg=slateblue
 " hi DiffDelete   guibg=coral
-hi Folded		cterm=bold,underline ctermfg=255 ctermbg=none guifg=#aaaaaa guibg=#555555 gui=bold,underline
+hi Folded		cterm=bold ctermfg=255 ctermbg=none guifg=#aaaaaa guibg=#555555 gui=bold
 hi FoldColumn	cterm=none ctermfg=249 ctermbg=1 guifg=#b2b2b2 gui=none
 " hi cIf0			guifg=gray
 " hi diffOnly	guifg=red gui=bold
