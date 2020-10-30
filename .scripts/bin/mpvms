@@ -5,10 +5,10 @@
 	shift
 	hmpv pause /tmp/mpv-socket
 	herbe "Playing video(s): $@" &
-	mpv --input-ipc-server=/tmp/mpv-socket2 $@ || herbe "Failed to play video(s): $@"
+	mpv --input-ipc-server=/tmp/mpv-socket2 -- $@ || herbe "Failed to play video(s): $@"
 	exit
 } || {
 	herbe "Playing music: $@" &
-	mpv --input-ipc-server=/tmp/mpv-socket --no-video $@ || herbe "Failed to play music: $@"
+	mpv --input-ipc-server=/tmp/mpv-socket --no-video -- $@ || herbe "Failed to play music: $@"
 	exit
 }

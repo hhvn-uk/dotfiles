@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export MANPAGER=zathura 
+man -T pdf $1

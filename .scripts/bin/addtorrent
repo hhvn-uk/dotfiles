@@ -1,0 +1,6 @@
+#!/bin/sh
+
+[ "$1" = "xclip" ] && set -- "$(xclip -o)"
+
+pgrep transmission || transmission-daemon -g ~/.config/transmission
+transmission-remote -a "$@" && herbe "Torrent added" || herbe "Torrent not added"

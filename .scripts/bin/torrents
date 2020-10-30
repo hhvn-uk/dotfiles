@@ -1,0 +1,5 @@
+#!/bin/sh
+
+pgrep transmission-da || transmission-daemon -g ~/.config/transmission
+
+stig

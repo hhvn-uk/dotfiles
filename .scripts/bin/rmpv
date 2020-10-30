@@ -6,10 +6,14 @@
 # hayden@haydenvh.com
 # Copyright (c) 2019-2020 Hayden Hamilton.
 
-files=$(find $1 -type f | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n $2 | sed 's/ - //g')
+files=$(find "$1" -type f | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n $2)
 echo "$files" | grep '[[:alnum:]]' >/dev/null || {
 	echo "No files found..."
 	exit 1
 }
 
-echo "$1" | grep "music" && mpv --input-ipc-server=/tmp/mpv-socket $files --no-video || mpv --input-ipc-server=/tmp/mpv-socket $files
+echo "$1" | grep "music" && {
+	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket --no-video --
+} || {
+	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket $files
+}

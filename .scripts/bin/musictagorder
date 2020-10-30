@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# usage: musictagorder -m [f1] [f2]
+# 
+# -m do not prefix filename with track num
+
+[ "$1" != "-m" ] && move=y || shift
+
+count=0
+while [ $# -ne 0 ]
+do
+	count=$(($count+1))
+	prettycount=$(printf '%02d' $count)
+
+	ffmpeg -y -notdin -i "$1" -map_metadata 0 -vn -c -copy -metadata "track=$prettycount" "$prettycount.$1"
+done

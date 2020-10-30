@@ -11,7 +11,10 @@ super + shift + t
 	pkill -SIGUSR2 herbe
 
 super + ctrl + t
-	pkill -SIGKILL herbe; herbe; herbe "Fixed herbe"
+	pkill -SIGKILL herbe; herbe
+
+super + alt + t
+	herbe "test"
 
 super + a
 	addrbook
@@ -87,6 +90,12 @@ super + shift + g
 
 super + g
 	st -e sh -c 'nvim ~/.local/notes'
+
+super + o
+	st -e torrents
+
+super + shift + o
+	addtorrent xclip
 
 super + alt + t
 	hmpv quit /tmp/mpv-socket3

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+transmission-remote -l | sed 's/Up & Down/Updown/' | awk '$8 != "Status" && $8 != ""' \
+	| sed 's/.*Seeding/Seeding/;s/.*Updown/Downloading\nSeeding/;
+	  s/.*Downloading/Downloading/;s/.*Idle/Idle/;s/.*Queued/Queued/;
+	  s/.*Stopped/Stopped/' | awk '{print $1}' | sort | uniq -c | tr '\n' ' ' \
+	| sed 's/  /|/g' | tr -s ' |' | sed 's/|/ |/g;s/^ |/[^c#aaaaaa^/;s/ $/] /;' | sed -E '
+	  s/([0-9]*) Downloading/^c#892b2b^\1D^c#aaaaaa^/;
+	  s/ Idle/I/;
+	  s/ Queued/Q/;
+	  s/([0-9]*) Seeding/^c#3fc1ce^\1S^c#aaaaaa^/;
+	  s/([0-9]*) Stopped/^c#777b8e^\1N^c#aaaaaa^/;'
