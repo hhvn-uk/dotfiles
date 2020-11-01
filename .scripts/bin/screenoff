@@ -1,9 +1,3 @@
 #!/bin/sh
 
-[ -f /tmp/screenoff ] && {
-	xset dpms force on
-	rm /tmp/screenoff
-} || {
-	xset dpms force off
-	touch /tmp/screenoff
-}
+xset dpms force off

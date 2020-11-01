@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# nwatched - a script for finding unwatched files in a fs hierarchy 
+#
+# Create a dir, inside it a subdir for each video
+#
+# eg:
+# videos/film1
+# videos/film2
+# videos/film3
+#
+# nwatched will output all 3 dirs
+#
+# Now, if you watch 'film2', create the file videos/film2/WATCHED, nwatched
+# will instead only output:
+#
+# videos/film1
+# videos/film3
+#
+# Useful? :)
+
+[ -z $1 ] 2>/dev/null && echo "usage: nwatched /path/to/dir" && exit
+
+watched=$(find "$1" | grep 'WATCHED$' | sed 's~/WATCHED$~~')
+all=$(find "$1" -type d)
+
+printf "$watched\n$all\n" | sort | uniq -c | awk '$1 != 2 {$1=""; print}'

@@ -1,5 +1,4 @@
 # Make alias'
-PATH="$PATH:$HOME/.scripts/bin"
 mkalias
 
 # Prompt
@@ -10,6 +9,7 @@ precmd(){
 	dir=$(pwd)
 	prompt="%{$(tput setab 3)%0G%} %{$(tput sgr0)%0G%} "
 	[ "$prev" != "0" ] && prompt+="%F{10}$prev "
+	[ "$USER" = "root" ] && prompt+="%F{8}$root "
 	prompt+="%F{6}"
 	prompt+="$dir"
 	prompt+="%F{5}"

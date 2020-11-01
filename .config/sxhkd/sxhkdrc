@@ -53,7 +53,7 @@ super + d
 	dmenu_run
 
 super + e
-	st -e tmux
+	st -e tmux -f $HOME/.config/tmux/config
 
 super + ctrl + e
 	rfeh ~/images/wallpapers/ auto right
@@ -141,3 +141,16 @@ super + shift + {h,j,k,l}
 
 super + ctrl + {h,j,k,l}
 	xdotool mousemove_relative -- {-40 0,0 40,0 -40,40 0}
+
+#thinkpad codes
+
+# XF86Sleep
+# XF86Batter
+XF86ScreenSaver
+	st -e slock_mod
+
+XF86Display
+	xset dpms force off
+
+# XF86TouchpadToggle
+# XF86Suspend
