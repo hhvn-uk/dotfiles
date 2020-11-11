@@ -1,0 +1,10 @@
+#!/bin/sh
+
+[ -z $1 ] && echo "usage: dnsbl <ip4 addr> [service]" && exit 1
+[ -z $2 ] && service=torexit.dan.me.uk || service="$2"
+
+rev=$(echo "$1" | awk 'BEGIN {OFS="."; FS="."}; {print $4, $3, $2, $1}')
+
+host "$rev.$service" | awk '{print $4}' >/dev/null || exit 1
+
+dig +short "$rev.$service" TXT

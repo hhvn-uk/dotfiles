@@ -14,6 +14,12 @@
 " vimagit - git in vim
 " quickscope - find stuff easer 
 
+"Persistant undo
+set undodir=~/.local/share/nvim/
+set undofile
+set undolevels=1000
+set undoreload=10000
+
 "Leader
 let mapleader=";"
 let maplocalleader=','

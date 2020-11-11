@@ -1,10 +1,4 @@
-#
-# .profile
-# Created by Hayden Hamilton
-#
-# haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton. LICENSE:MIT
-#
+#!/bin/ksh
 
 export PATH="$PATH:$HOME/.scripts/bin"
 export EDITOR="nvim"
@@ -54,3 +48,6 @@ export LC_IDENTIFICATION="sv_SE.UTF-8"
 export LC_ALL="sv_SE.UTF-8"
 
 cd $HOME # welcome home (st inherits / from hildon)
+
+[ "$(basename $SHELL)" != "ksh" ] && ksh
+

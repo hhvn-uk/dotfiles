@@ -2,4 +2,9 @@
 
 setxkbmap -layout us
 setxkbmap -option caps:escape
-xcape -e 'Shift_L=parenleft;Shift_R=parenright'
+
+# unicomp endurapro - increase trackpoint sensitivity
+xinput set-prop "pointer:Unicomp Inc Unicomp 10x Kbrd R7_2_w_PS_R7_38" "Coordinate Transformation Matrix" 4 0 0 0 4 0 0 0 4
+xinput set-prop "pointer:Unicomp Inc Unicomp 10x Kbrd R7_2_w_PS_R7_38" "libinput Accel Speed" 1
+xinput set-prop "pointer:Unicomp Inc Unicomp 10x Kbrd R7_2_w_PS_R7_38" "libinput Button Scrolling Button" 3                                                  
+xinput set-prop 'pointer:Unicomp Inc Unicomp 10x Kbrd R7_2_w_PS_R7_38' 'libinput Scroll Method Enabled' 0 0 1

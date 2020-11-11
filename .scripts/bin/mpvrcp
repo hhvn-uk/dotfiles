@@ -27,7 +27,7 @@
 
 clear
 trap 'tput cnorm; exit' 2
-trap 'clear; olddis=blah' 28 #SIGWINCH
+trap 'clear; oldtitle=blah' 28 #SIGWINCH
 
 drw_line(){
 	tput cup $1 0
@@ -43,7 +43,7 @@ get(){
 }
 
 getm(){
-	echo "$(centre "$(tput bold)$2:$(tput sgr0) $(get "$1" | sed "$3")")"
+	echo "$(tput bold)$2:$(tput sgr0) $(get "$1" | sed "$3")"
 }
 
 convertsecs() {
@@ -77,41 +77,32 @@ draw_main(){
 
 
 	line=0
-	dis=$(getm "media-title" "Title" | tr '.' ' '
-		getm "metadata/artist" "Artist"
-		getm "metadata/genre" "Genre"
-		getm "metadata/album" "Album"
-		getm "path" "Dir" "s~.*music/~~;s~/[^/]*$~~"
-		getm "file-format" "FF")
+	title=$(getm "media-title"       " Title " | tr '.' ' ')
 
-	[ "$dis" != "$olddis" ] && {
-		while [ $line -lt $((($(tput lines)/2)-4)) ]
-		do
-			drw_line $line ""
-			line=$(($line+1))
-		done
-
-		echo "$dis" | while IFS= read -r s
+	[ "$title" != "$oldtitle" ] && {
+		clear
+		(
+			echo "$title" 
+			getm "metadata/artist" "Artist "
+			getm "metadata/genre"  " Genre "
+			getm "metadata/album"  " Album "
+			getm "metadata/date"   "  Date "
+			getm "path"            "   Dir " "s~.*music/~~;s~/[^/]*$~~"
+			getm "file-format"     "    FF "
+		) | while IFS= read -r s
 		do
 			drw_line $line "$s"
 			line=$(($line+1))
 		done
-
-		line=$(($line+6))
-		while [ $line -ne $(($(tput lines)-1)) ]
-		do
-			drw_line $line ""
-			line=$(($line+1))
-		done
+		duration=$(convertsecs $(echo '{ "command": ["get_property", "duration"] }' | socat /tmp/mpv-socket - | jq .data | sed 's/\..*$//'))
+		playlist_pos=$(get "playlist-pos")
+		playlist_count=$(get "playlist-count")
 	}
 
-	olddis="$dis"
+	oldtitle="$title"
 
 	state=$(get "pause" | sed 's/false/Playing/;s/true/Paused/')
 	time=$(convertsecs $(echo '{ "command": ["get_property", "playback-time"] }' | socat /tmp/mpv-socket - | jq .data | sed 's/\..*$//'))
-	duration=$(convertsecs $(echo '{ "command": ["get_property", "duration"] }' | socat /tmp/mpv-socket - | jq .data | sed 's/\..*$//'))
-	playlist_pos=$(get "playlist-pos")
-	playlist_count=$(get "playlist-count")
 	drw_line $(tput lines) "$(tput setaf 7; tput rev; tput bold; centre "$(printf "%s | %s/%s | Pos: %s/%s" "$state" "$time" "$duration" "$playlist_pos" "$playlist_count")")"
 	tput sgr0
 }

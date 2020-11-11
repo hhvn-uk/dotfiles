@@ -1,0 +1,4 @@
+#!/bin/sh
+
+curl -F'file=@-' http://wfnintr.ne:1337
+

@@ -29,7 +29,7 @@ super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
 super + n
-	st -e mpvrcp /tmp/mpv-socket
+	st -c mpvrcp -e mpvrcp /tmp/mpv-socket
 
 super + shift + n 
 	st -e neomutt
@@ -88,8 +88,11 @@ super + shift + w
 super + shift + g
 	chradio
 
-super + g
+super + ctrl + g
 	st -e sh -c 'nvim ~/.local/notes'
+
+super + g
+	st -e sh -c 'rlwrap cgo'
 
 super + o
 	st -e torrents
@@ -136,11 +139,11 @@ super + y
 super + shift + y
 	st -e sh -c 'wifioff && cu dock'
 
-super + shift + {h,j,k,l}
-	xdotool mousemove_relative -- {-10 0,0 10,0 -10,10 0}
+super + ctrl + {j,k}
+	for void in $(seq 3); do xdotool click {5,4}; done
 
-super + ctrl + {h,j,k,l}
-	xdotool mousemove_relative -- {-40 0,0 40,0 -40,40 0}
+Menu
+	xdotool click 2
 
 #thinkpad codes
 

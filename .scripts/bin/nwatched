@@ -19,7 +19,7 @@
 #
 # Useful? :)
 
-[ -z $1 ] 2>/dev/null && echo "usage: nwatched /path/to/dir" && exit
+[ -z $1 ] 2>/dev/null && echo "usage: nwatched /path/to/dir" && exit 1
 
 watched=$(find "$1" | grep 'WATCHED$' | sed 's~/WATCHED$~~')
 all=$(find "$1" -type d)

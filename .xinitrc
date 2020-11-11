@@ -13,7 +13,7 @@ cu dock &
 st -e &
 
 #/usr/libexec/xscreensaver/galaxy -root -count 5
-/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -no-bigdots -speed 0.2 &
+/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
 
 xsetroot -cursor_name sailboat &
 exec dwm

@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# notify.sh - use irc to send a notice
+#
+# hayden@haydenvh.com
+# Copyright (c) 2020 Hayden Hamilton
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# This work is free. You can redistribute it and/or modify it under the
+# terms of the Do What The Fuck You Want To Public License, Version 2,
+# as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+usage(){
+	cat << .
+* = required
+
+stdin* (message(s) to send)
+
+options:
+	--server*
+	--port*
+	--channel*
+	--nick*
+	--password
+	--tls
+.
+	exit 1
+}
+
+
+while [ $# != 0 ]
+do
+	num=2
+	case $1 in
+		-s|--server)             server="$2"  ;;
+		-p|--port)               port="$2"    ;;
+		-c|--channel)            channel="$2" ;;
+		-n|--nick)               nick="$2"    ;;
+		-P|--passwd|--password)  passwd="$2"  ;;
+		-S|--ssl|-t|--tls)       tls=y; num=1 ;;
+		*)                       usage        ;;
+	esac
+	shift $num
+done
+
+[ -z $server ] || [ -z $port ] || [ -z $channel ] || [ -z $nick ] && usage
+
+tmp=$(mktemp)
+msg=$(mktemp)
+cp /dev/stdin $msg
+
+[ -z $passwd ] && {
+	printf "NICK $nick\r\nUSER $nick $nick $nick $nick\r\n" > $tmp
+} || {
+	printf "NICK $nick\r\nUSER $nick $nick $nick $nick\r\nPASS $passwd\r\n" > $tmp
+}
+
+(
+	[ -z $tls ] && {
+		tail -f $tmp | nc $server $port
+	} || {
+		tail -f $tmp | openssl s_client -connect $server:$port
+	}
+) | \
+	tee /dev/stderr | while IFS= read -r line
+	do
+		set -- $line
+		case "$@" in
+			"PING"*) printf "PONG $2\r\n" ;;
+			*"MOTD"*|*"Message of The Day"*)
+				printf "JOIN $channel\r\n"
+				awk -v "channel=$channel" '{printf("PRIVMSG %s %s\r\n", channel, $0)}' < $msg
+				printf "QUIT done\r\n"
+				rm $msg $tmp
+				exit
+				;;
+		esac
+	done | tee /dev/stderr >> $tmp

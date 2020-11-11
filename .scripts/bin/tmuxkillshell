@@ -1,0 +1,4 @@
+#!/bin/sh
+
+tmux lsp -s -F '#{pane_id} #{==:zsh,#{pane_current_command}}' \
+	| awk '$2 == 1 {print $1}' | xargs -r -n1 tmux kill-pane -t

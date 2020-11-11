@@ -1,0 +1,4 @@
+#!/bin/sh
+
+nohup tabbed st -w > /tmp/txid &
+

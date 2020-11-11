@@ -1,10 +1,21 @@
 #!/bin/sh
 
+export LC_ALL=c
+
 a="$1"
 shift
 
 case "$a" in
-	export-key) gpg --export --armour $1 ;;
+	genkey) gpg --gen-key ;;
+	export-key) 
+		for k in $@
+		do
+			gpg --fingerprint $k
+			printf "Destination? "
+			read -r dest </dev/tty
+			gpg --export --armour $k > $dest
+		done
+		;;
 	export-keyring) gpg --export --armour ;;
 	list*) 
 		[ ! -z $1 ] && args="--keyid-format $1"

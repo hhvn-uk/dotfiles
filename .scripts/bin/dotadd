@@ -48,3 +48,5 @@ git rm -rf --cache .config/irssi/nicklist*
 gitadd .config/galias
 gitadd .config/redshift/
 gitadd .ssh/config
+gitadd .kshrc
+gitadd .profile
