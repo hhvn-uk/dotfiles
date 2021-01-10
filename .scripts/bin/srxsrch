@@ -4,7 +4,7 @@ location=/exec/srxsrch.dcgi
 instance=searx.sunless.cloud
 
 # this script works both as a gopher frontend & cmdline frontend
-[ -z $1 ] 2>/dev/null && echo "usage: srxsrch <query> [page]"
+[ -z $1 ] 2>/dev/null && echo "usage: srxsrch <query> [page]" && exit 1
 #
 # gopher: [7|srxsrch|searx.dcgi|server|port]
 # gopher: [7|srxsrch|searx.dcgi?page|server|port]

@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mv $HOME/.config/surf/styles $HOME/.config/surf/.styles

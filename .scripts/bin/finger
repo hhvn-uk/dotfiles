@@ -19,12 +19,20 @@
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
 
 # usage: finger [user]@<host>
+# tries to ssh into machine if port 79 is not exposed
 
 user=${1%%@*}
 host=${1#*@}
 
-[ -z $user ] && {
-	printf "\r\n" | nc $host 79 | tr -d '\r'
-} || {
-	printf "$user\r\n" | nc $host 79 | tr -d '\r'
-}
+(
+	[ -z $host ] && {
+		printf "$user\r\n" | nc 127.0.0.1 79
+		exit
+	}
+
+	[ -z $user ] && {
+		printf "\r\n" | nc $host 79 || ssh $host finger
+	} || {
+		printf "$user\r\n" | nc $host 79 || ssh $host finger $user
+	}
+) | tr -d '\r'

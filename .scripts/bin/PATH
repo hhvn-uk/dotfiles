@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[ -z $1 ] && {
+	find $(echo "$PATH" | tr : ' ') -type f
+} || {
+	find $(echo "$PATH" | tr : ' ') -type f | grep "$@"
+}

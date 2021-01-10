@@ -1,5 +1,6 @@
 #!/bin/ksh
 
+export ENV="$HOME/.config/ksh/kshrc"
 export PATH="$PATH:$HOME/.scripts/bin"
 export EDITOR="nvim"
 export PAGER="less"
@@ -32,22 +33,6 @@ export XAUTHORITY=$HOME/.local/.xauth
 export LESSHISTFILE=-
 export GNUPGHOME=$HOME/.local/gnupg
 
-export LANG=sv_SE.UTF-8
-export LC_CTYPE="sv_SE.UTF-8"
-export LC_NUMERIC="sv_SE.UTF-8"
-export LC_TIME=sv_SE.UTF-8
-export LC_COLLATE=sv_SE.UTF-8
-export LC_MONETARY="sv_SE.UTF-8"
-export LC_MESSAGES="sv_SE.UTF-8"
-export LC_PAPER="sv_SE.UTF-8"
-export LC_NAME="sv_SE.UTF-8"
-export LC_ADDRESS="sv_SE.UTF-8"
-export LC_TELEPHONE="sv_SE.UTF-8"
-export LC_MEASUREMENT="sv_SE.UTF-8"
-export LC_IDENTIFICATION="sv_SE.UTF-8"
-export LC_ALL="sv_SE.UTF-8"
-
 cd $HOME # welcome home (st inherits / from hildon)
 
-[ "$(basename $SHELL)" != "ksh" ] && ksh
-
+[ "$(basename $SHELL)" != "ksh" ] && export SHELL=/bin/ksh && ksh

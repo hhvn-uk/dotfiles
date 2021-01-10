@@ -1,14 +1,15 @@
-* {
-	background-color: #0a0a10 !important;
-	background-image: none !important;
-	color: #1e5eb3 !important;
+ *{
+     background-color: #0a0a10 !important;
+     background-image: none !important;
+     color: #1e5eb3 !important;
+     border-color: #1e5eb3 !important;
+ }
+ h1,h2,h3,h4 {
+     color: #31364b !important;
+ }
+ a{
+	 color: #777b8e !important;
 }
-h1,h2,h3,h4 {
-	color: #a3a6b3 !important;
-}
-a {
-	color: #575b72 !important;
-}
-img {
-	opacity: .5;
+input,textarea{
+	border: 2px solid #1e5eb3 !important;
 }

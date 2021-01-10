@@ -1,4 +1,4 @@
-#!/bin/sh
+!/bin/sh
 
 xrdb ~/.local/xres &
 setxkbmap haydenh &
@@ -13,7 +13,10 @@ cu dock &
 st -e &
 
 #/usr/libexec/xscreensaver/galaxy -root -count 5
-/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
+#/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
 
-xsetroot -cursor_name sailboat &
-exec dwm
+rfeh images/
+
+while true; do
+	dwm 2>log
+done

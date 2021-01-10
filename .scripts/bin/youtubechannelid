@@ -1,3 +1,0 @@
-#!/bin/sh
-
-curl -qsL $1 | tr '}{,' '\n' | grep channelId | head -n 1 | sed 's/.*\\":\\"//;s/..$//' | awk '{print "https://www.youtube.com/feeds/videos.xml?channel_id=" $0}' | tee /dev/stderr | xclip

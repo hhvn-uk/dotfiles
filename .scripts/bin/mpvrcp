@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # mpvrcp - mpv remote control panel
-# Created by Hayden Hamilton
 #
 # hayden@haydenvh.com
 # Copyright (c) 2020 Hayden Hamilton
@@ -24,6 +23,10 @@
 # Example usage:
 #	mpv --input-ipc-server=/tmp/mpv-socket
 #	mpvrcp
+#
+# With dwm:
+# 	(in shell) st -c mpvrcp -e mpvrcp
+#    (rule in dwm) { "mpvrcp", NULL,   NULL,   1 << 0,   1,   0 },
 
 clear
 trap 'tput cnorm; exit' 2
@@ -76,19 +79,20 @@ draw_main(){
 	}
 
 
-	line=0
-	title=$(getm "media-title"       " Title " | tr '.' ' ')
+	line=1
+	title=$(getm "media-title"       "   Title " | tr '.' ' ')
 
 	[ "$title" != "$oldtitle" ] && {
 		clear
 		(
 			echo "$title" 
-			getm "metadata/artist" "Artist "
-			getm "metadata/genre"  " Genre "
-			getm "metadata/album"  " Album "
-			getm "metadata/date"   "  Date "
-			getm "path"            "   Dir " "s~.*music/~~;s~/[^/]*$~~"
-			getm "file-format"     "    FF "
+			getm "metadata/artist" "  Artist "
+			getm "metadata/genre"  "   Genre "
+			getm "metadata/album"  "   Album "
+			getm "metadata/track"  "   Track "
+			getm "metadata/date"   "    Date "
+			getm "path"            "     Dir " "s~.*music/~~;s~/[^/]*$~~"
+			getm "file-format"     "      FF "
 		) | while IFS= read -r s
 		do
 			drw_line $line "$s"

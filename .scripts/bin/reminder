@@ -5,4 +5,4 @@
 file=$(mktemp)
 echo "$1" > $file
 shift
-echo "export DISPLAY="$DISPLAY"; st -e sh -c \"cat $file /dev/stdin; rm $file\"" | at "$*"
+echo "export DISPLAY=\"$DISPLAY\"; st -e sh -c \"cat $file /dev/stdin; rm $file\"" | at "$@"

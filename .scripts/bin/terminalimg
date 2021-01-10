@@ -1,7 +1,12 @@
 #!/bin/bash
 
+trap 'tput cnorm' 2
+
 [ -f /usr/lib/w3m/w3mimgdisplay ] && w3m="/usr/lib/w3m/w3mimgdisplay"
 [ -f /usr/loca/lib/w3m/w3mimgdisplay ] && w3m="/usr/local/lib/w3m/w3mimgdisplay"
+
+LINES=$(tput lines)
+HEIGHT=$(tput cols)
 
 display(){
 	clear
@@ -11,7 +16,9 @@ display(){
 
 	export "${win_info[@]}" &>/dev/null
 
-	read -r img_width img_height < <("$w3m" <<< "5;$image")
+	echo $w3m
+	exit 1
+	read -r img_width img_height <("$w3m" <<< "5;$image")
 
 	((HEIGHT=HEIGHT-HEIGHT*5/LINES))
 

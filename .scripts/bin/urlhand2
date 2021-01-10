@@ -4,10 +4,11 @@ tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
 
 hand=$(printf "mpvms video
 mpvms
+mpv --pause
 popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
-surf -e $(cat /tmp/tabbed.xid || echo 0x0)
+$(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
 toxclip
 netimg
 netvid

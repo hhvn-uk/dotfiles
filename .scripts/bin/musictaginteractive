@@ -10,13 +10,14 @@ get(){
 	read $1 </dev/tty
 }
 
+[ ${sartist:-0} -ne 1 ] && get artist
+[ ${salbum:-0} -ne 1 ] && get album
+
 num=0
 for f in *
 do
 	num=$(($num+1))
 	echo "$(tput setaf 10)$f:$(tput sgr0)"
-	[ $sartist -ne 1 ] && get artist
 	get title
-	[ $salbum -ne 1 ] && get album
 	musictag "$f" "$artist" "$title" "$album" "$(printf "%02d" "$num")"
 done

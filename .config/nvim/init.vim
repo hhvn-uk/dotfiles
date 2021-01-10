@@ -34,6 +34,7 @@ set path+=**
 
 "Misc
 set encoding=utf-8
+set title
 
 "Set scheme
 syntax on
@@ -184,7 +185,7 @@ inoremap <C-h> <left>
 nnoremap <leader>CS :let @/=''<CR>
 
 "Registers
-noremap <c-y> "*
+set clipboard=unnamed
 
 "Terminals
 nnoremap <leader>Tt :vsplit term://zsh<CR><c-h><c-l>

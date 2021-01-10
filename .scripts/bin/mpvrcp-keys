@@ -1,0 +1,45 @@
+#!/bin/bash
+# sad bash depend :(
+# nead it for `read -rsn1 key1
+# please mail me if you know any posix solution
+
+
+trap 'drawgui' 28 #SIGWINCH
+
+send(){
+	echo "{ \"command\": [$1] }" | socat - $2 >/dev/null || {
+		tput cup 0 0 && tput el
+		printf '%s' "can't connect to socket..."
+		sleep 0.5
+		drawgui
+	}
+}
+toggle(){
+	paused=$(echo '{ "command": ["get_property", "pause"] }' | socat - $1 2>/dev/null | tr '{":0,}' ' ' | awk '// {print $2}')
+	[ "$paused" = "true" ] && {
+		echo '{ "command": ["set_property", "pause", false] }' | socat - $1 > /dev/null
+	} || {
+		echo '{ "command": ["set_property", "pause", true] }' | socat - $1 > /dev/null
+	}
+}
+
+drawgui(){
+	clear
+	tput cup 0 0
+	printf 'quit(q) rand(m) pause(p) vol(+-) prev(h) back(j) forward(k) next(l)'
+}
+
+drawgui
+
+while read -rsn1 key
+do
+	[ "$key" = "h" ] && send '"playlist-prev"' /tmp/mpv-socket
+	[ "$key" = "j" ] && send '"seek", "-10"' /tmp/mpv-socket
+	[ "$key" = "k" ] && send '"seek", "10"' /tmp/mpv-socket
+	[ "$key" = "l" ] && send '"playlist-next"' /tmp/mpv-socket
+	[ "$key" = "q" ] && semd '"quit"' /tmp/mpv-socket
+	[ "$key" = "p" ] && toggle /tmp/mpv-socket
+	[ "$key" = "+" ] && amixer set Master 5%+ >/dev/null 2>/dev/null
+	[ "$key" = "-" ] && amixer set Master 5%- >/dev/null 2>/dev/null
+	[ "$key" = "m" ] && rmpv music/ 50 >/dev/null 2>/dev/null & # rmpv is another script of mine
+done

@@ -1,6 +1,6 @@
 # vim: filetype=neomuttrc
 
-set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %-3.3M %s"
+set index_format="%4C %Z %{%b %d} %-15.15r %-20.20L (%?l?%4l&%4c?) %-3.3M %s"
 
 # Default index colors:
 color index yellow default '.*'

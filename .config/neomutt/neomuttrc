@@ -13,7 +13,7 @@ set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =lists =money =dataswamporg =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam ="------------------------" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =money =dataswamporg =inbox-airmail ="========================" =forwards =sent =drafts =rubbish =backup =spam =spam-domain ="------------------------" =exmouth =exmouthsent =exmouthrubbish
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
@@ -32,7 +32,6 @@ bind index,pager M compose-to-sender
 bind index \Ct collapse-thread
 bind index \Ca collapse-all
 
-set new_mail_command="sh -c 'echo N:%n U:%u > /tmp/mail &'"
 set sort=threads
 set collapse_all
 
@@ -40,10 +39,8 @@ set signature=~/.config/neomutt/signatures
 
 # source ~/.config/neomutt/gpg.rc
 
-# mark all mail as read
-macro index A \
-    "<clear-flag>O" \
-    "mark mail as read"
+macro index S <save-message>=spam<enter><enter>
+macro index A <save-message>=spam-domain<enter><enter>
 
 my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date

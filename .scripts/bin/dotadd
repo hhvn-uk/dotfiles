@@ -8,9 +8,9 @@ gitadd .config/sxhkd/
 gitadd .local/xauth
 gitadd .local/xres
 gitadd .local/ascii
-gitadd .config/alias
 gitadd .config/tmux/config
 gitadd .zprofile
+gitadd .profile
 gitadd .config/zsh/
 gitadd .scripts/
 gitadd .xinitrc
@@ -45,8 +45,6 @@ git rm --cache .config/irssi/config.autosave
 git rm --cache .config/irssi/default.theme
 git rm --cache .config/irssi/saved_nick_colors
 git rm -rf --cache .config/irssi/nicklist*
-gitadd .config/galias
 gitadd .config/redshift/
 gitadd .ssh/config
-gitadd .kshrc
 gitadd .profile

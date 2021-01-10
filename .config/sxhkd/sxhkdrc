@@ -23,22 +23,22 @@ super + shift + a
 	mailselect
 
 super + b
-	tabbed -c surf -e > /tmp/tabbed.xid
+	tabbed -k -c surf -e > /tmp/tabbed.xid
 
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
 super + n
-	st -c mpvrcp -e mpvrcp /tmp/mpv-socket
+	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
 
 super + shift + n 
-	st -e neomutt
+	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
 
 super + r
-	st -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.cache/sfeed/*'
+	st -t sfeed -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.cache/sfeed/*'
 
 super + x
-	sxhkdrestart; herbe "Restarted sxhkd" && st -e nvim $XDG_CONFIG_HOME/sxhkd/sxhkdrc
+	sxhkdrestart; herbe "Restarted sxhkd"
 
 super + ctrl + b
 	queuevid
@@ -55,14 +55,8 @@ super + d
 super + e
 	st -e tmux -f $HOME/.config/tmux/config
 
-super + ctrl + e
-	rfeh ~/images/wallpapers/ auto right
-
 super + m
 	dmon
-
-super + ctrl + q
-	rfeh ~/images/wallpapers/ auto left
 
 super + s
 	dpass
@@ -74,13 +68,13 @@ super + ctrl + s
 	maim | hlpaste "png"
 
 super + w
-	rfeh ~/images/wallpapers/
+	wallp ~/images/wallpapers
 
 super + ctrl + w
 	wallblur
 
-super + alt + w
-	fehffile ~/.cache/rfeh/prev
+super + {alt, alt + ctrl} + w
+	wallp ~/images/wallpapers {right, left}
 
 super + shift + w
 	colour-wall
@@ -95,7 +89,7 @@ super + g
 	st -e sh -c 'rlwrap cgo'
 
 super + o
-	st -e torrents
+	st -t torrents -c torrents -e sh -c "torrents; $SHELL"
 
 super + shift + o
 	addtorrent xclip

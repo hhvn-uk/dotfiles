@@ -1,6 +1,6 @@
 #!/bin/sh
 
 t=$(mktemp)
-curl "$1" > $t
+curl -L "$1" > $t
 sxiv $t
 rm $t

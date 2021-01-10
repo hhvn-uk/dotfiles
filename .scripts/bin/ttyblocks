@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd /tmp/dwmblocks
+while sleep 1
+do
+	tput sc
+	tput cup 0 0
+	tput sgr0
+	output=$(cat bat net torrent cpu mem disk disk2 vol time time2 2>/dev/null | tr '\n' ' ' | tr -s ' ' | sed 's/\^[^^]*\^//g')
+	for void in $(seq $(($(tput cols)-$(echo "$output" | wc -c))))
+	do
+		printf " "
+	done
+	echo "$output"
+	tput rc
+done &

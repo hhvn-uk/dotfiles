@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ $# -ne 0 ]
+do
+	[ ! -d "$1" ] && echo "$1: not a directory.. skipping" >/dev/stderr || touch "$1/WATCHED"
+	shift
+done

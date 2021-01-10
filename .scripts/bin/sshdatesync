@@ -1,7 +1,7 @@
 #!/bin/sh
 
 [ "$2" = "out" ] && {
-	ssh "$1" doas sh -c 'date --set "'"$(date)"'"'
+	ssh "$1" "${3:-doas}" sh -c 'date --set "'"$(date)"'"'
 } || {
 	doas date --set "$(ssh "$1" date)"
 }
