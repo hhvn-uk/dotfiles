@@ -19,7 +19,7 @@
 
 d=$HOME/net/exec/uptime
 
-for s in local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com
+for s in matrix local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com
 do 
 	curr=$(ssh $s uptime | awk '{print $3}' | grep '^[^:]*$' || echo 0)
 	[ ! -f $d/$s ] && echo "curr	$curr" > $d/$s
