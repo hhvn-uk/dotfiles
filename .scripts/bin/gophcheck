@@ -31,7 +31,8 @@ gopher://wfnintr.net/
 gopher://go-beyond.org/
 gopher://bitreich.org/1/news.gph
 gopher://baud.baby/1/phlog
-gopher://dataswamp.org/1/~solene"
+gopher://dataswamp.org/1/~solene
+gopher://codevoid.de/1"
 readcmd="cgo -f"
 
 cache=${XDG_CACHE_HOME:=$HOME/.cache}
