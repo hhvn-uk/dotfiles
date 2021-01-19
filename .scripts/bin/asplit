@@ -6,14 +6,16 @@ Takes a TSV format as stdin:
 starttime	endtime	title	author	track	album" && exit 1
 
 get(){
-	echo "$line" | awk -F"	" "{print \$$1}"
+	echo "$line" | awk -v "n=$1" -F"	" '{print $n}'
 }
+
+format=${1##*.}
 
 while IFS= read -r line
 do
 	get 5 | grep '[0-9]' >/dev/null && {
-		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" -metadata "track=$(get 5)" -metadata "album=$(get 6)" -f $2 "$(get 5).-.$(get 3 | tr '/ 	' '_..').$2"
+		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" -metadata "track=$(get 5)" -metadata "album=$(get 6)" "$(get 5).-.$(get 3 | tr '/ 	' '_..').$format"
 	} || {
-		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" -f $2 "$(get 3 | tr '/ 	' '_..').$2"
+		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" "$(get 3 | tr '/ 	' '_..').$format"
 	}
 done
