@@ -450,6 +450,11 @@ sub topic2mlt {
 	msg_line_tag($srv, $chan, $nick, $addr);
 }
 
+sub notice2mlt {
+	my ($srv, $msg, $nick, $addr, $chan) = @_;
+	msg_line_tag($srv, $chan, $nick, $addr);
+}
+
 sub msg_line_tag_xmppaction {
     clear_ref(), return unless @_;
     my ($srv, $msg, $nick, $targ) = @_;
@@ -1039,18 +1044,13 @@ Irssi::expando_create('nickcolor', \&expando_neatcolour, {
     'message nick'	 => 'none',
     'message invite'	 => 'none',
     'message invite_other'	 => 'none',
+    'message irc notice' => 'none',
     'message topic'	 => 'none',
-    (map { ("message $_ action"     => 'none',
-	    "message $_ own_action" => 'none')
-       } @action_protos),
    });
    
 Irssi::expando_create('inickcolor', \&expando_neatcolour_inv, {
     'message public' 	 => 'none',
     'message own_public' => 'none',
-    (map { ("message $_ action"     => 'none',
-	    "message $_ own_action" => 'none')
-       } @action_protos),
    });
    
 Irssi::signal_add({
@@ -1065,11 +1065,8 @@ Irssi::signal_add({
     'message nick'	 => 'nick2mlt',
     'message invite'	 => 'invite2mlt',
     'message invite_other'	 => 'inviteo2mlt',
-    'message topic'	 => 'topic2mlt',
+    'message irc notice' => 'notice2mlt',
     'message irc mode'	 => 'msg_line_clear',
-    (map { ("message $_ action"     => 'msg_line_tag',
-	    "message $_ own_action" => 'msg_line_clear')
-       } qw(irc silc)),
     "message xmpp action"     => 'msg_line_tag_xmppaction',
     "message xmpp own_action" => 'msg_line_clear',
     'print text'	 => 'prnt_clear_public',

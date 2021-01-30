@@ -870,7 +870,7 @@ sub _calculate_items {
 	    if    ($win->{data_level} == 0) { 'sb_act_none'; }
 	    elsif ($win->{data_level} == 1) { 'sb_act_text'; }
 	    elsif ($win->{data_level} == 2) { 'sb_act_msg'; }
-	    elsif ($colour           ne '') { "sb_act_hilight_color $colour"; }
+	    elsif ($colour           ne '') { 'sb_act_hilight'; }
 	    elsif ($win->{data_level} == 3) { 'sb_act_hilight'; }
 	    else                            { 'sb_act_special'; }
 	};

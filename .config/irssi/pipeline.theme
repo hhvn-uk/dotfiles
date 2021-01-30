@@ -15,6 +15,7 @@ abstracts = {
   # abstracts that do not take arguments - only for replicating certain text
   line_start = "";
   timestamp = "%G%%H:%%M%b ";
+  pad = "          ";
 
   # usage agnostic text hilighting
   hilight = "%_$*%_";
@@ -39,11 +40,11 @@ abstracts = {
   # hilighting with nickcolor-expando.pl
   pubnick = "%w$nickcolor$*";
   # constructs for basic message
-  msgnick = "$0$1%K %_|%_%N ";
-  himsg = "$0$1%K %_#%_%N ";
+  msgnick = "$0$1%K %_│%_%N ";
+  himsg = "$0$1%M %_#%_%N ";
   nticenick = "$0$1%K %_:%_%N ";
   askctcp = "$0$1%K %_?%_%N%_ ";
-  ansctcp = "$0$1%K %_A%_%N%_ ";
+  ansctcp = "$0$1%M %_A%_%N%_ ";
 
   # msgs
   ownmsgnick = "{msgnick $0 $1-}";
@@ -52,24 +53,24 @@ abstracts = {
   ownprivmsgnick = "{msgnick $*}";
   privmsgnick = "{msgnick $*}";
   privmsg = "{himsg %R<---$0}$1}";
-  ownprivmsg = "{msgnick $0%K--->$1}$2}";
+  ownprivmsg = "{msgnick %K--->$1}$2}";
   ownprivnick = "%W$0%n%w";
 
   # used internally for actions
-  action_core = "  %w*%w%_$0%_ $1";
+  action_core = "{pad}%w*%w %K│ %_$0%_ $1";
   action_nsp = "%w*%w%_$0%_ $1";
 
   # actions
   pvaction = "%R<---{action_nsp $0 $1}";
-  ownaction_target = "$0%K--->$1{action_nsp $0}";
+  ownaction_target = "%K--->$1{action_nsp $0}";
 
   # notices
-  ownnotice = "{nticenick $0%K--->$1}$2}";
-  notice = " {nticenick {nick $*}}%N";
+  ownnotice = "{nticenick %K--->$1}$2}";
+  notice = " {nticenick $nickcolor$*}%N";
   servernotice = "%w!$*%n ";
 
   # CTCPs
-  ownctcp = "{askctcp {ownnick $N}%K--->$0}$1";
+  ownctcp = "{askctcp %K--->$0}$1";
   ctcp = "{ansctcp %R<---$1}$0:%_ $2-";
   rctcp = "{askctcp %R<---$0}$1";
 
@@ -116,11 +117,12 @@ abstracts = {
   sb_uc_voices = "%_.+%_%G/%Y$*%n";
   sb_uc_normal = "%_.%_%G/%W$*%n";
   sb_uc_space = " ";
-  sb_act_hilight = "%M$*";
-  sb_act_hilight_color = "$0$1-%n";
-  sb_act_sep = "%c$*";
-  sb_act_text = "%c$*";
-  sb_act_msg = "%W$*";
+  sb_act_hilight = "%M%_X%_%N$*";
+  sb_act_hilight_color = "%M%%%N$*";
+  sb_act_sep = "%N$*";
+  sb_act_text = "%c-%N$*";
+  sb_act_msg = "%W*%N$*";
+  sb_act_none = " $*";
   sb_topic = "%0$*                                                                                                                                                                                                                                                                                                            ";
 
   # other
@@ -128,27 +130,33 @@ abstracts = {
   whois = "| $[8]0 : $1-";
   whowas_begin = "|-WHOWAS---:-------------------------->";
   who___end = "'----------'-------------------------->";
+  # keepnick
+  keepnick = "{line_start}   {hilight Keepnick} %K│%N $*";
+
+  # indent (https://github.com/irssi-import/modules/blob/master/theme-indent.c)
+  indent_default = "      {pad}  %K│ ";
+  level_hilight = "      {pad}  %M# ";
 };
 
 # %r%n%_$0%_$1%K |%n %|
 formats = {
   "fe-common/core" = {
     # excuse the ugly as hell formats here, blame nm2.pl
-    pubmsg = "$nickalign{pubmsgnick %G$2 {pubnick $0}$nicktrunc}$1";
-    join = "%_%W+{pubnick %_$0%_}!$1";
-    part = "%_%G-%_{pubnick %_$0%_}!$1 {reason $3}";
-    kick = "%_%G!%_$0 %n%wby {pubnick $2}, {reason $3}, from $1";
-    quit = "%_%G<%_{pubnick %_$0%_}!$1 {reason $2}";
-    own_msg = "$nickalign{ownmsgnick %G$2 {ownnick $0}$nicktrunc}$1";
-    own_msg_channel = "$nickalign{ownmsgnick %G$3 {ownnick $0}$nicktrunc{msgchannel $1}}$2";
-    pubmsg_me = "$nickalign{pubmsgmenick %G$2 {pubnick $0}$nicktrunc}$1";
-    pubmsg_me_channel = "$nickalign{pubmsgmenick %G$3 {pubnick $0}$nicktrunc{msgchannel $1}}$2";
-    pubmsg_hilight = "$nickalign{pubmsgmenick %G$3 {pubnick $1}$nicktrunc}$2";
-    pubmsg_channel = "$nickalign{pubmsgnick %G$4 {pubnick $0}$nicktrunc{msgchannel $1}}$2";
+    pubmsg = "$nickalign{pubmsgnick %G$2 {pubnick $[.9]0}$nicktrunc}$1";
+    join = "{pad}%_%W+ %K│ {pubnick %_$0%_}!$1";
+    part = "{pad}%_%G-%_ %K│ {pubnick %_$0%_}!$1 {reason $3}";
+    kick = "{pad}%_%G!%_ %K│ $0 %n%wby {pubnick $2}, {reason $3}, from $1";
+    quit = "{pad}%_%G<%_ %K│ {pubnick %_$0%_}!$1 {reason $2}";
+    own_msg = "$nickalign{ownmsgnick %G$2 {ownnick $[.10]0}$nicktrunc}$1";
+    own_msg_channel = "$nickalign{ownmsgnick %G$3 {ownnick $[.10]0}$nicktrunc{msgchannel $1}}$2";
+    pubmsg_me = "$nickalign{pubmsgmenick %G$2 {pubnick $[.9]0}$nicktrunc}$1";
+    pubmsg_me_channel = "$nickalign{pubmsgmenick %G$3 {pubnick $[.9]0}$nicktrunc{msgchannel $1}}$2";
+    pubmsg_hilight = "$nickalign{pubmsgmenick %G$3 {pubnick $[.9]1}$nicktrunc}$2";
+    pubmsg_channel = "$nickalign{pubmsgnick %G$4 {pubnick $[.9]0}$nicktrunc{msgchannel $1}}$2";
 
     chanmode_change = " {$channel $1} {nick $2} %nsets mode %W{$mode $1}";
     channel_mode = " {$channel $0} {nick $2} %nsets mode %W{$mode $1}";
-    nick_changed = "{pubnick $0}%w %_-->%_ $1";
+    nick_changed = "{pad}  %K│ {pubnick $0}%w %_-->%_ $1";
 
     # names
     endofnames = "{channel $0}: {hilight $1} nicks ({comment @/{hilight $2} +/{hilight $3}  -/{hilight $4}})";
@@ -158,7 +166,7 @@ formats = {
     line_start = "{line_start}";
     line_start_irssi = "{hilight}";
     servertag = "[$0] ";
-    daychange = "       %_----%_ %%d %%b %%Y %_----%_";
+    daychange = "      {pad}  %K│ %_----%_ %%d %%b %%Y %_----%_";
     talking_with = "You are now talking with {nick $0}";
 
     # windows
@@ -199,7 +207,7 @@ formats = {
 
     # servers
     looking_up = "Looking up {server $0}";
-    connecting = "Connecting to {server $0} [$1] port {hilight $2}";
+    connecting = "Connecting to {server $0} [$1] port {hilight $2} -- Remember: on irc nobody knows you're a dog";
     reconnecting = "Reconnecting to {server $0} [$1] port {hilight $2} - use /RMRECONNS to abort";
     connection_established = "Connection to {server $0} established";
     cant_connect = "Unable to connect server {server $0} port {hilight $1} {reason $2}";
@@ -246,7 +254,7 @@ formats = {
     chansetup_footer = "";
     own_msg_private = "{ownprivmsg {ownnick $N} {pubnick $0} $1}";
     own_msg_private_query = "{ownprivmsgnick {ownprivnick $2}}$1";
-    pubmsg_hilight_channel = "$nickalign{pubmsgmenick %G$4 {pubnick $1$nicktrunc{msgchannel $2}}$3";
+    pubmsg_hilight_channel = "$nickalign{pubmsgmenick %G$4 {pubnick $[.9]1$nicktrunc{msgchannel $2}}$3";
     msg_private = "{privmsg {pubnick $0}}$2";
     msg_private_query = "{privmsgnick $0}$2";
     no_msgs_got = "You have not received a message from anyone yet";
@@ -385,8 +393,8 @@ formats = {
     whois = "{whois_begin}%:{whois nick %|{hilight $0}}%:{whois host %|$2}%:{whois ident $|$1}%:{whois comment %|$3}";
     server_chanmode_change = "%RServermode: {mode $1} by {server $2}";
     whois_server = "{whois server %|$1 ({comment $2})}";
-    own_action = "$nickalign{action_core {ownnick $0$nicktrunc}}$1";
-    action_public = "$nickalign{action_core {pubnick $0$nicktrunc}}$1";
+    own_action = "{action_core {ownnick $0$nicktrunc}}$1";
+    action_public = "{action_core {pubnick $0$nicktrunc}}$1";
     away = "%_%G----->";
     unaway = "%_%W<-----";
     end_of_whois = "{who___end}";
@@ -496,13 +504,13 @@ formats = {
     accept_list = "Accepted users: {hilight $0}";
   };
   "Irssi::Script::adv_windowlist" = {
-    awl_display_nokey = "%N $H$C$S %N$N";
-    awl_display_key = "%N $H$C$S%N %mM-$Q";
-    awl_display_nokey_active = "%N%K $C %N$N";
-    awl_display_key_active = "%N%K $C %mM-$Q";
+    awl_display_nokey = "%N$H$C$S %N$N";
+    awl_display_key = "%N$H$C$S%N %mM-$Q";
+    awl_display_nokey_active = "%N%K>%N$C %N$N";
+    awl_display_key_active = "%N%K>%N$C %mM-$Q";
     awl_display_header = "%1 %Y$C (${N})";
-    awl_display_nokey_visible = "%N%K $C %N$N";
-    awl_display_key_visible = "%N%K $C %mM-$Q";
+    awl_display_nokey_visible = "%N%K<%N$C %N$N";
+    awl_display_key_visible = "%N%K<%N$C %mM-$Q";
     awl_name_display = "$0";
     awl_separator = " ";
     awl_separator2 = "";
@@ -684,7 +692,7 @@ formats = {
     keepnick_list_header = "";
     keepnick_list_line = "{line_start}{hilight Keepnick:} Keeping {nick $0} in [$1] ($2)";
     keepnick_list_footer = "";
-    keepnick_got_nick = "%N{hilight Keepnick:} Nickstealer left [$1], got {nick $0} back";
+    keepnick_got_nick = "{keepnick Nickstealer left [$1], got {nick $0} back}";
   };
   "Irssi::Script::nm2" = {
     neat_style = " , p , , , , , t , , ,";

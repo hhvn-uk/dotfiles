@@ -181,27 +181,18 @@ Irssi::expando_create('nickalign', \&expando_nickalign, {
     'message own_public'     => 'none',
     'message private'	     => 'none',
     'message own_private'    => 'none',
-    (map { ("message $_ action"     => 'none',
-	    "message $_ own_action" => 'none')
-       } @action_protos),
    });
 Irssi::expando_create('nicktrunc', \&expando_nicktrunc, {
     'message public'	     => 'none',
     'message own_public'     => 'none',
     'message private'	     => 'none',
     'message own_private'    => 'none',
-    (map { ("message $_ action"     => 'none',
-	    "message $_ own_action" => 'none')
-       } @action_protos),
    });
 Irssi::expando_create('nickcumode', \&expando_nickcumode, {
     'message public'	     => 'none',
     'message own_public'     => 'none',
     'message private'	     => 'none',
     'message own_private'    => 'none',
-    (map { ("message $_ action"     => 'none',
-	    "message $_ own_action" => 'none')
-       } @action_protos),
    });
 
 sub init_hist {
@@ -222,9 +213,6 @@ my %em = (
    );
 
 my %formats = (
-    own_action		   => [5, '{action_core {ownnick ',      '$0','}}','$1' ],
-    action_public	   => [4, '{action_core {pubnick ',      '$0','}}','$1' ],
-
     own_msg		   => [1, '{ownmsgnick '     ,'%G$2', ' {ownnick '   ,'$0','}',''               ,'}','$1' ],
     own_msg_channel	   => [1, '{ownmsgnick '     ,'%G$3', ' {ownnick '   ,'$0','}','{msgchannel $1}','}','$2' ],
     pubmsg_me		   => [0, '{pubmsgmenick '   ,'%G$2', ' {pubnick '   ,'$0','}',''               ,'}','$1' ],
@@ -298,29 +286,30 @@ sub update_nm {
     }
 
     my $longest;
-    if ($S{dynamic}) {
-	my $hist = $histories{"$tg/$target"} ||= init_hist($server, $target);
-	my $last = $histories{"$tg/$target/last"} || 1;
-	unshift @$hist, length $nick;
-	if (@$hist > 2*$S{history}) {
-	    splice @$hist, $S{history};
-	}
-	my @add;
-	unless ($S{shrink}) {
-	    push @add, $last;
-	}
-	if ($S{staircase}) {
-	    push @add, $last - 1
-	}
-	$longest = $histories{"$tg/$target/last"} = max(@$hist, @add);
+    # if ($S{dynamic}) {
+	# my $hist = $histories{"$tg/$target"} ||= init_hist($server, $target);
+	# my $last = $histories{"$tg/$target/last"} || 1;
+	# unshift @$hist, length $nick;
+	# if (@$hist > 2*$S{history}) {
+	    # splice @$hist, $S{history};
+	# }
+	# my @add;
+	# unless ($S{shrink}) {
+	    # push @add, $last;
+	# }
+	# if ($S{staircase}) {
+	    # push @add, $last - 1
+	# }
+	# $longest = $histories{"$tg/$target/last"} = max(@$hist, @add);
 
-	if ($S{max} && ($S{max} < $longest || !$S{shrink})) {
-	    $longest = $S{max};
-	}
-    }
-    else {
-	$longest = $S{max};
-    }
+	# if ($S{max} && ($S{max} < $longest || !$S{shrink})) {
+	    # $longest = $S{max};
+	# }
+    # }
+    # else {
+	# $longest = $S{max};
+	$longest = 10;
+    # }
 
     my $size = $mode < 4 ? $longest : max(0, $longest - $S{melength});
     my $t_add = update_expando($mode, $server, $target, $nick, $size);
@@ -490,15 +479,6 @@ Irssi::signal_add_first({
 	my ($server, $msg, $nick, $address) = @_;
 	update_nm(2, $server, $nick, $nick);
     },
-    (map { ("message $_ action" => sub {
-	my ($server, $msg, $nick, $address, $target) = @_;
-	update_nm(4, $server, $target, $nick);
-    }) } qw(irc silc)),
-    'message xmpp action' => sub {
-	return unless @_;
-	my ($server, $msg, $nick, $target) = @_;
-	update_nm(4, $server, $target, $nick);
-    },
    });
 
 sub channel_nick {
@@ -514,15 +494,6 @@ Irssi::signal_add_first({
     'message own_private' => sub {
 	my ($server, $msg, $target) = @_;
 	update_nm(3, $server, $target, $server->{nick});
-    },
-    (map { ("message $_ own_action" => sub {
-	my ($server, $msg, $target) = @_;
-	update_nm(5, $server, $target, $server->{nick});
-    }) } qw(irc silc)),
-    'message xmpp own_action' => sub {
-	return unless @_;
-	my ($server, $msg, $target) = @_;
-	update_nm(5, $server, $target, channel_nick($server, $target));
     },
     'message join' => sub {
 	my ($server, $target, $nick) = @_;
