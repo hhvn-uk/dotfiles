@@ -104,7 +104,7 @@ super + ctrl + u
 	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video
 
 super + alt + {y,u}
-	rmpv general/{videos,music}/ 150
+	rmpv general/{videos,music}/list 150
 
 super + ctrl + {i,p}
 	hmpv {back,forward} /tmp/mpv-socket
