@@ -1,21 +1,36 @@
 #!/bin/sh
 
-[ -z $1 ] && echo "usage: asplit <input file> <format>
+[ -z $1 ] || [ "$1" = "-h" ] && echo "usage: asplit <input file>
 
 Takes a TSV format as stdin:
-starttime	endtime	title	author	track	album" && exit 1
+starttime	endtime	title	author	track	album	comment
+
+Leave track as '-', if it is N/A" && exit 1
 
 get(){
-	echo "$line" | awk -v "n=$1" -F"	" '{print $n}'
+	echo "$line" | awk -v "n=$1" -F"	" '{print $n}' | sed 's/\\n/\n/g;s/\\t/\t/g'
 }
 
 format=${1##*.}
 
 while IFS= read -r line
 do
-	get 5 | grep '[0-9]' >/dev/null && {
-		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" -metadata "track=$(get 5)" -metadata "album=$(get 6)" "$(get 5).-.$(get 3 | tr '/ 	' '_..').$format"
-	} || {
-		ffmpeg -y -nostdin -i "$1" -ss "$(get 1)" -to "$(get 2)" -map_metadata -1 -vn -c copy -metadata "title=$(get 3)" -metadata "artist=$(get 4)" "$(get 3 | tr '/ 	' '_..').$format"
-	}
+	get 5 | grep '[0-9]' >/dev/null \
+	&& ffmpeg -y -nostdin -i "$1" \
+		-ss "$(get 1)" -to "$(get 2)" \
+		-map_metadata -1 -vn -c copy \
+		-metadata "title=$(get 3)" \
+		-metadata "artist=$(get 4)" \
+		-metadata "track=$(get 5)" \
+		-metadata "album=$(get 6)" \
+		-metadata "album=$(get 7)" \
+		"$(get 5).-.$(get 3 | tr '/ 	' '_..').$format" \
+	|| ffmpeg -y -nostdin -i "$1" \
+		-ss "$(get 1)" -to "$(get 2)" \
+		-map_metadata -1 -vn -c copy \
+		-metadata "title=$(get 3)" \
+		-metadata "artist=$(get 4)" \
+		-metadata "album=$(get 6)" \
+		-metadata "comment=$(get 7)" \
+		"$(get 3 | tr '/ 	' '_..').$format"
 done
