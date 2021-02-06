@@ -9,3 +9,5 @@
 [alias]
 	hist = !sh ~/.config/git/hist
 	mrg = merge --no-ff
+[init]
+	defaultBranch = master
