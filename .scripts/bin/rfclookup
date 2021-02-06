@@ -22,14 +22,7 @@
 #	 rfclookup.sh -n <number>
 
 [ "$1" = "-s" ] && {
-	resp=$(curl https://www.ietf.org/download/rfc-index.txt | tr '\n' '\t' | sed 's/\t\t/\n/g' | tr '\t' ' ' | tr -s ' ' | grep '^[0-9][0-9][0-9][0-9] ' | grep -iE "$2")
-	[ "$(echo "$resp" | wc -l)" = 0 ] && echo "error: no such docu" > /dev/stderr|| \
-	[ "$(echo "$resp" | wc -l)" = 1 ] && curl https://ietf.org/rfc/rfc${resp%% *}.txt || {
-		echo "$resp" > /dev/stderr
-		printf "Please choose an rfc (number): " > /dev/stderr
-		read num < /dev/tty
-		curl https://ietf.org/rfc/rfc$num.txt
-	}
+	curl https://www.ietf.org/download/rfc-index.txt | tr '\n' '\t' | sed 's/\t\t/\n/g' | tr '\t' ' ' | tr -s ' ' | grep '^[0-9][0-9][0-9][0-9] ' | grep -iE "$2"
 } || {
 	curl https://ietf.org/rfc/rfc$2.txt
 }
