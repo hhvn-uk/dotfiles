@@ -21,10 +21,12 @@ d=$HOME/net/exec/uptime
 
 for s in matrix local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com
 do 
-	curr=$(ssh $s uptime | awk '{print $3}' | grep '^[^:]*$' || echo 0)
+	curr=$(ssh $s uptime | grep -v 'min,' | awk '{print $3}' | grep '^[^:]*$' || echo 0)
+	ssh $s uptime >/dev/null && down=n || down=y # run the cmd again - variable can't be set
+                                                     # in substitions
 	[ ! -f $d/$s ] && echo "curr	$curr" > $d/$s
 	[ -f $d/$s ] && {
-		awk -F"	" -v "curr=$curr" '
+		awk -F"	" -v "curr=${curr:-0}" '
 			$1 == "curr" {
 				if ($2 > curr) {
 					print "curr	" curr
@@ -35,5 +37,7 @@ do
 			}
 			$1 == "record"' < $d/$s > $d/$s.new 
 		mv $d/$s.new $d/$s
+		[ "$down" = "y" ] && chmod +x $d/$s || chmod -x $d/$s # use executable perm to
+                                                                      # signal to uptime.dcgi
 	}
 done
