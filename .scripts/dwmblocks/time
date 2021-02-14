@@ -1,3 +1,9 @@
 #!/bin/sh
 
+echo $(curl wttr.in/?format=%D) > $HOME/.cache/wttrD
+echo $(curl wttr.in/?format=%d) > $HOME/.cache/wttrd
+echo $(curl wttr.in/?format=%S) > $HOME/.cache/wttrS
+echo $(curl wttr.in/?format=%s) > $HOME/.cache/wttrs
+echo $(curl wttr.in/?format=%C) > $HOME/.cache/wttrC
+
 echo "[$(date +%d/%m)]"

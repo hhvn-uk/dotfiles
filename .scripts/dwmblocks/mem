@@ -6,4 +6,9 @@
 # haydenvh.com
 # Copyright (c) 2019 Hayden Hamilton.
 
-echo "[M $(free -h | awk '{print $3 "/" $2}' | head -n 2 | tail -n 1)]"
+mem=$(free -h | awk '{print $3 "/" $2}' | head -n 2 | tail -n 1)
+echo "$mem" | grep 'Mi/' >/dev/null && col="^c#00aa00^"
+echo "$mem" | grep '1\.[0-4]Gi/' >/dev/null && col="^c#aaaa00^"
+echo "$mem" | grep '1\.[5-9]Gi/' >/dev/null && col="^c#aa7700^"
+echo "$mem" | grep '2\..Gi/' >/dev/null && col="^c#aa0000^"
+echo "[M ${col}${mem}]"

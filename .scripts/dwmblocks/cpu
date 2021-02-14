@@ -5,7 +5,8 @@ tempt=$(acpi -t | awk '{s+=$4} END {print s}')
 tempc=$(acpi -t | wc -l)
 temp=$(($tempt/$tempc))
 temp=" $temp"
-[ $temp -gt 60 ] && [ ! $temp -gt 70 ] && temp=" ^c#ffff00^^b#888800^$temp"
-[ $temp -gt 70 ] && temp=" ^c#ff0000^^b#770000^$temp"
-[ $temp -lt 40 ] && temp=" ^c#7777dd^^b#222277^$temp"
+[ $temp -gt 60 ] && [ ! $temp -gt 70 ] && temp="^c#aa7700^$temp"
+[ $temp -gt 70 ] && temp="^c#aa0000^$temp"
+[ $temp -lt 60 ] && temp="^c#aaaa00^$temp"
+[ $temp -lt 50 ] && temp="^c#00aa00^$temp"
 echo "[C $cpu%${temp}C]"

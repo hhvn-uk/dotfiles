@@ -1,0 +1,9 @@
+  ____ 
+<|____| STAT  [IP ADDR]        [TORRENTS]                [CPU usage% tempC]      [MEM]               [VOL vol% state]   [DATE]  [TIME]
+
+        ^      ^               ^                         .---------------^       ^                   .-----------^               ^
+	|      | red = no net  | S = seeding/uploading   | temps go from green   | ditto cpu temps   | green = unmuted           | black      = night
+	|                      | I = idle                | to red as they rise                       | red   = muted             | dark blue  = twilight
+	| ? = unknown          | D = downloading                                                                                 | light blue = day (sunny)
+	| + = charging         | Q = queued                                                                                      | white      = day (cloudy)
+	| - = discharging     

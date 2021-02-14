@@ -1,4 +1,0 @@
-#!/bin/sh
-
-sda1=$(df -h | awk '/sda1/ {print $3 "/" $2}')
-echo "[SDA1 $sda1]"

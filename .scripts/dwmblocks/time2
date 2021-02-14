@@ -1,3 +1,14 @@
 #!/bin/sh
 
-echo "[$(date | awk '{print $4}')]"
+currdate=$(date +%H:%M:%S)
+datediff $(cat $HOME/.cache/wttrD) $currdate | grep '^-' >/dev/null && col="^c#000000^"
+datediff $(cat $HOME/.cache/wttrd) $currdate | grep -v '^-' >/dev/null && col="^c#000000^"
+
+[ "$col" = "" ] && {
+	datediff $(cat $HOME/.cache/wttrS) $currdate | grep '^-' >/dev/null && col="^c#000099^"
+	datediff $(cat $HOME/.cache/wttrs) $currdate | grep -v '^-' >/dev/null && col="^c#000099^"
+}
+
+cat $HOME/.cache/wttr | grep -i 'sunny' >/dev/null && col="^c#eeaaaa^"
+[ "$col" = "" ] && col="^c#cccccc^"
+echo "[${col}${currdate}]"
