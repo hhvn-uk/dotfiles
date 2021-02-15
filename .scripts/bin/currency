@@ -1,10 +1,10 @@
 #!/bin/sh
 
-[ -z $1 ] && echo "usage: currency <amount> <input currency> in <output currency>"
+[ -z $1 ] && echo "usage: $(basename $0) <amount> <input currency> in <output currency>" && exit
 
-table=$(curl -qs https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml)
+from="$2"
+to="$4"
 
-inputrate=$(echo "$table" | grep -oi "<Cube currency=\"$2\"[^>]*" | head -n 1 | awk -F\" '{print $4}')
-outputrate=$(echo "$table" | grep -oi "<Cube currency=\"$4\"[^>]*" | head -n 1 | awk -F\" '{print $4}')
+mult=$(curl -qs "https://min-api.cryptocompare.com/data/price?fsym=$from&tsyms=$to" | awk -F"[\"}{:]" '{print $5}')
 
-echo "scale=5; $1 / $inputrate * $outputrate" | bc
+echo "scale=15; $1 * $mult" | bc
