@@ -15,7 +15,7 @@
     "compact-view": false,
     "details-window-height": 542,
     "details-window-width": 700,
-    "dht-enabled": true,
+    "dht-enabled": false,
     "download-dir": "/home/hayden/general/music",
     "download-queue-enabled": true,
     "download-queue-size": 5,
