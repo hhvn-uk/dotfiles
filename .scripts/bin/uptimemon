@@ -19,9 +19,9 @@
 
 d=$HOME/net/exec/uptime
 
-for s in matrix local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com
+for s in matrix local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com mx1.haydenvh.com
 do 
-	curr=$(ssh $s uptime | grep -v 'min,' | awk '{print $3}' | grep '^[^:]*$' || echo 0)
+	curr=$(ssh $s uptime | grep 'days' | awk '{print $3}' | grep '^[^:]*$' || echo 0)
 	ssh $s uptime >/dev/null && down=n || down=y # run the cmd again - variable can't be set
                                                      # in substitions
 	[ ! -f $d/$s ] && echo "curr	$curr" > $d/$s
