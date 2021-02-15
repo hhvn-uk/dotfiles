@@ -13,6 +13,6 @@ done
 num=$(echo "scale=2; ($charge/$total)*21" | bc | sed 's~\..*$~~')
 ind="^c#aa6600^?"
 [ "$charging" = "y" ] && ind="^c#00aa00^+" 
-[ $num -ge 19 ] && ind="^c#00aa00^+"
+[ $num -ge 19 ] && ind="^c#00aa00^#"
 [ "$discharging" = "y" ] && ind="^c#aa0000^-"
 printf " ^c#555555^^r0,5,2,4^^r2,2,22,10^^d^^r3,3,20,8^^r$((23-$num)),3,$num,8^^d^^f24^$ind^d^ "

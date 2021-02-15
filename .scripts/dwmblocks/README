@@ -7,3 +7,4 @@
 	| ? = unknown          | D = downloading                                                                                 | light blue = day (sunny)
 	| + = charging         | Q = queued                                                                                      | white      = day (cloudy)
 	| - = discharging     
+	| # = full
