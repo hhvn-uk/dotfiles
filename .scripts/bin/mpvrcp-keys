@@ -1,10 +1,9 @@
 #!/bin/bash
-# sad bash depend :(
-# nead it for `read -rsn1 key1
-# please mail me if you know any posix solution
 
+trap 'drawgui'     28 #SIGWINCH
+trap 'stty icanon' 2  #SIGINT
 
-trap 'drawgui' 28 #SIGWINCH
+clear
 
 send(){
 	echo "{ \"command\": [$1] }" | socat - $2 >/dev/null || {
@@ -14,6 +13,7 @@ send(){
 		drawgui
 	}
 }
+
 toggle(){
 	paused=$(echo '{ "command": ["get_property", "pause"] }' | socat - $1 2>/dev/null | tr '{":0,}' ' ' | awk '// {print $2}')
 	[ "$paused" = "true" ] && {
@@ -24,20 +24,24 @@ toggle(){
 }
 
 drawgui(){
-	clear
 	tput cup 0 0
+	tput el
 	printf 'quit(q) rand(m) pause(p) vol(+-) prev(h) back(j) forward(k) next(l)'
 }
 
-drawgui
+stty -icanon
+getchar(){
+	drawgui
+	key=$(dd bs=1 count=1 2>/dev/null)
+}
 
-while read -rsn1 key
+while getchar
 do
 	[ "$key" = "h" ] && send '"playlist-prev"' /tmp/mpv-socket
 	[ "$key" = "j" ] && send '"seek", "-10"' /tmp/mpv-socket
 	[ "$key" = "k" ] && send '"seek", "10"' /tmp/mpv-socket
 	[ "$key" = "l" ] && send '"playlist-next"' /tmp/mpv-socket
-	[ "$key" = "q" ] && semd '"quit"' /tmp/mpv-socket
+	[ "$key" = "q" ] && send '"quit"' /tmp/mpv-socket
 	[ "$key" = "p" ] && toggle /tmp/mpv-socket
 	[ "$key" = "+" ] && amixer set Master 5%+ >/dev/null 2>/dev/null
 	[ "$key" = "-" ] && amixer set Master 5%- >/dev/null 2>/dev/null
