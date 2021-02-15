@@ -1,7 +1,6 @@
 #!/bin/ksh
 
 export ENV="$HOME/.config/ksh/kshrc"
-export PATH="$PATH:$HOME/.scripts/bin"
 export EDITOR="nvim"
 export PAGER="less"
 export TERMINAL="st"
@@ -14,7 +13,6 @@ export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
 export CURLHOME="$HOME/.config/curl/"
 export CC="tcc"
-. .config/zsh/ls.zsh
 [ "$hostname" != "" ] && {
 	echo > /dev/null
 } || [ "$HOSTNAME" != "" ] && {
