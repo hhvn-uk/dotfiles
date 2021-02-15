@@ -32,6 +32,8 @@ bind index,pager M compose-to-sender
 bind index \Ct collapse-thread
 bind index \Ca collapse-all
 
+bind compose F edit-from
+
 set sort=threads
 set collapse_all
 
