@@ -1,6 +1,0 @@
-#!/bin/sh
-
-t=$(mktemp)
-curl "$1" > $t
-mpv $t
-rm $t
