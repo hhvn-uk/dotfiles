@@ -45,5 +45,5 @@ do
 	[ "$key" = "p" ] && toggle /tmp/mpv-socket
 	[ "$key" = "+" ] && amixer set Master 5%+ >/dev/null 2>/dev/null
 	[ "$key" = "-" ] && amixer set Master 5%- >/dev/null 2>/dev/null
-	[ "$key" = "m" ] && rmpv music/ 50 >/dev/null 2>/dev/null & # rmpv is another script of mine
+	[ "$key" = "m" ] && rmpv music/list 150 >/dev/null 2>/dev/null & # rmpv is another script of mine
 done
