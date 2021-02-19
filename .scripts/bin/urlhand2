@@ -1,18 +1,3 @@
 #!/bin/sh
 
-tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
-
-hand=$(printf "mpvms video
-mpvms
-mpv --pause
-popupmpv
-youtube-dl --add-metadata -ic
-youtube-dl --add-metadata -xic
-$(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
-toxclip
-netimg
-netvid
-popupcurl
-popupcgo" | dmenu -i)
-
-[ "$tor" = "yes" ] && sh -c "torsocks $hand $1" || sh -c "$hand $1"
+echo "$@" | $(dirname $0)/urlhand

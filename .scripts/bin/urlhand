@@ -1,9 +1,7 @@
 #!/bin/sh
 
-link=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ >),]*' < /dev/stdin 2>/dev/null | awk '{print $1}' | dmenu -i)
+link=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ ]*' < /dev/stdin 2>/dev/null | sed 's/[>,:)]$//' | dmenu -i)
 [ "$link" = "" ] && exit 1
-
-tor=$(printf "no\nyes" | dmenu -i -p "Tor?")
 
 hand=$(printf "mpvms video
 mpvms
@@ -16,6 +14,16 @@ toxclip
 netimg
 netvid
 popupcurl
-popupcgo" | dmenu -i)
+popupcgo
+torsocks mpvms video
+torsocks mpvms
+torsocks mpv --pause
+torsocks popupmpv
+torsocks youtube-dl --add-metadata -ic
+torsocks youtube-dl --add-metadata -xic
+torsocks $(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
+torsocks netimg
+torsocks popupcurl
+torsocks popupcgo" | dmenu -i)
 
-[ "$tor" = "yes" ] && sh -c "torsocks $hand $link" || sh -c "$hand $link"
+sh -c "$hand $link"
