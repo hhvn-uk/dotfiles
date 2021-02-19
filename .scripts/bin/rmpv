@@ -6,17 +6,22 @@
 # hayden@haydenvh.com
 # Copyright (c) 2019-2021 Hayden Hamilton.
 
+[ "$(uname)" = "Linux" ] && grepargs="-I"
+# WHO THE FUCK THOUGHT THE BINARY FILE SHIT IN GNU GREP WAS A GOOD IDEA?
+# DO I REALLY HAVE TO FUCKING CHECK IF I'M ON A GNU SYSTEM AND GIVE A STUPID ARGUMENT TO GREP JUST TO MAKE MY SCRIPT WORK BECAUSE YOU THINK UTF8 FILE IS BINARY?
+# HOW DO YOU FUCKING MANAGE TO FUCK UP LIKE THAT ON PURPOSE?
+
 [ -z "$1" ] || [ ! -z "$3" ] && echo "usage: rmpv <directory|filelist> [size]"
 
-[ -f "$1" ] && files=$(grep -E "mp3	|opus	|mkv	|mp4	|flac	|m4a	|webm	|wav	" < "$1" | \
+[ -f "$1" ] && files=$(grep $grepargs -E "mp3	|opus	|mkv	|mp4	|flac	|m4a	|webm	|wav	" < "$1" | \
 	awk -F"	" '{for (i=0; i < $2; i++) print $1}' | shuf | head -n ${2:-50} | sed "s~^.~$(dirname $1)~")
-[ -d "$1" ] && files=$(find "$1" -type f | grep -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n ${2:-50})
-echo "$files" | grep '[[:alnum:]]' >/dev/null || {
+[ -d "$1" ] && files=$(find "$1" -type f | grep $grepargs -E 'mp3$|opus$|mkv$|mp4$|flac$|m4a$|webm$|wav$' | shuf | head -n ${2:-50})
+echo "$files" | grep $grepargs '[[:alnum:]]' >/dev/null || {
 	echo "No files found..."
 	exit 1
 }
 
-echo "$1" | grep "music" >/dev/null && {
+echo "$1" | grep $grepargs "music" >/dev/null && {
 	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket --no-video --
 } || {
 	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket $files
