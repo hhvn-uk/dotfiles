@@ -3,4 +3,8 @@
 for u in $@
 do
 	curl -qsL $u | tr '}{,' '\n' | grep channelId | head -n 1 | sed 's/.*\\":\\"//;s/..$//' | awk '{print "https://www.youtube.com/feeds/videos.xml?channel_id=" $0}' 
-done | tee /dev/stderr | xclip
+done | (
+	[ ! -z $DISPLAY ] && {
+		tee /dev/stderr | xclip
+	} || cat
+)
