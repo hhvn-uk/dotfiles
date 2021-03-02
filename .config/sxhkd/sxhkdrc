@@ -136,6 +136,9 @@ super + shift + y
 super + ctrl + {j,k}
 	for void in $(seq 3); do xdotool click {5,4}; done
 
+super + shift + h
+	st -e htop
+
 Menu
 	xdotool click 2
 
