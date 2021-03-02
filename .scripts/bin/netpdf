@@ -1,0 +1,18 @@
+#!/bin/sh
+
+while [ $# != 0 ]
+do
+	
+	file="/tmp/netpdf.$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+	while [ -f $file ]
+	do
+		file="/tmp/netpdf.$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+	done
+
+	curl -L "$1" > "$file"
+	files="$files $file"
+	shift
+done
+
+zathura $files
+rm $files
