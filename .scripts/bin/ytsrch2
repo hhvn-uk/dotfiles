@@ -26,7 +26,7 @@ do
 	query="$query $2"
 	shift
 done 2>/dev/null
-content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$query" | xxd -p | tr -d '\n' | sed 's/../%&/g')")
+content=$(curl -H "Accept-Language: en-US" -qsL "https://www.youtube.com/results?search_query=$(echo "$query" | xxd -p | tr -d '\n' | sed 's/../%&/g')&hl=en")
 
 # this is just fucking braindead obfuscation, fuck youtube
 
@@ -44,9 +44,9 @@ getelem(){
 
 for i in $(seq ${2:-20})
 do
-	printf "\nURI:       %s\nTitle:     %s\nAuthor:    %s\nPublished: %s\nLength:    %s\nViews:     %s\n" \
-		"$(getelem $i "$uris"   )" \
+	printf "\nTitle:     %s\nURI:       %s\nAuthor:    %s\nPublished: %s\nLength:    %s\nViews:     %s\n" \
 		"$(getelem $i "$titles" )" \
+		"$(getelem $i "$uris"   )" \
 		"$(getelem $i "$authors")" \
 		"$(getelem $i "$dates"  )" \
 		"$(getelem $i "$length" )" \
