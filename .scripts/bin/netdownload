@@ -1,19 +1,15 @@
 #!/bin/sh
 
-cd $HOME/general/downloads
-while true
-do
-	df=$(
-		(
-			echo " $(basename $1)"
-			echo "../"
-			echo "$HOME/"
-			find -maxdepth 1 -type d | sed '/^\.$/d;s~^\./~~;s~$~/~'
-		) | dmenu -i -w $3 -c -p "$(pwd)" | tr -d ' ')
-	[ "$df" = "" ] && exit
-	[ -d "$df" ] && cd "$df"
-	[ ! -d "$df" ] && {
-		st -w $(xwininfo -children -id $3 | awk '$1 == "Parent" {print $4}') -e sh -c "curl '$1' --cookie '$2' --cookie-jar '$2' > '$df'"
-		exit
-	}
-done
+input=$(printf "no\nyes\n" | dmenu -i -p "Download: $1")
+[ "$input" = "yes" ] && {
+	file="$HOME/general/downloads/$(echo "$1" | tr '/' '+')"
+	while [ -f $file ]
+	do
+		file="$HOME/general/downloads/$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+	done
+	curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+	herbe "Saved to: $file"
+	exit 1
+} || {
+	urlhand2 "$1"
+}
