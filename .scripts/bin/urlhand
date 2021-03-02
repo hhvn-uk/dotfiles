@@ -1,6 +1,9 @@
 #!/bin/sh
 
-link=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ ]*' < /dev/stdin 2>/dev/null | sed 's/[>,:)]$//' | dmenu -i)
+links=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ ]*' < /dev/stdin 2>/dev/null | sed 's/[>,:)]$//')
+
+[ $(echo "$links" | wc -l) -eq 1 ] && link=$links || link=$(echo "$links" | dmenu -i)
+
 [ "$link" = "" ] && exit 1
 
 hand=$(printf "mpvms video
@@ -12,9 +15,10 @@ youtube-dl --add-metadata -xic
 $(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
 toxclip
 netimg
-netvid
+netpdf
 popupcurl
 popupcgo
+popupw3m
 torsocks mpvms video
 torsocks mpvms
 torsocks mpv --pause
@@ -23,7 +27,9 @@ torsocks youtube-dl --add-metadata -ic
 torsocks youtube-dl --add-metadata -xic
 torsocks $(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
 torsocks netimg
+torsocks netpdf
 torsocks popupcurl
-torsocks popupcgo" | dmenu -i)
+torsocks popupcgo
+torsocks popupw3m" | dmenu -i)
 
 sh -c "$hand $link"
