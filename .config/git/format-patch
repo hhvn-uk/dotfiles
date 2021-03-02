@@ -1,0 +1,3 @@
+#!/bin/sh
+
+git format-patch --compact-summary --minimal --subject-prefix "$(basename $(pwd))] [PATCH" -n $@

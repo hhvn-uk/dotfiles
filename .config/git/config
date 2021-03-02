@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
 	name = hhvn
-	email = hayden@haydenvh.com
+	email = dev@haydenvh.com
 
 [blame]
 	date = human
@@ -9,5 +9,17 @@
 [alias]
 	hist = !sh ~/.config/git/hist
 	mrg = merge --no-ff
+	fm = !sh ~/.config/git/format-patch
+
 [init]
 	defaultBranch = master
+
+[format]
+	headers = "Organization: haydenvh.com"
+
+[sendemail]
+	smtpDomain = port.haydenvh.com
+	smtpServer = haydenvh.com
+	smtpEncryption = tls
+	smtpServerPort = 587
+	cc = ""
