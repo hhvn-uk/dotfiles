@@ -22,6 +22,12 @@ case "$chosen" in
 		newname=$(echo | dmenu -i -p "Name for passwd?")
 		[ "$newname" = "" ] && newname="pleaseeditthis"
 		echo "$newname: $new" >> $PASS
+		echo "$new" | xclip
+		(
+			sleep 25
+			# destroy clipboard to prevent accidental pasting
+			printf '' | xclip
+		) &
 		;;
 	*)
 		printf "${passwd##*: }\n" | xclip
