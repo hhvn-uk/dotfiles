@@ -2,6 +2,7 @@
 [user]
 	name = hhvn
 	email = dev@haydenvh.com
+	signingkey = ED59FC1A
 
 [blame]
 	date = human
@@ -10,6 +11,9 @@
 	hist = !sh ~/.config/git/hist
 	mrg = merge --no-ff
 	fm = !sh ~/.config/git/format-patch
+
+[commit]
+	gpgsign = true
 
 [init]
 	defaultBranch = master
@@ -23,3 +27,6 @@
 	smtpEncryption = tls
 	smtpServerPort = 587
 	cc = ""
+
+[pull]
+	rebase = false
