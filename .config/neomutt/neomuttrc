@@ -1,7 +1,8 @@
-source users/hayden@haydenvh.com	#user
+source users/hayden@hhvn.uk	#user
+#source users/hayden@haydenvh.com	#user
 #source users/hhvn@dataswamp.org	#user
 #source users/backtrack@airmail.cc	#user
-#source users/irc@hlirc.net	#user
+#source users/hhvn@hlirc.net	#user
 
 set ssl_starttls = yes
 set ssl_force_tls = yes
