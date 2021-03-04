@@ -60,6 +60,7 @@ alias gnu.matrix="fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=
 alias rss="sfeed_update $XDG_CONFIG_HOME/sfeed/config && . $XDG_CONFIG_HOME/sfeed/config && sfeed_curses $XDG_CACHE_HOME/sfeed/*"
 alias diff="colordiff"
 alias irc="(sleep 1 && xdotool type 'tmux a' && xdotool key Return) & ssh local"
+alias gpg="\gpg --armour"
 alias ~d="cd ~/general/downloads; ls"
 alias ~do="cd ~/general/documents; ls"
 alias ~iw="cd ~/images/wallpapers; ls"
