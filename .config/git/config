@@ -10,6 +10,10 @@
 	hist = !sh ~/.config/git/hist
 	mrg = merge --no-ff
 	fm = !sh ~/.config/git/format-patch
+	ch = checkout
+	co = commit
+	pu = push
+	ac = !sh ~/.config/git/add-commit
 
 [init]
 	defaultBranch = master
@@ -18,8 +22,8 @@
 	headers = "Organization: haydenvh.com"
 
 [sendemail]
-	smtpDomain = port.haydenvh.com
-	smtpServer = haydenvh.com
+	smtpDomain = port.hhvn.uk
+	smtpServer = hhvn.uk
 	smtpEncryption = tls
 	smtpServerPort = 587
 	cc = ""

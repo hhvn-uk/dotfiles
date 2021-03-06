@@ -1,0 +1,23 @@
+#!/bin/sh
+# - recognize file names from inside commit message
+# example: git ac -m "LICENSE project.c: new email addr"
+#  output: git add LICENSE project.c; git commit -m "LICENSE project.c: new email addr"
+
+die(){
+	echo "error: no filenames extracted from (non-existant)* commit message"
+	exit 1
+}
+
+# [][][^][]*[][] is one of the ugliest regexes I've ever constructed
+# It is meant to get rid of the [NEW] from "thing.1[NEW]: add manpage"
+
+echo "$@" | grep ".*-m *[^:]*:" >/dev/null || die
+files=$(echo "$@" | sed 's/[][][^][]*[][]//g' | sed -E 's/.*-m *([^:]*):.*/\1/')
+
+git add $files
+
+while [ $# != 0 ]
+do
+	printf '%s\0' "$1"
+	shift
+done | xargs -0 git commit
