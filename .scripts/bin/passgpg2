@@ -1,0 +1,9 @@
+#!/bin/sh
+# gpg2 is so stupid, use gpg1 if you have the chance
+# why do I need --batch and --pinentry-mode loopback just so --passphrase works? wtf?
+
+while [ $# != 0 ]
+do
+	printf '%s\0' "$1"
+	shift
+done | xargs -0 gpg2 --armour --batch --pinentry-mode loopback --passphrase "$(dpass gpg3key)"

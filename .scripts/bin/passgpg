@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ $# != 0 ]
+do
+	printf '%s\0' "$1"
+	shift
+done | xargs -0 gpg --armour --passphrase "$(dpass gpg3key)"
