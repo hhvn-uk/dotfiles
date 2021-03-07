@@ -33,19 +33,19 @@ done
 	# in non-inline mode, take list of files to add
 	# then format these into the COMMIT_EDITMSG file
 
-	list="$@"
-	while [ $# -ne 0 ]
-	do
-		printf "%s\0" "$1"
-		shift
-	done | xargs -0 git add || exit 1
-
-	echo "$list:" > .git/COMMIT_EDITMSG
+	echo "$@:" > .git/COMMIT_EDITMSG
 	sum=$(sha256sum .git/COMMIT_EDITMSG)
 	${EDITOR:-vim} .git/COMMIT_EDITMSG
 	sum2=$(sha256sum .git/COMMIT_EDITMSG)
 
-	[ "$sum" != "$sum2" ] && git commit -F .git/COMMIT_EDITMSG || {
+	[ "$sum" != "$sum2" ] && {
+		while [ $# -ne 0 ]
+		do
+			printf "%s\0" "$1"
+			shift
+		done | xargs -0 git add || exit 1
+		git commit -F .git/COMMIT_EDITMSG 
+	} || {
 		echo "error: COMMIT_EDITMSG not changed"
 		exit 1
 	}
