@@ -14,6 +14,8 @@
 	co = commit
 	pu = push
 	ac = !sh ~/.config/git/add-commit
+	pa = push --all
+	re = !sh ~/.config/git/remote
 
 [init]
 	defaultBranch = master

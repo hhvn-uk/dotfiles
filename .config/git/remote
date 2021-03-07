@@ -1,0 +1,43 @@
+#!/bin/sh
+
+# I'm more interested in the URIs than the list of one, 
+# or two remotes, most of the time.
+[ -z "$@" ] 2>/dev/null && {
+	remotes=$(git remote -v)
+	[ -z "$remotes" ] && echo "no remotes configured" || echo "$remotes"
+
+	exit 0
+}
+
+# add/set-url act interchangably
+[ "$1" = "add" ] || [ "$1" = "set-url" ] && {
+	shift
+	for n in $(seq $#)
+	do
+		eval "echo \$$n" | grep -v '^-' >/dev/null && {
+			remote=$(eval "echo \$$n")
+			break
+		}
+	done
+	[ "$remote" = "" ] && echo "error: no remote given" && exit 1
+
+	for r in $(git remote)
+	do
+		[ "$r" = "$remote" ] && comm="set-url"
+	done
+
+	while [ $# -ne 0 ]
+	do
+		printf "%s\0" "$1"
+		shift
+	done | xargs -0 git remote ${comm:-add}
+
+	exit 0
+}
+
+# fallback to regular git-remote
+while [ $# -ne 0 ]
+do
+	printf "%s\0" "$1"
+	shift
+done | xargs -0 git remote
