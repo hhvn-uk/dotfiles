@@ -12,7 +12,8 @@ mpv --pause
 popupmpv
 youtube-dl --add-metadata -ic
 youtube-dl --add-metadata -xic
-$(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
+$(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)")
+>/tmp/tabbed.xid tabbed -cr2 surf -e ''
 toxclip
 netimg
 netpdf
@@ -25,7 +26,8 @@ torsocks mpv --pause
 torsocks popupmpv
 torsocks youtube-dl --add-metadata -ic
 torsocks youtube-dl --add-metadata -xic
-torsocks $(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)" || echo ">/tmp/tabbed.xid tabbed -cr2 surf -e ''")
+torsocks $(xprop -id $(cat /tmp/tabbed.xid) >/dev/null && echo "surf -e $(cat /tmp/tabbed.xid)")
+torsocks >/tmp/tabbed.xid tabbed -cr2 surf -e ''
 torsocks netimg
 torsocks netpdf
 torsocks popupcurl
