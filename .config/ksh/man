@@ -6,4 +6,3 @@ mantmp(){
 
 alias        man="mantmp; \man        -C /tmp/man.conf"
 alias    apropos="mantmp; \apropos    -C /tmp/man.conf"
-alias makewhatis="mantmp; \makewhatis -C /tmp/man.conf"
