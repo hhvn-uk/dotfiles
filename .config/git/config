@@ -11,11 +11,11 @@
 	fm = !sh ~/.config/git/format-patch
 	ac = !sh ~/.config/git/add-commit
 	re = !sh ~/.config/git/remote
+	pu = !sh ~/.config/git/push
+	pa = !sh ~/.config/git/push --all
 	mg = merge --no-ff
 	ch = checkout
 	co = commit
-	pu = push
-	pa = push --all
 
 [init]
 	defaultBranch = master
