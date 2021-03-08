@@ -1,0 +1,26 @@
+.Dd hhvn-git
+.Dt git-ac 1
+.Os
+.Sh Name
+.Nm git-ac 
+.Nd combine
+.Xr git-add 1
+and
+.Xr git-commit 1 "."
+.Sh SYNOPSIS
+.Nm
+.Fl m
+.Ar message
+.Ar [GIT-COMMIT-OPTIONS]
+.Nm
+.Ar files
+.Sh DESCRIPTION
+If supplied -m infer files from it.
+
+If not supplied -m, take list of files and begin formatting COMMIT_EDITMSG.
+.Sh SEE ALSO
+.Xr hhvn-git 7 ","
+.Xr git-add 1 ","
+.Xr git-commit 1 ","
+.Sh AUTHOR
+.An hhvn Aq Mt dev@hhvn.uk .
