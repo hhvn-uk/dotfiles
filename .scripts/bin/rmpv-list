@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# rmpv-list
+# manipulate and create lists for rmpv
+#
+# Copyright (c) 2021 Hayden Hamilton <dev@haydenvh.com>
+
+# current format:
+# file	weight
+#
+# where weight is the number of times the file will occur in the pre-shuffle list
+
+[ -z "$1" ] || [ -z "$2" ] && printf '%s\n%s\n' "usage: rmpv-list -c <dir>" "usage: rmpv-list -m <list> <file> <weight>"
+
+[ "$1" = "-c" ] && {
+	 [ -f "$2/list" ] && echo "error: $2/list already exists" | tr -s '/' && exit 1
+	 cd $2
+	 find . -type f | awk '{printf("%s\t1\n", $0)}' > list
+ }
+
+[ "$1" = "-m" ] && {
+	echo "$2" | grep -v '^/' >/dev/null && absolutelist="$(pwd)/$2" || absolutelist="$2"
+	echo "$3" | grep -v '^/' >/dev/null && absolutefile="$(pwd)/$3" || absolutefile="$3"
+	file=$(echo "$absolutefile" | sed "s~^$dir~~" | tr -s '/')
+	awk -F"	" -v "file=$file" -v "weight=$4" '
+		$1 == file {print file "\t" weight}
+		$1 != file
+		' < $absolutelist > $absolutelist.new
+}
