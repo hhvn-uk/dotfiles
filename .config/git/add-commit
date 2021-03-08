@@ -3,6 +3,8 @@
 # example: git ac -m "LICENSE project.c: new email addr"
 #  output: git add LICENSE project.c; git commit -m "LICENSE project.c: new email addr"
 
+shorten=y
+
 die(){
 	echo "error: no filenames extracted from commit message"
 	exit 1
@@ -33,7 +35,9 @@ done
 	# in non-inline mode, take list of files to add
 	# then format these into the COMMIT_EDITMSG file
 
-	echo "$@:" > .git/COMMIT_EDITMSG
+	[ "$shorten" = "y" ] && {
+		echo "$@:" | sed -E 's~([a-zA-Z])[^/]*/~\1/~g' > .git/COMMIT_EDITMSG
+	} || echo "$@:" > .git/COMMIT_EDITMSG
 	sum=$(sha256sum .git/COMMIT_EDITMSG)
 	${EDITOR:-vim} .git/COMMIT_EDITMSG
 	sum2=$(sha256sum .git/COMMIT_EDITMSG)
