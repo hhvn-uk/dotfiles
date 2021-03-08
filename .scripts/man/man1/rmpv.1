@@ -1,0 +1,22 @@
+.Dd hhvn-scripts
+.Dt rmpv 1
+.Sh NAME
+.Nm rmpv
+.Nd pseudo-random playing of music/video via mpv
+.Sh SYNOPSIS
+.Nm
+.Ar dir/
+.Nm
+.Ar dir/list
+.Sh DESCRIPTION
+Lists are in the
+.Xr rmpv-list 5
+format, and allow for more fine-grained tuning of the pseudo-random (you can prefer certain files, or blacklist them, all without messing with the files themsevles).
+
+If either argument match "music" the --no-video argument will be passed to mpv.
+.Sh SEE ALSO
+.Xr rmpv-list 1 ,
+.Xr rmpv-list 5 ,
+.Xr hhvn-scripts 7
+.Sh AUTHOR
+.An hhvn Aq Mt dev@hhvn.uk .
