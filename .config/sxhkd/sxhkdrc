@@ -68,13 +68,13 @@ super + ctrl + s
 	maim | hlpaste "png"
 
 super + w
-	wallp ~/images/wallpapers
+	wallp $HOME/general/images/wallpapers/
 
 super + ctrl + w
 	wallblur
 
 super + {alt, alt + ctrl} + w
-	wallp ~/images/wallpapers {right, left}
+	wallp ~/images/wallpapers/ {right, left}
 
 super + shift + w
 	colour-wall
