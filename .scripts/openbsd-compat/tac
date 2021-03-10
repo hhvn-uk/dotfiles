@@ -1,0 +1,14 @@
+#!/bin/awk -f
+
+BEGIN {
+	n=0
+}
+
+{
+	line[n++]=$0
+}
+
+END {
+	for (i=n; i != 0; i--)
+		print line[i-1]
+}
