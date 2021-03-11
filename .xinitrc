@@ -19,6 +19,7 @@ st -e &
 
 wallp images/ &
 
-while true; do
-	dwm 2>log
+while dwm 2>$HOME/.local/dwmlog
+do
+	:
 done
