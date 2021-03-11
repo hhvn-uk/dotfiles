@@ -1,14 +1,20 @@
-#!/bin/awk -f
+#!/bin/sh
 
-BEGIN {
-	n=0
-}
+while [ $# -ne 0 ]
+do
+	printf '%s\n' "$1"
+	shift
+done | nl | sort -nr | sed 's/^[[:space:]]*[0-9]*[[:space:]]//' |\
+	tr '\n' '\0' | xargs -0 cat | awk '
+	BEGIN {
+		n=0
+	}
 
-{
-	line[n++]=$0
-}
+	{
+		line[n++]=$0
+	}
 
-END {
-	for (i=n; i != 0; i--)
-		print line[i-1]
-}
+	END {
+		for (i=n; i != 0; i--)
+			print line[i-1]
+	}'
