@@ -1,0 +1,19 @@
+.Dd hhvn-obsd-compat
+.Dt tac 1
+.Sh PROLOGUE
+These scripts are barebone replicas of some GNU programs that I miss on openbsd
+
+IMO, this is the lazy method of ensuring compatibility :)
+.Sh NAME
+.Nm tac
+.Nd print last line of last
+.Ar file
+(or stdin).
+.Sh SYNOPSIS
+.Nm
+.Ar "[" files "]"
+.Sh SEE ALSO
+.Xr hhvn-scripts 7
+.Xr hhvn-obsd-compat 7
+.Sh AUTHOR
+.An hhvn Aq Mt dev@hhvn.uk .
