@@ -12,8 +12,8 @@
 	[ -z $1 ] && echo "${passwd##*: }"|| echo "$@ ${passwd##*: }"
 	exit
 }
-chosen=$(printf "GENERATE\nEDIT\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i | tr '[:upper:]' '[:lower:]')
-passwd=$(grep "^$chosen: " < $PASS)
+chosen=$(printf "GENERATE\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i | tr '[:upper:]' '[:lower:]')
+passwd=$(awk -F":" -v "chosen=$chosen" '$1 == chosen {print $2}' < .local/pass)
 
 case "$chosen" in
 	"") exit 1 ;;
@@ -30,7 +30,7 @@ case "$chosen" in
 		) &
 		;;
 	*)
-		printf "${passwd##*: }\n" | xclip
+		echo "${passwd}" | xclip
 		(
 			sleep 25
 			# destroy clipboard to prevent accidental pasting
