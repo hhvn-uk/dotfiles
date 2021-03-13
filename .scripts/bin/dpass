@@ -20,7 +20,10 @@ case "$chosen" in
 	generate)
 		new=$(head -c 2000 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 35 | shuf | head -n 1)
 		newname=$(echo | dmenu -i -p "Name for passwd?")
-		[ "$newname" = "" ] && newname="pleaseeditthis"
+		[ "$newname" = "" ] && {
+			herbe "dpass exiting... no pass given"
+			exit 1
+		}
 		echo "$newname: $new" >> $PASS
 		echo "$new" | xclip
 		(
