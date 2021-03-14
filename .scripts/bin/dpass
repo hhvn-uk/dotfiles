@@ -13,7 +13,7 @@
 	exit
 }
 chosen=$(printf "GENERATE\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i | tr '[:upper:]' '[:lower:]')
-passwd=$(awk -F":" -v "chosen=$chosen" '$1 == chosen {print $2}' < .local/pass)
+passwd=$(awk -F":" -v "chosen=$chosen" '$1 == chosen {print $2}' < .local/pass | tr -d ' ')
 
 case "$chosen" in
 	"") exit 1 ;;
