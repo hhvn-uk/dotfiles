@@ -18,8 +18,8 @@ color index_flags color12 default "~(~N)" # matches threads which contain unread
 color index_flags color12 default "~(~O)" # ditto
 
 # PGP'd
-color index_subject color8 default "~k"
-color index_subject color10 default "~V"
+color index_author color14 default "~k"
+color index_author color14 default "~V"
 
 # Header colors:
 color header blue default ".*"
