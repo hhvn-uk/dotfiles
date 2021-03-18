@@ -1,8 +1,8 @@
 source users/hayden@hhvn.uk	#user
+#source users/hhvn@hlirc.net	#user
+#source users/backtrack@airmail.cc	#user
 #source users/hayden@haydenvh.com	#user
 #source users/hhvn@dataswamp.org	#user
-#source users/backtrack@airmail.cc	#user
-#source users/hhvn@hlirc.net	#user
 
 set ssl_starttls = yes
 set ssl_force_tls = yes
@@ -14,7 +14,7 @@ set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =matrix =security =news =money =dataswamporg =inbox-airmail =school ="========================" =forwards =sent =drafts =rubbish =backup =spam =spam-domain ="------------------------" =exmouth =exmouthsent =exmouthrubbish
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =matrix =security =news =money =dataswamporg =inbox-airmail =school ="========================" =forwards =sent =drafts =rubbish =backup =spam =spam-domain ="------------------------"
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
@@ -40,8 +40,6 @@ set collapse_all
 
 set signature=~/.config/neomutt/signatures
 
-# source ~/.config/neomutt/gpg.rc
-
 macro index S <save-message>=spam<enter><enter>
 macro index A <save-message>=spam-domain<enter><enter>
 
@@ -49,3 +47,6 @@ my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date
 
 #folder-hook sent
+
+set header_cache = "~/general/mail/cache/"
+set message_cachedir = "~/general/mail/cache/"
