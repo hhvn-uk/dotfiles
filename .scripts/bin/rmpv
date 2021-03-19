@@ -24,5 +24,5 @@ echo "$files" | grep $grepargs '[[:alnum:]]' >/dev/null || {
 echo "$1" | grep $grepargs "music" >/dev/null && {
 	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket --no-video --
 } || {
-	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket $files
+	echo "$files" | tr '\n' '\0' | xargs -0 mpv --input-ipc-server=/tmp/mpv-socket
 }
