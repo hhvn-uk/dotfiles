@@ -22,17 +22,14 @@
 # tries to ssh into machine if port 79 is not exposed
 
 user=${1%%@*}
-host=${1#*@}
+hostport="${1#*@}"
+host=${hostport%:*}
+echo "$host" | grep ':' >/dev/null && port=${hostport##*:}
 
 (
-	[ -z $host ] && {
-		printf "$user\r\n" | nc 127.0.0.1 79
-		exit
-	}
-
 	[ -z $user ] && {
-		printf "\r\n" | nc $host 79 || ssh $host finger
+		printf "\r\n" | nc ${host:-localhost} ${port:-79}
 	} || {
-		printf "$user\r\n" | nc $host 79 || ssh $host finger $user
+		printf "$user\r\n" | nc ${host:-localhost} ${port:-79}
 	}
 ) | tr -d '\r'
