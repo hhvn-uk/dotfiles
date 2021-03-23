@@ -20,6 +20,7 @@ netpdf
 popupcurl
 popupcgo
 popupw3m
+gpgimport
 torsocks mpvms video
 torsocks mpvms
 torsocks mpv --pause
@@ -32,6 +33,7 @@ torsocks netimg
 torsocks netpdf
 torsocks popupcurl
 torsocks popupcgo
-torsocks popupw3m" | dmenu -i)
+torsocks popupw3m
+torsocks gpgimport" | dmenu -i)
 
 sh -c "$hand $link"

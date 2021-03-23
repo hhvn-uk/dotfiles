@@ -1,0 +1,4 @@
+#!/bin/sh
+# import from the 'net
+
+st -e sh -c "curl \"$@\" | gpg --import; cat"
