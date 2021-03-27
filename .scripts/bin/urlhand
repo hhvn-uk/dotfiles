@@ -36,4 +36,4 @@ torsocks popupcgo
 torsocks popupw3m
 torsocks gpgimport" | dmenu -i)
 
-sh -c "$hand $link"
+nohup sh -c "$hand $link" >/dev/null &
