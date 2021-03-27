@@ -7,5 +7,6 @@
 # screen + glasess = 1.0
 
 pkill redshift
+sleep 1
 xrandr --output HDMI2 --brightness 2.0
 xrandr --output VGA1  --brightness 2.0
