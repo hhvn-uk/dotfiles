@@ -13,6 +13,8 @@
 	re = !sh ~/.config/git/remote
 	pu = !sh ~/.config/git/push
 	pa = !sh ~/.config/git/push --all
+	rs = reset
+	rh = reset --hard
 	mg = merge --no-ff
 	ch = checkout
 	co = commit
