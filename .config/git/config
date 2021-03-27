@@ -14,6 +14,7 @@
 	pu = !sh ~/.config/git/push
 	pa = !sh ~/.config/git/push --all
 	se = send-email
+	ad = add
 	rs = reset
 	rh = reset --hard
 	mg = merge --no-ff
