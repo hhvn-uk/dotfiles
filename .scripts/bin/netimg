@@ -9,7 +9,7 @@ do
 		file="/tmp/netimg.$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
 	done
 
-	curl -L "$1" > "$file"
+	curl -kL "$1" > "$file"
 	files="$files $file"
 	shift
 done
