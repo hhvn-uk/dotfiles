@@ -28,10 +28,10 @@ super + b
 super + shift + b
 	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
 
-super + n
+super + shift + n
 	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
 
-super + shift + n 
+super + n 
 	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
 
 super + r
