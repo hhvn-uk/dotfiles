@@ -2,7 +2,7 @@
 #
 # uptimemon.sh - monitor and record uptime (records)
 #
-# hayden@haydenvh.com
+# hayden@hhvn.uk
 # Copyright (c) 2020 Hayden Hamilton
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -19,7 +19,7 @@
 
 d=$HOME/net/exec/uptime
 
-for s in matrix local irc1 irc2 dumbterm.haydenvh.com phony.haydenvh.com port.haydenvh.com mx1.haydenvh.com
+for s in matrix.hhvn.uk hhvn.uk irc1 irc2 dumbterm.hhvn.uk phony.hhvn.uk port.hhvn.uk mx1.hhvn.uk
 do 
 	curr=$(ssh $s uptime | grep 'days' | awk '{print $3}' | grep '^[^:]*$' || echo 0)
 	ssh $s uptime >/dev/null && down=n || down=y # run the cmd again - variable can't be set
