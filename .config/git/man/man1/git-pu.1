@@ -2,15 +2,22 @@
 .Dt git-pu 1
 .Os
 .Sh Name
-.Nm git-pu 
-.Nd alias for
+.Nm git-pu ,
+.Nm git-pa
+.Nd alias' for
 .Xr git-push 1 "."
-.Sh DESCRIPTION
-Uses "server" as default remote.
 .Sh SYNOPSIS
-.Nm
+.Nm git-pu
 .Ar [GIT-PUSH-OPTIONS]
 .Ar [GIT-PUSH-ARGUMENTS]
+.Nm git-pa
+.Ar [GIT-PUSH-OPTIONS]
+.Ar [GIT-PUSH-ARGUMENTS]
+.Sh DESCRIPTION
+.Nm git-pa
+pushes to all remotes.
+
+Uses "server" as default remote.
 .Sh SEE ALSO
 .Xr hhvn-git 7 ","
 .Xr git-push 1 ","
