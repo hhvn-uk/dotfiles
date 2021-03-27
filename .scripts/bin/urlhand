@@ -1,9 +1,7 @@
 #!/bin/sh
 
 links=$(grep -Eo '[A-Za-z][A-Za-z]*://[^ ]*' < /dev/stdin 2>/dev/null | sed 's/[>,:)]$//')
-
-[ $(echo "$links" | wc -l) -eq 1 ] && link=$links || link=$(echo "$links" | dmenu -i)
-
+[ $(echo "$links" | wc -l) -eq 1 ] && link=$links || link=$(printf 'ALL\n%s\n' "$links" | dmenu -i)
 [ "$link" = "" ] && exit 1
 
 hand=$(printf "mpvms video
@@ -36,4 +34,9 @@ torsocks popupcgo
 torsocks popupw3m
 torsocks gpgimport" | dmenu -i)
 
-nohup sh -c "$hand $link" >/dev/null &
+[ "$link" = "ALL" ] && {
+	for u in $links
+	do
+		nohup sh -c "$hand $u" >/dev/null &
+	done
+} || nohup sh -c "$hand $link" >/dev/null &
