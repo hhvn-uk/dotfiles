@@ -9,17 +9,13 @@ color index_number magenta default
 color index_subject cyan default '.*'
 
 # For new mail:
-color index_flags color12 default "~N"
-color index_flags color12 default "~O"
+color index_flags color14 default "~N"
+color index_flags color14 default "~O"
 
 # For threads
 #color index_subject default default "~v"
-color index_flags color12 default "~(~N)" # matches threads which contain unread entries
-color index_flags color12 default "~(~O)" # ditto
-
-# PGP'd
-color index_author color14 default "~k"
-color index_author color14 default "~V"
+color index_flags color14 default "~(~N)" # matches threads which contain unread entries
+color index_flags color14 default "~(~O)" # ditto
 
 # Header colors:
 color header blue default ".*"
@@ -68,5 +64,9 @@ color body brightyellow default "^gpg: "
 color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
 
 # Set status bar color
+set status_format=""
+set compose_format=""
+set pager_format=""
+set markers=no
 color status color5 default
 color progress color2 color23

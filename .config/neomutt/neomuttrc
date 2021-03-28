@@ -14,7 +14,7 @@ set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =matrix =security =news =money =dataswamporg =inbox-airmail =school ="========================" =forwards =sent =drafts =rubbish =backup =spam =spam-domain ="------------------------"
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =matrix =security =news =money =dataswamporg =inbox-airmail =school =forwards =sent =drafts =rubbish =backup =spam =spam-domain
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
@@ -37,6 +37,7 @@ bind compose F edit-from
 
 set sort=threads
 set collapse_all
+set help=no
 
 set signature=~/.config/neomutt/signatures
 
