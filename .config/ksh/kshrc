@@ -53,7 +53,7 @@ __ksh_prompt(){
 	tput sgr0
 }
 
-PS1="\$(__ksh_prompt \$?)"
+PS1="\$(__ksh_prompt \$?)\$(settitle ksh)"
 PS2="$(tput setaf 7):; $(tput sgr0)" 
 PS3="$(tput setaf 7):; $(tput sgr0)$(tput el) "
 PS4="$(tput setaf 7):; $(tput sgr0)" 
