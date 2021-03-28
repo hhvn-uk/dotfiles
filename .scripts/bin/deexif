@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ $# != 0 ]
+do
+	exiftool -all= "$1" >/dev/null && echo "Stripped $1..." || echo "Failed to strip $1..."
+	shift
+done
