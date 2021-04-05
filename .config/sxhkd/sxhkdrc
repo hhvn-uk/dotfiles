@@ -35,7 +35,7 @@ super + n
 	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
 
 super + r
-	st -t sfeed -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.cache/sfeed/*'
+	st -t sfeed -e sh -c 'sfeed_update $HOME/.config/sfeed/config && SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.local/sfeed/*'
 
 super + x
 	sxhkdrestart; herbe "Restarted sxhkd"
@@ -141,6 +141,9 @@ super + shift + h
 
 Menu
 	xdotool click 2
+
+{KP_Begin,KP_Left,KP_Right,KP_Down,KP_End,KP_Next,KP_Insert,KP_Delete,KP_Enter,KP_Prior,KP_Add,KP_Up,KP_Subtract,KP_Multiply,KP_Divide}
+	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 #thinkpad codes
 
