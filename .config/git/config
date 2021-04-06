@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
 	name = hhvn
-	email = dev@haydenvh.com
+	email = dev@hhvn.uk
 
 [blame]
 	date = human
@@ -26,7 +26,7 @@
 	defaultBranch = master
 
 [format]
-	headers = "Organization: haydenvh.com"
+	headers = "Organization: hhvn.uk"
 
 [sendemail]
 	smtpDomain = port.hhvn.uk
