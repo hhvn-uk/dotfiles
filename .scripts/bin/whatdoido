@@ -5,5 +5,5 @@ d=$(mktemp -d)
 cp "$1" $d
 cd $d
 printf "What do I do with this? "
-zsh
+$SHELL
 rm -rf $d
