@@ -1,6 +1,9 @@
 #!/bin/ksh
 
-_ksh_prompt(){
+__ksh_prompt(){
+	echo "$0" | grep -v ksh >/dev/null && {
+		printf "($(basename $0)) "
+	}
 	errorcode=$1
 	tput setaf 10
 	[ $errorcode -eq 0 ] && tput setaf 15 || tput setaf 10
@@ -13,15 +16,17 @@ _ksh_prompt(){
 		git diff | grep '.' >/dev/null && tput setaf 8 || tput setaf 15
 		printf "%s+" $(git diff 2>/dev/null | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
 			| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
-		git log | head -n 1 | grep -v '(.*\/.*)' >/dev/null && tput setaf 14
-		git log --pretty=format:"commit %h%d" | awk -v "c=0" '
-			/^commit/ {
-				if ($3 ~ /(.*\/.*)/) {
-					printf("%d", c)
-					exit
-				} else c += 1
-			}'
-		printf '^ '
+		git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && tput setaf 14 && {
+			git log --pretty=format:"commit %h%d" | awk -v "c=0" '
+				/^commit/ {
+					if ($0 ~ /\//) {
+						printf("%d", c)
+						exit
+					} else c += 1
+				}'
+			printf '^'
+		}
+		printf ' '
 	}
 	tput setaf 7
 	printf "%s " $(pwd | sed "s-$HOME-~-")
