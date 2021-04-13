@@ -16,6 +16,7 @@ irclog(){
 	cat $(find $dir | sed -E 's/(..)-(..)-(..)/\3-\2-\1/g' | sort | sed -E 's/(..)-(..)-(..)/\3-\2-\1/g') | ${log2ansi:-cat}| less
 }
 alias q="exit"
+alias duf="duf -style ascii"
 alias g="git"
 alias vsplit="vim -O"
 alias split="vim -o"
@@ -87,7 +88,8 @@ alias .........="cd ../../../../../../../.."
 alias ..........="cd ../../../../../../../../.."
 alias ...........="cd ../../../../../../../../../.."
 alias ............="cd ../../../../../../../../../../.."
-alias bbs="nc bbs.hlirc.net 23"
+alias bbs="printf '\n%s\n%s\n' 'hhvn' \"$(dpass bbs.hlirc.net)\" | cat - /dev/tty | nc bbs.hlirc.net 23"
+alias camerasync="rsync -azP /mnt/DCIM/* ~/general/images/byme"
 matrix(){
 	ssh matrix & >/dev/null
 	sleep 0.5
