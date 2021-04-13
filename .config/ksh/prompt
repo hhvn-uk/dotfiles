@@ -12,21 +12,23 @@ __ksh_prompt(){
 	printf "%s " $(whoami)
 	tput setaf 3
 	printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
-	git diff 1>/dev/null 2>/dev/null && {
-		git diff | grep '.' >/dev/null && tput setaf 8 || tput setaf 15
-		printf "%s+" $(git diff 2>/dev/null | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
-			| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
-		git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && tput setaf 14 && {
-			git log --pretty=format:"commit %h%d" | awk -v "c=0" '
-				/^commit/ {
-					if ($0 ~ /\//) {
-						printf("%d", c)
-						exit
-					} else c += 1
-				}'
-			printf '^'
+	[ "$_PROMPT_GIT" = "y" ] && {
+		git diff 1>/dev/null 2>/dev/null && {
+			git diff | grep '.' >/dev/null && tput setaf 8 || tput setaf 15
+			printf "%s+" $(git diff 2>/dev/null | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
+				| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
+			git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && tput setaf 14 && {
+				git log --pretty=format:"commit %h%d" | awk -v "c=0" '
+					/^commit/ {
+						if ($0 ~ /\//) {
+							printf("%d", c)
+							exit
+						} else c += 1
+					}'
+				printf '^'
+			}
+			printf ' '
 		}
-		printf ' '
 	}
 	tput setaf 7
 	printf "%s " $(pwd | sed "s-$HOME-~-")
@@ -34,3 +36,7 @@ __ksh_prompt(){
 	printf "$ "
 	tput sgr0
 }
+
+export _PROMPT_GIT=y
+alias hide_git="export _PROMPT_GIT=n"
+alias show_git="export _PROMPT_GIT=y"
