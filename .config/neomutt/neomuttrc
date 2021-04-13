@@ -51,3 +51,5 @@ hdr_order Subject From To Date
 
 set header_cache = "~/general/mail/cache/"
 set message_cachedir = "~/general/mail/cache/"
+
+set new_mail_command = "sh -c 'herbe \"%b mailboxes have new mail\" &'"
