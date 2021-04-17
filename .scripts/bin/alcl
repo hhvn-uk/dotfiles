@@ -75,7 +75,7 @@ _new(){
 		gph) gophertype="1";;
 		*) gophertype="0";;
 	esac
-	printf "$HEAD\n\n#$name\n\n<++>\n\n$FOOT\n\n" > $dir/$filename$filetype
+	printf "$HEAD\n\n#$name\n\n<++>\n[1|<< comments >>|/alcl/write/comments.dcgi?$num|server|port] \n\n$FOOT\n\n" > $dir/$filename$filetype
 	$EDITOR $dir/$filename$filetype
 
 	[ ! -f $dir/$filename$filetype ] && {
