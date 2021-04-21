@@ -14,7 +14,7 @@ set spoolfile = "+haydenvhcom"
 set record = "+sent"
 set postponed = "+drafts"
 set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =intfix =matrix =security =news =money =dataswamporg =inbox-airmail =school =forwards =sent =drafts =rubbish =backup =spam =spam-domain
+mailboxes =haydenvhcom =postmaster =hlircnet =lists =dev =curl =lkml =xinitf =matrix =security =news =money =dataswamporg =inbox-airmail =school =forwards =sent =drafts =rubbish =backup =spam =spam-domain
 
 set mbox_type = Maildir
 set abort_key = "<Esc>"
