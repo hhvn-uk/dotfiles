@@ -13,6 +13,7 @@
 	re = !sh ~/.config/git/remote
 	pu = !sh ~/.config/git/push
 	pa = !sh ~/.config/git/push --all
+	br = branch
 	se = send-email
 	ad = add
 	rs = reset
