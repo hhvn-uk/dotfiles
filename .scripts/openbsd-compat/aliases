@@ -1,0 +1,8 @@
+#!/bin/ksh
+
+[ "$(basename $0)" = "aliases" ] && {
+	echo "Do not run me!"
+	exit 1
+}
+
+alias rsync=openrsync
