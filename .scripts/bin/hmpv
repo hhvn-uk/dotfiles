@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # hmpv
 # Created by Hayden Hamilton
@@ -56,9 +56,9 @@ seek() {
 	fi
 }
 convertsecs() {
-	((h=${1}/3600))
-	((m=(${1}%3600)/60))
-	((s=${1}%60))
+	h=$((${1}/3600))
+	m=$(((${1}%3600)/60))
+	s=$((${1}%60))
 	printf "%02d:%02d:%02d\n" $h $m $s
 }
 gettime() {

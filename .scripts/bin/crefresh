@@ -1,4 +1,0 @@
-#!/bin/bash
-
-sleep 0.1
-pkill picom; picom --config ~/.config/picom/config -b -f

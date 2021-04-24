@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 trap 'drawgui'     28 #SIGWINCH
 trap 'stty icanon' 2  #SIGINT
@@ -32,7 +32,7 @@ drawgui(){
 stty -icanon
 getchar(){
 	drawgui
-	key=$(dd bs=1 count=1 2>/dev/null)
+	key=$(dd if=/dev/stdin bs=1 count=1 2>/dev/null)
 }
 
 while getchar
