@@ -1,4 +1,33 @@
 #!/bin/sh
-amixer set Master $1
+
+[ "$(uname)" = "Linux" ] && amixer set Master "$1"
+[ "$(uname)" = "OpenBSD" ] && {
+	echo "$1" | grep '%' >/dev/null && {
+		case "$(echo "$1" | sed -E 's/.*(.)$/\1/')" in
+			"+") t="+" ;;
+			"-") t="-" ;;
+			*) t="" ;;
+		esac
+
+		percent=$(echo "$1" | tr -d '%+-')
+		units=$(echo "scale=3; $percent / 100" | bc)
+		
+		sndioctl output.level="${t}${units}"
+
+		exit 0
+	}
+
+	case "$1" in
+		"mute") sndioctl output.mute=1 ;;
+		"unmute") sndioctl output.mute=0 ;;
+		"toggle")
+			case "$(sndioctl output.mute | sed 's/.*=//')" in
+				1) sndioctl output.mute=0 ;;
+				0) sndioctl output.mute=1 ;;
+			esac
+			;;
+		*) sndioctl output.level=$1 ;;
+	esac
+}
 
 $HOME/.scripts/dwmblocks/vol > /tmp/blocks/vol
