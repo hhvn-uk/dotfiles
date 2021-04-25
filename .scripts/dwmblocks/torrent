@@ -1,5 +1,10 @@
 #!/bin/sh
 
+pgrep transmission || {
+	echo '[^c#cc0000^none]'
+	exit 1
+}
+
 transmission-remote -l | sed 's/Up & Down/Updown/' | awk '$8 != "Status" && $8 != ""' \
 	| sed 's/.*Seeding/Seeding/;s/.*Updown/Downloading\nSeeding/;
 	  s/.*Downloading/Downloading/;s/.*Idle/Idle/;s/.*Queued/Queued/;
