@@ -210,3 +210,6 @@ source ~/.config/nvim/modules/textmanipulation.vim
 
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+" Shell on BSD
+let b:is_posix = 1
