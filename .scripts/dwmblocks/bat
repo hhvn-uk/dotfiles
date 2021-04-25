@@ -1,12 +1,21 @@
-#!/bin/bash
-
-case "$(acpi | awk '{print $3}' | tr -d ',')" in
-	"Charging") charging=y ;;
-	"Discharging") discharging=y ;;
-esac
+#!/bin/sh
 
 total=100
-charge=$(acpi | awk '{print $4}' | tr -d ',%')
+[ "$(uname)" = "Linux" ] && {
+	case "$(acpi | awk '{print $3}' | tr -d ',')" in
+		"Charging") charging=y ;;
+		"Discharging") discharging=y ;;
+	esac
+	charge=$(acpi | awk '{print $4}' | tr -d ',%')
+}
+
+[ "$(uname)" = "OpenBSD" ] && {
+	case "$(apm | head -n 2 | tail -n 1 | sed 's/.*: //')" in
+		"not"*) discharging=y ;;
+		*) charging=y ;;
+	esac
+	charge=$(apm | head -n 1 | sed -E 's/%.*//;s/.*([0-9])/\1/')
+}
 num=$(echo "scale=2; ($charge/$total)*21" | bc | sed 's~\..*$~~')
 ind="^c#aa6600^?"
 [ "$charging" = "y" ] && ind="^c#00aa00^+" 
