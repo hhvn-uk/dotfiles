@@ -1,15 +1,12 @@
 #!/bin/bash
 
-total=0
-charge=0
-for b in $(find /sys/class/power_supply -name "BAT*")
-do
-	total=$(($total+100))
-	read cap < $b/capacity
-	charge=$(($charge+$cap))
-	grep -i 'charg' < $b/status >/dev/null && charging='y'
-	grep -i 'discharg' < $b/status >/dev/null && discharging='y'
-done
+case "$(acpi | awk '{print $3}' | tr -d ',')" in
+	"Charging") charging=y ;;
+	"Discharging") discharging=y ;;
+esac
+
+total=100
+charge=$(acpi | awk '{print $4}' | tr -d ',%')
 num=$(echo "scale=2; ($charge/$total)*21" | bc | sed 's~\..*$~~')
 ind="^c#aa6600^?"
 [ "$charging" = "y" ] && ind="^c#00aa00^+" 
