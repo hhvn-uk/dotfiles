@@ -1,6 +1,6 @@
-.Dd hhvn-git
+.Dd 27 Apr 2021
 .Dt git-ac 1
-.Os
+.Os hhvn-git(7)
 .Sh Name
 .Nm git-ac 
 .Nd combine
@@ -8,19 +8,21 @@
 and
 .Xr git-commit 1 "."
 .Sh SYNOPSIS
-.Nm
+.Nm git ac
 .Fl m
 .Ar message
 .Ar [GIT-COMMIT-OPTIONS]
-.Nm
+.Nm git ac
 .Ar files
 .Sh DESCRIPTION
 If supplied -m infer files from it.
 
 If not supplied -m, take list of files and begin formatting COMMIT_EDITMSG.
 .Sh SEE ALSO
-.Xr hhvn-git 7 ","
-.Xr git-add 1 ","
-.Xr git-commit 1 ","
+.Bl -item -compact
+.It
+.Xr git-add 1
+.It
+.Xr git-commit 1
 .Sh AUTHOR
 .An hhvn Aq Mt dev@hhvn.uk .
