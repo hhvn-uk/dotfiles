@@ -1,0 +1,8 @@
+# vim: set syntax=conf :
+set recolor true
+set recolor-darkcolor "#1e5eb3"
+set recolor-lightcolor "#050a10"
+set highlight-color "#007bb4"
+set highlight-active-color "#005fd7"
+set default-bg "#0a0a10"
+set window-title-basename "true"
