@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# idea:
+# https://gist.github.com/Xeoncross/4020489
+
+git log --shortstat --author "$1" | awk '
+	/file[s]* changed.*insert/ {
+		files+=$1; inserted+=$4; deleted+=$6
+		next
+	}
+
+	/file[s]* changed/ {
+		files+=$1; deleted+=$4
+	}
+
+	END {
+		printf("Files changed:\t%s\nInsertions:\t%s\nDeletions:\t%s\n", files, inserted, deleted);
+	}'
