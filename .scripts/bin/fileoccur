@@ -1,0 +1,4 @@
+#!/bin/sh
+# output list of files containing $1
+
+grep "$1" -R "${2:-.}" 2>&1 | grep -Ev '\.git|^grep' | grep -o '[^:]*:' | sed 's/:$//' | uniq
