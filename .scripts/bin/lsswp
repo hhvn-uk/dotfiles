@@ -1,0 +1,6 @@
+#!/bin/sh
+# ls, for nvim swap files
+
+SWAP_PATH="${SWAP_PATH:-$HOME/.local/share/nvim/swap}"
+
+find "$SWAP_PATH" -type f | sed 's~.*/~~;s~\.sw[op]$~~' | tr '%' '/'
