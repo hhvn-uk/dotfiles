@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# seconds to colon-seperated-time
+
+# DONOTUSE: cannot handle hours yet
+
+[ -z $1 ] || [ "$1" = "-h" ] && echo "usage: secs2cst <n>" && exit 1
+
+awk -v "n=$1" '{
+		for (i=0;; i++) {
+			if (n > 60) {
+				result[i] = int(n / 60)
+				n = n - (result[i] * 60)
+			} else {
+				result[i] = n
+				break
+			}
+		}
+		elements = i
+		for (i=0; i <= elements; i++)
+			if (i != elements)
+				printf("%02d:", result[i])
+			else
+				printf("%02d\n", result[i])
+	}'
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# colon-seperated-time to seconds
+
+[ -z $1 ] || [ "$1" = "-h" ] && echo "usage: cst2secs [HH:]MM:SS" && exit 1
+
+echo "$1" | awk -F":" -v "s=0" '{
+		n=1
+		for (i=NF; i != 0; i--) {
+			s = s + ($i * n)
+			n = n * 60
+		}
+		print s
+	}'
