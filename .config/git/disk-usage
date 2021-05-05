@@ -1,0 +1,14 @@
+#!/bin/sh
+
+[ "$@" = "" ] && args=-h
+
+[ "$@" != "" ] &&
+	[ "$@" != "-s" ] &&
+	[ "$@" != "-h" ] &&
+	[ "$@" != "-sh" ] &&
+	echo "usage: git du [-sh]" && 
+	exit 1
+
+(
+	[ -d ./.git ] && du "${args:-$@}" .git || du "${args:-$@}" .
+) | tail -n 1 | awk '{print "Repo: " $1}'

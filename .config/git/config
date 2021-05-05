@@ -15,6 +15,7 @@
 	pa = !sh ~/.config/git/push --all
 	ef = !sh ~/.config/git/effort
 	fi = !sh ~/.config/git/find
+	du = !sh ~/.config/git/disk-usage
 	br = branch
 	se = send-email
 	ad = add

@@ -1,0 +1,20 @@
+.Dd 27 Apr 2021
+.Dt git-du 1
+.Os hhvn-git(7)
+.Sh Name
+.Nm git-du
+.Nd calculate size of git repo (excl. checked out/untracked files)
+.Sh SYNOPSIS
+.Nm git du
+.Op Fl sh
+.Sh OPTIONS
+Assumes -h by default, use:
+.D1 git du ''
+or -s only to not use -h.
+.Op Ar author
+.Sh BUGS
+When invoked with -h via git, the following is shown:
+.D1 'du' is aliased to '!sh ~/.config/git/disk-usage'
+.D1 Usual output here...
+.Sh AUTHOR
+.An hhvn Aq Mt dev@hhvn.uk .
