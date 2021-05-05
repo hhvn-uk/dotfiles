@@ -1,0 +1,6 @@
+#!/bin/sh
+
+find=$(find . "$@" | sed 's~^./~~')
+git=$(git ls-files)
+
+printf "$find\n$git\n" | sort | uniq -c | awk '$1 > 1 {$1=""; print}' | sed 's/^[[:space:]]*//'
