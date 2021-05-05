@@ -24,6 +24,8 @@
 	ch = checkout
 	co = commit
 	cp = cherry-pick
+	pl = pull
+	df = diff
 
 [init]
 	defaultBranch = master
