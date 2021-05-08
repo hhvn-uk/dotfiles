@@ -34,4 +34,4 @@ export IPFS_PATH=$HOME/.local/ipfs
 
 cd $HOME # welcome home (st inherits / from hildon)
 
-[ "$(basename $SHELL)" != "ksh" ] && export SHELL=/bin/ksh && ksh
+echo "$0" | grep ksh >/dev/null && export SHELL=ksh
