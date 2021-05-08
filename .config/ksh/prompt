@@ -1,9 +1,6 @@
 #!/bin/ksh
 
 __ksh_prompt(){
-	echo "$0" | grep -v ksh >/dev/null && {
-		printf "($(basename $0)) "
-	}
 	errorcode=$1
 	# tput setaf 10 >/dev/null
 	[ $errorcode -eq 0 ] && tput setaf 15 || tput setaf 10
@@ -32,6 +29,9 @@ __ksh_prompt(){
 	}
 	tput setaf 7
 	printf "%s " $(pwd | sed "s-$HOME-~-")
+	echo "$0" | grep -v ksh >/dev/null && {
+		printf "($(basename $0))"
+	}
 	printf "$ "
 	tput sgr0
 }
