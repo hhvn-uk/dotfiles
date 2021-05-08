@@ -5,11 +5,11 @@ __ksh_prompt(){
 		printf "($(basename $0)) "
 	}
 	errorcode=$1
-	tput setaf 10
+	# tput setaf 10 >/dev/null
 	[ $errorcode -eq 0 ] && tput setaf 15 || tput setaf 10
-	printf "%s " $errorcode
+	printf '%s ' "$errorcode"
 	tput setaf 5
-	printf "%s " $(whoami)
+	printf "%s " "$(whoami)"
 	tput setaf 3
 	printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 	[ "$_PROMPT_GIT" = "y" ] && {
@@ -32,7 +32,6 @@ __ksh_prompt(){
 	}
 	tput setaf 7
 	printf "%s " $(pwd | sed "s-$HOME-~-")
-	tput setaf 7
 	printf "$ "
 	tput sgr0
 }
