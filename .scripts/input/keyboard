@@ -1,6 +1,5 @@
 #!/bin/bash
 
-setxkbmap haydenh
 setxkbmap -option caps:escape
 
 # unicomp endurapro - increase trackpoint sensitivity
