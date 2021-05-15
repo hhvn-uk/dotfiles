@@ -1,0 +1,4 @@
+#!/bin/sh
+
+export IFS=$(printf "\n\t")
+sloccount "$@" $(git ls-files)

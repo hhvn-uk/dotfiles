@@ -16,6 +16,7 @@
 	ef = !sh ~/.config/git/effort
 	fi = !sh ~/.config/git/find
 	du = !sh ~/.config/git/disk-usage
+	sc = !sh ~/.config/git/sloccount
 	br = branch
 	se = send-email
 	ad = add
