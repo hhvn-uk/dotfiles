@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pgrep transmission || {
+pgrep transmission >/dev/null || {
 	echo '[^c#cc0000^none]'
 	exit 1
 }
