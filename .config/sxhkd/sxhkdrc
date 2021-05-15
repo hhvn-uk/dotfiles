@@ -73,8 +73,8 @@ super + w
 super + ctrl + w
 	wallblur
 
-super + {alt, alt + ctrl} + w
-	wallp ~/images/wallpapers/ {right, left}
+# super + {alt, alt + ctrl} + w
+# 	wallp ~/images/wallpapers/ {right, left}
 
 super + shift + w
 	colour-wall
