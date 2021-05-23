@@ -15,7 +15,7 @@ seteditor nvim
 
 settitle(){
 	# set terminal's title
-	printf "\033]0;%s\007" "$@"
+	printf "\[\033]0;%s\007\]" "$@"
 }
 
 PS1="\$(__ksh_prompt \$?)\$(settitle ksh)"

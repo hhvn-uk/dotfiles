@@ -1,20 +1,25 @@
 #!/bin/ksh
 
+# use \[..\] to prevent counting
+__prompt_col(){
+	printf '\[%s\]' "$(tput setaf $1)"
+}
+
 __ksh_prompt(){
 	errorcode=$1
 	# tput setaf 10 >/dev/null
-	[ $errorcode -eq 0 ] && tput setaf 15 || tput setaf 10
+	[ $errorcode -eq 0 ] && __prompt_col 15 || __prompt_col 10
 	printf '%s ' "$errorcode"
-	tput setaf 5
+	__prompt_col 5
 	printf "%s " "$(whoami)"
-	tput setaf 3
+	__prompt_col 3
 	printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 	[ "$_PROMPT_GIT" = "y" ] && {
 		git diff 1>/dev/null 2>/dev/null && {
-			git diff | grep '.' >/dev/null && tput setaf 8 || tput setaf 15
+			git diff | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
 			printf "%s+" $(git diff 2>/dev/null | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
 				| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
-			git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && tput setaf 14 && {
+			git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && __prompt_col 14 && {
 				git log --pretty=format:"commit %h%d" | awk -v "c=0" '
 					/^commit/ {
 						if ($0 ~ /\//) {
@@ -27,13 +32,13 @@ __ksh_prompt(){
 			printf ' '
 		}
 	}
-	tput setaf 7
+	__prompt_col 7
 	printf "%s " $(pwd | sed "s-$HOME-~-")
 	echo "$0" | grep -v ksh >/dev/null && {
 		printf "($(basename $0))"
 	}
-	printf "$ "
-	tput sgr0
+	printf "$\[ \]" # uncount an additional char
+	printf '\[%s\]' "$(tput sgr0)"
 }
 
 export _PROMPT_GIT=y
