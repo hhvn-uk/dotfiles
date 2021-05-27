@@ -18,7 +18,7 @@ settitle(){
 	printf "\[\033]0;%s\007\]" "$@"
 }
 
-PS1="\$(__ksh_prompt \$?)\$(settitle ksh)"
+PS1="\$(__ksh_prompt \$? | __prompt_strip)\$(settitle ksh | __prompt_strip)"
 PS2="$(tput setaf 7):; $(tput sgr0)" 
 PS3="$(tput setaf 7):; $(tput sgr0)$(tput el) "
 PS4="$(tput setaf 7):; $(tput sgr0)" 

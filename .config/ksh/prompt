@@ -5,6 +5,12 @@ __prompt_col(){
 	printf '\[%s\]' "$(tput setaf $1)"
 }
 
+__prompt_strip(){
+	echo "$0" | grep -v ksh >/dev/null && {
+		sed 's/\\\[//g;s/\\\]//g'
+	} || cat
+}
+
 __ksh_prompt(){
 	errorcode=$1
 	# tput setaf 10 >/dev/null
