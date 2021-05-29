@@ -12,6 +12,9 @@ __prompt_strip(){
 }
 
 __ksh_prompt(){
+	__prompt_col 14
+	printf "\[%%%$(echo "$(tput cols) - 1" | bc)s\r\]"
+
 	errorcode=$1
 	# tput setaf 10 >/dev/null
 	[ $errorcode -eq 0 ] && __prompt_col 15 || __prompt_col 10
