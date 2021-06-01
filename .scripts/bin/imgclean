@@ -11,7 +11,8 @@ do
 	[ "$(uname)" = "OpenBSD" ] && summer=sha256
 	[ -z "$summer" ] && summer=sha256sum
 
-	# sum name of file, for speed
+	# sum name of file, for speed,
+	# as opposed to the file itself
 	sum=$(echo "$f" | $summer | awk '{print $1}')
 
 	# ignore already created
