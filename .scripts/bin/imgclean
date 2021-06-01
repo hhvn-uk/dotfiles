@@ -1,0 +1,23 @@
+#!/bin/sh
+
+[ -z "$1" ] || [ ! -d "$1" ] || [ ! -z "$2" ] && {
+	printf "usage: %s <dir>\n" "$(basename $0)"
+	exit 2
+}
+
+export IFS=$(printf '\n\t')
+for f in $(find . -maxdepth 1 -type f -name "*.JPG")
+do
+	[ "$(uname)" = "OpenBSD" ] && summer=sha256
+	[ -z "$summer" ] && summer=sha256sum
+
+	# sum name of file, for speed
+	sum=$(echo "$f" | $summer | awk '{print $1}')
+
+	# ignore already created
+	[ ! -f clean/"$sum".jpg ] && {
+		printf '%s --> %s... ' "$f" "$sum"
+		exiftool "$f" -all= -o clean/"$sum".jpg >/dev/null
+		printf 'done\n'
+	} || printf "%s already exists, ignoring %s...\n" "$sum" "$f"
+done
