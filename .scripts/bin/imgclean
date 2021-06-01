@@ -1,12 +1,14 @@
 #!/bin/sh
 
+filexts="jpg|jpeg|png"
+
 [ -z "$1" ] || [ ! -d "$1" ] || [ ! -z "$2" ] && {
 	printf "usage: %s <dir>\n" "$(basename $0)"
 	exit 2
 }
 
 export IFS=$(printf '\n\t')
-for f in $(find . -maxdepth 1 -type f -name "*.JPG")
+for f in $(find . -maxdepth 1 -type f | grep -Ei "\.($filexts)$")
 do
 	[ "$(uname)" = "OpenBSD" ] && summer=sha256
 	[ -z "$summer" ] && summer=sha256sum
