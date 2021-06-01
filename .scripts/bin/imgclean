@@ -1,26 +1,31 @@
 #!/bin/sh
 
+dir="$1"
+odir="${2:-clean}"
 filexts="jpg|jpeg|png"
 
-[ -z "$1" ] || [ ! -d "$1" ] || [ ! -z "$2" ] && {
-	printf "usage: %s <dir>\n" "$(basename $0)"
+[ -z "$dir" ] || [ ! -d "$dir" ] || [ ! -z "$3" ] && {
+	printf "usage: %s <dir> [output-dir]\n" "$(basename $0)"
 	exit 2
 }
 
+mkdir -p "$odir" || exit $?
+touch "$odir/test" && rm "$odir/test" || exit 1
+
 export IFS=$(printf '\n\t')
-for f in $(find . -maxdepth 1 -type f | grep -Ei "\.($filexts)$")
+for f in $(find "$dir" -maxdepth 1 -type f | grep -Ei "\.($filexts)$")
 do
 	[ "$(uname)" = "OpenBSD" ] && summer=sha256
 	[ -z "$summer" ] && summer=sha256sum
 
 	# sum name of file, for speed,
 	# as opposed to the file itself
-	sum=$(echo "$f" | $summer | awk '{print $1}')
+	sum=$(basename "$f" | $summer | awk '{print $1}')
 
 	# ignore already created
-	[ ! -f clean/"$sum".jpg ] && {
-		printf '%s --> %s... ' "$f" "$sum"
-		exiftool "$f" -all= -o clean/"$sum".jpg >/dev/null
+	[ ! -f "$odir/$sum".jpg ] && {
+		printf '%s --> %s... ' "$f" "$odir/$sum"
+		exiftool "$f" -all= -o "$odir/$sum".jpg >/dev/null
 		printf 'done\n'
-	} || printf "%s already exists, ignoring %s...\n" "$sum" "$f"
+	} || printf "%s already exists, ignoring %s...\n" "$odir/$sum" "$f"
 done
