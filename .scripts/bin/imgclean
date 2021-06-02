@@ -24,8 +24,8 @@ do
 
 	# ignore already created
 	[ ! -f "$odir/$sum".jpg ] && {
-		printf '%s --> %s... ' "$f" "$odir/$sum"
+		printf '%s --> %s... ' "$f" "$odir/$sum.jpg"
 		exiftool "$f" -all= -o "$odir/$sum".jpg >/dev/null
 		printf 'done\n'
-	} || printf "%s already exists, ignoring %s...\n" "$odir/$sum" "$f"
+	} || printf "%s already exists, ignoring %s...\n" "$odir/$sum.jpg" "$f"
 done
