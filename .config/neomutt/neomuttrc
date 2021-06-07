@@ -43,6 +43,9 @@ set signature=~/.config/neomutt/signatures
 
 macro index S <save-message>=spam<enter><enter>
 macro index A <save-message>=spam-domain<enter><enter>
+macro index R \
+    "T ~O | ~N\n;N" \
+    "mark all new as read"
 
 my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date
