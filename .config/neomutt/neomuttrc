@@ -46,6 +46,7 @@ macro index A <save-message>=spam-domain<enter><enter>
 macro index R \
     "T ~O | ~N\n;N" \
     "mark all new as read"
+macro index E <save-message>=sent<enter><enter>
 
 my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date
