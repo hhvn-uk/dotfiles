@@ -1,7 +1,13 @@
-# This is Git's per-user configuration file.
 [user]
 	name = hhvn
 	email = dev@hhvn.uk
+	signingKey = ED59FC1A
+
+[commit]
+	gpgSign = yes
+
+[gpg]
+	program = passgpg
 
 [blame]
 	date = human
