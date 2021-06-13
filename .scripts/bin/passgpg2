@@ -2,4 +2,9 @@
 # gpg2 is so stupid, use gpg1 if you have the chance
 # why do I need --batch and --pinentry-mode loopback just so --passphrase works? wtf?
 
-gpg2 --armour --batch --pinentry-mode loopback --passphrase "$(dpass gpg3key)" "$@"
+file=/tmp/$$.passwd
+touch $file
+chmod 0600 $file
+dpass gpg3key > $file
+gpg2 --armour --batch --pinentry-mode loopback --passphrase-file $file "$@"
+rm $file

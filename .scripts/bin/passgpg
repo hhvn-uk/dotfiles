@@ -1,3 +1,8 @@
 #!/bin/sh
 
-gpg --armour --passphrase "$(dpass gpg3key)" "$@"
+file=/tmp/$$.passwd
+touch $file
+chmod 0600 $file
+dpass gpg3key > $file
+gpg --armour --passphrase-file $file "$@"
+rm $file
