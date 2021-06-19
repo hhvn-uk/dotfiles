@@ -1,6 +1,7 @@
 #!/bin/sh
 
-find=$(find . "$@" | sed 's~^./~~')
+export IFS=$(printf "\n\t")
 git=$(git ls-files)
+find=$(find $git "$@" 2>/dev/null | sed 's~^./~~')
 
 printf "$find\n$git\n" | sort | uniq -c | awk '$1 > 1 {$1=""; print}' | sed 's/^[[:space:]]*//'
