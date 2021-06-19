@@ -19,7 +19,7 @@ syn keyword irssi_keywords servers chatnets channels settings aliases statusbar 
 syn region irssi_category start="=[ \t]*(" end=")" fold transparent contains=irssi_servers,irssi_chatnets,irssi_channels,irssi_statusbar,irssi_settings,value_def,m_error,irssi_highlight
 syn region irssi_category start="=[ \t]*{" end="}" fold transparent contains=irssi_servers,irssi_chatnets,irssi_channels,irssi_statusbar,irssi_settings,value_def,m_error,irssi_highlight
 syn keyword irssi_servers address chatnet port autoconnect use_ssl ssl_verify
-syn keyword irssi_chatnets type max_kicks max_msgs max_whois aliases statusbar contained
+syn keyword irssi_chatnets type chat_type tag max_kicks max_msgs max_whois aliases statusbar contained
 syn keyword irssi_channels name chatnet autojoin username realname autosendcmd contained
 syn keyword irssi_statusbar items barstart barend topicbarstart topicbarend time user window window_empty
 syn keyword irssi_statusbar more placement position visible window_inact prompt lag act disabled
