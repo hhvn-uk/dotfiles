@@ -50,17 +50,6 @@ hi ColorColumn guibg=#24283c
 hi QuickScopePrimary   ctermfg=4 guifg=#575b72 cterm=bold,reverse gui=bold,reverse
 hi QuickScopeSecondary ctermfg=7 guifg=#c7cad9 cterm=bold,reverse gui=bold,reverse
 
-" hi diffChange	guibg=olivedrab
-" hi diffText	guibg=olivedrab
-hi diffAdded	ctermfg=36
-hi diffRemoved	ctermfg=10
-
-hi link diffFile	preproc
-hi link diffNewFile	preproc
-hi link diffOldFile	preproc
-hi link diffIndexLine	preproc
-hi link diffSubname	statement
-
 hi Statusbar 	ctermbg=0 ctermfg=0 guifg=#141726 guibg=#141726
 hi Basecol 	ctermbg=1 ctermfg=7 guibg=#24283c
 hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
@@ -87,8 +76,21 @@ hi link NvimInternalError	Error
 hi link WarningMsg		ErrorMsg
 hi link Search			search
 hi link IncSearch		search
+hi link string			constant
+
+" diff/patch files
+hi diffAdded	ctermfg=36
+hi diffRemoved	ctermfg=10
+hi link diffFile	preproc
+hi link diffNewFile	preproc
+hi link diffOldFile	preproc
+hi link diffIndexLine	preproc
+hi link diffSubname	statement
+
+" ksh/bash/posix
 hi link shSetList		variable
 hi link shShellVariables	variable
+hi link shQuote			string
 
 " menu from ctrl+n or tab completions
 hi Pmenu guifg=#1e5eb3 guibg=#141726
