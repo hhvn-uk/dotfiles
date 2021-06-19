@@ -1,10 +1,3 @@
-hi Statusbar 	ctermbg=0 ctermfg=0 guifg=#141726 guibg=#141726
-hi Basecol 	ctermbg=1 guibg=#24283c
-hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
-hi Branchcol 	cterm=bold ctermbg=9 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#4747e1
-hi Positioncol 	cterm=bold ctermbg=3 ctermfg=254 gui=bold guifg=#e4e4e4 guibg=#40445c
-hi Buffcol	ctermbg=4 ctermfg=159 guifg=#afffff guibg=#575b72
-
 let g:currentmode={
 			\'n' : 'Normal ',
 			\'no' : 'N·Operator Pending ',
@@ -41,20 +34,18 @@ function! Modecol()
 	let l:mode=tolower(Modecurrent())
 
 	if l:mode == 'insert '
-		let gbg='#af005f'
+		let lcol = 'InsertMode'
 	elseif l:mode == 'terminal '
-		let gbg='#af8700'
+		let lcol = 'TerminalMode'
 	elseif l:mode == 'command '
-		let gbg='#005f5f'
+		let lcol = 'CommandMode'
 	elseif l:mode == 'visual ' || l:mode == 'v-block ' || l:mode == 'v-line ' || l:mode == 'select '
-		let gbg='#af5f00'
+		let lcol = 'VisualMode'
 	else
-		let gbg='#892b2b'
+		let lcol = 'NormalMode'
 	endif
 	
-	let hargs='gui=bold guifg=#e4e4e4 guibg=' . gbg . ' ' . other
-
-	execute 'hi! Modecol ' . hargs
+	execute 'hi link Modecol ' . lcol
 	return ''
 endfunction
 
@@ -63,13 +54,14 @@ function! Gitbranch()
 endfunction
 
 function! Activestatus()
-	""Mode
-	let g:s.="%#Modecol#"
-	let g:s.=" %{Modecurrent()}"
-	let g:s.="%#Basecol#"
+	set termguicolors
 	""File
 	let g:s.="%#Filecol#"
 	let g:s.=" %f\ -\ %y%m "
+	let g:s.="%#Basecol#"
+	""Mode
+	let g:s.="%#Modecol#"
+	let g:s.=" %{Modecurrent()}"
 	let g:s.="%#Basecol#"
 	let g:s.="%="
 	""Branch
@@ -114,16 +106,13 @@ function! NetrwIstatus()
 endfunction
 
 function! TermAstatus()
-	""Reminder
-	let g:s.="%#Modecol#"
-	let g:s.=" [terminal] "
-	let g:s.="%#Basecol#"
 
 	return g:s
 endfunction
 
 function! TermIstatus()
 	""Reminder
+	let g:s.="%="
 	let g:s.="%#Basecol#"
 	let g:s.=" [terminal] "
 
