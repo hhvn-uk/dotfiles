@@ -39,7 +39,7 @@ set title
 "Set scheme
 syntax on
 set termguicolors
-colo haydenh
+colo hhvn
 set background=dark
 set relativenumber
 set number

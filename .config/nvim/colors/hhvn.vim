@@ -1,6 +1,6 @@
 " Vim color file
-" Firstcreated by:	Ron Aaron <ron@ronware.org>
-" Modified by:		Hayden Hamilton <hayden@haydenvh.com>
+" First created by:	Ron Aaron <ron@ronware.org>
+" Modified by:		hhvn <hhvn@hhvn.uk>
 " Last Change:		17 March 2020
 
 set background=dark
@@ -8,7 +8,7 @@ hi clear
 if exists("syntax_on")
 		syntax reset
 endif
-let g:colors_name = "haydenh"
+let g:colors_name = "hhvn"
 " Modified for term colors
 hi clear Normal
 hi clear NonText
