@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 socket1="$1"
 socket2="$2"
 socket3="$3"
