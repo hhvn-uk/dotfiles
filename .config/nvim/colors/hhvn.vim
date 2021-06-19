@@ -11,6 +11,7 @@ hi clear Normal
 hi clear NonText
 hi clear Visual
 hi clear Search
+hi clear Folded
 
 hi comment		ctermfg=238 guifg=#434343 cterm=none         gui=none
 hi constant		ctermfg=13  guifg=#a84b8d cterm=none         gui=none
@@ -23,12 +24,8 @@ hi variable		ctermfg=38  guifg=#00afd7 cterm=none         gui=none
 hi search		                          cterm=reverse,bold gui=reverse,bold
 hi title		ctermfg=225 guifg=#ffd7ff cterm=none         gui=none
 hi label		ctermfg=255 guifg=#eeeeee cterm=none         gui=none
-hi Visual		cterm=reverse gui=reverse
-hi Folded		cterm=bold ctermfg=255 ctermbg=none guifg=#aaaaaa guibg=#555555 gui=bold
-hi FoldColumn	cterm=none ctermfg=249 ctermbg=1 guifg=#b2b2b2 gui=none
-" hi cIf0			guifg=gray
-" hi diffOnly	guifg=red gui=bold
-hi hicomment cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
+hi Visual		                          cterm=reverse      gui=reverse
+hi hicomment 		cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
 
 hi Error ctermfg=10 ctermbg=0 guifg=#892b2b guibg=#141726 gui=none
 hi ErrorMsg ctermfg=0 ctermbg=10 guibg=#892b2b guifg=#141726 gui=none
@@ -40,7 +37,7 @@ hi CursorLineNr ctermfg=11 guifg=#a1a1d9 gui=bold cterm=bold
 
 hi SpellBad   ctermbg=1 ctermfg=10   guifg=#892b2b gui=bold cterm=bold
 hi SpellCap   ctermbg=1 ctermfg=13   guifg=#a84b8d gui=bold cterm=bold
-hi SpellRare  ctermbg=1 ctermfg=none guifg=none    gui=none,underline cterm=none,underline
+hi SpellRare  ctermbg=1                            gui=none,underline cterm=none,underline
 hi SpellLocal ctermbg=1 ctermfg=255  guifg=#eeeeee gui=bold cterm=bold
 
 hi MatchParen ctermfg=30 cterm=reverse guifg=#003740 gui=reverse
@@ -65,7 +62,7 @@ hi NormalMode	ctermfg=7   ctermbg=1 guifg=#c7cad9 guibg=#24283c gui=bold cterm=b
 
 hi TabLine     cterm=none ctermfg=252  ctermbg=1 gui=none guifg=#d0d0d0 guibg=#24283c
 hi TabLineSel  cterm=bold ctermfg=252  ctermbg=3 gui=bold guifg=#d0d0d0 guibg=#40445c
-hi TabLineFill cterm=none ctermfg=none ctermbg=1 gui=none guifg=none    guibg=#24283c
+hi TabLineFill cterm=none              ctermbg=1 gui=none               guibg=#24283c
 
 hi link Todo			hicomment
 hi link Number			constant
@@ -77,6 +74,7 @@ hi link WarningMsg		ErrorMsg
 hi link Search			search
 hi link IncSearch		search
 hi link string			constant
+hi link Folded			Normal
 
 " diff/patch files
 hi diffAdded	ctermfg=36
