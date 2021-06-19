@@ -44,7 +44,7 @@ set signature=~/.config/neomutt/signatures
 macro index S <save-message>=spam<enter><enter>
 macro index A <save-message>=spam-domain<enter><enter>
 macro index R \
-    "T ~O | ~N\n;N" \
+    <collapse-all>"T ~O | ~N\n;N" \
     "mark all new as read"
 macro index E <save-message>=sent<enter><enter>
 
