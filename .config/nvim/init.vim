@@ -200,7 +200,6 @@ source ~/.config/nvim/modules/statusline.vim
 source ~/.config/nvim/modules/splits.vim
 source ~/.config/nvim/modules/netrw.vim
 source ~/.config/nvim/modules/term.vim
-source ~/.config/nvim/modules/tabs.vim
 source ~/.config/nvim/modules/edit.vim
 source ~/.config/nvim/modules/window.vim
 source ~/.config/nvim/modules/message.vim
