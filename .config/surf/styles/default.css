@@ -23,3 +23,8 @@ input,textarea{
 .cbe, .cbe >*, .cbe a:link, .cbe a:visited { color:#173173 !important; }
 .cce, .cce >*, .cce a:link, .cce a:visited { color:#173173 !important; }
 .cdd, .cdd >*, .cdd a:link, .cdd a:visited { color:#173173 !important; }
+
+.highlight, .highlight >*, .highlight >*>*, .highlight >*>*>*, .highlight >*>*>*>*, .highlight >*>*>*>*>* {
+	background-color: #0a2126 !important;
+	color: #ffffff !important;
+}
