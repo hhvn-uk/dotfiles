@@ -22,7 +22,7 @@ hi type			ctermfg=42  guifg=#3abf8f cterm=none         gui=none
 hi special		ctermfg=255 guifg=#eeeeee cterm=none         gui=none
 hi variable		ctermfg=38  guifg=#00afd7 cterm=none         gui=none
 hi search		                          cterm=reverse,bold gui=reverse,bold
-hi title		ctermfg=225 guifg=#ffd7ff cterm=none         gui=none
+hi title		ctermfg=225 guifg=#66aa88 cterm=none         gui=none
 hi label		ctermfg=255 guifg=#eeeeee cterm=none         gui=none
 hi Visual		                          cterm=reverse      gui=reverse
 hi hicomment 		cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
@@ -89,6 +89,9 @@ hi link diffSubname	statement
 hi link shSetList		variable
 hi link shShellVariables	variable
 hi link shQuote			string
+
+" markdown
+hi link markdownHeadingDelimiter	preproc
 
 " menu from ctrl+n or tab completions
 hi Pmenu guifg=#1e5eb3 guibg=#141726
