@@ -10,7 +10,7 @@ syn match todoItemPrepared	'\.'		contained
 syn match todoCategory		'^#.*'		contains=todoCategoryContent,todoCategoryDelim
 syn match todoCategoryDelim	'[#]*'		contained
 syn match todoCategoryContent	'[^#]*'		contained
-syn match todoBullet		'\s*[-+*]'
+syn match todoBullet		'^\s*[-+*]'
 
 hi link	todoItem		Operator
 hi	todoItemDone		ctermfg=46 cterm=bold guifg=#00aa00 gui=bold
