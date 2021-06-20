@@ -2,6 +2,8 @@ if exists("b:current_syntax")
 	finish
 endif
 
+set ts=4 sw=4 expandtab
+
 syn match todoItem		'\[.\]' 	contains=todoItemDone,todoItemRevision,todoItemProgress,todoItemPrepared
 syn match todoItemDone		'X'		contained
 syn match todoItemRevision	'\*'		contained
