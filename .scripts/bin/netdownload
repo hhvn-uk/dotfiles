@@ -5,7 +5,7 @@ input=$(printf "no\nyes\n" | dmenu -i -p "Download: $1")
 	file="$HOME/general/downloads/$(echo "$1" | tr '/' '+')"
 	while [ -f $file ]
 	do
-		file="$HOME/general/downloads/$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+		file="$HOME/general/downloads/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
 	done
 	curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
 	herbe "Saved to: $file"

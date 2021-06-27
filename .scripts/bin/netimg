@@ -3,10 +3,10 @@
 while [ $# != 0 ]
 do
 
-	file="/tmp/netimg.$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+	file="/tmp/netimg.$(base64 </dev/urandom | tr '/' '+' | head -c10)"
 	while [ -f $file ]
 	do
-		file="/tmp/netimg.$(head -n 5 /dev/urandom | base64 | tr '/' '+' | tr -d '\n' | cut -c-10)"
+		file="/tmp/netimg.$(base64 </dev/urandom | tr '/' '+' | head -c10)"
 	done
 
 	curl -kL "$1" > "$file"
