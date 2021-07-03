@@ -1,0 +1,122 @@
+#!/bin/sh
+
+echo(){
+	printf '%s\n' "$*"
+}
+
+prompt(){
+	prompt_var="$1"
+	shift
+
+	stty >/dev/null && {
+		printf '%s: ' "$*"
+		read -r $prompt_var
+	} || {
+		prompt_var=$(</dev/null dmenu -i -p "$*")
+	}
+}
+
+matches(){
+	echo "$arg" | grep -Ei "$@" >/dev/null
+}
+
+fmatches(){
+	file "$arg" | grep -Ei "$@" >/dev/null
+}
+
+rand(){
+	base64 </dev/urandom | tr / + | head -c$1
+}
+
+plumb(){
+	[ "$1" = "gui" ] && {
+		gui=1
+		shift
+	}
+	[ $norun -eq 1 ] && return
+	export norun=1
+	[ $gui -eq 1 ] &&
+		sh -c "$*" "$arg" &
+	[ $gui -eq 0 ] &&
+		${TERMINAL:-st} sh -c "$*" "$arg" &
+}
+
+_mktemp(){
+	_mktemp_file="/tmp/$(rand 10)-$1"
+	while [ -f $_mktemp_file ]
+	do
+		_mktemp_file="/tmp/$(rand 10)-$1"
+	done
+}
+
+for arg in "$@"
+do
+	herbe "arg: $arg"
+	norun=0
+	gui=0
+
+	# network
+	matches "^magnet:" &&
+	plumb 'addtorrent $0'
+
+	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
+	matches "^https?://.*youtu.*be" &&
+	plumb 'mpv --pause $0'
+
+	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
+	plumb gui 'netimg $0'
+
+	matches "^https?://" &&
+	plumb gui 'xprop -id $(cat /tmp/tabbed.xid) >/dev/null && surf -e $(cat /tmp/tabbed.xid) $0 || >/tmp/tabbed.xid tabbed -c surf -e $(sleep 1 && cat /tmp/tabbed.xid) $0'
+
+	matches "^gophers?://(.*/1(/|$)|[^/]*$)" &&
+	plumb 'cgo $0'
+
+	matches "^gophers?://" &&
+	plumb 'curl $0 | vim -'
+
+	matches "^mailto:" &&
+	plumb 'neomutt $(echo "$0" | sed "s~^mailto:~~")'
+
+	matches "^finger://" &&
+	plumb 'finger $(echo "$0" | sed "s~^finger://~~")'
+
+	matches "^ssh://" &&
+	plumb 'ssh $(echo "$0" | sed "s~^ssh://~~;s~:[0-9]*~~")'
+
+	matches "^git://" &&
+	plumb 'git clone $0'
+
+	# local files now
+	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
+	fmatches "pdf|postscript" &&
+	plumb gui 'zathura $0'
+
+	matches ".*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
+	fmatches "video|matroska|audio|sound" &&
+	plumb 'mpv --pause $0'
+
+	matches ".*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" ||
+	fmatches "image" &&
+	plumb gui 'sxiv $0'
+
+	matches ".*\.h$" &&
+	[ -f "/usr/include/$arg" ] &&
+	plumb 'vim /usr/include/$0'
+
+	matches ".*\.h$" &&
+	[ -f "/usr/local/include/$arg" ] &&
+	plumb 'vim /usr/local/include/$0'
+
+	matches "/.*\.[0-9]p?$" &&
+	fmatches "(roff|preprocessor)" &&
+	plumb 'man $0'
+
+	matches "[^/].*\.[0-9]p?$" &&
+	fmatches "(roff|preprocessor)" &&
+	plumb 'man ./$0'
+
+	matches ".*" &&
+	plumb 'vim $0'
+done
+wait
