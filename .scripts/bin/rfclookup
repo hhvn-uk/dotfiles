@@ -18,12 +18,30 @@
 # terms of the Do What The Fuck You Want To Public License, Version 2,       
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
 
-# usage: rfclookup.sh -s <search query>
-#	 rfclookup.sh -n <number>
+index=https://www.ietf.org/download/rfc-index.txt 
+document="https://www.ietf.org/rfc/rfc%s.txt"
 
-[ "$1" = "-s" ] && {
-	curl -i https://www.ietf.org/download/rfc-index.txt | tr '\n' '\t' | sed 's/\t\t/\n/g' | tr '\t' ' ' | tr -s ' ' | grep '^[0-9][0-9][0-9][0-9] ' | grep -iE "$2"
-	exit
-} || {
-	curl https://www.ietf.org/rfc/rfc$2.txt
+usage(){
+	base=$(basename "$0")
+	printf "usage: %s -s <search query>\n" "$base"
+	printf "\t %s -n <number>\n" "$base"
+	printf "\t %s -u <number>\n" "$base"
 }
+
+case "$1" in
+-s)
+	curl -i $index |
+		tr '\n' '\t' | 
+		sed 's/\t\t/\n/g' | 
+		tr '\t' ' ' | 
+		tr -s ' ' | 
+		grep '^[0-9][0-9][0-9][0-9] ' | 
+		grep -iE "$2"
+	;;
+-n)
+	curl -s $(printf "$document\n" "$2") | less
+	;;
+-u)
+	printf "$document\n" "$2"
+	;;
+esac
