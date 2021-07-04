@@ -12,6 +12,9 @@
 [blame]
 	date = human
 
+[core]
+	pager = gdiffpager
+
 [alias]
 	hs = !sh ~/.config/git/hist
 	fm = !sh ~/.config/git/format-patch

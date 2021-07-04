@@ -1,0 +1,12 @@
+#!/bin/sh
+
+san(){
+	tr '[' '\f'
+}
+
+san |
+sed "
+	s/$(tput bold | san)/$(tput setaf 95)/g;
+	s/$(tput setaf 1 | san)/$(tput setaf 10)/g;
+	s/$(tput setaf 2 | san)/$(tput setaf 36)/g;
+	" | tr '\f' '[' | less -R
