@@ -1,9 +1,14 @@
+# torsocks -a 0.0.0.0
+# isolate the program by using
+# a non-existant daemon
+
 #text/html		; lynx -stdin -dump < '%s' | less
-text/html		; surf '%s'
+text/html		; torsocks -a 0.0.0.0 surf '%s'
 text/*			; nvim '%s'
 
 application/pdf		; zathura '%s'
-application/*		; whatdoido '%s'
+application/zip		; unzip -c '%s' | less
+application/gzip	; gunzip '%s' | less
 
 image/*			; sxiv '%s'
 video/*			; mpv '%s'
