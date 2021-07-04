@@ -35,7 +35,7 @@ super + n
 	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
 
 super + r
-	st -t sfeed -e sh -c 'SFEED_PLUMBER=urlhand2 sfeed_curses $HOME/.local/sfeed/*'
+	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
 
 super + x
 	sxhkdrestart; herbe "Restarted sxhkd"
