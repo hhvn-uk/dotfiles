@@ -92,6 +92,7 @@ alias ...........="cd ../../../../../../../../../.."
 alias ............="cd ../../../../../../../../../../.."
 alias bbs="printf '\n%s\n%s\n' 'hhvn' \"$(dpass bbs.hlirc.net)\" | cat - /dev/tty | nc bbs.hlirc.net 23"
 alias camerasync="rsync -azP /mnt/DCIM/* ~/general/images/byme"
+alias wtf="\wtf -o"
 matrix(){
 	ssh matrix & >/dev/null
 	sleep 0.5
