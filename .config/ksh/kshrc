@@ -25,7 +25,7 @@ PS4="$(tput setaf 7):; $(tput sgr0)"
 
 export PS1 PS2 PS3 PS4
 
-export PATH="$PATH:$HOME/.scripts/bin"
+export PATH="$HOME/.scripts/bin:$PATH"
 
 [ "$(uname)" = "OpenBSD" ] && {
 	export PATH="$PATH:$HOME/.scripts/openbsd-compat"
