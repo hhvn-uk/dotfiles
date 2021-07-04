@@ -35,3 +35,5 @@ export IPFS_PATH=$HOME/.local/ipfs
 cd $HOME # welcome home (st inherits / from hildon)
 
 echo "$0" | grep ksh >/dev/null && export SHELL=ksh
+
+[ "$(tty)" = "/dev/tty1" ] && startx
