@@ -18,24 +18,30 @@ plumb(){
 	export norun=1
 	case "$t" in
 	gui)
-		>/dev/null nohup sh -c "$*" "$arg" &
+		>/dev/null nohup sh -c "$*" &
 		;;
 	terminal)
-		>/dev/null nohup ${TERMINAL:-st} sh -c "$*" "$arg" &
+		>/dev/null nohup ${TERMINAL:-st} sh -c "$*" &
+		;;
+	prompt)
+		>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*")" &
+		;;
+	*)
+		herbe "No such plumb-type: $t"
 		;;
 	esac
 }
 
-rand(){
-	base64 </dev/urandom | tr / + | head -c$1
+replace(){
+	arg=$(echo "$arg" | sed "$*")
 }
 
-_mktemp(){
-	_mktemp_file="/tmp/$(rand 10)-$1"
-	while [ -f $_mktemp_file ]
-	do
-		_mktemp_file="/tmp/$(rand 10)-$1"
-	done
+isfile(){
+	[ -f "$1" ]
+}
+
+hascmd(){
+	command -v "$*" >/dev/null
 }
 
 for arg in "$@"
@@ -43,72 +49,90 @@ do
 	export norun=0
 	export gui=0
 	export proxy=""
+	export arg
+
+	# remove file://
+	matches "^file://" &&
+	replace 's~^file://~~'
 
 	# network
 	matches "://.*\.onion" &&
 	export proxy="torsocks"
 
 	matches "^magnet:" &&
-	plumb terminal 'addtorrent $0'
+	plumb terminal 'addtorrent $arg'
 
 	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
-	matches "^https?://.*youtu.*be" &&
-	plumb gui '$proxy mpv --pause $0'
+	matches "^https?://(www.)?(youtube.com|youtu.be)" &&
+	plumb gui '$proxy mpv --pause $arg'
 
 	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
-	plumb gui '$proxy netimg $0'
+	plumb gui '$proxy netimg $arg'
 
-	matches "^https?://" &&
-	plumb gui 'xprop -id $(cat /tmp/tabbed.xid) >/dev/null && $proxy surf -e $(cat /tmp/tabbed.xid) $0 || >/tmp/tabbed.xid tabbed -c $proxy surf -e $(sleep 3 && cat /tmp/tabbed.xid) $0'
+	matches "^https?://" ||
+	matches "\.html?$" ||
+	fmatches "HTML" &&
+	plumb gui 'xprop -id $(cat /tmp/tabbed.xid) >/dev/null && $proxy surf -e $(cat /tmp/tabbed.xid) $arg || { >/tmp/tabbed.xid tabbed -c & $proxy surf -e $(sleep 1 && cat /tmp/tabbed.xid) $arg; }'
 
 	matches "^gophers?://(.*/[17+](/|$)|[^/]*$)" &&
-	plumb terminal '$proxy cgo $0'
+	plumb terminal '$proxy cgo $arg'
 
 	matches "^gophers?://" &&
-	plumb terminal '$proxy curl $0 | vim -'
+	plumb terminal '$proxy curl $arg | vim -'
 
 	matches "^mailto:" &&
-	plumb terminal 'neomutt $(echo "$0" | sed "s~^mailto:~~")'
+	plumb terminal 'neomutt $(echo "$arg" | sed "s~^mailto:~~")'
 
 	matches "^finger://" &&
-	plumb terminal '$proxy finger $(echo "$0" | sed "s~^finger://~~")'
+	plumb terminal '$proxy finger $(echo "$arg" | sed "s~^finger://~~")'
 
 	matches "^ssh://" &&
-	plumb terminal '$proxy ssh $(echo "$0" | sed "s~^ssh://~~;s~:[0-9]*~~")'
+	plumb terminal '$proxy ssh $(echo "$arg" | sed "s~^ssh://~~;s~:[0-9]*~~")'
 
 	matches "^git://" &&
-	plumb terminal '$proxy git clone $0'
+	plumb terminal '$proxy git clone $arg'
 
 	# local files now
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
-	plumb gui 'zathura $0'
+	plumb gui 'zathura $arg'
 
 	matches ".*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
 	fmatches "video|matroska|audio|sound" &&
-	plumb terminal 'mpv --pause $0'
+	plumb terminal 'mpv --pause $arg'
 
 	matches ".*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" ||
 	fmatches "image" &&
-	plumb gui 'sxiv $0'
+	plumb gui 'sxiv $arg'
 
-	matches ".*\.h$" &&
-	[ -f "/usr/include/$arg" ] &&
-	plumb terminal 'vim /usr/include/$0'
-
-	matches ".*\.h$" &&
-	[ -f "/usr/local/include/$arg" ] &&
-	plumb terminal 'vim /usr/local/include/$0'
-
-	matches "/.*\.[0-9]p?$" &&
+	matches "\.?/.*\.[0-9]p?$" &&
 	fmatches "(roff|preprocessor)" &&
-	plumb terminal 'man $0'
+	plumb terminal 'man $arg'
 
-	matches "[^/].*\.[0-9]p?$" &&
-	fmatches "(roff|preprocessor)" &&
-	plumb terminal 'man ./$0'
+	matches "\.(gph|gophermap)$|(^|/)gophermap$" &&
+	plumb terminal 'cgo -f $arg'
 
+	# numbered file
+	matches ":[0-9][0-9]*$" &&
+	isfile ${arg%:*} &&
+	plumb terminal 'vim +${arg##*:} ${arg%:*}'
+
+	# catch all for files
 	matches ".*" &&
-	plumb terminal 'vim $0'
+	isfile $arg &&
+	plumb terminal 'vim $arg'
+
+	# include files
+	matches ".*\.h$" &&
+	isfile "/usr/include/$arg" &&
+	plumb terminal 'vim /usr/include/$arg'
+
+	matches ".*\.h$" &&
+	isfile "/usr/local/include/$arg" &&
+	plumb terminal 'vim /usr/local/include/$arg'
+
+	# catch-all for non-files
+	matches ".*" &&
+	plumb prompt 'Plumb to (use $arg): '
 done
 wait
