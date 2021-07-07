@@ -40,6 +40,9 @@ super + shift + c
 super + d
 	dmenu_run
 
+super + u
+	plumb $(xclip -o)
+
 super + e
 	st -e tmux -f $HOME/.config/tmux/config
 
