@@ -1,6 +1,3 @@
-super + {, shift, ctrl, alt, shift + alt} + v
-	dinput "Are you sure?" "{halt zzz, halt halt, halt reboot, halt ZZZ, pkill dwm}"
-
 super + Return
 	st
 
@@ -25,9 +22,6 @@ super + shift + a
 super + b
 	tabbed -k -c surf -e > /tmp/tabbed.xid
 
-super + shift + b
-	dmpvurl /tmp/mpv-socket /tmp/mpv-socket2
-
 super + shift + n
 	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
 
@@ -36,12 +30,6 @@ super + n
 
 super + r
 	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
-
-super + x
-	sxhkdrestart; herbe "Restarted sxhkd"
-
-super + ctrl + b
-	queuevid
 
 super + c
 	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
@@ -54,9 +42,6 @@ super + d
 
 super + e
 	st -e tmux -f $HOME/.config/tmux/config
-
-super + m
-	dmon
 
 super + s
 	dpass
@@ -73,20 +58,8 @@ super + w
 super + ctrl + w
 	wallblur
 
-# super + {alt, alt + ctrl} + w
-# 	wallp ~/images/wallpapers/ {right, left}
-
-super + shift + w
-	colour-wall
-
 super + shift + g
 	chradio
-
-super + ctrl + g
-	st -e sh -c 'nvim ~/.local/notes'
-
-super + g
-	st -e sh -c 'rlwrap cgo'
 
 super + o
 	st -t torrents -c torrents -e sh -c "torrents; $SHELL"
