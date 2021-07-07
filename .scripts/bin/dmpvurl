@@ -1,9 +1,0 @@
-#!/bin/sh
-# dmenu/dmpvurl
-
-socket="$1"
-socket2="$2"
-url=$(xclip -o | tr " " "\n" | awk '/http|gopher/ {print $0}')
-
-hmpv pause $socket
-mpvms video "$url"
