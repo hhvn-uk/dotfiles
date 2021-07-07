@@ -1,15 +1,37 @@
 #!/bin/sh
 
-input=$(printf "no\nyes\n" | dmenu -i -p "Download: $1")
-[ "$input" = "yes" ] && {
-	file="$HOME/general/downloads/$(echo "$1" | tr '/' '+')"
+# silently ignore non-authorative (or non-) uris.
+echo "$1" | grep "://" >/dev/null || exit 99
+
+uri2file(){
+	awk '
+	BEGIN {
+		FS="/"
+	}
+
+	{
+		for (i=NF; i != 1; i--)
+			printf "%s+", $i
+		printf "%s\n", $1
+	}'
+}
+
+input=$(printf "plumb\ndownload\n" | dmenu -i -p "$1")
+case "$input" in
+d*)
+	file="$HOME/general/downloads/$(echo "$1" | uri2file)"
 	while [ -f $file ]
 	do
 		file="$HOME/general/downloads/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
 	done
 	curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
 	herbe "Saved to: $file"
-	exit 1
-} || {
-	urlhand2 "$1"
-}
+	echo "$file" | xclip
+	;;
+p*)
+	plumb "$1"
+	;;
+*)
+	exit 99
+	;;
+esac
