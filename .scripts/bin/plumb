@@ -35,13 +35,13 @@ plumb(){
 	export norun=1
 	case "$t" in
 	gui)
-		>/dev/null nohup sh -c "$*" &
+		>/dev/null nohup sh -c "$*; rm '$file'" &
 		;;
 	terminal)
-		>/dev/null nohup ${TERMINAL:-st} sh -c "$*" &
+		>/dev/null nohup ${TERMINAL:-st} sh -c "$*; rm '$file'" &
 		;;
 	prompt)
-		>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*")" &
+		>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*"); rm '$file'" &
 		;;
 	*)
 		herbe "No such plumb-type: $t"
@@ -59,6 +59,16 @@ isfile(){
 
 hascmd(){
 	command -v "$*" >/dev/null
+}
+
+fetch(){
+	file="/tmp/plumb.$(basename "$arg")"
+	while [ -f $file ]
+	do
+		file="/tmp/plumb.$(base64 </dev/urandom | tr -d / | head -c10).$(basename "$arg")"
+	done
+	$proxy curl "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+	export arg="$file"
 }
 
 for arg in "$@"
@@ -81,7 +91,7 @@ do
 
 	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
 	matches "^https?://(www.)?(youtube.com|youtu.be)" &&
-	plumb gui '$proxy mpv --pause $arg'
+	plumb gui '$proxy queue $arg; $proxy mpv --pause $arg'
 
 	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
 	plumb gui '$proxy netimg $arg'
@@ -95,7 +105,7 @@ do
 	plumb terminal '$proxy cgo $arg'
 
 	matches "^gophers?://" &&
-	plumb terminal '$proxy curl $arg | vim -'
+	fetch
 
 	matches "^mailto:" &&
 	plumb terminal 'neomutt $(echo "$arg" | sed "s~^mailto:~~")'
@@ -110,6 +120,9 @@ do
 	plumb terminal '$proxy git clone $arg'
 
 	# local files now
+	fmatches "PGP.*public.*key" &&
+	plumb terminal "gpg --import $arg; sleep 5"
+
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
 	plumb gui 'zathura $arg'
