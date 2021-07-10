@@ -54,7 +54,14 @@ replace(){
 }
 
 isfile(){
-	[ -f "$1" ]
+	[ -z "$1" ] && {
+		[ -f "$arg" ]
+		return $?
+	}
+	[ -n "$1" ] && {
+		[ -f "$1" ]
+		return $?
+	}
 }
 
 hascmd(){
@@ -121,25 +128,31 @@ do
 
 	# local files now
 	fmatches "PGP.*public.*key" &&
+	isfile &&
 	plumb terminal "gpg --import $arg; sleep 5"
 
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
+	isfile &&
 	plumb gui 'zathura $arg'
 
 	matches ".*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
 	fmatches "video|matroska|audio|sound" &&
+	isfile &&
 	plumb terminal 'mpv --pause $arg'
 
 	matches ".*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" ||
 	fmatches "image" &&
+	isfile &&
 	plumb gui 'sxiv $arg'
 
 	matches "\.?/.*\.[0-9]p?$" &&
 	fmatches "(roff|preprocessor)" &&
+	isfile &&
 	plumb terminal 'man $arg'
 
 	matches "\.(gph|gophermap)$|(^|/)gophermap$" &&
+	isfile &&
 	plumb terminal 'cgo -f $arg'
 
 	# numbered file
@@ -149,7 +162,7 @@ do
 
 	# catch all for files
 	matches ".*" &&
-	isfile $arg &&
+	isfile &&
 	plumb terminal 'vim $arg'
 
 	# include files
