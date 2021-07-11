@@ -77,8 +77,8 @@ hi link string			constant
 hi link Folded			Normal
 
 " diff/patch files
-hi diffAdded	ctermfg=36
-hi diffRemoved	ctermfg=10
+hi diffAdded	ctermfg=36 guifg=#00af87
+hi diffRemoved	ctermfg=10 guifg=#892b2b
 hi link diffFile	preproc
 hi link diffNewFile	preproc
 hi link diffOldFile	preproc
