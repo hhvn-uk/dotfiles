@@ -59,7 +59,6 @@ alias fwknop="fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev
 alias edconf="nvim ~/.config/zsh/.zshrc"
 alias gnu.matrix="fwknop --rc-file=$HOME/.config/fwknop/config --save-args-file=/dev/full -sn gnu.matrix && ssh gnu.matrix"
 alias rss="sfeed_update $XDG_CONFIG_HOME/sfeed/config && . $XDG_CONFIG_HOME/sfeed/config && sfeed_curses $HOME/.local/sfeed/*"
-alias diff="colordiff"
 alias irc="(sleep 1 && xdotool type 'tmux a' && xdotool key Return) & ssh local"
 alias gpg="\gpg --armour"
 alias sloccount="mkdir -p $HOME/.local/sloccount; \sloccount --datadir $HOME/.local/sloccount"
