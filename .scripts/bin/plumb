@@ -12,6 +12,11 @@ fmatches(){
 	file "$arg" | grep -Ei "$@" >/dev/null
 }
 
+fmagic(){
+	isfile "$arg" || return 1
+	grep "$1" < "$arg" >/dev/null
+}
+
 _envsubst(){
 	str="$*"
 
@@ -68,6 +73,10 @@ hascmd(){
 	command -v "$*" >/dev/null
 }
 
+wasfetched(){
+	[ -n "$orig" ]
+}
+
 fetch(){
 	file="/tmp/plumb.$(basename "$arg")"
 	while [ -f $file ]
@@ -75,6 +84,7 @@ fetch(){
 		file="/tmp/plumb.$(base64 </dev/urandom | tr -d / | head -c10).$(basename "$arg")"
 	done
 	$proxy curl "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+	export orig="$arg"
 	export arg="$file"
 }
 
@@ -84,6 +94,7 @@ do
 	export gui=0
 	export proxy=""
 	export arg=$(_envsubst "$arg")
+	export orig=""
 
 	# remove file://
 	matches "^file://" &&
@@ -141,6 +152,13 @@ do
 	fmatches "PGP.*message|PGP.*encrypted" &&
 	isfile &&
 	plumb terminal "gpg -d $arg; sleep 5"
+
+	matches "\.(atom|rss)$|rss\.xml$" ||
+	fmatches "atom|rss" ||
+	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
+	fmagic "^<rss" &&
+	wasfetched &&
+	plumb terminal 'sfeed_addfeed $orig'
 
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
