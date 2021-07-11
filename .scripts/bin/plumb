@@ -103,6 +103,9 @@ do
 	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
 	plumb gui '$proxy netimg $arg'
 
+	matches "^(gopher|http)s?://.*\.(asc|gpg|pgp)$" &&
+	fetch
+
 	matches "^https?://" ||
 	matches "\.html?$" ||
 	fmatches "HTML" &&
@@ -127,9 +130,17 @@ do
 	plumb terminal '$proxy git clone $arg'
 
 	# local files now
-	fmatches "PGP.*public.*key" &&
+	fmatches "PGP.*public.*key|PGP.*ring" &&
 	isfile &&
 	plumb terminal "gpg --import $arg; sleep 5"
+
+	fmatches "PGP.*signature" &&
+	isfile &&
+	plumb terminal "gpg --verify $arg; sleep 5"
+
+	fmatches "PGP.*message|PGP.*encrypted" &&
+	isfile &&
+	plumb terminal "gpg -d $arg; sleep 5"
 
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
