@@ -1,0 +1,23 @@
+#!/bin/sh
+
+_config=$HOME/.config/sfeed/config
+_backup=$_config.bkp
+
+[ -z $1 ] && echo "usage: $(basename $0) <uri>" && exit 2
+name=$(</dev/null dmenu -p "Feed title:")
+[ -z "$name" ] && exit 99
+
+mv $_config $_backup
+awk -v"uri=$1" -v"title=$name" '
+/^feeds\(\)/ {
+	add=1
+}
+
+$1 == "feed" && add {
+	add=0
+	printf "\tfeed \"%s\" \"%s\"\n", title, uri
+}
+
+{
+	print
+}' < $_backup > $_config
