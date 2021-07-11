@@ -158,7 +158,7 @@ do
 	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
 	fmagic "^<rss" &&
 	wasfetched &&
-	plumb terminal 'sfeed_addfeed $orig'
+	plumb gui 'sfeed_addfeed $orig'
 
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
