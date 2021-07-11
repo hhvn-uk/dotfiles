@@ -97,7 +97,7 @@ do
 	plumb terminal 'addtorrent $arg'
 
 	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
-	matches "^https?://(www.)?(youtube.com|youtu.be)" &&
+	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" &&
 	plumb gui '$proxy queuevid $arg; $proxy mpv --pause $arg'
 
 	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
