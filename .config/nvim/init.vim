@@ -201,7 +201,6 @@ source ~/.config/nvim/modules/splits.vim
 source ~/.config/nvim/modules/netrw.vim
 source ~/.config/nvim/modules/term.vim
 source ~/.config/nvim/modules/edit.vim
-source ~/.config/nvim/modules/window.vim
 source ~/.config/nvim/modules/message.vim
 source ~/.config/nvim/modules/openc.vim
 source ~/.config/nvim/modules/filetype.vim
