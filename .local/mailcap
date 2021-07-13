@@ -1,0 +1,4 @@
+text/*			; plumb '%s'
+application/*		; plumb '%s'
+video/*			; plumb '%s'
+image/*			; plumb '%s'
