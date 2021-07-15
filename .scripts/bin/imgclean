@@ -21,6 +21,7 @@ do
 	# sum name of file, for speed,
 	# as opposed to the file itself
 	sum=$(basename "$f" | $summer | awk '{print $1}')
+	nhash=$(basename "$f" | sed 's/\..*//')
 
 	# ignore already created
 	[ ! -f "$odir/$sum".jpg ] && {
@@ -28,4 +29,13 @@ do
 		exiftool "$f" -all= -o "$odir/$sum".jpg >/dev/null
 		printf 'done\n'
 	} || printf "%s already exists, ignoring %s...\n" "$odir/$sum.jpg" "$f"
+	[ ! -f "$oder/$nhash".jpg ] && {
+		printf 'symlinking %s <-> %s...' "$odir/$sum.jpg" "$odir/$nhash.jpg"
+		# symlinks are relative to the directory the symlink is in,
+		# therefore - do not use $odir/$sum.jpg. ln is kinda dumb in
+		# this regard, it just uses the raw argv contents, no checking or
+		# resolving of files. Perhaps a smart ln could be a project?
+		ln -s "$sum.jpg" "$odir/$nhash.jpg"
+		printf 'done\n'
+	}
 done
