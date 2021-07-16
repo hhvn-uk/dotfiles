@@ -48,6 +48,10 @@ plumb(){
 	prompt)
 		>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*"); rm '$file'" &
 		;;
+	matchlater)
+		export norun=0
+		>/dev/null nohup sh -c "$*" &
+		;;
 	*)
 		herbe "No such plumb-type: $t"
 		;;
@@ -141,6 +145,14 @@ do
 	plumb terminal '$proxy git clone $arg'
 
 	# local files now
+	fmatches "gzip" &&
+	isfile &&
+	plumb matchlater 'gunzip < $arg > $arg.new && mv $arg.new $arg'
+
+	fmatches "zip.*archive" &&
+	isfile
+	plumb matchlater 'unzip -p $arg > $arg.new && mv $arg.new $arg'
+
 	fmatches "PGP.*public.*key|PGP.*ring" &&
 	isfile &&
 	plumb terminal 'gpg --import $arg; sleep 5'
