@@ -127,12 +127,6 @@ do
 	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" &&
 	plumb gui '$proxy mpv --pause $arg'
 
-	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
-	plumb gui '$proxy netimg $arg'
-
-	matches "^(gopher|http)s?://.*\.(asc|gpg|pgp)$" &&
-	fetch
-
 	matches "^https?://" &&
 	! mime "text/html" &&
 	fetch
