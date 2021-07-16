@@ -93,12 +93,11 @@ fetch(){
 }
 
 mime(){
-	mime=$($proxy curl -i "$(echo "$arg" |
-		sed -E 's/]|\[|}|\{/\\&/g')" |
-		awk '/^[[:space:]]*$/ {exit 1}; 1' |
+	mime=$($proxy curl -i "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" |
+		awk '/HTTP/ && $2 != "200" {s=1}; /^[[:space:]]*$/ {if (s) s=0; else exit 1}; !s' |
 		tr '[:upper:]' '[:lower:]' |
 		awk '$1 == "content-type:" {print $2}')
-	echo "$mime" | grep -i "$1" >/dev/null
+	echo "$mime" | tee /dev/stderr | grep -i "$1" >/dev/null
 }
 
 for arg in "$@"
