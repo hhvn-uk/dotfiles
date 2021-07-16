@@ -20,7 +20,7 @@ fmagic(){
 _envsubst(){
 	str="$*"
 
-	env | 
+	env |
 	while read -r line
 	do
 		str=$(echo "$str" | awk -v "var=${line%%=*}" -v "val=${line#*=}" '
@@ -92,6 +92,15 @@ fetch(){
 	export arg="$file"
 }
 
+mime(){
+	mime=$($proxy curl -i "$(echo "$arg" |
+		sed -E 's/]|\[|}|\{/\\&/g')" |
+		awk '/^[[:space:]]*$/ {exit 1}; 1' |
+		tr '[:upper:]' '[:lower:]' |
+		awk '$1 == "content-type:" {print $2}')
+	echo "$mime" | grep -i "$1" >/dev/null
+}
+
 for arg in "$@"
 do
 	export norun=0
@@ -111,14 +120,21 @@ do
 	matches "^magnet:" &&
 	plumb terminal 'addtorrent "$arg"'
 
-	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
+	matches "^(gopher|http)s?://.*\.(ogg|mp3|opus|flac|pls)$" &&
+	plumb terminal '$proxy mpv --pause $arg'
+
+	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogv|gifv|mp4|ape|m3u|m3u8)$" ||
 	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" &&
-	plumb gui '$proxy queuevid $arg; $proxy mpv --pause $arg'
+	plumb gui '$proxy mpv --pause $arg'
 
 	matches "^(gopher|http)s?://.*\.(jpe?g|gif|tiff?|ppm|bit|bmp|png|xpm)$" &&
 	plumb gui '$proxy netimg $arg'
 
 	matches "^(gopher|http)s?://.*\.(asc|gpg|pgp)$" &&
+	fetch
+
+	matches "^https?://" &&
+	! mime "text/html" &&
 	fetch
 
 	matches "^https?://" ||
