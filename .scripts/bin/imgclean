@@ -29,7 +29,7 @@ do
 		exiftool "$f" -all= -o "$odir/$sum".jpg >/dev/null
 		printf 'done\n'
 	} || printf "%s already exists, ignoring %s...\n" "$odir/$sum.jpg" "$f"
-	[ ! -f "$oder/$nhash".jpg ] && {
+	[ ! -f "$odir/$nhash".jpg ] && {
 		printf 'symlinking %s <-> %s...' "$odir/$sum.jpg" "$odir/$nhash.jpg"
 		# symlinks are relative to the directory the symlink is in,
 		# therefore - do not use $odir/$sum.jpg. ln is kinda dumb in
