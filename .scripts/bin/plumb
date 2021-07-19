@@ -40,17 +40,17 @@ plumb(){
 	export norun=1
 	case "$t" in
 	gui)
-		>/dev/null nohup sh -c "$*; rm '$file'" &
+		>/dev/null 2>/dev/null nohup sh -c "$*; rm '$file'" &
 		;;
 	terminal)
-		>/dev/null nohup ${TERMINAL:-st} sh -c "$*; rm '$file'" &
+		>/dev/null 2>/dev/null nohup ${TERMINAL:-st} sh -c "$*; rm '$file'" &
 		;;
 	prompt)
-		>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*"); rm '$file'" &
+		>/dev/null 2>/dev/null nohup ${TERMINAL:-st} sh -c "$(dmenu -i -p "$*"); rm '$file'" &
 		;;
 	matchlater)
 		export norun=0
-		>/dev/null nohup sh -c "$*" &
+		>/dev/null 2>/dev/null nohup sh -c "$*" &
 		;;
 	*)
 		herbe "No such plumb-type: $t"
@@ -87,18 +87,25 @@ fetch(){
 	do
 		file="/tmp/plumb.$(base64 </dev/urandom | tr -d / | head -c10).$(basename "$arg")"
 	done
-	$proxy curl "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+	$proxy curl $([ "$verbose" != "y" ] && echo -s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
 	export orig="$arg"
 	export arg="$file"
 }
 
 mime(){
-	mime=$($proxy curl -i "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" |
+	mime=$($proxy curl -i$([ "$verbose" != "y" ] && echo s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" |
 		awk '/HTTP/ && $2 != "200" {s=1}; /^[[:space:]]*$/ {if (s) s=0; else exit 1}; !s' |
 		tr '[:upper:]' '[:lower:]' |
 		awk '$1 == "content-type:" {print $2}')
 	echo "$mime" | tee /dev/stderr | grep -i "$1" >/dev/null
 }
+
+case "$1" in
+	-v)
+		verbose=y
+		shift
+		;;
+esac
 
 for arg in "$@"
 do
@@ -146,7 +153,7 @@ do
 	plumb terminal 'neomutt $(echo "$arg" | sed "s~^mailto:~~")'
 
 	matches "^finger://" &&
-	plumb terminal '$proxy finger $(echo "$arg" | sed "s~^finger://~~")'
+	plumb terminal '$proxy finger $(echo "$arg" | sed "s~^finger://~~"); cat'
 
 	matches "^ssh://" &&
 	plumb terminal '$proxy ssh $(echo "$arg" | sed "s~^ssh://~~;s~:[0-9]*~~")'
