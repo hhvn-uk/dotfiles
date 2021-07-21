@@ -1,6 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] || [ ! -z $2 ] && echo "usage: mkcd <dir>" && exit 1
-
-mkdir "$1"
-cd "$1"

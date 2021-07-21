@@ -1,8 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] && echo "usage: reminder <name of reminder> <time>" && exit
-
-file=$(mktemp)
-echo "$1" > $file
-shift
-echo "export DISPLAY=\"$DISPLAY\"; st -e sh -c \"cat $file /dev/stdin; rm $file\"" | at "$@"

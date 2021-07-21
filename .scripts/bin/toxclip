@@ -1,4 +1,0 @@
-#!/bin/sh
-# put arg into xclip
-
-echo "$1" | xclip

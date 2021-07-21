@@ -1,3 +1,0 @@
-#!/bin/sh
-
-tail -n 100 < ~/.config/vimb/history | dmenu -i | awk '{print $1}' | xclip

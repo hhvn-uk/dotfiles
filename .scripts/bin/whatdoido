@@ -1,9 +1,0 @@
-#!/bin/sh
-
-file "$1"
-d=$(mktemp -d)
-cp "$1" $d
-cd $d
-printf "What do I do with this? "
-$SHELL
-rm -rf $d
