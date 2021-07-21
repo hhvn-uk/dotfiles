@@ -34,7 +34,7 @@ files=$(find . -mindepth 2 -type f)
 export IFS=$(printf '\n\t')
 for dir in $dirs
 do
-	printf 'creating %s... ' "$dir"
+	printf 'creating %s... ' "$dest"
 	dest=$(printf '%s\n' "$dir" | sed 's~^\.~~')
 	mkdir -p $dest
 	printf 'done\n'
@@ -42,7 +42,7 @@ done
 
 for file in $files
 do
-	printf 'creating %s... ' "$file"
+	printf 'creating %s... ' "$dest"
 	dest=$(printf '%s\n' "$file" | sed 's~^\.~~')
 	content=$(_envsubst < "$file")
 	printf '%s\n' "$content" | doas tee "$dest" >/dev/null
