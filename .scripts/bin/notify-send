@@ -1,0 +1,15 @@
+#!/bin/sh
+# based upon: https://raw.githubusercontent.com/dudik/herbe/24557245869662e1885f286037ecc37038a5f791/notify-send
+
+while [ $# -ne 0 ] && [ ${narg:-0} -ne 1 ]
+do
+	case "$1" in
+	--urgency|--expire-time|--icon|--category) shift 2 ;;
+	--) shift; narg=1 ;;
+	*)
+		echo "$1" | grep '^-[utich]*$' >/dev/null &&
+			shift 2 || narg=1
+	esac
+done
+
+nohup herbe "$@" >/dev/null 2>/dev/null &
