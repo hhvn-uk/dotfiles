@@ -55,7 +55,7 @@ case "$1" in
 
 		mkdir -p "$dir"
 
-		file="$dir/$(echo "$uri" | uri2file)"
+		file="$dir/$(echo "$uri" | sha256sum | awk '{print $1}')"
 		[ -f "$file" ] &&
 			printf "ERROR: File '%s' already exits: skipping '%s'\n" "$file" "$uri" &&
 			continue
@@ -69,6 +69,6 @@ case "$1" in
 			continue
 
 		printf "Downloaded '%s' as %s\n" "$uri" "$file"
-	done < "$1"
+	done < "${1:-/dev/stdin}"
 	;;
 esac
