@@ -45,6 +45,7 @@ case "$1" in
 		uri=$(printf '%s\n' "$line" | awk -F"\t" '{print $2}')
 		# let $3 be comment, therefore no need to handle
 
+		[ -z "$line" ] && continue
 		[ -z "$dir" ] || [ -z "$uri" ] &&
 			printf "ERROR: Erroneous syntax on line %d\n" "$linec" &&
 			continue
