@@ -39,22 +39,22 @@ set pgp_show_unusable   = no
 set pgp_sign_as         = "ED59FC1A"
 set pgp_sort_keys       = address
 set pgp_strict_enc      = yes
-set pgp_timeout         = 21600 # Remember PGP passphrase for 6 hours
+set pgp_timeout         = 0 # Remember PGP passphrase for 6 hours
 
 # PGP Commands
-set pgp_clearsign_command    = "gpg2 --batch --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_decode_command       = "gpg2 --status-fd=2 %?p?--passphrase-fd 0? --quiet --batch --output - %f"
-set pgp_decrypt_command      = "gpg2 --status-fd=2 %?p?--passphrase-fd 0? --quiet --batch --output - %f"
-set pgp_encrypt_only_command = "passgpg2 --batch --quiet --output - --encrypt --textmode --armor --always-trust -r %r -- %f"
-set pgp_encrypt_sign_command = "passgpg2 %?p?--passphrase-fd 0? --batch --quiet --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -r %r -- %f"
-set pgp_export_command       = "gpg2 --export --armor %r"
+set pgp_clearsign_command    = "passgpg --no-use-agent --output - --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_decode_command       = "passgpg --no-use-agent --status-fd=2 --quiet --output - %f"
+set pgp_decrypt_command      = "passgpg --no-use-agent --status-fd=2 --quiet --output - %f"
+set pgp_encrypt_only_command = "passgpg --no-use-agent --quiet --output - --encrypt --textmode --armor --always-trust -r %r -- %f"
+set pgp_encrypt_sign_command = "passgpg --no-use-agent --quiet --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -r %r -- %f"
+set pgp_export_command       = "gpg --no-use-agent --export --armor %r"
 set pgp_getkeys_command      = ""
-set pgp_import_command       = "gpg2 --import -v %f"
-set pgp_list_pubring_command = "gpg2 --with-colons --with-fingerprint --list-keys %r"
-set pgp_list_secring_command = "gpg2 --with-colons --with-fingerprint --list-secret-keys %r"
-set pgp_sign_command         = "passgpg2 --comment 'Key: gopher://hhvn.uk/0/.pub.pgp' --batch --output - --armor --detach-sign --textmode %?a?-u %a? %f"
-set pgp_verify_command       = "gpg2 --status-fd=2 --quiet --batch --output - --verify %s %f"
-set pgp_verify_key_command   = "gpg2 --verbose --batch --fingerprint --check-sigs %r"
+set pgp_import_command       = "gpg --no-use-agent --import -v %f"
+set pgp_list_pubring_command = "gpg --no-use-agent --with-colons --with-fingerprint --list-keys %r"
+set pgp_list_secring_command = "gpg --no-use-agent --with-colons --with-fingerprint --list-secret-keys %r"
+set pgp_sign_command         = "passgpg --no-use-agent --comment 'Key: gopher://hhvn.uk/0/.pub.pgp' --output - --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_verify_command       = "gpg --no-use-agent --status-fd=2 --quiet --batch --output - --verify %s %f"
+set pgp_verify_key_command   = "gpg --no-use-agent --verbose --batch --fingerprint --check-sigs %r"
 
 # SMIME sucks
 bind compose S pgp-menu
