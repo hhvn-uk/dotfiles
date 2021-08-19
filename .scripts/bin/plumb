@@ -130,7 +130,9 @@ do
 	plumb terminal '$proxy mpv --pause $arg'
 
 	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogv|gifv|mp4|ape|m3u|m3u8)$" ||
-	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" &&
+	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" ||
+	matches "^https?://.*/videos/watch/" || # peertube
+	matches "^https?://videos?\..*/w/" &&   # peertube also uses /w/, which is so ambiguous I made this subdomain-dependant
 	! matches "(youtu.be|youtube.com).*/feeds/" &&
 	plumb gui '$proxy mpv --pause $arg'
 
