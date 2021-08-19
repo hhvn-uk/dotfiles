@@ -182,20 +182,6 @@ do
 	isfile &&
 	plumb terminal 'gpg -d $arg; sleep 5'
 
-	matches "\.(atom|rss)$|rss\.xml$" ||
-	fmatches "atom|rss" ||
-	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
-	fmagic "<rss" &&
-	wasfetched &&
-	plumb gui 'sfeed_addfeed $orig'
-
-	matches "\.(atom|rss)$|rss\.xml$" ||
-	fmatches "atom|rss" ||
-	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
-	fmagic "<rss" &&
-	! wasfetched &&
-	plumb terminal 'sfeed < $arg | sort -rn | sfeed_curses'
-
 	matches ".*\.(epub|ps|eps|pdf|dvi|djvu)$" ||
 	fmatches "pdf|postscript" &&
 	isfile &&
@@ -219,6 +205,20 @@ do
 	matches "\.(gph|gophermap)$|(^|/)gophermap$" &&
 	isfile &&
 	plumb terminal 'cgo -f $arg'
+
+	matches "\.(atom|rss)$|rss\.xml$" ||
+	fmatches "atom|rss" ||
+	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
+	fmagic "<rss" &&
+	wasfetched &&
+	plumb gui 'sfeed_addfeed $orig'
+
+	matches "\.(atom|rss)$|rss\.xml$" ||
+	fmatches "atom|rss" ||
+	fmagic "<feed.*xmlns.*http://www.w3.org/2005/Atom" ||
+	fmagic "<rss" &&
+	! wasfetched &&
+	plumb terminal 'sfeed < $arg | sort -rn | sfeed_curses'
 
 	# numbered file
 	matches ":[0-9][0-9]*$" &&
