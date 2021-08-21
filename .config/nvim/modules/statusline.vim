@@ -72,10 +72,6 @@ function! Activestatus()
 	let g:s.="%#Positioncol#"
 	let g:s.=" %l/%L,\ %c "
 	let g:s.="%#Basecol#"
-	""Buffer
-	let g:s.="%#Buffcol#"
-	let g:s.=" [%n] "
-	let g:s.="%#Basecol#"
 
 	return g:s
 endfunction

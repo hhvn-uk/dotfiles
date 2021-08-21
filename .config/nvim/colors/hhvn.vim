@@ -52,7 +52,6 @@ hi Basecol 	ctermbg=1 ctermfg=7 guibg=#24283c
 hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
 hi Branchcol 	cterm=bold ctermbg=9 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#4747e1
 hi Positioncol 	cterm=bold ctermbg=3 ctermfg=254 gui=bold guifg=#e4e4e4 guibg=#40445c
-hi Buffcol	ctermbg=4 ctermfg=159 guifg=#afffff guibg=#575b72
 
 hi InsertMode	ctermfg=126 ctermbg=1 guifg=#af0087 guibg=#24283c gui=bold cterm=bold
 hi TerminalMode	ctermfg=190 ctermbg=1 guifg=#d7ff00 guibg=#24283c gui=bold cterm=bold
