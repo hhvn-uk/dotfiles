@@ -80,6 +80,9 @@ function! Inactivestatus()
 	""File
 	let g:s.="%#Basecol#"
 	let g:s.=" %f\ -\ %y%m"
+	let g:s.="%="
+	""Position
+	let g:s.=" %l/%L,\ %c "
 
 	return g:s
 endfunction
