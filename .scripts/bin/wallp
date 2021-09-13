@@ -9,11 +9,11 @@
 [ -z $1 ] && echo "usage: wallp <dir|file[,<dir|file>...]> [left|right]" && exit 1
 
 [ -z $2 ] && monitors=2
-files=$(find $(echo "$1" | tr ',' ' ') -type f | shuf | head -n ${monitors:-1})
+files=$(find -L $(echo "$1" | tr ',' ' ') -maxdepth 1 -type f | shuf | head -n ${monitors:-1})
 [ "$2" = "right" ] && files=$(printf "%s\n%s\n" "$(awk '{print $1}' < $HOME/.cache/rfeh/prev)" "$files")
 [ "$2" = "left" ] && files=$(printf "%s\n%s\n" "$files" "$(awk '{print $2}' < $HOME/.cache/rfeh/prev)")
 mkdir -p $HOME/.cache/rfeh
-echo $files > $HOME/.cache/rfeh/prev
+echo $files | tee $HOME/.cache/rfeh/prev
 files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
 for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
 do
