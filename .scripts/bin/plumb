@@ -129,6 +129,9 @@ do
 	matches "^(gopher|http)s?://.*\.(ogg|mp3|opus|flac|pls)$" &&
 	plumb terminal '$proxy mpv --pause $arg'
 
+	matches "^(gopher|http)s?://.*\.gif$" &&
+	plumb gui '$proxy mpv --loop-file $arg'
+
 	matches "^(gopher|http)s?://.*\.(mkv|mp4|avi|webm|ogv|gifv|mp4|ape|m3u|m3u8)$" ||
 	matches "^https?://(www\.|m\.)?(youtube.com|youtu.be)" ||
 	matches "^https?://.*/videos/watch/" || # peertube
@@ -188,6 +191,10 @@ do
 	fmatches "pdf|postscript" &&
 	isfile &&
 	plumb gui 'zathura $arg'
+
+	matches ".*\.gif$" &&
+	isfile &&
+	plumb gui 'mpv --loop-file $arg'
 
 	matches ".*\.(mkv|mp4|avi|webm|ogg|ogv|gifv|mp3|mp4|opus|flac|ape|m3u|m3u8)$" ||
 	fmatches "video|matroska|audio|sound" &&
