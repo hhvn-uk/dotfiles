@@ -93,10 +93,9 @@ fetch(){
 }
 
 mime(){
-	mime=$($proxy curl -i$([ "$verbose" != "y" ] && echo s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" |
-		awk '/HTTP/ && $2 != "200" {s=1}; /^[[:space:]]*$/ {if (s) s=0; else exit 1}; !s' |
-		tr '[:upper:]' '[:lower:]' |
-		awk '$1 == "content-type:" {print $2}')
+	mime=$($proxy curl -Li$([ "$verbose" != "y" ] && echo s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" |
+		awk '/^HTTP/ && $2 != "200" {s=1}; /^HTTP/ && $2 == "200" {p=1}; /^[[:space:]]*$/ {if (s) s=0; else exit 1}; p' |
+		tr '[:upper:]' '[:lower:]' | awk '$1 == "content-type:" {print $2}')
 	echo "$mime" | tee /dev/stderr | grep -i "$1" >/dev/null
 }
 
