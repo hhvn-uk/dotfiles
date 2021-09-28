@@ -13,10 +13,46 @@ uri2file(){
 	}'
 }
 
+trimlast(){
+	echo "$1" | sed -E 's~/[^/]*/?$~/~'
+}
+
+append(){
+	echo "$1" | sed 's~/$~~' | tr -d '\n'
+	printf '/%s\n' "$2"
+}
+
 case "$1" in
 *"://"*) # URI
-	input=$(printf "plumb\ndownload\n" | dmenu -i -p "$1")
+	input=$(printf "plumb\ndownload\ndownload to\n" | dmenu -i -p "$1")
 	case "$input" in
+	d*to)
+		dir="$HOME"
+		while true
+		do
+			ndir=$(
+				(
+					printf '%s\n%s\n' "." ".."
+					find -L "$dir" -maxdepth 1 -mindepth 1 -type d |
+						awk -v "dir=$dir" '{sub(dir, ""); print}'
+				) | sed -E 's~\.?/~~' | dmenu -p "$dir"
+			)
+
+			[ "$ndir" = "" ] && exit 1
+			[ "$ndir" = "." ] && break
+			[ "$ndir" = ".." ] && 
+				dir=$(trimlast "$dir") ||
+				dir=$(append "$dir" "$ndir")
+		done
+		file="$dir/$(echo "$1" | uri2file)"
+		while [ -f $file ]
+		do
+			file="$dir/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
+		done
+		curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+		herbe "Saved to: $file"
+		echo "$file" | xclip
+		;;
 	d*)
 		file="$HOME/general/downloads/$(echo "$1" | uri2file)"
 		while [ -f $file ]
