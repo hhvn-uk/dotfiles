@@ -7,30 +7,75 @@ starttime	endtime	title	author	track	album	comment
 
 Leave track as '-', if it is N/A" && exit 1
 
+arith(){
+	printf '%s\n' "$*" | bc
+}
+
+# status bar at the bottom of the screen (like apt)
+status_init(){
+	printf '\n'
+	tput sc
+	printf '\033[0;%dr' $(calc "$(tput lines) - 1")
+	tput rc
+	tput cuu 1
+}
+
+status_write(){
+	status_write_colour="$1"
+	status_write_format="$2"
+	shift 2
+
+	tput sc
+	tput cup $(tput lines) 0
+	tput setaf "$status_write_colour"
+	tput rev
+	tput el
+	printf " $status_write_format " "$@"
+	tput cup $(tput lines) $(tput cols)
+	tput sgr0
+	tput rc
+}
+
+status_deinit(){
+	tput sc
+	printf '\033[0;%dr' $(tput lines)
+	tput cup $(tput lines) 0
+	tput el
+	tput rc
+	printf '\n'
+}
+
+trap 'status_deinit' 2 # SIGINT
+
 get(){
 	echo "$line" | awk -v "n=$1" -F"	" '{print $n}' | sed 's/\\n/\n/g;s/\\t/\t/g'
 }
 
 format=${1##*.}
 
+status_init
 while IFS= read -r line
 do
-	get 5 | grep '[0-9]' >/dev/null \
-	&& ffmpeg -y -nostdin -i "$1" \
-		-ss "$(get 1)" -to "$(get 2)" \
-		-map_metadata -1 -vn -c copy \
-		-metadata "title=$(get 3)" \
-		-metadata "artist=$(get 4)" \
-		-metadata "track=$(get 5)" \
-		-metadata "album=$(get 6)" \
-		-metadata "album=$(get 7)" \
-		"$(get 5).-.$(get 3 | tr '/ 	' '_..').$format" \
-	|| ffmpeg -y -nostdin -i "$1" \
-		-ss "$(get 1)" -to "$(get 2)" \
-		-map_metadata -1 -vn -c copy \
-		-metadata "title=$(get 3)" \
-		-metadata "artist=$(get 4)" \
-		-metadata "album=$(get 6)" \
-		-metadata "comment=$(get 7)" \
-		"$(get 3 | tr '/ 	' '_..').$format"
+	status_write 28 "Splitting %s..." "$(get 3)"
+	get 5 | grep '[0-9]' >/dev/null && 
+		ffmpeg -y -nostdin -i "$1" \
+			-ss "$(get 1)" -to "$(get 2)" \
+			-map_metadata -1 -vn -c copy \
+			-metadata "title=$(get 3)" \
+			-metadata "artist=$(get 4)" \
+			-metadata "track=$(get 5)" \
+			-metadata "album=$(get 6)" \
+			-metadata "comment=$(get 7)" \
+			"$(get 5).-.$(get 3 | tr '/ 	' '_..').$format" || 
+		ffmpeg -y -nostdin -i "$1" \
+			-ss "$(get 1)" -to "$(get 2)" \
+			-map_metadata -1 -vn -c copy \
+			-metadata "title=$(get 3)" \
+			-metadata "artist=$(get 4)" \
+			-metadata "album=$(get 6)" \
+			-metadata "comment=$(get 7)" \
+			"$(get 3 | tr '/ 	' '_..').$format"
+	status_write 238 "Waiting..."
 done
+
+status_deinit
