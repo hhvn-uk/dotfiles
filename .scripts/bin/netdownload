@@ -22,88 +22,120 @@ append(){
 	printf '/%s\n' "$2"
 }
 
-case "$1" in
-*"://"*) # URI
-	input=$(printf "plumb\ndownload\ndownload to\n" | dmenu -i -p "$1")
-	case "$input" in
-	d*to)
-		dir="$HOME"
-		while true
-		do
-			ndir=$(
-				(
-					printf '%s\n%s\n' "." ".."
-					find -L "$dir" -maxdepth 1 -mindepth 1 -type d |
-						awk -v "dir=$dir" '{sub(dir, ""); print}'
-				) | sed -E 's~\.?/~~' | dmenu -p "$dir"
-			)
+[ $# -eq 0 ] && set -- "/dev/stdin"
 
-			[ "$ndir" = "" ] && exit 1
-			[ "$ndir" = "." ] && break
-			[ "$ndir" = ".." ] && 
-				dir=$(trimlast "$dir") ||
-				dir=$(append "$dir" "$ndir")
-		done
-		file="$dir/$(echo "$1" | uri2file)"
-		while [ -f $file ]
+while [ $# -ne 0 ]
+do
+	case "$1" in
+	"-h")
+		cat >&2 <<- .
+		usage: $(basename "$0") [-hpdt] <file|URI> ...
+
+		-h	help
+		-p	plumb URIs
+		-d	download URIs to default location
+		-t	download URIs to menu specificed location
+		.
+		exit 2
+		;;
+	"-p")
+		input_def="plumb"
+		shift
+		;;
+	"-d")
+		input_def="download"
+		shift
+		;;
+	"-t")
+		input_def="download to"
+		shift
+		;;
+	*"://"*) # URI
+		[ -n "$input_def" ] &&
+			input="$input_def" ||
+			input=$(printf "plumb\ndownload\ndownload to\n" | dmenu -i -p "$1")
+		case "$input" in
+		d*to)
+			dir="$HOME"
+			while true
+			do
+				ndir=$(
+					(
+						printf '%s\n%s\n' "." ".."
+						find -L "$dir" -maxdepth 1 -mindepth 1 -type d |
+							awk -v "dir=$dir" '{sub(dir, ""); print}'
+					) | sed -E 's~\.?/~~' | dmenu -p "$dir"
+				)
+
+				[ "$ndir" = "" ] && exit 1
+				[ "$ndir" = "." ] && break
+				[ "$ndir" = ".." ] && 
+					dir=$(trimlast "$dir") ||
+					dir=$(append "$dir" "$ndir")
+			done
+			file="$dir/$(echo "$1" | uri2file)"
+			while [ -f $file ]
+			do
+				file="$dir/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
+			done
+			curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+			herbe "Saved to: $file"
+			echo "$file" | xclip
+			;;
+		d*)
+			file="$HOME/general/downloads/$(echo "$1" | uri2file)"
+			while [ -f $file ]
+			do
+				file="$HOME/general/downloads/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
+			done
+			curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
+			herbe "Saved to: $file"
+			echo "$file" | xclip
+			;;
+		p*)
+			plumb "$1"
+			;;
+		*)
+			exit 99
+			;;
+		esac
+		shift
+		;;
+	*) 	# download queue
+		linec=0
+		while read -r line
 		do
-			file="$dir/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
-		done
-		curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
-		herbe "Saved to: $file"
-		echo "$file" | xclip
-		;;
-	d*)
-		file="$HOME/general/downloads/$(echo "$1" | uri2file)"
-		while [ -f $file ]
-		do
-			file="$HOME/general/downloads/$(base64 </dev/urandom | tr '/' '+' | head -c10)"
-		done
-		curl "$(echo "$1" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
-		herbe "Saved to: $file"
-		echo "$file" | xclip
-		;;
-	p*)
-		plumb "$1"
-		;;
-	*)
-		exit 99
+			linec=$(echo "$linec + 1" | bc)
+
+			dir=$(printf '%s\n' "$line" | awk -F"\t" '{print $1}')
+			uri=$(printf '%s\n' "$line" | awk -F"\t" '{print $2}')
+			# let $3 be comment, therefore no need to handle
+
+			[ -z "$line" ] && continue
+			[ -z "$dir" ] || [ -z "$uri" ] &&
+				printf "ERROR: Erroneous syntax on line %d\n" "$linec" &&
+				continue
+
+			[ -f "$dir" ] &&
+				printf "ERROR: File exists inplace of dir '%s'\n" "$dir" &&
+				continue
+
+			mkdir -p "$dir"
+
+			file="$dir/$(echo "$uri" | sha256sum | awk '{print $1}')"
+			[ -f "$file" ] && continue
+
+			curlout=$(curl -o"$file" "$uri" 2>&1)
+			curlexit=$?
+			curlout=$(printf '%s\n' "$curlout" | tail -n1 | tr -d '\r' | sed 's/.*curl: ([0-9]*) //') 
+
+			[ $curlexit -ne 0 ] &&
+				printf "ERROR: Failed to download '%s': %s\n" "$uri" "$curlout" &&
+				continue
+
+			printf "Downloaded '%s' as %s\n" "$uri" "$file"
+		done < "$1"
+		shift
 		;;
 	esac
-	;;
-*) 	# download queue
-	linec=0
-	while read -r line
-	do
-		linec=$(echo "$linec + 1" | bc)
-
-		dir=$(printf '%s\n' "$line" | awk -F"\t" '{print $1}')
-		uri=$(printf '%s\n' "$line" | awk -F"\t" '{print $2}')
-		# let $3 be comment, therefore no need to handle
-
-		[ -z "$line" ] && continue
-		[ -z "$dir" ] || [ -z "$uri" ] &&
-			printf "ERROR: Erroneous syntax on line %d\n" "$linec" &&
-			continue
-
-		[ -f "$dir" ] &&
-			printf "ERROR: File exists inplace of dir '%s'\n" "$dir" &&
-			continue
-
-		mkdir -p "$dir"
-
-		file="$dir/$(echo "$uri" | sha256sum | awk '{print $1}')"
-		[ -f "$file" ] && continue
-
-		curlout=$(curl -o"$file" "$uri" 2>&1)
-		curlexit=$?
-		curlout=$(printf '%s\n' "$curlout" | tail -n1 | tr -d '\r' | sed 's/.*curl: ([0-9]*) //') 
-
-		[ $curlexit -ne 0 ] &&
-			printf "ERROR: Failed to download '%s': %s\n" "$uri" "$curlout" &&
-			continue
-
-		printf "Downloaded '%s' as %s\n" "$uri" "$file"
-	done < "${1:-/dev/stdin}"
-	;;
-esac
+done
