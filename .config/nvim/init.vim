@@ -22,6 +22,7 @@ set undoreload=10000
 
 "Leader
 let mapleader=";"
+let maplocalleader=","
 
 "Cursor
 let &t_SI.="\033[6 q" "SI = INSERT mode
