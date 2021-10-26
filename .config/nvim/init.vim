@@ -104,7 +104,6 @@ ino <Right> <Nop>
 set clipboard=unnamed
 
 "Modules
-source ~/.config/nvim/modules/abbrs.vim
 source ~/.config/nvim/modules/statusline.vim
 source ~/.config/nvim/modules/splits.vim
 source ~/.config/nvim/modules/netrw.vim
