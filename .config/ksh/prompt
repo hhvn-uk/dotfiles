@@ -15,21 +15,23 @@ __ksh_prompt(){
 	__prompt_col 14
 	printf "\[%%%$(echo "$(tput cols) - 1" | bc)s\r\]"
 
-	errorcode=$1
+	__ksh_prompt_errorcode=$1
 	# tput setaf 10 >/dev/null
-	[ $errorcode -eq 0 ] && __prompt_col 15 || __prompt_col 10
-	printf '%s ' "$errorcode"
+	[ $__ksh_prompt_errorcode -eq 0 ] && __prompt_col 15 || __prompt_col 10
+	printf '%s ' "$__ksh_prompt_errorcode"
 	__prompt_col 5
 	printf "%s " "$(whoami)"
 	__prompt_col 3
 	printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 	[ "$_PROMPT_GIT" = "y" ] && {
-		git diff 1>/dev/null 2>/dev/null && {
-			git diff | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
-			printf "%s+" $(git diff 2>/dev/null | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
+		__ksh_prompt_diff=$(git diff 2>/dev/null)
+		[ $? -eq 0 ] && {
+			printf '%s\n' "$__ksh_prompt_diff" | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
+			printf "%s+" $(printf '%s\n' "$__ksh_prompt_diff" | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
 				| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
-			git log --pretty=format:"commit %h%d" | head -n 1 | grep -v '.*\/.*' >/dev/null && __prompt_col 14 && {
-				git log --pretty=format:"commit %h%d" | awk -v "c=0" '
+			__ksh_prompt_log=$(git log --pretty=format:"commit %h%d")
+			printf '%s\n' "$__ksh_prompt_log" | head -n 1 | grep -v '.*\/.*' >/dev/null && __prompt_col 14 && {
+				printf '%s\n' "$__ksh_prompt_log" | awk -v "c=0" '
 					/^commit/ {
 						if ($0 ~ /\//) {
 							printf("%d", c)
