@@ -1,2 +1,0 @@
-/load perl
-/sbar modify -type window -position 0 -visible active prompt
