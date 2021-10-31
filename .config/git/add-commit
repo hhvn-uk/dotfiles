@@ -43,11 +43,7 @@ done
 	sum2=$(sha256sum .git/COMMIT_EDITMSG)
 
 	[ "$sum" != "$sum2" ] && {
-		while [ $# -ne 0 ]
-		do
-			printf "%s\0" "$1"
-			shift
-		done | xargs -0 git add || exit 1
+		git add "$@" || exit 1
 		git commit -F .git/COMMIT_EDITMSG 
 	} || {
 		echo "error: COMMIT_EDITMSG not changed"
