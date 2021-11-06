@@ -1,0 +1,31 @@
+#!/bin/sh
+# This script is quite good at scraping 
+# source out of debug binaries, but not
+# data (it gets mangled pretty bad).
+
+[ -z "$1" ] || [ -n "$2" ] && printf "usage: %s <debug binary>\n" "$(basename "$0")" && exit 2
+
+objdump -St "$1" 2>&1 | awk '
+	/SYMBOL TABLE/ {st = 1}
+	/^[[:space:]]*$/ {
+		st = 0
+		if (!sp) {
+			print
+			sp = 1
+		}
+	}
+	$1 !~ ":$" && $2 !~ "<[^>]*>:$" && !st && !/Disassembly.*:/ && /[^[:space:]]/ {
+		# avoid double printing for loops
+		if ($1 ~ "^for") {
+			if (forseen[$0] == 1) {
+				forseen[$0] = 0
+			} else {
+				print
+				forseen[$0] = 1
+			}
+		} else {
+			print
+			sp = 0
+		}
+	}
+'
