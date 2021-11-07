@@ -21,9 +21,9 @@ __ksh_prompt(){
 	printf '%s ' "$__ksh_prompt_errorcode"
 	__prompt_col 5
 	printf "%s " "$(whoami)"
-	__prompt_col 3
-	printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 	[ "$_PROMPT_GIT" = "y" ] && {
+		__prompt_col 3
+		printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 		__ksh_prompt_diff=$(git diff 2>/dev/null)
 		[ $? -eq 0 ] && {
 			printf '%s\n' "$__ksh_prompt_diff" | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
