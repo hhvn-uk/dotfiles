@@ -64,9 +64,10 @@ noremap <leader>ss :set syntax=
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>g :!git 
 noremap <leader>nn :setlocal number! relativenumber!<CR>
-noremap <leader>j 0/<++><Enter>"_c4l
-noremap <leader>J 0/<++><Enter>"_d4l
 nnoremap <leader>CS :let @/=''<CR>
+
+nmap <c-o> 0/<++><Enter>"_c4l
+imap <c-o> <Esc>0/<++><Enter>"_c4l
 
 "General stuff
 noremap dw diw
