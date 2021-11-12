@@ -28,6 +28,3 @@ augroup Netrwstop
 augroup END
 
 set fillchars+=vert:\|
-hi VertSplit	ctermbg=1 ctermfg=1 guifg=#24283c guibg=#24283c
-hi link StatusLine VertSplit
-hi link StatusLineNC VertSplit

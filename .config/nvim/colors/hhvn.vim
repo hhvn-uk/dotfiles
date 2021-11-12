@@ -12,6 +12,8 @@ hi clear NonText
 hi clear Visual
 hi clear Search
 hi clear Folded
+hi clear StatusLine
+hi clear StatusLineNC
 
 hi comment		ctermfg=238 guifg=#434343 cterm=none         gui=none
 hi constant		ctermfg=13  guifg=#a84b8d cterm=none         gui=none
@@ -48,7 +50,8 @@ hi QuickScopePrimary   ctermfg=4 guifg=#575b72 cterm=bold,reverse gui=bold,rever
 hi QuickScopeSecondary ctermfg=7 guifg=#c7cad9 cterm=bold,reverse gui=bold,reverse
 
 hi Statusbar 	ctermbg=0 ctermfg=0 guifg=#141726 guibg=#141726
-hi Basecol 	ctermbg=1 ctermfg=7 guibg=#24283c
+hi Basecol 	ctermbg=1                         guibg=#24283c
+hi Blankcol	ctermbg=1 ctermfg=1 guifg=#24283c guibg=#24283c
 hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
 hi Branchcol 	cterm=bold ctermbg=9 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#4747e1
 hi Positioncol 	cterm=bold ctermbg=3 ctermfg=254 gui=bold guifg=#e4e4e4 guibg=#40445c
@@ -58,6 +61,7 @@ hi TerminalMode	ctermfg=190 ctermbg=1 guifg=#d7ff00 guibg=#24283c gui=bold cterm
 hi CommandMode	ctermfg=24  ctermbg=1 guifg=#005f87 guibg=#24283c gui=bold cterm=bold
 hi VisualMode	ctermfg=202 ctermbg=1 guifg=#ff5f00 guibg=#24283c gui=bold cterm=bold
 hi NormalMode	ctermfg=7   ctermbg=1 guifg=#c7cad9 guibg=#24283c gui=bold cterm=bold
+hi VertSplit	ctermfg=1   ctermbg=1 guifg=#24283c guibg=#24283c gui=none cterm=none
 
 hi TabLine     cterm=none ctermfg=252  ctermbg=1 gui=none guifg=#d0d0d0 guibg=#24283c
 hi TabLineSel  cterm=bold ctermfg=252  ctermbg=3 gui=bold guifg=#d0d0d0 guibg=#40445c
@@ -74,6 +78,8 @@ hi link Search			search
 hi link IncSearch		search
 hi link string			constant
 hi link Folded			Normal
+hi link StatusLine		VertSplit
+hi link StatusLineNC		VertSplit
 
 " diff/patch files
 hi diffAdded	ctermfg=36 guifg=#00af87

@@ -62,7 +62,7 @@ function! Activestatus()
 	""Mode
 	let g:s.="%#Modecol#"
 	let g:s.=" %{Modecurrent()}"
-	let g:s.="%#Basecol#"
+	let g:s.="%#Blankcol#"
 	let g:s.="%="
 	""Branch
 	" let g:s.="%#Branchcol#"
@@ -80,6 +80,7 @@ function! Inactivestatus()
 	""File
 	let g:s.="%#Basecol#"
 	let g:s.=" %f\ -\ %y%m"
+	let g:s.="%#Blankcol#"
 	let g:s.="%="
 	""Position
 	let g:s.=" %l/%L,\ %c "
@@ -111,6 +112,7 @@ endfunction
 
 function! TermIstatus()
 	""Reminder
+	let g:s.="%#Blankcol#"
 	let g:s.="%="
 	let g:s.="%#Basecol#"
 	let g:s.=" [terminal] "
