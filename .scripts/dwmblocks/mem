@@ -18,4 +18,4 @@
 	[ $used -gt 1500 ] && col="^c#aa7700^"
 	[ $used -gt 2000 ] && col="^c#aa0000^"
 }
-echo "[M ${col}${mem}]"
+echo "[^c#7777cc^M^d^${col}${mem}]"

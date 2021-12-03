@@ -9,5 +9,12 @@
 	toggled=$(sndioctl output.mute | sed 's/.*=//;s/0/on/;s/1/off/')
 	volume=$(sndioctl output.level | sed -E 's/.*=//;s/(.)\.(..)(.)/\1\2.\3/;s/^0*//;s/\.0$//;s/$/%/')
 }
-output="$(echo ${volume} | tr "\n" " ")$(echo "${toggled}" | grep 'on' >/dev/null && printf '^c#00cc00^' || printf '^c#cc0000^')$(echo ${toggled} | tr "\n" " " | sed 's/ //g')"
-echo "[VOL $output]"
+
+colour="^c#7777cc^"
+colour2="^d^"
+echo "$toggled" | grep on >/dev/null || {
+	colour="^c#555555^"
+	colour2="^c#666666^"
+}
+
+printf '[%sVOL%s%s]' "$colour" "$colour2" "${volume}"
