@@ -47,5 +47,5 @@ do
 	do
 		grep '[[:alnum:]]' < $f >/dev/null && cp $f /tmp/dwmblocks
 	done
-	xsetroot -name " $(cat bat net torrent cpu mem vol time time2 2>/dev/null | sed 's~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr '\n' ' ')"
+	xsetroot -name "$(cat bat net torrent cpu mem vol time time2 2>/dev/null | sed 's~\[~ ^b#1a3136^ ~g;s~\]~ ^d^~g' | tr -d '\n' | sed 's/^[[:space:]]*//')"
 done
