@@ -6,7 +6,7 @@ echo $(curl wttr.in/?format=%S) > $HOME/.cache/wttrS
 echo $(curl wttr.in/?format=%s) > $HOME/.cache/wttrs
 echo $(curl wttr.in/?format=%C) > $HOME/.cache/wttrC
 
-day=$(date +%A | tr '[:lower:]' '[:upper:]')
+day=$(date +%a | tr '[:lower:]' '[:upper:]')
 [ $(date +%u) -eq 6 ] || [ $(date +%u) -eq 7] && col="^c#007700^" || col="^c#888888^"
 
 month=$(date +%m)
