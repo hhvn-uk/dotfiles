@@ -58,8 +58,8 @@ super + shift + s
 super + ctrl + s
 	maim | hlpaste "png"
 
-super + w
-	wallp ~/general/images/wallpapers/; exit
+@super + w
+	wallp ~/general/images/wallpapers/
 
 super + ctrl + w
 	wallblur
