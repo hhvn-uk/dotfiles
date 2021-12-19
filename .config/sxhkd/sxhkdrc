@@ -22,9 +22,6 @@ super + shift + a
 super + b
 	tabbed -k -c surf -e > /tmp/tabbed.xid
 
-super + shift + n
-	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
-
 super + n 
 	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
 
@@ -67,9 +64,6 @@ super + ctrl + w
 super + shift + g
 	chradio
 
-super + o
-	st -t torrents -c torrents -e sh -c "torrents; $SHELL"
-
 super + shift + o
 	addtorrent xclip
 
@@ -82,17 +76,34 @@ super + ctrl + y
 super + ctrl + u
 	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video
 
-super + alt + {y,u}
-	rmpv general/{videos,music}/list
+# Socket mpv control
+# super + alt + {y,u}
+# 	rmpv general/{videos,music}/list
+#
+# super + ctrl + {i,p}
+# 	hmpv {back,forward} /tmp/mpv-socket
+#
+# super + alt + {i,p}
+# 	hmpv {prev,next} /tmp/mpv-socket
+#
+# super + {ctrl,alt} + o
+# 	hmpv {toggle,quit} /tmp/mpv-socket
+#
+# super + shift + n
+# 	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
 
+# cmus control
 super + ctrl + {i,p}
-	hmpv {back,forward} /tmp/mpv-socket
+	cmus-remote --seek {-5,5}
 
 super + alt + {i,p}
-	hmpv {prev,next} /tmp/mpv-socket
+	cmus-remote {--prev,--next}
 
 super + {ctrl,alt} + o
-	hmpv {toggle,quit} /tmp/mpv-socket
+	cmus-remote {--pause,--stop}
+
+super + shift + n
+	pgrep cmus || st -c cmus -g 150x30 -b -e cmus
 
 super + {minus,equal}
 	hvol 3%{-,+}
