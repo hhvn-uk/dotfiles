@@ -6,5 +6,5 @@ file=/tmp/$$.passwd
 touch $file
 chmod 0600 $file
 dpass gpg3key > $file
-gpg2 --armour --batch --pinentry-mode loopback --passphrase-file $file "$@"
+gpg2 -q --armour --batch --pinentry-mode loopback --passphrase-file $file "$@" 2>/dev/null
 rm $file

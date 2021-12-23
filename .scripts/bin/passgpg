@@ -4,5 +4,5 @@ file=/tmp/$$.passwd
 touch $file
 chmod 0600 $file
 dpass gpg3key > $file
-gpg --armour --passphrase-file $file "$@"
+gpg -q --armour --passphrase-file $file "$@"
 rm $file
