@@ -1,5 +1,9 @@
 #!/bin/ksh
 
+# Fuck GNU
+# For some reason I can't get grep to ignore "binary" files with POSIXLY_CORRECT
+grep --version 2>/dev/null | grep 'GNU' >/dev/null && __ksh_prompt_gnu_binary="a"
+
 # use \[..\] to prevent counting
 __prompt_col(){
 	printf '\[%s\]' "$(tput setaf $1)"
@@ -26,11 +30,11 @@ __ksh_prompt(){
 		printf "%s" $(git branch 2>/dev/null | grep '^*' | awk '{print $2 "|"}')
 		__ksh_prompt_diff=$(git diff 2>/dev/null)
 		[ $? -eq 0 ] && {
-			printf '%s\n' "$__ksh_prompt_diff" | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
-			printf "%s+" $(printf '%s\n' "$__ksh_prompt_diff" | grep -E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
+			echo "$__ksh_prompt_diff" | grep '.' >/dev/null && __prompt_col 8 || __prompt_col 15
+			printf "%s+" $(echo "$__ksh_prompt_diff" 2>/dev/null | grep -${__ksh_prompt_gnu_binary}E '^(\+\+\+|---)' | sed -E 's~^[^a]*a/|^[^b]*b/~~' \
 				| grep -v /dev/null | uniq | wc -l | tr -d '\n' | grep '.' || printf 0)
 			__ksh_prompt_log=$(git log --pretty=format:"commit %h%d")
-			printf '%s\n' "$__ksh_prompt_log" | head -n 1 | grep -v '.*\/.*' >/dev/null && __prompt_col 14 && {
+			printf '%s\n' "$__ksh_prompt_log2" | head -n 1 | grep -v '.*\/.*' >/dev/null && __prompt_col 14 && {
 				printf '%s\n' "$__ksh_prompt_log" | awk -v "c=0" '
 					/^commit/ {
 						if ($0 ~ /\//) {
@@ -44,7 +48,7 @@ __ksh_prompt(){
 		}
 	}
 	__prompt_col 7
-	printf "%s " $(pwd | sed "s-$HOME-~-")
+	printf "%s " "$(pwd | sed "s-$HOME-~-")"
 	echo "$0" | grep -v ksh >/dev/null && {
 		printf "($(basename $0))"
 	}
