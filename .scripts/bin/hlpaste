@@ -3,8 +3,8 @@
 # 	 hlpaste [file extension] < /path/to/file
 
 cp /dev/stdin /tmp/hlpaste
-id=$(mktemp -u paste/XXXXXXXXX)
+id=$(mktemp -u p/XXXXXXXXXXXXXX)
 
 gtype=$(file /tmp/hlpaste | tr '[:upper:]' '[:lower:]' | sed -E 's~.*(binary|video|audio).*~9~;s~.*image.*~I~' | grep -o '^.$' || echo "0")
-scp /tmp/hlpaste hlirc.net:/var/gopher/$id.${1:-txt}
-printf "gopher://hlirc.net/$gtype/$id.${1:-txt}" | tee /dev/stderr | xclip
+scp /tmp/hlpaste hlirc.net:/var/gopher/$id.${1:-txt} >/dev/null
+printf "gopher://hlirc.net/$gtype/$id.${1:-txt}\n" | tee /dev/stderr | tr -d '\n' | xclip
