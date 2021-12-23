@@ -28,7 +28,7 @@ _envsubst(){
 	#  - variable doesn't persist after leaving the loop
 }
 
-dirs=$(find . -type d)
+dirs=$(find . -mindepth 1 -type d)
 files=$(find . -mindepth 2 -type f)
 
 export IFS=$(printf '\n\t')
