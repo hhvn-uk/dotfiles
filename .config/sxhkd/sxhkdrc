@@ -94,7 +94,7 @@ super + ctrl + u
 
 # cmus control
 super + ctrl + {i,p}
-	cmus-remote --seek {-5,5}
+	cmus-remote --seek {-5,+5}
 
 super + alt + {i,p}
 	cmus-remote {--prev,--next}
