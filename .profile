@@ -12,7 +12,6 @@ export PASS="$HOME/.local/pass"
 export SHELL="/usr/bin/zsh"
 export ZDOTDIR="$HOME/.config/zsh"
 export CURLHOME="$HOME/.config/curl/"
-export CC="tcc"
 [ "$hostname" != "" ] && {
 	echo > /dev/null
 } || [ "$HOSTNAME" != "" ] && {
