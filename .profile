@@ -23,7 +23,7 @@ export CURLHOME="$HOME/.config/curl/"
 };
 
 #XDG
-eval "$(awk '{print "export " $0}' < .config/user-dirs.dirs)"
+eval "$(awk '{print "export " $0}' < $HOME/.config/user-dirs.dirs)"
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_DIRS=/usr/local/share:/usr/share:$HOME/.local/share
