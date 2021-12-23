@@ -64,7 +64,8 @@ noremap <leader>ss :set syntax=
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>g :!git 
 noremap <leader>nn :setlocal number! relativenumber!<CR>
-nnoremap <leader>CS :let @/=''<CR>
+noremap <leader>CS :let @/=''<CR>
+noremap <silent> <c-s> :silent !plumb <cfile><CR>
 
 nmap <c-o> 0/<++><Enter>"_c4l
 imap <c-o> <Esc>0/<++><Enter>"_c4l
