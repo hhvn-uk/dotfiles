@@ -90,6 +90,10 @@ fetch(){
 	$proxy curl $([ "$verbose" != "y" ] && echo -s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
 	export orig="$arg"
 	export arg="$file"
+
+	[ -z "$exittrap" ] && exittrap=":"
+	exittrap="$exittrap; rm -rf \"$file\""
+	trap "$exittrap" EXIT
 }
 
 mime(){
@@ -105,6 +109,9 @@ case "$1" in
 		shift
 		;;
 esac
+
+[ -n "$PLUMB" ] && exit
+export PLUMB="$$"
 
 for arg in "$@"
 do
