@@ -25,7 +25,7 @@ grepout(){
 
 [ -f /tmp/pexels ] && old=$(printf "yes\nno" | dmenu -i -p "Use old request?")
 [ "$old" != "yes" ] && {
-	query=$(echo | dmenu -i -p "Search query (required):")
+	query=$(printf '' | dmenu -i -p "Search query (required):")
 	[ "$query" = "" ] && echo "Query required" && exit 1 || request="search?query=$(echo "$query" | tr ' ' '+')"
 	perpage=$(echo "DEFAULT" | dmenu -i -p "Results per page:")
 	[ "$perpage" != "DEFAULT" ] && request="${request}&per_page=$perpage" || perpage="15"
