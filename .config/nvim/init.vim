@@ -7,10 +7,8 @@
 "
 
 "Note: plugins can found in .vim/plugin/ or .vim/autoload/
-" goyo - centres text
 " surround - allows operation on surrounding characters
 " commentary - comments stuff out
-" repeat - repeat things
 " vimagit - git in vim
 " quickscope - find stuff easer 
 
