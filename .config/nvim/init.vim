@@ -1,9 +1,6 @@
 "
 " .config/nvim/init.vim
-" Created by Hayden Hamilton
-"
-" haydenvh.com
-" Copyright (c) 2019 Hayden Hamilton.
+" Copyright (c) 2019-2021 hhvn <dev@hhvn.uk>
 "
 
 "Note: plugins can found in .vim/plugin/ or .vim/autoload/
