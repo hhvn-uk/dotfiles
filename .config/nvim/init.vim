@@ -43,6 +43,7 @@ set number
 set hlsearch
 filetype plugin on
 set noshowmode
+set so=4
 
 function! ReopenFile()
 	let curfile=expand('%:p')
