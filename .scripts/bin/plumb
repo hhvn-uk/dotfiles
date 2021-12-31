@@ -90,9 +90,12 @@ fetch(){
 	$proxy curl $([ "$verbose" != "y" ] && echo -s) "$(echo "$arg" | sed -E 's/]|\[|}|\{/\\&/g')" > "$file"
 	export orig="$arg"
 	export arg="$file"
+	removelater "$file"
+}
 
-	[ -z "$exittrap" ] && exittrap=":"
-	exittrap="$exittrap; rm -rf \"$file\""
+removelater(){
+	[ -z "$exittrap" ] && exittrap="$*"
+	exittrap="$exittrap; rm -rf \"$*\""
 	trap "$exittrap" EXIT
 }
 
@@ -177,11 +180,13 @@ do
 	# local files now
 	fmatches "gzip" &&
 	isfile &&
-	plumb matchlater 'gunzip < $arg > $arg.new && mv $arg.new $arg'
+	plumb matchlater 'gunzip < $arg > $arg.new && mv $arg.new $arg' &&
+	removelater "$arg.new"
 
 	fmatches "zip.*archive" &&
 	isfile
-	plumb matchlater 'unzip -p $arg > $arg.new && mv $arg.new $arg'
+	plumb matchlater 'unzip -p $arg > $arg.new && mv $arg.new $arg' &&
+	removelater "$arg.new"
 
 	fmatches "PGP.*public.*key|PGP.*ring" &&
 	isfile &&
