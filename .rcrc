@@ -2,9 +2,6 @@
 if (grep --version >[2=1] | grep GNU >/dev/null)
 	__prompt_gnu_binary = 'a'
 
-# Get vi bindings
-INPUTRC = $home/.config/readline/inputrc
-
 # Backend prompt function
 fn __prompt {
 	__prompt_exitcode = $status
