@@ -53,11 +53,10 @@ fn __prompt {
 		echo $__prompt_log | awk '-vc=0' '
 			/^commit/ {
 				if ($0 ~ /\//) {
-					printf("%d", c)
+					printf("%d^", c)
 					exit
-				}
+				} else c += 1
 			}'
-		printf '^'
 	}
 
 	# dir
