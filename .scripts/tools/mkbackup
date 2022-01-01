@@ -1,3 +1,0 @@
-#!/bin/sh
-
-tar cvf - /lib* /srv/ /home/ /root /etc/ /bin /sbin /usr/ | dup-pack -r /mnt/backups/dedup/ $(date +%d%m%y)
