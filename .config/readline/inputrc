@@ -1,0 +1,7 @@
+# Only good thing about readline
+set editing-mode vi
+
+# I find it more hassle than it's worth
+# in e,g, gdb, where I can't use aliases
+# and have to paste in commands instead.
+set enable-bracketed-paste off
