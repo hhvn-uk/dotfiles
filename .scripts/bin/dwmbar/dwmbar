@@ -1,0 +1,47 @@
+#!/bin/rc
+
+cd `{dirname $0}
+
+mkdir -p /tmp/blocks
+fn block {
+	dwmbar/$1 > /tmp/blocks/$1 &
+}
+
+block vol
+while (true) {
+	block bat
+	block cpu
+	block mem
+	sleep 3
+} &
+
+while (true) {
+	block time2
+	sleep 1
+} &
+
+while (true) {
+	block news
+	block mail
+	block rem
+	block torrent
+	sleep 20
+} &
+
+while (true) {
+	block time
+	block net
+	sleep 900
+} &
+
+mkdir /tmp/dwmblocks
+cd /tmp/dwmblocks
+while (true) {
+	sleep 0.1
+	for (f in /tmp/blocks/*) {
+		grep '[[:alnum:]]' < $f >/dev/null && cp $f /tmp/dwmblocks
+	}
+	xsetroot -name ``(''){cat bat net torrent cpu mem vol time time2 >[2]/dev/null | 
+				tr -d '\n' | 
+				sed 's/^\[/^f4^/;s~\[~^c#000000^^r0,0,1,50^^d^^f4^~g;s~\]~^f4^~g'}
+}
