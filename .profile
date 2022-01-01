@@ -1,5 +1,6 @@
 #!/bin/ksh
 
+export INPUTRC=$HOME/.config/readline/inputrc
 export ENV="$HOME/.config/ksh/kshrc"
 export EDITOR="nvim"
 export PAGER="less"
