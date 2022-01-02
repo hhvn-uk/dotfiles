@@ -153,3 +153,20 @@ fn w3m {
 
 # Settings
 history = $XDG_CACHE_HOME/history
+
+# .profile
+INPUTRC	= $home/.config/readline/inputrc
+ENV	= $home/.config/ksh/kshrc
+EDITOR	= nvim
+PAGER	= less
+TERMINAL= st
+PASS	= $home/.local/pass
+
+. $home/.config/user-dirs.dirs
+XDG_CONFIG_HOME	= $home/.config
+XDG_CACHE_HOME	= $home/.cache
+XAUTHORITY	= $home/.local/.xauth
+LESSHISTFILE	= -
+GNUPGHOME	= $home/.local/gnupg
+IPFS_PATH	= $home/.local/ipfs
+CURLHOME	= $home/.config/curl/"
