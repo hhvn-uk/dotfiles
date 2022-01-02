@@ -146,6 +146,10 @@ fn wtf {
 		builtin wtf
 	}
 }
+fn w3m {
+	# Symlink $home/.config/w3m -> $home/.config/.w3m
+	home = $home/.config { builtin w3m $* }
+}
 
 # Settings
 if (! ~ $XDG_CONFIG_HOME ()) {
