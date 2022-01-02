@@ -1,8 +1,0 @@
-#!/bin/sh
-# reverse of sunglasses
-
-pkill redshift
-xrandr --output HDMI2 --brightness 1.15
-xrandr --output VGA1  --brightness 1.15
-sleep 3
-nohup redshift &

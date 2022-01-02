@@ -19,7 +19,8 @@
 
 d=$HOME/net/exec/uptime
 
-for s in matrix.hhvn.uk hhvn.uk irc1 irc2 dumbterm.hhvn.uk phony.hhvn.uk port.hhvn.uk mx1.hhvn.uk
+#for s in matrix.hhvn.uk hhvn.uk irc1 irc2 dumbterm.hhvn.uk phony.hhvn.uk port.hhvn.uk mx1.hhvn.uk
+for s in hhvn.uk irc1 irc2 dumbterm.hhvn.uk phony.hhvn.uk port.hhvn.uk mx1.hhvn.uk neutron.hhvn.uk
 do 
 	curr=$(ssh $s uptime | grep 'days' | awk '{print $3}' | grep '^[^:]*$' || echo 0)
 	ssh $s uptime >/dev/null && down=n || down=y # run the cmd again - variable can't be set

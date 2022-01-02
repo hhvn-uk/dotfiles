@@ -20,6 +20,7 @@ done
 printf "Colour? "
 read c </dev/tty
 
+rm /tmp/kshrc
 cat $HOME/.config/ksh/* | sed -E "s/setaf 5/setaf $c/g;"'s/setaf ([0-9]*)/setaf \1 \1 \1/g' > /tmp/kshrc
 scp /tmp/kshrc $host:.profile
 for u in $@

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 [ -z $1 ] && echo "usage: shmenu <prompt>
 
@@ -9,13 +9,18 @@ stderr contains the user interface
 Use ctrl+h or ctrl+l to navigate between options." && exit
 
 cleanup(){
+	tput cnorm
+	stty icanon
 	clear > /dev/stderr
 	echo "$files" | grep -i "$query" | tail -n $selected | head -n 1
 	exit
 }
 
+trap cleanup 2
+
 files=$(cat /dev/stdin)
 tput civis
+stty -icanon </dev/tty >/dev/stderr
 
 selected=1
 IFS=''
@@ -44,7 +49,7 @@ do
 	printf '  '
 	tput rc >/dev/stderr
 	tput cnorm
-	read -rsn1 key < /dev/tty
+	key=$(dd bs=1 count=1 </dev/tty 2>/dev/null)
 	tput civis
 	oldoutput="$output"
 	[ "$key" = "$(echo)" ] && cleanup
@@ -53,3 +58,5 @@ do
 	newkey=$(echo "$key" | grep '[[:print:]]')
 	[ "$newkey" = "" ] && prev=$(echo "$prev" | sed 's/.$//') || prev="${prev}${newkey}"
 done
+
+cleanup

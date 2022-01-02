@@ -1,4 +1,0 @@
-#!/bin/sh
-
-doas pkill sshfs
-doas umount -l $HOME/general

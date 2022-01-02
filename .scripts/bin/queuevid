@@ -1,3 +1,0 @@
-#!/bin/sh
-
-ts "cd ~/general/videos/ && youtube-dl --add-metadata -ic $(xclip -o)"

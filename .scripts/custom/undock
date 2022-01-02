@@ -1,8 +1,0 @@
-#!/bin/sh
-
-for d in "LVDS1" "VGA1" "HDMI2"
-do
-	xrandr --output $d --off
-done
-
-xrandr --output LVDS1 --mode 1280x800

@@ -1,0 +1,18 @@
+#!/bin/sh
+# usage: <command> | hlpaste [file extension]
+# 	 hlpaste [file extension] < /path/to/file
+
+cp /dev/stdin /tmp/hlpaste
+id=$(sha512sum < /tmp/hlpaste | grep -Eo '^.{15}')
+fileext="${1:-txt}"
+gtype=$(file /tmp/hlpaste |
+		tr '[:upper:]' '[:lower:]' | 
+		sed -E 's~.*(binary|video|audio).*~9~;s~.*image.*~I~' | 
+		grep -o '^.$' || echo "0")
+
+file="$id.$fileext"
+path="$HOME/net/paste/$file"
+uri="gopher://hhvn.uk/$gtype/paste/$file"
+mv /tmp/hlpaste "$path"
+
+echo "$uri" | tee /dev/stderr | tr -d '\n' | xclip

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # usage: wbcachemake
 
 cache=$HOME/general/cache/

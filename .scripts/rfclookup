@@ -19,7 +19,7 @@
 # as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.   
 
 index=https://www.ietf.org/download/rfc-index.txt 
-document="https://www.ietf.org/rfc/rfc%s.txt"
+document="https://tools.ietf.org/rfc/rfc%s.txt"
 
 usage(){
 	base=$(basename "$0")
@@ -30,7 +30,7 @@ usage(){
 
 case "$1" in
 -s)
-	curl -i $index |
+	curl -Li $index |
 		tr '\n' '\t' | 
 		sed 's/\t\t/\n/g' | 
 		tr '\t' ' ' | 
@@ -39,7 +39,7 @@ case "$1" in
 		grep -iE "$2"
 	;;
 -n)
-	curl -s $(printf "$document\n" "$2") | less
+	curl -Ls $(printf "$document\n" "$2") | less
 	;;
 -u)
 	printf "$document\n" "$2"
