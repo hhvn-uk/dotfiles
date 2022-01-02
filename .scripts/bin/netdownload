@@ -77,9 +77,9 @@ eof
 			case plumb
 				plumb $arg
 			case download
-				filename = ``($nl){mktemp $HOME/general/downloads $arg}
+				filename = ``(''){mktemp $HOME/general/downloads $arg | tr -d '\n'}
 				uri = `{echo $arg | sed -E 's/]|\[|}|\{/\\&/g'}
-				curl $^uri '>' $^filename
+				curl $^uri > $^filename
 				herbe 'Saved to: ' ^ $^filename
 			}
 		}
