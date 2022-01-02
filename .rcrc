@@ -107,6 +107,7 @@ fn __prompt {
 fn prompt {
 	__prompt_content = ``(''){__prompt}
 	prompt = ($__prompt_content '')
+	printf '\033]0;rc: %s\007' `{pwd}
 }
 
 # Aliases
