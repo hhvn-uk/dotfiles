@@ -1,0 +1,6 @@
+#!/bin/rc
+# get youtube links
+
+sed 's/<[^>]*>//g' |
+	grep -Eo 'https://www.youtube.com/watch\?v=.{11}|https://youtu.be/.{11}|https://www.youtube.com/embed/.{11}' |
+	sed -E 's~.*(.{11})$~https://www.youtube.com/embed/\1~g'
