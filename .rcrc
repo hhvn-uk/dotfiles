@@ -2,16 +2,44 @@
 if (grep --version >[2=1] | grep GNU >/dev/null)
 	__prompt_gnu_binary = 'a'
 
-# Backend prompt function
-fn __prompt {
-	__prompt_exitcode = $status
-	__prompt_gitoutput = 0
-	if (~ $__prompt_exitcode 0) {
+fn __prompt_exit_colour {
+	if (~ $1 0) {
 		tput setaf 15
+	} else if (~ $1 sig*) {
+		tput setaf 8
 	} else {
 		tput setaf 10
 	}
-	printf '%s ' $__prompt_exitcode
+}
+
+# Backend prompt function
+fn __prompt {
+	__prompt_exitcodes = $status
+	__prompt_gitoutput = 0
+
+	# exit codes
+	# rc produces a list if there is a pipeline
+	if (~ $__prompt_exitcodes(2) ()) {
+		# only one
+		__prompt_exit_colour $__prompt_exitcodes(1)
+		printf '%s ' $__prompt_exitcodes(1)
+	} else {
+		tput setaf 3
+		printf '['
+		__prompt_print_bar =  0
+		for (__prompt_exitcode in $__prompt_exitcodes) {
+			if (~ $__prompt_print_bar 1) {
+				tput setaf 3
+				printf '|'
+			} else {
+				__prompt_print_bar = 1
+			}
+			__prompt_exit_colour $__prompt_exitcode
+			printf '%s' $__prompt_exitcode
+		}
+		tput setaf 3
+		printf '] '
+	}
 
 	# username
 	tput setaf 5
