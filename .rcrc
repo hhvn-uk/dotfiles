@@ -28,8 +28,9 @@ fn __prompt {
 	}
 
 	# unstaged changes
-	__prompt_diff = ``(''){git diff >[2=1]}
-	if (echo $__prompt_diff | grep '.' >/dev/null && !~ $__prompt_diff warning:*) {
+	__prompt_diff = ``(''){git diff >[2]/dev/null}
+	__prompt_diffstatus = $bqstatus
+	if (echo $__prompt_diff | grep '.' >/dev/null) {
 		if (echo $__prompt_diff | grep '.' >/dev/null) {
 			tput setaf 8
 		} else {
@@ -44,7 +45,7 @@ fn __prompt {
 				wc -l | 
 				tr -d '\n'}
 		__prompt_gitoutput = 1
-	} else if (!~ $__prompt_diff warning:*) {
+	} else if (~ $bqstatus 0) {
 		tput setaf 15
 		printf '='
 		__prompt_gitoutput = 1
