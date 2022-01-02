@@ -91,3 +91,10 @@ fn camerasync {
 	rsync -azP /mnt/DCIM/* ~/general/images/byme"
 }
 fn wtf { builtin wtf -o }
+
+# Settings
+if (! ~ $XDG_CONFIG_HOME ()) {
+	history = $home/.local/history
+} else {
+	history = $XDG_CONFIG_HOME/.local/history
+}
