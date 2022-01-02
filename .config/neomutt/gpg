@@ -52,7 +52,7 @@ set pgp_getkeys_command      = ""
 set pgp_import_command       = "gpg --no-use-agent --import -v %f"
 set pgp_list_pubring_command = "gpg --no-use-agent --with-colons --with-fingerprint --list-keys %r"
 set pgp_list_secring_command = "gpg --no-use-agent --with-colons --with-fingerprint --list-secret-keys %r"
-set pgp_sign_command         = "passgpg --no-use-agent --comment 'Key: gopher://hhvn.uk/0/.pub.pgp' --output - --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_sign_command         = "passgpg --no-use-agent --comment 'Key: gopher://hhvn.uk/0/keys' --output - --armor --detach-sign --textmode %?a?-u %a? %f"
 set pgp_verify_command       = "gpg --no-use-agent --status-fd=2 --quiet --batch --output - --verify %s %f"
 set pgp_verify_key_command   = "gpg --no-use-agent --verbose --batch --fingerprint --check-sigs %r"
 
