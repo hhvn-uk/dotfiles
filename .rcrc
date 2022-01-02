@@ -60,6 +60,7 @@ fn __prompt {
 				if ($0 ~ /\//) {
 					printf("%d^", c)
 					exitcode = 0
+					exit(0)
 				} else c += 1
 			}
 			END { exit(exitcode) }' && __prompt_gitoutput = 1
