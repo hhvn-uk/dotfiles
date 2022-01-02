@@ -1,5 +1,5 @@
 # Fuck GNU
-if (grep --version >[2=1] | grep GNU >/dev/null)
+if (~ `$nl{grep --version >[2=1]} *GNU*)
 	__prompt_gnu_binary = 'a'
 
 fn __prompt_exit_colour {
@@ -16,6 +16,13 @@ fn __prompt_exit_colour {
 fn __prompt {
 	__prompt_exitcodes = $status
 	__prompt_gitoutput = 0
+
+	# missing newline
+	# https://www.vidarholen.net/contents/blog/?p=878
+	tput setaf 14
+	printf '%%'
+	tr '\0' ' ' < /dev/zero | head -c `{tput cols} | sed 's/.//'
+	printf '\r'
 
 	# exit codes
 	# rc produces a list if there is a pipeline
@@ -76,7 +83,7 @@ fn __prompt {
 
 	# unpushed commits
 	__prompt_log = ``(''){git log '--pretty=format:commit %h%d' >[2]/dev/null}
-	if (echo $__prompt_log | head -n1 | grep -v '.*\/.*' >/dev/null) {
+	if (!~ `$nl{echo $__prompt_log | head -n1} */*) {
 		tput setaf 14
 		echo $__prompt_log | awk '
 			BEGIN {c = 0; exitcode = 1}
