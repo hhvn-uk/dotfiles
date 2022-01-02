@@ -22,7 +22,7 @@ fn __prompt {
 	if (~ $__prompt_exitcodes(2) ()) {
 		# only one
 		__prompt_exit_colour $__prompt_exitcodes(1)
-		printf '%s ' $__prompt_exitcodes(1)
+		printf '%s ' $__prompt_exitcodes(1) | sed 's/^sig//'
 	} else {
 		tput setaf 3
 		printf '['
@@ -35,7 +35,7 @@ fn __prompt {
 				__prompt_print_bar = 1
 			}
 			__prompt_exit_colour $__prompt_exitcode
-			printf '%s' $__prompt_exitcode
+			printf '%s' $__prompt_exitcode | sed 's/^sig//'
 		}
 		tput setaf 3
 		printf '] '
