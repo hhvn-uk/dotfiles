@@ -152,8 +152,4 @@ fn w3m {
 }
 
 # Settings
-if (! ~ $XDG_CONFIG_HOME ()) {
-	history = $home/.local/history
-} else {
-	history = $XDG_CONFIG_HOME/.local/history
-}
+history = $XDG_CACHE_HOME/history
