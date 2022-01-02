@@ -1,3 +1,0 @@
-#!/bin/sh
-
-sh $HOME/.scripts/custom/$1
