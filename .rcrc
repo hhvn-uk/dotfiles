@@ -30,13 +30,8 @@ fn __prompt {
 	# unstaged changes
 	__prompt_diff = ``(''){git diff >[2]/dev/null}
 	__prompt_diffstatus = $bqstatus
-	if (echo $__prompt_diff | grep '.' >/dev/null) {
-		if (echo $__prompt_diff | grep '.' >/dev/null) {
-			tput setaf 8
-		} else {
-			tput setaf 15
-		}
-
+	if (~ $__prompt_diff ?*) {
+		tput setaf 8
 		printf '%s+' `{echo $__prompt_diff | 
 				grep '-E'^$__prompt_gnu_binary '^(\+\+\+|---)' |
 				sed -E 's~^[^a]*a/|^[^b]*b/~~' |
