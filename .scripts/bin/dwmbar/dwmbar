@@ -7,6 +7,12 @@ fn block {
 	dwmbar/$1 > /tmp/blocks/$1 &
 }
 
+fn sigexit {
+	for (p in $apids) {
+		kill $p
+	}
+}
+
 block vol
 while (true) {
 	block bat
@@ -18,14 +24,6 @@ while (true) {
 while (true) {
 	block time2
 	sleep 1
-} &
-
-while (true) {
-	block news
-	block mail
-	block rem
-	block torrent
-	sleep 20
 } &
 
 while (true) {
