@@ -1,6 +1,0 @@
-#!/bin/sh
-
-doas kill -9 $(ps aux | grep 'dwm[b]ar' | awk '{print $2}')
-
-cd ~/.scripts/dwmblocks
-exec ./dwmbar >/dev/null 2>/dev/null &
