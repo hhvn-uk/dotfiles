@@ -44,7 +44,7 @@ fn __prompt {
 	}
 
 	# unpushed commits
-	__prompt_log = ``(''){git log '--pretty=format:commit %h%d'}
+	__prompt_log = ``(''){git log '--pretty=format:commit %h%d' >[2]/dev/null}
 	if (echo $__prompt_log | head -n1 | grep -v '.*\/.*' >/dev/null) {
 		tput setaf 14
 		echo $__prompt_log | awk '-vc=0' '
