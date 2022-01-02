@@ -5,6 +5,7 @@ if (grep --version >[2=1] | grep GNU >/dev/null)
 # Backend prompt function
 fn __prompt {
 	__prompt_exitcode = $status
+	__prompt_gitoutput = 0
 	if (~ $__prompt_exitcode 0) {
 		tput setaf 15
 	} else {
@@ -18,13 +19,17 @@ fn __prompt {
 
 	# branch
 	tput setaf 3
-	printf '%s' `{git branch >[2]/dev/null | 
+	__prompt_branch = `{git branch >[2]/dev/null | 
 			grep '^*' | 
 			awk '{print $2 "|"}'}
+	if (!~ $__prompt_branch ()) {
+		printf '%s' $__prompt_branch
+		__prompt_gitoutput = 1
+	}
 
 	# unstaged changes
-	__prompt_diff = ``(''){git diff >[2]/dev/null}
-	if (echo $__prompt_diff | grep '.' >/dev/null) {
+	__prompt_diff = ``(''){git diff >[2=1]}
+	if (echo $__prompt_diff | grep '.' >/dev/null && !~ $__prompt_diff warning:*) {
 		if (echo $__prompt_diff | grep '.' >/dev/null) {
 			tput setaf 8
 		} else {
@@ -38,27 +43,35 @@ fn __prompt {
 				uniq | 
 				wc -l | 
 				tr -d '\n'}
-	} else {
+		__prompt_gitoutput = 1
+	} else if (!~ $__prompt_diff warning:*) {
 		tput setaf 15
 		printf '='
+		__prompt_gitoutput = 1
 	}
 
 	# unpushed commits
 	__prompt_log = ``(''){git log '--pretty=format:commit %h%d' >[2]/dev/null}
 	if (echo $__prompt_log | head -n1 | grep -v '.*\/.*' >/dev/null) {
 		tput setaf 14
-		echo $__prompt_log | awk '-vc=0' '
+		echo $__prompt_log | awk '
+			BEGIN {c = 0; exitcode = 1}
 			/^commit/ {
 				if ($0 ~ /\//) {
 					printf("%d^", c)
-					exit
+					exitcode = 0
 				} else c += 1
-			}'
+			}
+			END { exit(exitcode) }' && __prompt_gitoutput = 1
+	}
+
+	if (~ $__prompt_gitoutput 1) {
+		printf ' '
 	}
 
 	# dir
 	tput setaf 7
-	printf ' %s' `{pwd | sed 's~' ^ $home ^ '~\~~'}
+	printf '%s' `{pwd | sed 's~' ^ $home ^ '~\~~'}
 
 	# end
 	printf '$ '
