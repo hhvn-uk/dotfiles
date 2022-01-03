@@ -2,13 +2,19 @@
 if (~ `$nl{grep --version >[2=1]} *GNU*)
 	__prompt_gnu_binary = 'a'
 
+fn __prompt_tput {
+	# Use \001 and \002 to tell readline
+	# wether a character is visible or not
+	printf '\001%s\002' `''{tput $*}
+}
+
 fn __prompt_exit_colour {
 	if (~ $1 0) {
-		tput setaf 15
+		__prompt_tput setaf 15
 	} else if (~ $1 sig*) {
-		tput setaf 8
+		__prompt_tput setaf 8
 	} else {
-		tput setaf 10
+		__prompt_tput setaf 10
 	}
 }
 
@@ -19,7 +25,7 @@ fn __prompt {
 
 	# missing newline
 	# https://www.vidarholen.net/contents/blog/?p=878
-	tput setaf 14
+	__prompt_tput setaf 14
 	printf '%%'
 	tr '\0' ' ' < /dev/zero | head -c `{tput cols} | sed 's/.//'
 	printf '\r'
@@ -31,12 +37,12 @@ fn __prompt {
 		__prompt_exit_colour $__prompt_exitcodes(1)
 		printf '%s ' $__prompt_exitcodes(1) | sed 's/^sig//'
 	} else {
-		tput setaf 3
+		__prompt_tput setaf 3
 		printf '['
 		__prompt_print_bar =  0
 		for (__prompt_exitcode in $__prompt_exitcodes) {
 			if (~ $__prompt_print_bar 1) {
-				tput setaf 3
+				__prompt_tput setaf 3
 				printf '|'
 			} else {
 				__prompt_print_bar = 1
@@ -44,16 +50,16 @@ fn __prompt {
 			__prompt_exit_colour $__prompt_exitcode
 			printf '%s' $__prompt_exitcode | sed 's/^sig//'
 		}
-		tput setaf 3
+		__prompt_tput setaf 3
 		printf '] '
 	}
 
 	# username
-	tput setaf 5
+	__prompt_tput setaf 5
 	printf '%s ' `{whoami}
 
 	# branch
-	tput setaf 3
+	__prompt_tput setaf 3
 	__prompt_branch = `{git branch >[2]/dev/null | 
 			grep '^*' | 
 			awk '{print $2 "|"}'}
@@ -66,7 +72,7 @@ fn __prompt {
 	__prompt_diff = ``(''){git diff >[2]/dev/null}
 	__prompt_diffstatus = $bqstatus
 	if (~ $__prompt_diff ?*) {
-		tput setaf 8
+		__prompt_tput setaf 8
 		printf '%s+' `{echo $__prompt_diff | 
 				grep '-E'^$__prompt_gnu_binary '^(\+\+\+|---)' |
 				sed -E 's~^[^a]*a/|^[^b]*b/~~' |
@@ -76,7 +82,7 @@ fn __prompt {
 				tr -d '\n'}
 		__prompt_gitoutput = 1
 	} else if (~ $bqstatus 0) {
-		tput setaf 15
+		__prompt_tput setaf 15
 		printf '='
 		__prompt_gitoutput = 1
 	}
@@ -84,7 +90,7 @@ fn __prompt {
 	# unpushed commits
 	__prompt_log = ``(''){git log '--pretty=format:commit %h%d' >[2]/dev/null}
 	if (!~ `$nl{echo $__prompt_log | head -n1} */*) {
-		tput setaf 14
+		__prompt_tput setaf 14
 		echo $__prompt_log | awk '
 			BEGIN {c = 0; exitcode = 1}
 			/^commit/ {
@@ -102,19 +108,19 @@ fn __prompt {
 	}
 
 	# dir
-	tput setaf 7
+	__prompt_tput setaf 7
 	printf '%s' `{pwd | sed 's~' ^ $home ^ '~\~~'}
 
 	# end
-	printf '$ '
-	tput sgr0
+	printf '$\001 \002'
+	__prompt_tput sgr0
 }
 
 # Frontend prompt function
 fn prompt {
+	printf '\033]0;rc: %s\007' `{pwd}
 	__prompt_content = ``(''){__prompt}
 	prompt = ($__prompt_content '')
-	printf '\033]0;rc: %s\007' `{pwd}
 }
 
 # Aliases
