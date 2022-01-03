@@ -2,11 +2,9 @@
 
 xrdb ~/.local/xres &
 setxkbmap haydenh &
-mpvlisten /tmp/mpv-socket2 /tmp/mpv-socket &
-./.scripts/input/keyboard &
+./.scripts/keyboard
 (
-	cd .scripts/dwmblocks
-	./dwmbar
+	./.scripts/dwmbar/dwmbar
 ) &
 sxhkd &
 cu dock &
@@ -18,7 +16,7 @@ st -e &
 #/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
 
 xset r rate 200 40 &
-xmodmap -e "keysym Control_R = Multi_key"
+xmodmap -e "keysym Control_R = Multi_key" &
 
 wallp images/ &
 while dwm 2>$HOME/.local/dwmlog
