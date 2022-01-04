@@ -4,7 +4,7 @@ fn uri2file {
 	ret = ()
 
 	for (uri in $*) {
-		filetype = `{echo $uri | grep -o '\.[^/.]*$' | sed 's/^.//'}
+		filetype = `{echo $uri | grep -o '\.[^/]*$' | sed 's/^.//'}
 		hier = ``('/'){echo $uri | sed 's~^.*://~~'}
 		for (ent in $hier) {
 			if (~ $reverse ()) {
