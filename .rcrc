@@ -166,6 +166,7 @@ fn w3m {
 
 # Settings
 history = $XDG_CACHE_HOME/history
+path = ($HOME/.scripts/ $path)
 
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
