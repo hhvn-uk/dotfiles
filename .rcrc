@@ -160,9 +160,9 @@ fn camerasync {
 }
 fn wtf {
 	if (flag i) {
-		builtin wtf -o
+		builtin wtf -o $*
 	} else {
-		builtin wtf
+		builtin wtf $*
 	}
 }
 fn w3m {
