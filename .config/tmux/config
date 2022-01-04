@@ -45,7 +45,7 @@ set -g status-position bottom
 set -g status-justify centre
 set -g status-style 'bg=colour0 fg=colour11'
 set -g status-left '[#(whoami)@#H]'
-set -g status-right '#[bg=colour11,fg=colour10] %d/%m/%y #[bg=colour10,fg=colour11] %H:%M:%S '
+set -g status-right '#[bg=colour5,fg=colour10] %d/%m/%y #[bg=colour10,fg=colour5] %H:%M:%S '
 set -g status-right-length 45
 set -g status-left-length 45
 
