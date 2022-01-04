@@ -83,7 +83,7 @@ syn match   rcVarSpecial "\v\$?<(home|ifs|path|pid|prompt|status|contained)>" co
 
 syn region  rcSubst      matchgroup=rcInclude    start="[<>]{" end="}" skipwhite nextgroup=@rcArgument2 contains=@rcList
 syn region  rcSubstIFS   matchgroup=rcInclude    start="``\|`" end="{"me=s-1 skipwhite nextgroup=rcSubstBrace contains=@rcList
-syn region  rcSubstBrace matchgroup=rcInclude    start="{" end="}" contained
+syn region  rcSubstBrace matchgroup=rcInclude    start="{" end="}" skipwhite nextgroup=@rcArgument2 contained contains=@rcList
 syn match   rcSub        "`\<\S\+\>"
 syn match   rcJoin       "\^"                               skipwhite nextgroup=@rcArgument2 contains=rcError
 syn match   rcError      "\v(^|\^)\s*\^|\^\ze\s*($|#|;|\^)" skipwhite nextgroup=@rcArgument2
