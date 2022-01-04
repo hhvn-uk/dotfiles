@@ -125,7 +125,7 @@ fn prompt {
 
 # Aliases
 fn g { git $* }
-fn vsplit { vim -O }
+fn vsplit { vim -O $* }
 if (~ `{uname} 'Linux') {
 	fn ls {
 		if (flag i) {
