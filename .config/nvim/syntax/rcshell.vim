@@ -57,7 +57,7 @@ syn match   rcComment  "#.*"
 """"""""""""""""""""""""
 " Arguments should be proceeded by additional arguments, not commands, etc
 syn cluster rcArgument   contains=@rcBuiltins,@rcArgument2
-syn cluster rcArgument2  contains=rcWord,@rcSimple,rcNumber,rcPattern,rcQuoted,rcSubQuote,rcParens,rcVar,rcSubst,rcSub,rcJoin
+syn cluster rcArgument2  contains=rcWord,@rcSimple,rcNumber,rcPattern,rcQuoted,rcSubQuote,rcParens,rcVar,rcSubst,rcSubstIFS,rcSub,rcJoin
 
 syn match   rcWord       "[^#;&|^$=`'{}()<>\[\] \t\r]"               skipwhite nextgroup=@rcArgument2
 
