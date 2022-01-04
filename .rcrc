@@ -105,7 +105,7 @@ fn __prompt {
 	printf '%s' `{pwd | sed 's~' ^ $home ^ '~\~~'}
 
 	# end
-	printf '$\001 \002'
+	printf '$ '
 	__prompt_tput sgr0
 }
 
@@ -115,7 +115,7 @@ fn prompt {
 	# https://www.vidarholen.net/contents/blog/?p=878
 	__prompt_tput setaf 14
 	printf '%%'
-	tr '\0' ' ' < /dev/zero | head -c `{tput cols} | sed 's/.//'
+	tr '\0' ' ' < /dev/zero | head -c `{tput cols}
 	printf '\r'
 
 	# set X11 title
