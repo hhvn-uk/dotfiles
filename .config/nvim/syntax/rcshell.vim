@@ -12,6 +12,11 @@
 " * edit rcHereDoc match pattern to get <<EOF >output highlighted correctly.
 " -- weakish
 "
+" Edited by hhvn for the following:
+"  - allow syntax to be loaded for multiple files
+"  - support ``ifs-list{cmd} from Rakitzis' rc, and `ifs-list{cmd} from
+"    the rc-line-split patch (found in 9front). ``{cmd} however is an error
+"
 "Info
 """"""""""
 "
@@ -76,8 +81,9 @@ syn match   rcVarOper    +[#"^]+                             contained
 syn match   rcVarSpecial "\v\$?<(home|ifs|path|pid|prompt|status|contained)>" contained
 " Todo: Make error for $"foo(
 
-syn region  rcSubst      matchgroup=rcInclude    start="[`<>]{" end="}" skipwhite nextgroup=@rcArgument2 contains=@rcList
-syn region  rcSubst      matchgroup=rcInclude    start="`(" end=")" skipwhite nextgroup=@rcArgument2 contains=@rcArgument
+syn region  rcSubst      matchgroup=rcInclude    start="[<>]{" end="}" skipwhite nextgroup=@rcArgument2 contains=@rcList
+syn region  rcSubstIFS   matchgroup=rcInclude    start="``\|`" end="{"me=s-1 skipwhite nextgroup=rcSubstBrace contains=@rcList
+syn region  rcSubstBrace matchgroup=rcInclude    start="{" end="}" contained
 syn match   rcSub        "`\<\S\+\>"
 syn match   rcJoin       "\^"                               skipwhite nextgroup=@rcArgument2 contains=rcError
 syn match   rcError      "\v(^|\^)\s*\^|\^\ze\s*($|#|;|\^)" skipwhite nextgroup=@rcArgument2
@@ -148,6 +154,7 @@ syn region rcSubQuote matchgroup=rcQuoted start="rc\s\+-c\s*'"hs=e-1 skip="''" e
 """""""
 syn match rcError "[\]})]"
 syn match rcError "\$(.\{-})\|\${.\{-}}\|\d\+>\(&\d\+\)\?\|`[^{]\{-}`\s\|{.*,.*}"
+syn match rcError "``{"
 
 " Ignore bash
 " Bad ${}, 2>&1, `foo`,
