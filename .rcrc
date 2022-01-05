@@ -111,22 +111,21 @@ fn __prompt {
 
 # Frontend prompt function
 fn prompt {
-	# missing newline
-	# https://www.vidarholen.net/contents/blog/?p=878
-	__prompt_tput setaf 14
-	printf '%%'
-	tr '\0' ' ' < /dev/zero | head -c `{tput cols}
-	printf '\r'
-
-	# set X11 title
-	printf '\033]0;rc: %s\007' `{pwd}
-
-	# prompt stuff
 	__prompt_content = `''{__prompt}
 	__prompt_indent = `$nl{printf '%s' $__prompt_content |
 				awk '{gsub(/\001[^\002]*\002/, ""); print}' |
 				sed 's/[^ ]/ /g;s/$/ /g'}
 	prompt = ($__prompt_content $__prompt_indent)
+
+	# missing newline
+	# https://www.vidarholen.net/contents/blog/?p=878
+	__prompt_tput setaf 14
+	printf '%%'
+	tr '\0' ' ' < /dev/zero | head -c `{tput cols} | sed 's/.//'
+	printf '\r'
+
+	# set X11 title
+	printf '\033]0;rc: %s\007' `{pwd}
 }
 
 # Aliases
