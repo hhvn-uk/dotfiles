@@ -189,3 +189,4 @@ LESSHISTFILE	= -
 GNUPGHOME	= $home/.local/gnupg
 IPFS_PATH	= $home/.local/ipfs
 CURLHOME	= $home/.config/curl/"
+LS_COLORS	= `''{<$home/.config/ls tr -d ' ' | tr '\n' ':' | tr -s ':'}
