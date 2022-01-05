@@ -5,3 +5,6 @@ set editing-mode vi
 # in e,g, gdb, where I can't use aliases
 # and have to paste in commands instead.
 set enable-bracketed-paste off
+
+# I'm used to this from ksh
+set mark-symlinked-directories on
