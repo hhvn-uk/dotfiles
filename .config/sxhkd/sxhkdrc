@@ -23,7 +23,7 @@ super + b
 	tabbed -k -c surf -e > /tmp/tabbed.xid
 
 super + n 
-	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
+	st -t neomutt -c neomutt -e sh -c 'neomutt; ' ^ $SHELL
 
 # I have cronjobs set
 # to update feeds now
@@ -41,10 +41,10 @@ super + d
 	dmenu_run
 
 super + u
-	plumb $(xclip -o)
+	plumb `$nl{xclip -o}
 
 super + e
-	st -e tmux -f $HOME/.config/tmux/config
+	st -e tmux -f $home/.config/tmux/config
 
 super + s
 	dpass
@@ -56,7 +56,7 @@ super + ctrl + s
 	maim | hlpaste "png"
 
 @super + w
-	wallp ~/general/images/wallpapers/
+	wallp $home/general/images/wallpapers/
 
 super + ctrl + w
 	wallblur
