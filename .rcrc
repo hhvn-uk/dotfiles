@@ -180,6 +180,7 @@ EDITOR	= nvim
 PAGER	= less
 TERMINAL= st
 PASS	= $home/.local/pass
+SHELL   = /bin/rc
 
 . $home/.config/user-dirs.dirs
 XDG_CONFIG_HOME	= $home/.config
