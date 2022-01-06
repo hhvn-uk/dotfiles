@@ -7,10 +7,9 @@ setxkbmap haydenh &
 	./.scripts/dwmbar/dwmbar
 ) &
 sxhkd &
-cu dock &
-cu mount &
-cu eyes &
-st -e &
+port.hhvn.uk/dock &
+port.hhvn.uk/mount &
+st &
 
 #/usr/libexec/xscreensaver/galaxy -root -count 5
 #/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
