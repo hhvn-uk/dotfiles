@@ -17,7 +17,7 @@ highlight link sxhkd_binding_pass Constant
 highlight link sxhkd_brace Macro
 
 " match shell command
-syntax include @sxhkd_shell syntax/rcshell.vim
+syntax include @sxhkd_shell syntax/sh.vim
 syntax region shLine matchgroup=sxhkd_exec start=/\v^\s+\s/ end=/\v$/ contains=@sxhkd_shell
 
 let b:current_syntax = "sxhkd"

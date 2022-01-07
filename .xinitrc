@@ -6,7 +6,7 @@ setxkbmap haydenh &
 (
 	./.scripts/dwmbar/dwmbar
 ) &
-sxhkd &
+SHELL=/bin/sh sxhkd &
 port.hhvn.uk/dock &
 port.hhvn.uk/mount &
 st &
