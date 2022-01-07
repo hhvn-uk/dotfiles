@@ -169,10 +169,6 @@ fn w3m {
 	home = $home/.config { builtin w3m $* }
 }
 
-# Settings
-history = $XDG_CACHE_HOME/history
-path = ($HOME/.scripts/ $path)
-
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
 ENV	= $home/.config/ksh/kshrc
@@ -191,3 +187,8 @@ GNUPGHOME	= $home/.local/gnupg
 IPFS_PATH	= $home/.local/ipfs
 CURLHOME	= $home/.config/curl/"
 LS_COLORS	= `''{<$home/.config/ls tr -d ' ' | tr '\n' ':' | tr -s ':'}
+
+# Settings
+history = $XDG_CACHE_HOME/history
+path = ($HOME/.scripts/ $path)
+
