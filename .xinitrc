@@ -1,24 +1,21 @@
-#!/bin/sh
+#!/bin/rc
 
-xrdb ~/.local/xres &
+xrdb $home/.local/xres &
 setxkbmap haydenh &
-./.scripts/keyboard
-(
-	./.scripts/dwmbar/dwmbar
-) &
-SHELL=/bin/sh sxhkd &
+dwmbar/dwmbar &
+port.hhvn.uk/keyboard &
 port.hhvn.uk/dock &
 port.hhvn.uk/mount &
+xset r rate 200 40 &
+xmodmap -e 'keysym Control_R = Multi_key' &
+wallp images/wallpapers &
+
+SHELL = /bin/sh 
+sxhkd &
 st &
 
-#/usr/libexec/xscreensaver/galaxy -root -count 5
-#/usr/libexec/xscreensaver/cubicgrid -root -zoom 100 -speed 0.2 &
+while (dwm) {
+	true
+}
 
-xset r rate 200 40 &
-xmodmap -e "keysym Control_R = Multi_key" &
-
-wallp images/ &
-while dwm 2>$HOME/.local/dwmlog
-do
-	:
-done
+pkill dwmbar
