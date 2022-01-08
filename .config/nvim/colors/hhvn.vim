@@ -15,58 +15,58 @@ hi clear Folded
 hi clear StatusLine
 hi clear StatusLineNC
 
-hi comment		ctermfg=238 guifg=#434343 cterm=none         gui=none
-hi constant		ctermfg=13  guifg=#a84b8d cterm=none         gui=none
-hi identifier		ctermfg=14  guifg=#434343 cterm=none         gui=none
-hi statement		ctermfg=11  guifg=#a1a1d9 cterm=none         gui=none
-hi preproc		ctermfg=95  guifg=#875f5f cterm=none         gui=none
-hi type			ctermfg=42  guifg=#3abf8f cterm=none         gui=none
-hi special		ctermfg=255 guifg=#eeeeee cterm=none         gui=none
-hi variable		ctermfg=38  guifg=#00afd7 cterm=none         gui=none
-hi search		                          cterm=reverse,bold gui=reverse,bold
-hi title		ctermfg=225 guifg=#66aa88 cterm=none         gui=none
-hi label		ctermfg=255 guifg=#eeeeee cterm=none         gui=none
-hi Visual		                          cterm=reverse      gui=reverse
-hi hicomment 		cterm=bold ctermbg=3 ctermfg=255 guibg=#31364b guifg=#eeeeee gui=none,bold
+hi comment		ctermfg=238  cterm=none
+hi constant		ctermfg=13   cterm=none
+hi identifier		ctermfg=14   cterm=none
+hi statement		ctermfg=5    cterm=none
+hi preproc		ctermfg=95   cterm=none
+hi type			ctermfg=11   cterm=bold
+hi special		ctermfg=255  cterm=none
+hi variable		ctermfg=38   cterm=none
+hi search		             cterm=reverse,bold
+hi title		ctermfg=225  cterm=none
+hi label		ctermfg=255  cterm=none
+hi Visual		             cterm=reverse
+hi hicomment 		ctermfg=2    cterm=bold
 
-hi Error ctermfg=10 ctermbg=0 guifg=#892b2b guibg=#141726 gui=none
-hi ErrorMsg ctermfg=0 ctermbg=10 guibg=#892b2b guifg=#141726 gui=none
-hi MsgArea ctermbg=0 guibg=#141726 gui=none
-hi MsgSeparator ctermbg=1  guibg=#24283c gui=none cterm=none
+hi Error ctermfg=10 ctermbg=0
+hi ErrorMsg ctermfg=0 ctermbg=10
+hi MsgArea ctermbg=0
+hi MsgSeparator ctermbg=1    cterm=none
 
-hi LineNr	ctermfg=11 guifg=#616199 gui=none cterm=none
-hi CursorLineNr ctermfg=11 guifg=#a1a1d9 gui=bold cterm=bold
+hi LineNr	ctermfg=3   cterm=none
+hi CursorLineNr ctermfg=3   cterm=bold
+hi CursorLine	ctermbg=none  cterm=none
+set cursorline
 
-hi SpellBad   ctermbg=1 ctermfg=10   guifg=#892b2b gui=bold cterm=bold
-hi SpellCap   ctermbg=1 ctermfg=13   guifg=#a84b8d gui=bold cterm=bold
-hi SpellRare  ctermbg=1                            gui=none,underline cterm=none,underline
-hi SpellLocal ctermbg=1 ctermfg=255  guifg=#eeeeee gui=bold cterm=bold
+hi SpellBad   ctermbg=1 ctermfg=10     cterm=bold
+hi SpellCap   ctermbg=1 ctermfg=13     cterm=bold
+hi SpellRare  ctermbg=1                cterm=none,underline
+hi SpellLocal ctermbg=1 ctermfg=255    cterm=bold
 
-hi MatchParen ctermfg=30 cterm=reverse guifg=#003740 gui=reverse
-hi Underlined cterm=underline ctermfg=23 gui=underline guifg=#005f5f
-hi ColorColumn guibg=#24283c
+hi MatchParen ctermfg=30 cterm=reverse
+hi Underlined cterm=underline ctermfg=23
 
-hi QuickScopePrimary   ctermfg=4 guifg=#575b72 cterm=bold,reverse gui=bold,reverse
-hi QuickScopeSecondary ctermfg=7 guifg=#c7cad9 cterm=bold,reverse gui=bold,reverse
+hi QuickScopePrimary   ctermfg=4      cterm=bold,reverse
+hi QuickScopeSecondary ctermfg=7      cterm=bold,reverse
 
-hi Statusbar 	ctermbg=0 ctermfg=0 guifg=#141726 guibg=#141726
-hi Basecol 	ctermbg=1                         guibg=#24283c
-hi Blankcol	ctermbg=1 ctermfg=1 guifg=#24283c guibg=#24283c
-hi Filecol 	cterm=bold ctermbg=3 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#40445c
-hi Branchcol 	cterm=bold ctermbg=9 ctermfg=7 gui=bold guifg=#c7cad9 guibg=#4747e1
-hi Positioncol 	cterm=bold ctermbg=3 ctermfg=254 gui=bold guifg=#e4e4e4 guibg=#40445c
+hi Statusbar 	ctermbg=1 ctermfg=0
+hi Basecol 	ctermbg=1 ctermfg=5   cterm=bold
+hi Blankcol	ctermbg=1 ctermfg=1
+hi Filecol 	ctermbg=1 ctermfg=7   cterm=bold
+hi Positioncol 	ctermbg=1 ctermfg=254 cterm=bold
 
-hi InsertMode	ctermfg=126 ctermbg=1 guifg=#af0087 guibg=#24283c gui=bold cterm=bold
-hi TerminalMode	ctermfg=190 ctermbg=1 guifg=#d7ff00 guibg=#24283c gui=bold cterm=bold
-hi CommandMode	ctermfg=24  ctermbg=1 guifg=#005f87 guibg=#24283c gui=bold cterm=bold
-hi VisualMode	ctermfg=202 ctermbg=1 guifg=#ff5f00 guibg=#24283c gui=bold cterm=bold
-hi NormalMode	ctermfg=7   ctermbg=1 guifg=#c7cad9 guibg=#24283c gui=bold cterm=bold
-hi VertSplit	ctermfg=1   ctermbg=1 guifg=#24283c guibg=#24283c gui=none cterm=none
+hi InsertMode	ctermfg=13  ctermbg=1 cterm=bold
+hi CommandMode	ctermfg=24  ctermbg=1 cterm=bold
+hi VisualMode	ctermfg=8   ctermbg=1 cterm=bold
+hi NormalMode	ctermfg=5   ctermbg=1 cterm=bold
+hi VertSplit	ctermfg=1   ctermbg=1 cterm=none
 
-hi TabLine     cterm=none ctermfg=252  ctermbg=1 gui=none guifg=#d0d0d0 guibg=#24283c
-hi TabLineSel  cterm=bold ctermfg=252  ctermbg=3 gui=bold guifg=#d0d0d0 guibg=#40445c
-hi TabLineFill cterm=none              ctermbg=1 gui=none               guibg=#24283c
+hi TabLine     ctermfg=252  ctermbg=1 cterm=none
+hi TabLineSel  ctermfg=252  ctermbg=3 cterm=bold
+hi TabLineFill              ctermbg=1 cterm=none
 
+hi clear Todo
 hi link Todo			hicomment
 hi link Number			constant
 hi link Float			constant
@@ -80,15 +80,17 @@ hi link string			constant
 hi link Folded			Normal
 hi link StatusLine		VertSplit
 hi link StatusLineNC		VertSplit
+hi link Function		comment
+" The colour for comments just makes sense for functions, IMO
 
 " diff/patch files
-hi diffAdded	ctermfg=36 guifg=#00af87
-hi diffRemoved	ctermfg=10 guifg=#892b2b
-hi link diffFile	preproc
-hi link diffNewFile	preproc
-hi link diffOldFile	preproc
-hi link diffIndexLine	preproc
-hi link diffSubname	statement
+hi diffAdded	ctermfg=36
+hi diffRemoved	ctermfg=10
+hi link diffFile		preproc
+hi link diffNewFile		preproc
+hi link diffOldFile		preproc
+hi link diffIndexLine		preproc
+hi link diffSubname		statement
 
 " ksh/bash/posix
 hi link shSetList		variable
@@ -96,12 +98,10 @@ hi link shShellVariables	variable
 hi link shQuote			string
 
 " markdown
-hi link markdownHeadingDelimiter	preproc
+hi link markdownHeadingDelimiter preproc
 
 " menu from ctrl+n or tab completions
-hi Pmenu guifg=#1e5eb3 guibg=#141726
-hi PmenuSel guifg=#141726 guibg=#777b8e gui=bold
-hi PmenuSbar guibg=#24283c
-hi PmenuThumb guibg=#892b2b
+hi Pmenu 	ctermfg=none ctermbg=0
+hi PmenuSel 	ctermfg=0    ctermbg=7   cterm=bold
 
 let g:colors_name = "hhvn"

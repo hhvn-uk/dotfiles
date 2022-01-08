@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/hayden/general/work/website2/localgit/xinitf/story'
+let g:netrw_dirhist_4='/home/hayden/.scripts/openbsd-compat'
+let g:netrw_dirhist_3='/home/hayden/general/work/website2/localgit/intfix/story'
+let g:netrw_dirhist_2='/home/hayden/.config/nvim/ftplugin'
+let g:netrw_dirhist_1='/home/hayden/general/work/website2/localgit/hlircnet-ircd/include'
+let g:netrw_dirhist_0='/home/hayden/general/work/website2/ascii/hlircnet.irc'
+let g:netrw_dirhist_9='/home/hayden/general/work/website2/localgit/hhttpd'
+let g:netrw_dirhist_8='/home/hayden/general/music/Linkin Park'
+let g:netrw_dirhist_7='/home/hayden/general/work/website2/localgit/austall/handlers'
+let g:netrw_dirhist_6='/home/hayden/.scripts/man/man1'

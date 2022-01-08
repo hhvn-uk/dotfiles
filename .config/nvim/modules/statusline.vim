@@ -35,8 +35,6 @@ function! Modecol()
 
 	if l:mode == 'INSERT'
 		let lcol = 'InsertMode'
-	elseif l:mode == 'TERMINAL'
-		let lcol = 'TerminalMode'
 	elseif l:mode == 'COMMAND'
 		let lcol = 'CommandMode'
 	elseif l:mode == 'VISUAL' || l:mode == 'V-BLOCK' || l:mode == 'V-LINE' || l:mode == 'SELECT'
@@ -54,7 +52,6 @@ function! Gitbranch()
 endfunction
 
 function! Activestatus()
-	set termguicolors
 	""File
 	let g:s.="%#Filecol#"
 	let g:s.=" %f\ -\ %y%m "
@@ -105,21 +102,6 @@ function! NetrwIstatus()
 	return g:s
 endfunction
 
-function! TermAstatus()
-
-	return g:s
-endfunction
-
-function! TermIstatus()
-	""Reminder
-	let g:s.="%#Blankcol#"
-	let g:s.="%="
-	let g:s.="%#Basecol#"
-	let g:s.=" [terminal] "
-
-	return g:s
-endfunction
-
 augroup Statusline
 	autocmd!
 	autocmd FileType netrw let &l:statusline=Choosestatus(1, &filetype)
@@ -138,17 +120,12 @@ function! Choosestatus(active, filetype)
 	endif
 
 	"Overwrite if special
-	let s="term"
 	if a:filetype == 'netrw' && a:active == '1'
 		let g:s=""
 		let statusline=NetrwAstatus()
 	elseif a:filetype == 'netrw'
 		let g:s=""
 		let statusline=NetrwIstatus()
-	elseif stridx(expand('%:p'), s) == '0' && a:active == '1'
-		let statusline=TermAstatus()
-	elseif stridx(expand('%:p'), s) == '0'
-		let statusline=TermIstatus()
 	endif
 
 	return statusline
