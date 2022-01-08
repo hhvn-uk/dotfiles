@@ -8,3 +8,7 @@ set enable-bracketed-paste off
 
 # I'm used to this from ksh
 set mark-symlinked-directories on
+
+# Get rid of dumb interactive shit
+set completion-query-items -1
+set page-completions off
