@@ -168,6 +168,17 @@ fn w3m {
 	# Symlink $home/.config/w3m -> $home/.config/.w3m
 	home = $home/.config { builtin w3m $* }
 }
+fn _man {
+	conf = '/tmp/'^$pid^'.man.conf' program = $1 {
+		sed -E 's~HOME~'^$home^'~g' < $home/.config/man.conf > $conf
+		shift 1
+		builtin $program -C $conf $*
+		rm $conf
+	}
+}
+fn man { _man man $* }
+fn apropos { _man apropos $* }
+fn makewhatis { _man makewhatis $* }
 
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
@@ -191,4 +202,3 @@ LS_COLORS	= `''{<$home/.config/ls tr -d ' ' | tr '\n' ':' | tr -s ':'}
 # Settings
 history = $XDG_CACHE_HOME/history
 path = ($HOME/.scripts/ $path /usr/lib/plan9/bin)
-
