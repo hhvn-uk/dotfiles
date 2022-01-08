@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cp /dev/stdin /tmp/swamp
-scp /tmp/swamp "hhvn@dataswamp.org:/home/hhvn/public_gph/$1"

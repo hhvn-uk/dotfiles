@@ -1,5 +1,0 @@
-#!/bin/sh
-
-station=$(echo "rtmp://flatearth.nop.ninja/live/saturday-night" | dmenu -i)
-
-mpv --input-ipc-server=/tmp/mpv-socket3 $station

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] && echo "usage: number <number> <file>" && exit
-
-mv "$2" "$1.-.$2"

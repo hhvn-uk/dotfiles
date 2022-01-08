@@ -1,5 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] && echo "usage: $(basename $0) <url>" && exit 1
-
-echo "$1" | sed 's/github.com/raw.githubusercontent.com/;s~/blob/~/~'
