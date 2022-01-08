@@ -190,5 +190,5 @@ LS_COLORS	= `''{<$home/.config/ls tr -d ' ' | tr '\n' ':' | tr -s ':'}
 
 # Settings
 history = $XDG_CACHE_HOME/history
-path = ($HOME/.scripts/ $path)
+path = ($HOME/.scripts/ $path /usr/lib/plan9/bin)
 
