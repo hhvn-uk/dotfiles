@@ -7,15 +7,21 @@
 "Credits
 """""""""""""
 " Most of the work is done by Andy Spencer.
-" I have only made some minor changes:
+" [Jakukyo Friel has] only made some minor changes:
 " * make this syntax highlight works with Byron Rakitzis' reimplementation.
 " * edit rcHereDoc match pattern to get <<EOF >output highlighted correctly.
 " -- weakish
 "
-" Edited by hhvn for the following:
+" Also edited by hhvn for the following:
 "  - allow syntax to be loaded for multiple files
 "  - support ``ifs-list{cmd} from Rakitzis' rc, and `ifs-list{cmd} from
 "    the rc-line-split patch (found in 9front). ``{cmd} however is an error
+"  - return anywhere in a function (allowed by Rakitzis' rc)
+"  - signal names are only highlighted like so 'fn <signal here> {' rather
+"    than inside the function body
+"  - more such signal names, aswell as the prompt (invoked by Rakitzis's rc 
+"    before $prompt(1) is printed) and beforecmd (invoked by my fork before
+"    any command is run.
 "
 "Info
 """"""""""
