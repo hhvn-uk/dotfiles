@@ -125,7 +125,7 @@ fn prompt {
 	printf '\r'
 
 	# set X11 title
-	printf '\033]0;rc: %s\007' `{pwd}
+	printf '\033]0;rc (%s)\007' `{pwd | sed 's~' ^ $home ^ '~\~~'}
 }
 
 # Aliases
