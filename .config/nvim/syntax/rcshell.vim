@@ -132,7 +132,7 @@ syn region  rcBrace      matchgroup=rcOperator    start="{"         end="}"    c
 
 syn match   rcFunction   "\v<fn\s+\w+>"                                        contains=rcHandler skipwhite nextgroup=rcFnBody
 syn region  rcFnBody     matchgroup=rcFunction    start="{"         end="}"    contained contains=@rcList
-syn keyword rcHandler    prompt sigexit sigabrt sigiot sigalrm sigbus sigfpe sighup sigill sigint sigpipe sigpoll sigquit sigterm sigwinch sigxcpu
+syn keyword rcHandler    prompt beforecmd sigexit sigabrt sigiot sigalrm sigbus sigfpe sighup sigill sigint sigpipe sigpoll sigquit sigterm sigwinch sigxcpu
 
 syn match   rcAssign     "\w\+\ze\s*="                                         skipwhite nextgroup=@rcArgument contains=rcVarSpecial
 
