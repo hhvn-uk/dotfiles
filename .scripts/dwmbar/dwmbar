@@ -3,8 +3,16 @@
 cd `{dirname $0}
 
 mkdir -p /tmp/blocks
+cd /tmp/blocks
+
 fn block {
-	dwmbar/$1 > /tmp/blocks/$1 &
+	val = `$nl{dwmbar/$1} {
+		if (~ $val () || ~ $val '') {
+			rm /tmp/blocks/$1
+		} else {
+			printf '%s' $val > /tmp/blocks/$1
+		}
+	} &
 }
 
 fn sigexit {
@@ -14,6 +22,7 @@ fn sigexit {
 }
 
 block vol
+block mus
 while (true) {
 	block bat
 	block cpu
@@ -22,6 +31,7 @@ while (true) {
 } &
 
 while (true) {
+	block mus
 	block time2
 	sleep 1
 } &
@@ -32,14 +42,9 @@ while (true) {
 	sleep 900
 } &
 
-mkdir /tmp/dwmblocks
-cd /tmp/dwmblocks
 while (true) {
 	sleep 0.1
-	for (f in /tmp/blocks/*) {
-		grep '[[:alnum:]]' < $f >/dev/null && cp $f /tmp/dwmblocks
-	}
-	xsetroot -name ``(''){cat bat net torrent cpu mem vol time time2 >[2]/dev/null | 
+	xsetroot -name ``(''){cat mus bat net torrent cpu mem vol time time2 >[2]/dev/null | 
 				tr -d '\n' | 
 				sed 's/^\[/^f4^/;s~\[~^c#000000^^r0,0,1,50^^d^^f4^~g;s~\]~^f4^~g'}
 }
