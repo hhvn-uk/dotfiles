@@ -160,7 +160,7 @@ fn sloccount {
 	builtin sloccount --datadir $home/.local/sloccount $*
 }
 fn camerasync {
-	rsync -azP /mnt/DCIM/* ~/general/images/byme"
+	rsync -azP /mnt/DCIM/* $home/general/images/byme
 }
 fn wtf {
 	if (flag i) {
