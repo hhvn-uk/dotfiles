@@ -30,4 +30,5 @@
 	esac
 }
 
-$HOME/.scripts/dwmblocks/vol > /tmp/blocks/vol
+block=$($HOME/.scripts/dwmbar/vol)
+printf '%s' "$block" > /tmp/blocks/vol
