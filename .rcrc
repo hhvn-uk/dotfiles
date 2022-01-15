@@ -128,11 +128,6 @@ fn prompt {
 	printf '\033]0;rc (%s)\007' `{pwd | sed 's~' ^ $home ^ '~\~~'}
 }
 
-fn beforecmd {
-	# set X11 title
-	printf '\033]0;rc (%s): %s\007' `{pwd | sed 's~' ^ $home ^ '~\~~'} $1
-}
-
 # Aliases
 fn g { git $* }
 fn vsplit { vim -O $* }

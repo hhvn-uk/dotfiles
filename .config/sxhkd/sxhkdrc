@@ -2,15 +2,9 @@
 # ISC license
 #
 # See also: git://hhvn.uk/sxhkd-rc
-#
-# There seems to be a bug somewhere between rc
-# and st, where rc or st exits as soon as a line
-# is read. For now this is worked around by
-# setting the shell back to sh, and having that
-# run rc.
 
 super + Return
-	SHELL=/bin/sh st
+	st
 
 super + t
 	pkill -SIGUSR1 herbe
@@ -34,7 +28,7 @@ super + b
 	tabbed -k -c surf -e > /tmp/tabbed.xid
 
 super + n 
-	SHELL=/bin/sh st -t neomutt -c neomutt -e sh -c 'neomutt; $SHELL'
+	st -t neomutt -c neomutt -e sh -c 'neomutt; $SHELL'
 
 # I have cronjobs set
 # to update feeds now
@@ -43,7 +37,7 @@ super + n
 # 	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
 
 super + c
-	SHELL=/bin/sh st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
+	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 super + shift + c
 	slock
@@ -55,7 +49,7 @@ super + u
 	plumb `''{xclip -o}
 
 super + e
-	SHELL=/bin/sh st -e tmux -f $home/.config/tmux/config
+	st -e tmux -f $home/.config/tmux/config
 
 super + s
 	dpass
