@@ -1,5 +1,16 @@
+# Copyright (c) 2022 hhvn <dev@hhvn.uk>
+# ISC license
+#
+# See also: git://hhvn.uk/sxhkd-rc
+#
+# There seems to be a bug somewhere between rc
+# and st, where rc or st exits as soon as a line
+# is read. For now this is worked around by
+# setting the shell back to sh, and having that
+# run rc.
+
 super + Return
-	st
+	SHELL=/bin/sh st
 
 super + t
 	pkill -SIGUSR1 herbe
@@ -11,7 +22,7 @@ super + ctrl + t
 	pkill -SIGKILL herbe; herbe
 
 super + alt + t
-	herbe "test"
+	herbe 'test'
 
 super + a
 	addrbook
@@ -23,7 +34,7 @@ super + b
 	tabbed -k -c surf -e > /tmp/tabbed.xid
 
 super + n 
-	st -t neomutt -c neomutt -e sh -c "neomutt; $SHELL"
+	SHELL=/bin/sh st -t neomutt -c neomutt -e sh -c 'neomutt; $SHELL'
 
 # I have cronjobs set
 # to update feeds now
@@ -32,7 +43,7 @@ super + n
 # 	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
 
 super + c
-	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
+	SHELL=/bin/sh st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 super + shift + c
 	slock
@@ -41,19 +52,19 @@ super + d
 	dmenu_run
 
 super + u
-	plumb $(xclip -o)
+	plumb `''{xclip -o}
 
 super + e
-	st -e tmux -f $HOME/.config/tmux/config
+	SHELL=/bin/sh st -e tmux -f $home/.config/tmux/config
 
 super + s
 	dpass
 
 super + shift + s
-	maim -s | hlpaste "png"
+	maim -s | hlpaste 'png'
 
 super + ctrl + s
-	maim | hlpaste "png"
+	maim | hlpaste 'png'
 
 @super + w
 	wallp ~/general/images/wallpapers/
@@ -67,55 +78,46 @@ super + shift + g
 super + shift + o
 	addtorrent xclip
 
-super + alt + t
-	hmpv quit /tmp/mpv-socket3
-
-super + ctrl + y
-	dmpv general/videos/ /tmp/mpv-socket2 /tmp/mpv-socket --fs ls
-
-super + ctrl + u
-	dmpv general/music/ /tmp/mpv-socket /tmp/mpv-socket2 --no-video
-
 # Socket mpv control
-# super + alt + {y,u}
-# 	rmpv general/{videos,music}/list
+# super + alt + [y,u]
+# 	rmpv general/[videos,music]/list
 #
-# super + ctrl + {i,p}
-# 	hmpv {back,forward} /tmp/mpv-socket
+# super + ctrl + [i,p]
+# 	hmpv [back,forward] /tmp/mpv-socket
 #
-# super + alt + {i,p}
-# 	hmpv {prev,next} /tmp/mpv-socket
+# super + alt + [i,p]
+# 	hmpv [prev,next] /tmp/mpv-socket
 #
-# super + {ctrl,alt} + o
-# 	hmpv {toggle,quit} /tmp/mpv-socket
+# super + [ctrl,alt] + o
+# 	hmpv [toggle,quit] /tmp/mpv-socket
 #
 # super + shift + n
 # 	st -c mpvrcp -g 150x30 -b -e mpvrcp /tmp/mpv-socket
 
 # cmus control
-super + ctrl + {i,p}
-	cmus-remote --seek {-5,+5}
+super + ctrl + [i,p]
+	cmus-remote --seek [-5,+5]
 
-super + alt + {i,p}
-	cmus-remote {--prev,--next}
+super + alt + [i,p]
+	cmus-remote [--prev,--next]
 
-super + {ctrl,alt} + o
-	cmus-remote {--pause,--stop}
+super + [ctrl,alt] + o
+	cmus-remote [--pause,--stop]
 
 super + shift + n
 	pgrep cmus || st -c cmus -g 150x30 -b -e cmus
 
-super + {minus,equal}
-	hvol 3%{-,+}
+super + [minus,equal]
+	hvol 3%[-,+]
 
-super + shift {minus,equal}
-	hvol 6%{-,+}
+super + shift [minus,equal]
+	hvol 6%[-,+]
 
-{XF86AudioLowerVolume, XF86AudioRaiseVolume}
-	hvol 3%{-,+}
+[XF86AudioLowerVolume, XF86AudioRaiseVolume]
+	hvol 3%[-,+]
 
-shift + {XF86AudioLowerVolume, XF86AudioRaiseVolume}
-	hvol 6%{-,+}
+shift + [XF86AudioLowerVolume, XF86AudioRaiseVolume]
+	hvol 6%[-,+]
 
 super + y
 	st -e sh -c 'autowifi && cu undock'
@@ -123,8 +125,8 @@ super + y
 super + shift + y
 	st -e sh -c 'wifioff && cu dock'
 
-super + ctrl + {j,k}
-	for void in $(seq 3); do xdotool click {5,4}; done
+super + ctrl + [j,k]
+	for (void in `{seq 3}) { xdotool click [5,4] }
 
 super + shift + h
 	st -e htop
@@ -132,7 +134,7 @@ super + shift + h
 Menu
 	xdotool click 2
 
-{KP_Begin,KP_Left,KP_Right,KP_Down,KP_End,KP_Next,KP_Insert,KP_Delete,KP_Enter,KP_Prior,KP_Add,KP_Up,KP_Subtract,KP_Multiply,KP_Divide}
+[KP_Begin,KP_Left,KP_Right,KP_Down,KP_End,KP_Next,KP_Insert,KP_Delete,KP_Enter,KP_Prior,KP_Add,KP_Up,KP_Subtract,KP_Multiply,KP_Divide]
 	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 #thinkpad codes
