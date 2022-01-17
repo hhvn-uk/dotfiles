@@ -61,7 +61,7 @@ super + ctrl + s
 	maim | hlpaste 'png'
 
 @super + w
-	wallp ~/general/images/wallpapers/
+	wallp $home/general/images/wallpapers/
 
 super + ctrl + w
 	wallblur
