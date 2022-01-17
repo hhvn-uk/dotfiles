@@ -1,0 +1,3 @@
+#!/bin/rc
+
+grep -Eo '<link[^>]*application/(atom|rss)\+xml[^>]*>' | sed 's/.*href=["'']//;s/["''].*//'
