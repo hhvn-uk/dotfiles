@@ -1,0 +1,6 @@
+#!/bin/rc
+
+echo $^* | sed -E '
+	s~https://(www\.)?youtu\.be/([^/]*)~https://www.youtube.com/embed/\2~g
+	s~https://(www\.)?youtube\.com/watch\?v=([^/]*)~https://www.youtube.com/embed/\2~g
+'
