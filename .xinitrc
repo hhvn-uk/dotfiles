@@ -12,7 +12,6 @@ barriers -c $home/.config/barrierc --disable-crypto --no-tray --name port.hhvn.u
 wallp images/wallpapers &
 
 sxhkd &
-SHELL = /bin/sh
 st &
 
 while (dwm) {
