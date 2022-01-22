@@ -11,12 +11,15 @@ endif
 let b:did_indent = 1
 
 setlocal indentexpr=GetRcIndent()
+setlocal indentkeys+=0},0)
+setlocal nosmartindent
 
 if exists("GetRcIndent")
 	finish
 endif
 
 function! GetRcIndent()
+	let curline = getline(v:lnum)
 	let lnum = prevnonblank(v:lnum - 1)
 	let pnum = prevnonblank(lnum - 1)
 
@@ -28,6 +31,11 @@ function! GetRcIndent()
 	let line = getline(lnum)
 	let indent = indent(lnum)
 	let origindent = indent
+
+	if curline =~ '[})]'
+		let prevline = line
+		let line = curline
+	endif
 
 	let braces = s:Get_brace_balance(line, '{', '}')
 	let indent += braces * &sw
@@ -42,9 +50,6 @@ function! GetRcIndent()
 			let indent += &sw
 		endif
 	endif
-
-	" Todo: have ending braces automatically
-	"       unindented like cindent
 
 	return indent
 endfunction
