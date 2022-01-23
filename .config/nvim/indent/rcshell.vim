@@ -38,9 +38,15 @@ function! GetRcIndent()
 	endif
 
 	let braces = s:Get_brace_balance(line, '{', '}')
+	if braces < 0
+		let braces += 1
+	endif
 	let indent += braces * &sw
 
 	let braces = s:Get_brace_balance(line, '(', ')')
+	if braces < 0
+		let braces += 1
+	endif
 	let indent += braces * &sw
 
 	if line =~ '[|\\]\s*$'
