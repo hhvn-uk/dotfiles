@@ -179,6 +179,19 @@ fn _man {
 fn man { _man man $* }
 fn apropos { _man apropos $* }
 fn makewhatis { _man makewhatis $* }
+fn dict {
+	@{
+		if (flag i) {
+			argv = ()
+			for (arg in $*) {
+				argv = ($argv `''{printf '%s' $arg | sed -E 's~dict://[^/]*/.:(.*)~\1~'})
+			}
+		} else {
+			argv = $*
+		}
+		builtin dict $argv
+	}
+}
 
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
