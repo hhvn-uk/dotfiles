@@ -6,7 +6,7 @@ total=100
 		"Charging") charging=y ;;
 		"Discharging") discharging=y ;;
 	esac
-	charge=$(acpi | awk '{print $4}' | tr -d ',%')
+	charge=$(acpi | awk '{print $NF}' | tr -d ',%')
 }
 
 [ "$(uname)" = "OpenBSD" ] && {

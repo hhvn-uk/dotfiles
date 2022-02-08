@@ -1,4 +1,4 @@
 #!/bin/rc
 
-doas kill `{pidof dwmbar}
+pkill dwmbar
 dwmbar/dwmbar & >/dev/null >[2=1]
