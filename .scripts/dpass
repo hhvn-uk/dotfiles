@@ -1,43 +1,44 @@
-#!/bin/sh
-#
-# hayden@haydenvh.com
-# Copyright (c) 2019-2020 hhvn
-# wtfpl
+#!/bin/rc
+# Copyright (c) 2022 hhvn <dev@hhvn.uk>
 
-[ -z $PASS ] && PASS=$HOME/.local/pass
-[ ! -f $PASS ] && touch $PASS
-[ ! -z $1 ] && {
-	passwd=$(grep "^$1: " < $PASS)
-	shift
-	[ -z $1 ] && echo "${passwd##*: }"|| echo "$@ ${passwd##*: }"
-	exit
+if (~ $#PASS 0) {
+	PASS = $home/.local/pass
 }
-chosen=$(printf "GENERATE\n$(cut -d ':' -f 1 < $PASS)" | dmenu -l 20 -i | tr '[:upper:]' '[:lower:]')
-passwd=$(awk -F":" -v "chosen=$chosen" '$1 == chosen {print $2}' < .local/pass | tr -d ' ')
+if (!test -f $PASS) {
+	touch $PASS
+}
 
-case "$chosen" in
-	"") exit 1 ;;
-	generate)
-		new=$(head -c 2000 /dev/urandom | tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' | fold -w 35 | shuf | head -n 1)
-		newname=$(echo | dmenu -i -p "Name for passwd?")
-		[ "$newname" = "" ] && {
-			herbe "dpass exiting... no pass given"
-			exit 1
-		}
-		echo "$newname: $new" >> $PASS
-		echo "$new" | xclip
-		(
-			sleep 25
-			# destroy clipboard to prevent accidental pasting
-			printf '' | xclip
-		) &
-		;;
-	*)
-		echo "${passwd}" | xclip
-		(
-			sleep 25
-			# destroy clipboard to prevent accidental pasting
-			printf '' | xclip	
-		) &
-		;;
-esac
+dec = `''{dmenu -P -p 'Master password:' </dev/null | gpg -qd --passphrase-fd 0 $PASS}
+
+if (!~ $#* 0) {
+	opt = $1
+	fromarg = 1
+} else {
+	opt = `$nl{printf '%s' $dec | awk -F: 'BEGIN {print "GENERATE"}; {print $1}' | dmenu -l 20 -i}
+}
+
+switch ($opt) {
+case GENERATE
+	newpass = `''{tr -dc 'a-zA-Z0-9~!@#$%^&*_+=-' < /dev/urandom | head -c 35}
+	newname = `$nl{dmenu -p 'Name:' </dev/null}
+	if (~ $newname '') {
+		herbe 'dpass exiting... no pass given'
+		exit 1
+	}
+	dec     = `''{printf '%s%s: %s\n' $dec $newname $newpass}
+	encfile = /tmp/$pid.plain
+	touch $encfile
+	chmod 0700 $encfile
+	printf '%s' $dec > $encfile
+	gpg --armor -e --default-recipient-self < $encfile > $PASS
+	printf '%s' $newpass | xclip
+	@{ sleep 25; xclip </dev/null } &
+case *
+	out = `$nl{printf '%s' $dec | awk -F: -v 'opt=' ^ $opt '$1 == opt { print $2 }' | sed 's/^.//'}
+	if (~ $fromarg 1) {
+		echo $out
+	} else {
+		printf '%s' $out | xclip
+		@{ sleep 25; xclip </dev/null } &
+	}
+}
