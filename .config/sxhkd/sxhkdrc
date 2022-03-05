@@ -37,7 +37,7 @@ super + n
 # 	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
 
 super + c
-	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
+	slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
 
 super + shift + c
 	slock
