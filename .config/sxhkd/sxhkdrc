@@ -48,9 +48,6 @@ super + d
 super + u
 	plumb `''{xclip -o}
 
-super + e
-	st -e tmux -f $home/.config/tmux/config
-
 super + s
 	dpass
 
@@ -99,7 +96,7 @@ super + [ctrl,alt] + o
 	cmus-remote [--pause,--stop]
 
 super + shift + n
-	pgrep cmus || st -c cmus -g 150x30 -b -e cmus
+	st -c cmus -g 150x30 -b -e rc -c 'tmux new-session -As cmus cmus'
 
 super + [minus,equal]
 	hvol 3%[-,+]
