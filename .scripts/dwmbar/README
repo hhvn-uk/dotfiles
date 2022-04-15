@@ -1,9 +1,0 @@
-            
-[BAT stat]    [IP ADDR]      [TORRENTS]                  [CPU usage% tempC]     [MEM]                 [VOL vol%]          [DAY DATE]                           [TIME]
-
-        ^      ^               ^                         .---------------^       ^                   .-------^             ^      ^-----------.                 ^
-	|      | red = no net  | S = seeding/uploading   | temps go from green   | ditto cpu temps   | normal = unmuted    | green = weekend  | white = winter  | black      = night
-	|                      | I = idle                | to red as they rise                       | grey   = muted      | grey = weekday   | yellow = spring | dark blue  = twilight
-	| + = charging         | D = downloading                                                                                              | green = summer  | pink       = day (sunny)
-	| - = discharching     | Q = queued                                                                                                   | red = autumn    | white      = day (cloudy)
-                                                                                                                                                                | light blue = day (rainy)

@@ -22,7 +22,6 @@ fn sigexit {
 }
 
 block vol
-# block mus
 while (true) {
 	block bat
 	block cpu
@@ -31,20 +30,17 @@ while (true) {
 } &
 
 while (true) {
-	# block mus
-	block time2
+	block time
 	sleep 1
 } &
 
 while (true) {
-	block time
-	block net
+	block date
 	sleep 900
 } &
 
+printf ' ' > sep
 while (true) {
 	sleep 0.1
-	xsetroot -name ``(''){cat mus bat torrent cpu mem vol time time2 >[2]/dev/null | 
-				tr -d '\n' | 
-				sed 's/^\[/^f4^/;s~\[~^c#000000^^r0,0,1,50^^d^^f4^~g;s~\]~^f4^~g'}
+	xsetroot -name ``(''){cat bat sep cpu sep mem sep vol sep date sep time sep >[2]/dev/null | tr -d '\n'}
 }

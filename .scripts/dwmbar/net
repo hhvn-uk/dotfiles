@@ -1,9 +1,0 @@
-#!/bin/sh
-#
-# haydenvh.com
-# Copyright (c) 2019 Hayden Hamilton.
-
-ip=$(curl -s gopher://hlirc.net/0/ip.cgi || echo "^c#aa0000^no net...")
-[ -z $ip ] && exit
-ip=$(echo "$ip" | tail -n 1)
-echo "[$ip]"
