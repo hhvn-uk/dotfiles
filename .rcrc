@@ -217,11 +217,17 @@ XDG_CONFIG_HOME	= $home/.config
 XDG_CACHE_HOME	= $home/.cache
 XAUTHORITY	= $home/.local/.xauth
 LESSHISTFILE	= -
+HISTFILE	= $home/.local/history
 GNUPGHOME	= $home/.local/gnupg
 IPFS_PATH	= $home/.local/ipfs
 CURLHOME	= $home/.config/curl/"
 LS_COLORS	= `''{<$home/.config/ls tr -d ' ' | tr '\n' ':' | tr -s ':'}
 
-# Settings
 history = $XDG_CACHE_HOME/history
-path = ($HOME/.scripts/ $path /usr/lib/plan9/bin)
+# Originally I had $HOME/.scripts placed before the regular $PATH to override
+# things, however this can mess with traditional unix shells that don't
+# understand subdirs in $PATH. Say you have rm/script1 and rm/script2: rc will
+# still run the regular /bin/rm, but sh will go 'ah, let's try execute this
+# directory and see what happens' - of course nothing happens and it gives up
+# on trying to locate rm.
+path = ($path $HOME/.scripts/ /usr/lib/plan9/bin)
