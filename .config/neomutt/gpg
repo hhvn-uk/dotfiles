@@ -2,8 +2,8 @@
 
 # Common Crypto Options
 set crypt_autoencrypt           = no     # Automatically encrypt all mail
-set crypt_autopgp               = yes    # Allow automatic pgp functions
-set crypt_autosign              = yes    # Automatically sign all mail
+set crypt_autopgp               = no     # Allow automatic pgp functions
+set crypt_autosign              = no     # Automatically sign all mail
 set crypt_autosmime             = no     # Allow automatic smime functions
 set crypt_confirmhook           = yes
 set crypt_opportunistic_encrypt = no
