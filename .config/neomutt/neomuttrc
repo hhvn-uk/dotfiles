@@ -1,27 +1,14 @@
-source users/hayden@hhvn.uk	#user
-#source users/hhvn@hlirc.net	#user
-#source users/backtrack@airmail.cc	#user
-#source users/hayden@haydenvh.com	#user
-#source users/hhvn@dataswamp.org	#user
-
 set ssl_starttls = yes
 set ssl_force_tls = yes
 set mailcap_path = "~/.config/neomutt/mailcap"
 set smtp_authenticators = "plain"
 
-set folder = "~/general/mail/"
-set spoolfile = "+haydenvhcom"
-set record = "+sent"
-set postponed = "+drafts"
-set trash = "+rubbish"
-mailboxes =haydenvhcom =postmaster =hlircnet =dev =lists =openbsd =curl =security =news =money =dataswamporg =inbox-airmail =school =forwards =sent =drafts =rubbish =backup =spam =spam-domain # =lkml 
-
-set mbox_type = Maildir
 set abort_key = "<Esc>"
 set abort_nosubject = no
 set abort_unmodified = no
 set alias_file = "~/.config/neomutt/alias"
 
+source folders
 source colours
 source sidebar
 source alias
@@ -29,7 +16,6 @@ source gpg
 
 bind index D purge-message
 bind index,pager M compose-to-sender
-#bind index R source
 bind index \Ct collapse-thread
 bind index \Ca collapse-all
 
@@ -50,10 +36,5 @@ macro index E <save-message>=sent<enter><enter>
 
 my_hdr X-Mailer: neomutt
 hdr_order Subject From To Date
-
-#folder-hook sent
-
-set header_cache = "~/general/mail/cache/"
-set message_cachedir = "~/general/mail/cache/"
 
 set new_mail_command = "sh -c 'herbe \"%b mailboxes have new mail\" &'"
