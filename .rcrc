@@ -201,6 +201,9 @@ fn dict {
 	}
 }
 
+# Enable coredumps of practically infinite size.
+limit coredumpsize 99999999
+
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
 ENV	= $home/.config/ksh/kshrc
