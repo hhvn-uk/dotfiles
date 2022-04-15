@@ -206,7 +206,6 @@ limit coredumpsize 99999999
 
 # .profile
 INPUTRC	= $home/.config/readline/inputrc
-ENV	= $home/.config/ksh/kshrc
 EDITOR	= nvim
 PAGER	= less
 TERMINAL= st
