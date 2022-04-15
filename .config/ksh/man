@@ -1,8 +1,0 @@
-#!/bin/ksh
-
-mantmp(){
-	sed "s~HOME~$HOME~g" < $HOME/.config/man.conf > /tmp/man.conf
-}
-
-alias        man="mantmp; \man        -C /tmp/man.conf"
-alias    apropos="mantmp; \apropos    -C /tmp/man.conf"

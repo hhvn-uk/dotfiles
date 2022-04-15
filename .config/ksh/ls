@@ -1,3 +1,0 @@
-#!/bin/ksh
-
-export LS_COLORS=$(tr -d ' ' <$HOME/.config/ls | tr '\n' ':' | tr -s ':')
