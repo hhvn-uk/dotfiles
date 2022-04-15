@@ -179,7 +179,7 @@ fn _man {
 fn man { _man man $* }
 fn apropos { _man apropos $* }
 fn makewhatis { _man makewhatis $* }
-fn gpg { gpg --armor $* }
+fn gpg { builtin gpg --armor $* }
 fn convert {
 	if (flag i) {
 		builtin convert -monitor $*
