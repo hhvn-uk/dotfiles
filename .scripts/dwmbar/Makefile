@@ -10,6 +10,8 @@ build: get
 	[ -d blocks ] && { cd blocks; make; } || false
 
 get:
-	[ ! -d blocks ] && { git clone git://hhvn.uk/s2dblocks blocks || exit 1; } || true
+	[ ! -d blocks ] && \
+		{ git clone git://hhvn.uk/s2dblocks blocks || exit 1; } || \
+		{ cd blocks; git pull; true; }
 
 .PHONY: install build get
