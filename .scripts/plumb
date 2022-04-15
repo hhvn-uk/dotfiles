@@ -242,6 +242,12 @@ do
 	! wasfetched &&
 	plumb terminal 'sfeed < $arg | sort -rn | sfeed_curses'
 
+	# dmarc reports
+	fmagic "<feedback" &&
+	fmagic "<policy_published" &&
+	fmagic "<dkim" &&
+	plumb terminal 'dmarc < $arg; cat'
+
 	# numbered file
 	matches ":[0-9][0-9]*$" &&
 	isfile ${arg%:*} &&

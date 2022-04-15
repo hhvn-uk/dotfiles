@@ -1,0 +1,37 @@
+#!/bin/sh
+
+tr -d '\r' | xml2tsv | tr -d ' ' | awk -F"\t" '
+$1 == "/feedback/record/row/policy_evaluated/disposition" {disposition=$NF}
+$1 == "/feedback/record/row/policy_evaluated/dkim" {dkimstat=$NF}
+$1 == "/feedback/record/row/policy_evaluated/spf" {spfstat=$NF}
+$1 == "/feedback/record/identifiers/header_from" {hfrom=$NF}
+$1 == "/feedback/report_metadata/date_range/begin" {begindate=$NF}
+$1 == "/feedback/report_metadata/date_range/end" {enddate=$NF}
+$1 == "/feedback/record/row/source_ip" {ip=$NF}
+$1 == "/feedback/record/row/count" {count=$NF}
+
+function colourise(str) {
+	if (str == "fail" || str == "reject")
+		colour = 160
+	if (str == "quarantine")
+		colour = 136
+	if (str == "pass")
+		colour = 28
+	printf("\x1b[38;5;%dm%s\x1b[0m", colour, str)
+}
+
+END {
+	begindatef = strftime("%b %d %Y", begindate)
+	enddatef   = strftime("%b %d %Y", enddate)
+
+	printf("%s - %s\n\n", begindatef, enddatef)
+	printf("\"From\":\t%s\n", hfrom)
+	printf("IP:\t%s (x%d)\n", ip, count)
+	printf("DKIM:\t")
+	colourise(dkimstat)
+	printf("\nSPF:\t")
+	colourise(spfstat)
+	printf("\nAction:\t")
+	colourise(disposition)
+	printf("\n")
+}'
