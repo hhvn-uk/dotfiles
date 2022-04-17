@@ -1,8 +1,0 @@
-#!/bin/sh
-
-[ -z $1 ] || [ -z $4 ] && echo "usage: musictag <file>.<fileext> <artist> <title> <album> [track]" && exit 1
-
-[ ! -z $5 ] && outname="$5."
-outname="${outname}$(echo "$2" | tr ' /' '.+').-.$(echo "$3" | tr ' /' '.+').${1##*.}"
-
-ffmpeg -y -nostdin -i "$1" -map_metadata -1 -vn -c copy -metadata "artist=$2" -metadata "title=$3" -metadata "album=$4" -metadata "track=$5" "$outname"

@@ -1,0 +1,130 @@
+#!/bin/rc
+
+usage = (
+'usage: tag/set [-n] [-k] [--artist artist]'
+'               [--title title] [--album album]'
+'               [--track track] [--comment comment]'
+'               files...'
+'       tag/set [-n] [-d] files...'
+''
+'tag/set removes and replaces metadata from audio/video files.'
+''
+'-n Dry run. Only print commands to be executed.'
+'-d Remove all data without replacing. Cannot be used with other options'
+'   except -n. This option was added to prevent accidental destruction.'
+'-k Preserve all metadata that is not specified'
+''
+'--artist, --title, --album, --track, and --comment'
+'  Specify replacement metadata.'
+)
+
+clear = (-map_metadata -1)
+files = ()
+tmp = ()
+margs = ()
+
+fn sigexit {
+	for (f in $tmp) {
+		rm -f $f >[2]/dev/null >[1=2]
+	}
+}
+
+fn usage {
+	for (line in $usage) {
+		printf '%s\n' $line >[1=2]
+	}
+	exit 2
+}
+
+fn tmp {
+	if (~ $dry 1) {
+		echo tmpfile
+	} else {
+		location = /tmp/$pid.`$nl{echo $1 | tr / _} {
+			echo $location
+			tmp = ($tmp $location)
+		}
+	}
+}
+
+fn addmd {
+	if (~ $2 ()) {
+		usage
+	}
+	margs = ($margs -metadata `$nl{echo $1 | sed 's/^--//'} ^ '=' ^ $2)
+}
+
+fn printcmd {
+	whatis $1 >[2=1] | sed 's/^[^=]*=(//;s/)$//'
+}
+
+while (!~ $#* 0) {
+	switch ($1) {
+	case --artist
+		addmd $*
+		shift
+	case --title
+		addmd $*
+		shift
+	case --album
+		addmd $*
+		shift
+	case --track
+		addmd $*
+		shift
+	case --comment
+		addmd $*
+		shift
+	case -k
+		clear = ()
+	case -d
+		delete = 1
+	case -n
+		dry = 1
+	case -*
+		printf 'No such option: %s\n' $1 >[1=2]
+		usage
+	case *
+		files = ($files $1)
+	}
+	shift
+}
+
+if (~ $files ()) {
+	printf 'No files specified\n' >[1=2]
+	exit 1
+}
+
+# --delete cannot be specified along with other args
+if (~ $delete 1 && {!~ $margs () || ~ $clear ()}) {
+	printf '--delete cannot be specified along with other args\n'
+	exit 1
+}
+
+if (~ $margs () && !~ $delete 1) {
+	printf 'Nothing to do\n' >[1=2]
+	exit 1
+}
+
+for (f in $files) {
+	out = `$nl{tmp $f}
+	fcmd = (ffmpeg -y -nostdin -i $f $clear -c copy $margs $out(1))
+	mcmd = (mv $out(1) $f)
+	if (~ $dry 1) {
+		printcmd fcmd
+		printcmd mcmd
+	} else if (!test -f $f) {
+		printf 'No such file: %s\n' $f >[1=2]
+	} else {
+		if (~ $delete 1) {
+			echo Removing metadata...
+		} else if (~ $clear ()) {
+			echo Adding metadata...
+		} else {
+			echo Replacing metadata...
+		}
+		$fcmd
+		echo Replacing file...
+		$mcmd
+	}
+}

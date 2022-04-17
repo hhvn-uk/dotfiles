@@ -1,0 +1,111 @@
+#!/bin/rc
+
+usage = (
+'usage: tag/interactive [-n] [-k] [-p metadata] [--artist artist]'
+'                       [--title title] [--album album]'
+'		        [--track track] [--comment comment]'
+'		        files...'
+''
+'tag/interactive is an interactive interface to tag/set.'
+''
+'-p Metadata to prompt the user for. Usuable multiple times.'
+'   Can contain: artist, title, album, track, comment'
+'-n Dry run. Prints commands to be executed.'
+'-k Preserve all metadata this is not specified.'
+''
+'--artist, --title, --album, --track, and --comment'
+'  Specify default metadata to apply to all files.'
+)
+
+targs = ()
+
+fn usage {
+	for (line in $usage) {
+		printf '%s\n' $line >[1=2]
+	}
+	exit 2
+}
+
+fn addmd {
+	if (~ $2 ()) {
+		usage
+	}
+	targs = ($targs $1 $2)
+	have = ($have `$nl{echo $1 | sed 's/^--//'})
+}
+
+fn get {
+	if (~ $want $1) {
+		tput bold
+		printf '%s: ' $1
+		tput sgr0
+		curtargs = ($curtargs --$1 `$nl{head -n 1})
+	}
+}
+
+fn printcmd {
+	whatis $1 >[2=1] | sed 's/^[^=]*=(//;s/)$//'
+}
+
+while (!~ $#* 0) {
+	switch ($1) {
+	case --artist
+		addmd $*
+		shift
+	case --title
+		addmd $*
+		shift
+	case --album
+		addmd $*
+		shift
+	case --track
+		addmd $*
+		shift
+	case --comment
+		addmd $*
+		shift
+	case -p
+		if (~ $2 ()) {
+			usage
+		}
+		if (!~ $2 artist title album track comment) {
+			printf 'Unsupported prompt: %s\n' $2 >[1=2]
+		}
+		want = ($want $2)
+		shift
+	case -k
+		targs = (-k $targs)
+	case -n
+		dry = 1
+	case -*
+		printf 'No such option: %s\n' $1 >[1=2]
+		usage
+	case *
+		files = ($files $1)
+	}
+	shift
+}
+
+for (w in $want) {
+	if (~ $have $w) {
+		printf 'Cannot have both --%s and -p %s\n' $w $w >[1=2]
+	}
+}
+
+for (f in $files) {
+	curtargs = $targs
+	printf '==> %s <==\n' $f
+	get artist
+	get title
+	get album
+	get track
+	get comment
+	cmd = (tag/set $curtargs $f)
+	if (~ $dry 1) {
+		printcmd cmd
+		tag/set -n $curtargs $f >[2=1]
+	} else {
+		echo Running `$nl{printcmd cmd}
+		$cmd
+	}
+}

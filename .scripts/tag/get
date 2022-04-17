@@ -1,0 +1,37 @@
+#!/bin/rc
+
+fn usage {
+	printf 'usage: tag/get files...\n' >[1=2]
+	exit 2
+}
+
+if (~ $#* 0 || ~ $1 -h) {
+	usage
+}
+
+label = ''
+
+for (f in $*) {
+	if (!~ $#* 1) {
+		label = '[' ^ $f ^ '] '
+	}
+	if (!test -f $f) {
+		printf '%sCould not locate file.\n' $label >[1=2]
+		continue
+	}
+	ffmpeg -i $f -f ffmetadata - >[2]/dev/null |
+		awk -vlabel=^$label '/=/ {
+			key = $0;  sub(/=.*/, "", key)
+			pad = key; gsub(/./, " ", pad)
+			val = $0;  sub(/^[^=]*=/, "", val)
+			printf("%s%s: %s\n", label, key, val);
+			next
+		}
+
+		# Print multiline metadata values indented
+		/^[^;\[]/ { printf("%s%s  %s\n", label, pad, $0) }
+
+		# Chapters/streams
+		/^\[/ { printf("\n%s%s\n", label, $0) }' |
+		sed -E 's/\\$//g;s/\\([=;#\\])/\1/g'
+}
