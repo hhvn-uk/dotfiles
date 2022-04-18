@@ -18,6 +18,12 @@ fn __prompt_exit_colour {
 	}
 }
 
+fn sigexit { 
+	for (f in $manconfs) {
+		rm -f $f
+	}
+}
+
 # Backend prompt function
 fn __prompt {
 	__prompt_exitcodes = $status
@@ -171,9 +177,12 @@ fn w3m {
 fn _man {
 	conf = '/tmp/'^$pid^'.man.conf' program = $1 {
 		sed -E 's~HOME~'^$home^'~g' < $home/.config/man.conf > $conf
+		manconfs = ($manconfs $conf)
 		shift 1
 		builtin $program -C $conf $*
-		rm $conf
+		for (f in $manconfs) {
+			rm -f $f >[2]/dev/null
+		}
 	}
 }
 fn man { _man man $* }
