@@ -1,0 +1,25 @@
+#!/bin/rc
+
+if (!~ `{id -u} 0) {
+	printf 'Give me root, not this stupid %s user!\n' `{whoami} >[1=2]
+	exit 1
+}
+
+interfaces = `$nl{ip a | awk '/^[0-9]/ {gsub(/:/, ""); print $2}'}
+wireless = ()
+networks = ()
+
+for (i in $interfaces) {
+	if (~ $i wl*) {
+		wireless = ($wireless $i)
+	}
+}
+
+for (i in $wireless) {
+	networks = ($networks `$nl{iwlist $i scan |
+		awk '$1 ~ /^ESSID:".+"/ {
+			sub(/[^"]*"/, ""); sub(/"$/, ""); print
+		}' < f | sort -u})
+}
+
+echo $^networks

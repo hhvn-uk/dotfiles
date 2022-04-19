@@ -1,0 +1,62 @@
+#!/bin/rc
+
+cfile = /etc/wpa_supplicant/wpa_supplicant.conf
+efile = /tmp/$pid.errors
+
+fn sigexit {
+	if (!~ $havex11 1) {
+		stty echo
+	}
+	if (test -f $efile) {
+		rm -f $efile
+	}
+}
+
+if (!~ $DISPLAY ()) {
+	havex11 = 1
+} else {
+	havex11 = 0
+}
+
+if (!~ `{id -u} 0) {
+	if (~ $havex11 1) {
+		echo Accept | dmenu -p 'Give me root, not this stupid ' ^ `{whoami} ^ ' user!' >/dev/null
+	} else {
+		printf 'Give me root, not this stupid %s user!\n' `{whoami} >[1=2]
+	}
+	exit 1
+}
+
+echo Scanning for SSIDs...
+networks = `{net/scan}
+if (~ $havex11 1) {
+	choices = `{echo $networks | tr ' ' '\n' | dmenu -i -p 'SSID:'}
+} else {
+	echo $^networks
+	printf 'SSID: '
+	choices = `{head -n 1}
+}
+
+for (ssid in $choices) {
+	if (~ $havex11 1) {
+		pass = `$nl{dmenu -i -p $ssid ^ ' password:' </dev/null}
+	} else {
+		stty -echo
+		printf '%s password: ' $ssid
+		pass = `$nl{head -n 1}
+		printf '\n'
+		stty echo
+	}
+	conf = `''{wpa_passphrase $ssid $pass >[2]$efile}
+	if (!~ $bqstatus 0) {
+		if (~ $havex11 1) {
+			echo Accept | dmenu -p `''{cat $efile} >/dev/null
+		} else {
+			cat $efile >[1=2]
+		}
+		exit 1
+	}
+	printf '%s' $conf | grep -v '#psk' >[1=2]
+	echo Writing to $cfile
+	printf '%s' $conf >> $cfile
+}
