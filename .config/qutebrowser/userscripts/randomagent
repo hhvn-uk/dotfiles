@@ -1,0 +1,6 @@
+#!/bin/rc
+
+chars = `$nl{head -c 200 /dev/urandom | od -Ad | tr ' ' '\n' | awk -vmin=20 -vmax=40 '{i += $1}; END {print (i % min) + (max - min)}'}
+agent = `$nl{head -c$chars /dev/urandom | base64 | tr -d '='}
+
+echo ':set content.headers.user_agent ' ^ $agent > $QUTE_FIFO

@@ -157,7 +157,7 @@ do
 	matches "^https?://" ||
 	matches "\.html?$" ||
 	fmatches "HTML" &&
-	plumb gui 'xprop -id $(cat /tmp/tabbed.xid) >/dev/null && $proxy surf -e $(cat /tmp/tabbed.xid) $arg || { >/tmp/tabbed.xid tabbed -c & $proxy surf -e $(sleep 1 && cat /tmp/tabbed.xid) $arg; }'
+	plumb gui 'qutebrowser $arg'
 
 	matches "^gophers?://(.*/[17+0](/|$)|[^/]*$)" &&
 	plumb terminal '$proxy zygo $arg'
