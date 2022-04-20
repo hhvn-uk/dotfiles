@@ -1,0 +1,7 @@
+#!/bin/rc
+# Find all reverse host pointers for an addr by getting addrs with host(1),
+# and then passing them back to host(1) in order to do the reverse lookups.
+
+for (a in `{host $* | tee /dev/stderr | awk '$2 == "has" && $3 == "address" {print $4}'}) {
+	host $a
+}
