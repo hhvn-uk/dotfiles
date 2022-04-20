@@ -1,0 +1,103 @@
+vim: set syntax=hirc :
+
+/set def.nick hhvn
+/set def.quitmessage pain is temporary
+/set def.partmessage pain is temporary
+/set nickcolour.self 92
+/set nickcolour.range 40 63
+/set regex.icase 1
+/set regex.extended 0
+
+Formats
+/format mode.channel %{b}mode%{o}%{=}%{c:94}${2-}%{o} by %{nick:${nick}}${nick}
+/format mode.nick.self %{nick:${1}}${1}%{o} set %{c:94}${2-}%{o}
+/format mode.nick %{nick:${1}}${1}%{o} set %{c:94}${2-}%{o} by %{nick:${nick}}${nick} (${ident}@${host})
+/format rpl.channelmodeis %{b}mode%{o}%{=}%{c:94}${3-}%{o}
+/format rpl.away %{b}away%{b}%{=}%{nick:${2}}${2}%{o}: ${3}
+/format join %{b}%{c:44}+%{o}%{=}%{nick:${nick}}${nick}!${ident}@${host}
+/format part %{b}%{c:40}-%{o}%{=}%{nick:${nick}}${nick}!${ident}@${host}%{o} %{c:92}${2}
+/format quit %{b}%{c:40}<%{o}%{=}%{nick:${nick}}${nick}!${ident}@${host}%{o} %{c:92}${1}
+/format kick %{b}%{c:40}!%{o}%{=}%{nick:${2}}${2}%{o} by %{nick:${nick}}${nick}!${ident}@${host}%{o} %{c:92}${3}
+/format rpl.namreply %{b}names%{b}%{=}${4-}
+/format rpl.inviting %{b}invite%{b}%{=}${2}
+/format ui.error %{c:28}%{b}error: %{o}%{b}${4} %{b}(${3} at ${1}:${2})
+/format ui.grep.start %{b}%{c:93}-----------grep: ${1}
+/format ui.grep.end %{b}%{c:93}--------------->
+/format ui.help.start %{b}%{c:93}-----------help: ${1}
+/format ui.help  ${1}
+/format ui.help.end %{b}%{c:93}--------------->
+/format ui.autocmds.start %{b}%{c:93}-------autocmds: ${1}
+/format ui.autocmds.end %{b}%{c:93}--------------->
+/format ui.keybind.start %{b}%{c:93}-------keybinds:
+/format ui.keybind.end %{b}%{c:93}--------------->
+/format ui.alias.start %{b}%{c:93}--------aliases:
+/format ui.alias.end %{b}%{c:93}--------------->
+/format ui.buflist.activity.hilight %{c:63}
+/format topic %{b}topic%{b}%{=}${2}\nset by %{nick:${nick}}${nick}%{o} now
+/format rpl.notopic %{b}topic%{b}%{=}no topic set
+/format rpl.topic %{b}topic%{b}%{=}${3}
+/format rpl.whoreply %{b}%{nick:${6}}${6}!${3}@${4}%{b}%{o} (%{split:2, ,${8}}): ${7} %{split:1, ,${8}
+
+Ignore ends of some commands for aesthetics
+/ignore -format rpl.endofwhois .*
+/ignore -format rpl.endofinfo .*
+/ignore -format rpl.endofmotd .*
+/ignore -format rpl.listend .*
+
+Window decorations
+/format ui.separator.vertical %{c:91}│
+/format ui.separator.split.left %{c:91}├
+/format ui.separator.split.right %{c:91}┤
+/format ui.separator.horizontal %{c:91}─
+
+irssi muscle memory
+/alias /lastlog /grep
+/alias /wc /close
+
+Niceties
+/alias /unalias /alias -delete
+/alias /unbind /bind -delete
+/alias /unignore /ignore -delete
+/alias /back /away
+
+Unimplemented commands for server stuff
+/alias /die /quote die
+/alias /rehash /quote rehash
+/alias /restart /quote restart
+/alias /shelp /quote help
+/alias /sadmin /quote admin
+/alias /squit /quote squit
+/alias /sconnect /quote connect
+/alias /kline /quote kline
+/alias /gline /quote gline
+/alias /zline /quote zline
+/alias /gzline /quote gzline
+
+Buffer selection
+/bind ^[1 /select 1
+/bind ^[2 /select 2
+/bind ^[3 /select 3
+/bind ^[4 /select 4
+/bind ^[5 /select 5
+/bind ^[6 /select 6
+/bind ^[7 /select 7
+/bind ^[8 /select 8
+/bind ^[9 /select 9
+/bind ^[0 /select 10
+/bind ^[! /select 11
+/bind ^[@ /select 12
+/bind ^[# /select 13
+/bind ^[$ /select 14
+/bind ^[% /select 15
+/bind ^[^ /select 16
+/bind ^[& /select 17
+/bind ^[* /select 18
+/bind ^[( /select 19
+/bind ^[) /select 20
+
+Scrolling
+/bind ^k /scroll 20
+/bind ^j /scroll -20
+
+Autoconnexion
+/source ~/.config/hirc/networks
