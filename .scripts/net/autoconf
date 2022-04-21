@@ -1,0 +1,95 @@
+#!/bin/rc
+
+if (!~ `{id -u} 0) {
+	printf 'You should probably run this script as root.\n' >[1=2]
+	exit 1
+
+}
+
+cfile = /etc/ip.rc
+if (test -f $cfile) {
+	. $cfile
+}
+
+# Remove excess elements
+ethip = $ethip(1)
+wlanip = $wlanip(1)
+
+gateway = 192.168.1.1
+lanmask = 192.168.1.0/24
+
+fn needeth { if (~ $ethip ()) { printf 'Ethernet ip: '; ethip = `$nl{head -n 1} } }
+fn needwlan { if (~ $wlanip ()) { printf 'Wireless ip: '; wlanip = `$nl{head -n 1} } }
+fn try { $* || exit $status(1) }
+fn setup {
+	interface = $1
+	ip = $2
+
+	if (!~ `{ip addr show $interface | awk '$1 ~ /^inet/ {sub(/\/.*/, ""); print $2}'} $ip) {
+		printf 'Adding address %s to %s...\n' $ip $interface
+		try ip addr add $ip/24 brd + dev $interface || exit 1
+	}
+
+	printf 'Flushing default route...\n'
+	try ip route flush default
+	printf 'Configuring default route via %s\n' $gateway
+	try ip route add default dev $interface
+	try ip route change default via $gateway dev $interface
+	printf 'Flushing LAN route...\n'
+	try ip route flush $lanmask
+	printf 'Configuring LAN route from %s\n' $ip
+	try ip route add $lanmask dev $interface
+	try ip route change $lanmask src $ip dev $interface
+
+	printf 'Successfully configured %s with ip %s\n' $interface $ip
+	exit 0
+}
+
+echo Finding interfaces...
+interfaces = `$nl{ip a | awk '/^[0-9]/ {gsub(/:/, ""); print $2}'}
+eth = ()
+wlan = ()
+
+for (i in $interfaces) {
+	if (~ $i en* || ~ $i eth*) {
+		eth = ($eth $i)
+	} else if (~ $i wl*) {
+		wlan = ($wlan $i)
+	}
+}
+
+echo Checking for ethernet interfaces...
+for (i in $eth) {
+	# Try to set the interface to up.
+	# If it doesn't work, `ip a` will say down.
+	ip link set dev $i up
+
+	if (~ `{ip addr show $i} UP) {
+		printf 'Found available ethernet interface: %s\n' $i
+		needeth
+		setup $i $ethip
+	}
+}
+
+echo Checking for wpa_supplicant...
+if (!sv check wpa_supplicant) {
+	if (!test -d /etc/sv/wpa_supplicant) {
+		exit 1
+	}
+	try ln -s /etc/sv/wpa_supplicant /var/service
+	try sv check wpa_supplicant
+}
+
+echo Checking for wireless interfaces...
+for (i in $wlan) {
+	ip link set dev $i up
+
+	if (~ `{ip addr show $i} UP) {
+		printf 'Found available wireless interface: %s\n' $i
+		needwlan
+		setup $i $wlanip
+	}
+}
+
+printf 'Could not find any interface to configure.\n'
+exit 1
