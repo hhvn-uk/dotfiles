@@ -1,4 +1,6 @@
 #!/bin/rc
+# Find any working ethernet/wlan interface and 
+# configure it, with priority given to ethernet.
 
 if (!~ `{id -u} 0) {
 	printf 'You should probably run this script as root.\n' >[1=2]
@@ -45,7 +47,7 @@ fn setup {
 	exit 0
 }
 
-echo Finding interfaces...
+printf 'Finding interfaces...'
 interfaces = `$nl{ip a | awk '/^[0-9]/ {gsub(/:/, ""); print $2}'}
 eth = ()
 wlan = ()
@@ -58,7 +60,7 @@ for (i in $interfaces) {
 	}
 }
 
-echo Checking for ethernet interfaces...
+printf 'Checking for ethernet interfaces...'
 for (i in $eth) {
 	# Try to set the interface to up.
 	# If it doesn't work, `ip a` will say down.
@@ -71,7 +73,7 @@ for (i in $eth) {
 	}
 }
 
-echo Checking for wpa_supplicant...
+printf 'Checking for wpa_supplicant...'
 if (!sv check wpa_supplicant) {
 	if (!test -d /etc/sv/wpa_supplicant) {
 		exit 1
@@ -80,7 +82,7 @@ if (!sv check wpa_supplicant) {
 	try sv check wpa_supplicant
 }
 
-echo Checking for wireless interfaces...
+printf 'Checking for wireless interfaces...'
 for (i in $wlan) {
 	ip link set dev $i up
 

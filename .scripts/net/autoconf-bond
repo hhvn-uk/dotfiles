@@ -1,0 +1,110 @@
+#!/bin/rc
+# Create and automatically configure a bond0 device
+# and enslave ethernet/wlan interfaces to it.
+
+if (!~ `{id -u} 0) {
+	printf 'You should probably run this script as root.\n' >[1=2]
+	exit 1
+
+}
+
+cfile = /etc/ip.rc
+if (test -f $cfile) {
+	. $cfile
+}
+
+# Remove excess elements
+ip      = $ip(1)
+gateway = $gateway(1)
+lanmask = $lanmask(1)
+mode    = $mode(1)
+miimon  = $miimon(1)
+
+if (~ $gateway ())
+	gateway = 192.168.1.1
+if (~ $lanmask ())
+	lanmask = 192.168.1.0/24
+if (~ $mode ())
+	mode = active-backup
+if (~ $miimon ())
+	miimon = 100
+
+fn needip { if (~ $ip ()) { printf 'Ip: '; ip = `$nl{head -n 1} } }
+
+printf 'Checking if module ''bonding'' is loaded...\n'
+if (~ `{lsmod | awk '$1 == "bonding"'} ()) {
+	printf 'Loading module ''bonding''...'
+	modprobe bonding || exit 1
+}
+
+printf 'Finding interfaces...\n'
+interfaces = `$nl{ip a | awk '/^[0-9]/ {gsub(/:/, ""); print $2}'}
+bond    = ()
+slaves  = ()
+pslaves = () # already enslaved
+eth     = ()
+wlan    = ()
+
+for (i in $interfaces) {
+	if (~ $i en* || ~ $i eth*) {
+		eth = ($eth $i)
+	} else if (~ $i wl*) {
+		wlan = ($wlan $i)
+	} else if (~ $i bond*) {
+		bond = ($bond $i)
+	}
+}
+
+if (~ $bond ()) {
+	printf 'No bonding interface found\n'
+	exit 1
+}
+
+idir = /sys/class/net/ ^ $bond(1) ^ /bonding
+
+printf 'Setting bonding mode to: %s...\n' $mode
+echo $mode > $idir/mode || exit $status(1)
+
+printf 'Setting bonding miimon to: %s...\n' $miimon
+echo $miimon > $idir/miimon || exit $status(1)
+
+printf 'Checking for enslavable interfaces...\n'
+for (i in ($eth $wlan)) {
+	if (~ `{ip link show $i} 'master') {
+		printf 'Ignoring already enslaved interface %s\n' $i
+		pslaves = ($pslaves $i)
+	} else {
+		slaves = ($slaves $i)
+	}
+}
+
+if (~ $slaves ()) {
+	printf 'No interfaces to enslave\n'
+	# If interfaces are already enslaved, consider it a success
+	if (~ $pslaves ()) {
+		exit 1
+	}
+} else {
+	for (i in $slaves) {
+		printf 'Enslaving %s...\n' $i
+		echo +$i > $idir/slaves || exit 1
+	}
+}
+
+if (!~ `{ip addr show $interface | awk '$1 ~ /^inet/ {sub(/\/.*/, ""); print $2}'} $ip) {
+	printf 'Adding address %s to %s...\n' $ip $bond(1)
+	ip addr add $ip/24 brd + dev $interface || exit 1
+}
+
+printf 'Flushing default route...\n'
+ip route flush default || exit 1
+printf 'Configuring default route via %s\n' $gateway
+ip route add default dev $bond(1) || exit 1
+ip route change default via $gateway dev $bond(1) || exit 1
+printf 'Flushing LAN route...\n'
+ip route flush $lanmask || exit 1
+printf 'Configuring LAN route from %s\n' $ip
+ip route add $lanmask dev $bond(1) || exit 1
+ip route change $lanmask src $ip dev $bond(1) || exit 1
+
+printf 'Successfully configured %s with ip %s\n' $bond(1) $ip
