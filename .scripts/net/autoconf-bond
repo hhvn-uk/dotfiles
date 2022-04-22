@@ -45,6 +45,7 @@ interfaces = `$nl{ip a | awk '/^[0-9]/ {gsub(/:/, ""); print $2}'}
 bond    = ()
 slaves  = ()
 pslaves = () # already enslaved
+primary = ()
 eth     = ()
 wlan    = ()
 
@@ -71,12 +72,21 @@ echo $mode > $idir/mode || exit $status(1)
 printf 'Setting bonding miimon to: %s...\n' $miimon
 echo $miimon > $idir/miimon || exit $status(1)
 
+printf 'Getting bonding primary interface...\n'
+curprimary = `{cat $idir/primary}
+
 printf 'Checking for enslavable interfaces...\n'
 for (i in ($eth $wlan)) {
 	if (~ `{ip link show $i} 'master') {
 		printf 'Ignoring already enslaved interface %s\n' $i
 		pslaves = ($pslaves $i)
 	} else {
+		if (~ $curprimary ()) {
+			# TODO: better way to get primary
+			printf 'Setting %s as primary interface...\n' $i
+			echo $i > $idir/primary
+			curprimary = $i
+		}
 		slaves = ($slaves $i)
 	}
 }
@@ -90,13 +100,13 @@ if (~ $slaves ()) {
 } else {
 	for (i in $slaves) {
 		printf 'Enslaving %s...\n' $i
-		echo +$i > $idir/slaves || exit 1
+		ifenslave $bond(1) $i || exit 1
 	}
 }
 
 if (!~ `{ip addr show $interface | awk '$1 ~ /^inet/ {sub(/\/.*/, ""); print $2}'} $ip) {
 	printf 'Adding address %s to %s...\n' $ip $bond(1)
-	ip addr add $ip/24 brd + dev $interface || exit 1
+	ip addr add $ip/24 brd + dev $bond(1) || exit 1
 }
 
 printf 'Flushing default route...\n'
