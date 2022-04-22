@@ -20,6 +20,11 @@ lanmask = $lanmask(1)
 mode    = $mode(1)
 miimon  = $miimon(1)
 
+# Include it in /etc/ip.rc to avoid being prompted
+if (~ $ip ()) {
+	printf 'Ip: '
+	ip = `$nl{head -n 1}
+}
 if (~ $gateway ())
 	gateway = 192.168.1.1
 if (~ $lanmask ())
@@ -28,8 +33,6 @@ if (~ $mode ())
 	mode = active-backup
 if (~ $miimon ())
 	miimon = 100
-
-fn needip { if (~ $ip ()) { printf 'Ip: '; ip = `$nl{head -n 1} } }
 
 printf 'Checking if module ''bonding'' is loaded...\n'
 if (~ `{lsmod | awk '$1 == "bonding"'} ()) {
