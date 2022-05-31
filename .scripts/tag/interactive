@@ -4,7 +4,7 @@ usage = (
 'usage: tag/interactive [-n] [-k] [-p metadata] [--artist artist]'
 '                       [--title title] [--album album]'
 '		        [--track track] [--comment comment]'
-'		        files...'
+'			[--date date] files...'
 ''
 'tag/interactive is an interactive interface to tag/set.'
 ''
@@ -13,7 +13,7 @@ usage = (
 '-n Dry run. Prints commands to be executed.'
 '-k Preserve all metadata this is not specified.'
 ''
-'--artist, --title, --album, --track, and --comment'
+'--artist, --title, --album, --track, --comment and --date'
 '  Specify default metadata to apply to all files.'
 )
 
@@ -62,6 +62,9 @@ while (!~ $#* 0) {
 		addmd $*
 		shift
 	case --comment
+		addmd $*
+		shift
+	case --date
 		addmd $*
 		shift
 	case -p
