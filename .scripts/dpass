@@ -14,7 +14,7 @@ if (!~ $#* 0) {
 	opt = $1
 	fromarg = 1
 } else {
-	opt = `$nl{printf '%s' $dec | awk -F: 'BEGIN {print "GENERATE"}; {print $1}' | dmenu -l 20 -i}
+	opt = `$nl{printf '%s' $dec | awk -F: 'BEGIN {printf("GENERATE\nAPPEND\n")}; {print $1}' | dmenu -l 20 -i}
 }
 
 switch ($opt) {
@@ -31,6 +31,23 @@ case GENERATE
 	chmod 0700 $encfile
 	printf '%s' $dec > $encfile
 	gpg --armor -e --default-recipient-self < $encfile > $PASS
+	shred -u $encfile
+	printf '%s' $newpass | xclip
+	@{ sleep 25; xclip </dev/null } &
+case APPEND
+	newname = `$nl{dmenu -p 'Name:' </dev/null}
+	newpass = `$nl{dmenu -P -p 'Password:' </dev/null}
+	if (~ $newname '') {
+		herbe 'dpass exiting... no pass given'
+		exit 1
+	}
+	dec     = `''{printf '%s%s: %s\n' $dec $newname $newpass}
+	encfile = /tmp/$pid.plain
+	touch $encfile
+	chmod 0700 $encfile
+	printf '%s' $dec > $encfile
+	gpg --armor -e --default-recipient-self < $encfile > $PASS
+	shred -u $encfile
 	printf '%s' $newpass | xclip
 	@{ sleep 25; xclip </dev/null } &
 case *
