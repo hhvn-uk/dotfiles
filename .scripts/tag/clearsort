@@ -1,0 +1,13 @@
+#!/bin/rc
+# Clear annoying sorting tags. Different people want things sorted in different
+# ways. Let software (i,e, cmus) do it rather than hardcoding different sorting
+# systems into files.
+
+fn sigexit {
+	rm $tmp
+}
+
+for (f in $*) {
+	tmp = /tmp/$pid.`$nl{echo $f | tr / _}
+	ffmpeg -y -nostdin -i $f -c copy -metadata TSOP='' -metadata TSOA='' -metadata TSOC='' -metadata TSO2='' -metadata XSOP='' -metadata XSOA='' -metadata XSOC='' -metadata TSP='' -metadata TS2='' -metadata TSA='' -metadata TSC='' -metadata albumsort='' -metadata artistsort='' -metadata albumartistsort='' -metadata album-sort='' -metadata artist-sort='' -metadata albumartist-sort='' $tmp && mv $tmp $f
+}
