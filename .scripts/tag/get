@@ -19,7 +19,14 @@ for (f in $*) {
 		printf '%sCould not locate file.\n' $label >[1=2]
 		continue
 	}
-	ffmpeg -i $f -f ffmetadata - >[2]/dev/null |
+
+	if (~ $f *.opus) {
+		eargs = (-map_metadata 0:s:a:0)
+	} else {
+		eargs = ()
+	}
+
+	ffmpeg -i $f $eargs -f ffmetadata - >[2]/dev/null |
 		awk -vlabel=^$label '/=/ {
 			key = $0;  sub(/=.*/, "", key)
 			pad = key; gsub(/./, " ", pad)
