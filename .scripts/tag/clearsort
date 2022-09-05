@@ -3,11 +3,6 @@
 # ways. Let software (i,e, cmus) do it rather than hardcoding different sorting
 # systems into files.
 
-fn sigexit {
-	rm $tmp
-}
-
 for (f in $*) {
-	tmp = /tmp/$pid.`$nl{echo $f | tr / _}
-	ffmpeg -y -nostdin -i $f -c copy -metadata TSOP='' -metadata TSOA='' -metadata TSOC='' -metadata TSO2='' -metadata XSOP='' -metadata XSOA='' -metadata XSOC='' -metadata TSP='' -metadata TS2='' -metadata TSA='' -metadata TSC='' -metadata albumsort='' -metadata artistsort='' -metadata albumartistsort='' -metadata album-sort='' -metadata artist-sort='' -metadata albumartist-sort='' $tmp && mv $tmp $f
+	tag/clear $f TSOP TSOA TSOC TSO2 XSOP XSOA XSOC TSP TS2 TSA TSC albumsort artistsort albumartistsort album-sort artist-sort albumartist-sort
 }

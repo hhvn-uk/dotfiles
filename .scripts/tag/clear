@@ -1,0 +1,19 @@
+#!/bin/rc
+#
+# Clear a tag from a file
+#
+
+fn sigexit {
+	rm $tmp
+}
+
+file = $1
+shift
+tmp = /tmp/$pid.clear.`$nl{echo $file | tr / _}
+
+for (tag in $*) {
+	args = ($args -metadata $tag^=)
+}
+
+ffmpeg -nostdin -i $file -c copy $args $tmp
+mv $tmp $file

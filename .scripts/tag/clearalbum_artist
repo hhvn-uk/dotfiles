@@ -1,0 +1,8 @@
+#!/bin/rc
+#
+# Grrr.
+#
+
+for (f in *) {
+	tag/clear $f album_artist
+}
