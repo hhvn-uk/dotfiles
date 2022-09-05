@@ -71,7 +71,7 @@ while (!~ $#* 0) {
 		if (~ $2 ()) {
 			usage
 		}
-		if (!~ $2 artist title album track comment) {
+		if (!~ $2 artist title album track comment date) {
 			printf 'Unsupported prompt: %s\n' $2 >[1=2]
 		}
 		want = ($want $2)
