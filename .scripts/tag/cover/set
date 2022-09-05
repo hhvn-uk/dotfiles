@@ -1,0 +1,18 @@
+#!/bin/rc
+#
+# Add cover art to audio.
+#
+# usage: tag/cover/set <cover> files...
+
+cover = $1
+shift
+
+fn sigexit {
+	rm $tmp
+}
+
+for (f in $*) {
+	tmp = /tmp/$pid.cover.`$nl{echo $f | tr / _}
+	ffmpeg -i $f -i $cover -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title='Album cover' -metadata:s:v comment='Cover (front)' $tmp
+	mv $tmp $f
+}

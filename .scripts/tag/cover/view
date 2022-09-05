@@ -1,0 +1,13 @@
+#!/bin/rc
+#
+# View cover art of a file with sxiv.
+#
+# usage: tag/cover/view file
+
+fn sigexit {
+	rm $tmp
+}
+
+tmp = /tmp/$pid.view.jpg
+ffmpeg -nostdin -y -i $1 -an $tmp
+sxiv $tmp
