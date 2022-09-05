@@ -1,0 +1,18 @@
+#!/bin/rc
+#
+# Formats the names of files in my preferred way.
+#
+
+fn sigexit {
+	rm $tmp
+}
+
+tmp = /tmp/$pid.tags
+for (f in $*) {
+	tag/get $f > $tmp
+	track = `$nl{grep '^track:' < $tmp | sed 's/^track: 0*//;s~/.*$~~'}
+	title = `$nl{grep '^title:' < $tmp | sed 's/^title: //'}
+	ext = `$nl{echo $f | sed 's/.*\.//' | tr '[:upper:]' '[:lower:]'}
+	dir = `$nl{dirname $f}
+	printf '%s/%02d %s.%s\n' $dir $track $title $ext
+}

@@ -1,0 +1,19 @@
+#!/bin/rc
+#
+# tag/fileformat, but renames them
+#
+
+for (old in $*) {
+	if (echo $old | grep -vEi '\.(mp3|flac|opus|m4a)$' >/dev/null) {
+		printf 'NOT AUDIO:\t%s\n' $old >[1=2]
+		continue
+	}
+
+	new = `$nl{tag/fileformat $old}
+
+	if (echo $new | grep '/[0-9][0-9] ..*\..*$' >/dev/null && echo $new | grep -v '/00' >/dev/null) {
+		mv -v $old $new
+	} else {
+		printf 'CHECK FAILED:\t%s\t%s\n' $old $new >[1=2]
+	}
+}
