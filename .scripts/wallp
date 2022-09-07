@@ -1,22 +1,68 @@
-#!/bin/sh
-#
-# wallp
-# Created by Hayden Hamilton
-#
-# hayden@haydenvh.com
-# Copyright (c) 2019-2020 Hayden Hamilton.
+#!/bin/rc
+# usage: wallp [-s] [-n|-r] [dir] [monitors]
+#        randomly select wallpaper for each monitor and apply
+#         -S select monitors via dmenu
+#         -s select subdirectory via dmenu
+#         -n only select new wallpaper for monitors without one
+#         -r don't select new wallpapers, restore from cache
+# usage: wallp [-l]
+#        list monitors
 
-[ -z $1 ] && echo "usage: wallp <dir|file[,<dir|file>...]> [left|right]" && exit 1
+fn checkempty {
+	if ($1 ())
+		exit
+}
 
-[ -z $2 ] && monitors=2
-files=$(find -L $(echo "$1" | tr ',' ' ') -maxdepth 1 -type f | shuf | head -n ${monitors:-1})
-[ "$2" = "right" ] && files=$(printf "%s\n%s\n" "$(awk '{print $1}' < $HOME/.cache/rfeh/prev)" "$files")
-[ "$2" = "left" ] && files=$(printf "%s\n%s\n" "$files" "$(awk '{print $2}' < $HOME/.cache/rfeh/prev)")
-mkdir -p $HOME/.cache/rfeh
-echo $files | tee $HOME/.cache/rfeh/prev
-files=$(echo "$files" | tr " " "\n" | sed "s~^~--output OUTPUT --zoom ~g" | tr "\n" " ")
-for OUTPUT in $(xrandr --listactivemonitors | awk '$4 {print $4}')
-do
-	files=$(echo "$files" | sed "s/OUTPUT/$OUTPUT/")
-done
-xwallpaper $files
+_dir = $home/.local/wall
+mkdir -p $_dir
+
+while (~ $1 -*) {
+	flags = ($flags $1)
+	shift
+}
+
+if (!~ $1 ()) {
+	search = $1
+	shift
+}
+
+if (~ $flags -s) {
+	search = `$nl{find $search -type d | dmenu -i}
+	checkempty $search
+}
+
+if (~ $flags -S) {
+	monitors = `$nl{xrandr --listactivemonitors | awk '$4 {print $4}' | dmenu -i}
+	checkempty $monitors
+} else if (~ $1 ()) {
+	monitors = `$nl{xrandr --listactivemonitors | awk '$4 {print $4}'}
+} else {
+	monitors = $*
+}
+
+if (~ $flags -l) {
+	exec echo $^monitors
+}
+
+if (~ $flags -n) {
+	for (m in $monitors) {
+		if (!test -f $_dir/$m) {
+			pop = ($pop $m)
+		}
+	}
+} else {
+	pop = $monitors
+}
+
+if (!~ $flags -r) {
+	wallpapers = `$nl{find $search -type f | shuf -n $#pop}
+	for (i in `{seq $#pop}) {
+		rm -f $_dir/$pop($i)
+		ln -s `$nl{realpath $wallpapers($i)} $_dir/$pop($i)
+	}
+}
+
+for (m in $monitors) {
+	args = ($args --output $m --zoom $_dir/$m)
+}
+xwallpaper $args
