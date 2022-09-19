@@ -1,0 +1,11 @@
+#!/bin/rc
+#
+# tag/dirformat, but it moves things
+#
+
+for (old in $*) {
+	new = `$nl{tag/dirformat $old}
+	if (~ $bqstatus 0) {
+		mv -v $old $new
+	}
+}

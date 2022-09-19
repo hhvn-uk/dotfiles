@@ -1,0 +1,33 @@
+#!/bin/rc
+#
+# Format a directory name as an album/release
+#
+
+if (!test -d $1) {
+	printf 'Not a directory: %s\n' $1
+	exit 1
+}
+
+p = `$nl{dirname $1}
+f = `$nl{find $1 -maxdepth 1 -type f -iname '*.opus' -o -iname '*.mp3' -o -iname '*.m4a' -o -iname '*.wav' -o -iname '*.flac' | head -n 1}
+
+if (~ $f ()) {
+	echo 'No audio files'
+}
+
+fn sigexit {
+	rm $tmp
+}
+
+tmp = /tmp/$pid.tags
+
+tag/get $f > $tmp
+album = `$nl{grep -i '^album:' < $tmp | sed 's/^[^ ]*: //' | tr / _}
+date = `$nl{grep -i '^date:' < $tmp | sed 's/^[^ ]*: //'}
+
+if (~ $album () || ~ $date ()) {
+	printf 'Insufficient metadata: %s\n' $f
+	exit 1
+}
+
+printf '%s/%s (%s)\n' $p $album $date
