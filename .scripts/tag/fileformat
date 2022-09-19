@@ -10,8 +10,8 @@ fn sigexit {
 tmp = /tmp/$pid.tags
 for (f in $*) {
 	tag/get $f > $tmp
-	track = `$nl{grep '^track:' < $tmp | sed 's/^track: 0*//;s~/.*$~~'}
-	title = `$nl{grep '^title:' < $tmp | sed 's/^title: //'}
+	track = `$nl{grep -i '^track:' < $tmp | sed 's/^[^ ]*: 0*//;s~/.*$~~'}
+	title = `$nl{grep -i '^title:' < $tmp | sed 's/^[^ ]*: //' | tr / '&'}
 	ext = `$nl{echo $f | sed 's/.*\.//' | tr '[:upper:]' '[:lower:]'}
 	dir = `$nl{dirname $f}
 	printf '%s/%02d %s.%s\n' $dir $track $title $ext
