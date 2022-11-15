@@ -1,13 +1,11 @@
 "
 " .config/nvim/init.vim
-" Copyright (c) 2019-2021 hhvn <dev@hhvn.uk>
+" Copyright (c) 2019-2022 hhvn <dev@hhvn.uk>
+"
 "
 
-"Note: plugins can found in .vim/plugin/ or .vim/autoload/
-" surround - allows operation on surrounding characters
-" commentary - comments stuff out
-" vimagit - git in vim
-" quickscope - find stuff easer 
+"GRRRRRR.
+set mouse=
 
 "Persistant undo
 set undodir=~/.local/share/nvim/undo
@@ -38,6 +36,8 @@ set hlsearch
 filetype plugin on
 set noshowmode
 set so=4
+set lcs=tab:._
+set gdefault
 
 function! ReopenFile()
 	let curfile=expand('%:p')
@@ -50,12 +50,10 @@ noremap <leader>vs :source ~/.config/nvim/init.vim<CR>
 noremap <leader>r :call ReopenFile()<CR>
 noremap <leader>m :make
 noremap <leader>sc :setlocal spell! spelllang=en_gb \| set linebreak<CR>
-noremap <leader>sf mm[s1z=`m<CR>
-noremap <leader>ssf mm[sz=`m
+noremap <leader>sf mm[sz=`m
 noremap <leader>bd :bdelete<CR>
 noremap <leader>bn :bn<CR>
 noremap <leader>bp :bp<CR>
-noremap <leader>ss :set syntax=
 noremap <leader>8 :set colorcolumn=80<CR>:set tw=80<CR>:set fo+=t<CR>
 noremap <leader>g :!git 
 noremap <leader>nn :setlocal number! relativenumber!<CR>
@@ -82,12 +80,6 @@ set foldmethod=marker
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
 
-"Netrw
-let g:netrw_liststyle=3
-let g:netrw_banner=0
-let g:netrw_altv=1
-let g:netrw_winsize=20
-
 "Remove arrow keys
 no <Up> <Nop>
 no <Down> <Nop>
@@ -98,20 +90,38 @@ ino <Down> <Nop>
 ino <Left> <Nop>
 ino <Right> <Nop>
 
+"Use o/O
+no A<CR> <Nop>
+
 "Registers
 set clipboard=unnamed
 
 "Modules
 source ~/.config/nvim/modules/statusline.vim
-source ~/.config/nvim/modules/splits.vim
-source ~/.config/nvim/modules/netrw.vim
-source ~/.config/nvim/modules/message.vim
-source ~/.config/nvim/modules/openc.vim
 source ~/.config/nvim/modules/filetype.vim
 source ~/.config/nvim/modules/textmanipulation.vim
+source ~/.config/nvim/modules/preproccomment.vim
 
 " quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " Shell on BSD
 let b:is_posix = 1
+
+" Splitting
+set splitbelow splitright
+noremap <leader>z :vsplit 
+noremap <leader>Z :split 
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-c> <C-w>c
+noremap <A-j> <C-w>+
+noremap <A-k> <C-w>-
+noremap <A-h> <C-w>>
+noremap <A-l> <C-w><
+
+" Hide startup information
+set shortmess+=I
