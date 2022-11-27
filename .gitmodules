@@ -1,0 +1,3 @@
+[submodule ".config/mpv/uosc"]
+	path = .config/mpv/uosc
+	url = https://github.com/tomasklaen/uosc
