@@ -89,7 +89,7 @@ super + alt + [i,p]
 super + [ctrl,alt] + o
 	cmus-remote [--pause,--stop]
 
-super + shift + n
+super + m
 	st -c cmus -g 150x30 -b -e rc -c 'tmux new-session -As cmus cmus'
 
 super + [minus,equal]
