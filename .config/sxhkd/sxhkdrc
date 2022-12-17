@@ -30,14 +30,8 @@ super + b
 super + n 
 	st -t neomutt -c neomutt -e sh -c 'neomutt; $SHELL'
 
-# I have cronjobs set
-# to update feeds now
-#
-# super + r
-# 	st -t sfeed -e sh -c 'SFEED_PLUMBER=plumb sfeed_curses $HOME/.local/sfeed/*'
-
 super + c
-	slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
+	slock_mod
 
 super + shift + c
 	slock
@@ -110,30 +104,18 @@ super + shift [minus,equal]
 shift + [XF86AudioLowerVolume, XF86AudioRaiseVolume]
 	hvol 6%[-,+]
 
-super + y
-	st -e sh -c 'autowifi && cu undock'
-
-super + shift + y
-	st -e sh -c 'wifioff && cu dock'
-
-super + ctrl + [j,k]
-	for (void in `{seq 3}) { xdotool click [5,4] }
-
 super + shift + h
 	st -e htop
 
 Menu
 	xdotool click 2
 
-[KP_Begin,KP_Left,KP_Right,KP_Down,KP_End,KP_Next,KP_Insert,KP_Delete,KP_Enter,KP_Prior,KP_Add,KP_Up,KP_Subtract,KP_Multiply,KP_Divide]
-	st -e slock_mod /tmp/mpv-socket /tmp/mpv-socket2 /tmp/mpv-socket3
-
 #thinkpad codes
 
 # XF86Sleep
 # XF86Batter
 XF86ScreenSaver
-	st -e slock_mod
+	slock_mod
 
 XF86Display
 	xset dpms force off
