@@ -25,7 +25,7 @@ super + shift + a
 	mailselect
 
 super + b
-	tabbed -k -c surf -e > /tmp/tabbed.xid
+	pgrep qutebrowser && herbe 'qutebrowser already running' || qutebrowser
 
 super + n 
 	st -t neomutt -c neomutt -e sh -c 'neomutt; $SHELL'
